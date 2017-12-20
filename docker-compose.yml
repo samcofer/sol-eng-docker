@@ -1,7 +1,7 @@
 version: '2.3'
 services:
 
-  k-server:
+  k-server-minimal:
     build:
       context: ./server
 #    volumes:

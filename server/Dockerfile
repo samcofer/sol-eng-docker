@@ -1,32 +1,27 @@
-FROM ubuntu:16.04
-#phusion/baseimage:0.9.22
+FROM phusion/baseimage:0.9.22
 
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && \
 	apt-get install -y apt-transport-https && \
 	apt-get dist-upgrade -y
 
-#RUN echo 'deb https://cran.rstudio.com/bin/linux/ubuntu xenial/' >> /etc/apt/sources.list && \
-#	apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9 && \ 
-#	apt-get update
-
 # kerberos server
-RUN apt-get install -y ntp krb5-admin-server krb5-kdc supervisor && \
-	mkdir /var/log/supervisord
+RUN apt-get install -y ntp krb5-admin-server krb5-kdc
 
 COPY kdc.conf /etc/krb5kdc/kdc.conf
 COPY kadm5.acl /etc/krb5kdc/kadm5.acl
 COPY krb5.conf /etc/krb5.conf
 
-COPY ./supervisord.conf /etc/supervisord.conf
+RUN chmod -R 644 /etc/krb* && \
+	mkdir -p /etc/service/krb5 && \
+	mkdir -p /etc/krb5.conf.d && \
+	kdb5_util create -s -P pass
 
-RUN chmod -R 644 /etc/krb* 
-	#cp /etc/init.d/krb* /etc/my_init.d/
+COPY ./kerberos.sh /etc/service/krb5/run
+
+RUN chmod -R 755 /etc/service
 
 
-
-# when container is starting
-CMD ["/usr/bin/supervisord", "-n", "-c", "/etc/supervisord.conf"]
 
 
 # when container is starting
