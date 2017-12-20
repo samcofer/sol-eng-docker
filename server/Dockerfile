@@ -13,11 +13,13 @@ COPY kadm5.acl /etc/krb5kdc/kadm5.acl
 COPY krb5.conf /etc/krb5.conf
 
 RUN chmod -R 644 /etc/krb* && \
-	mkdir -p /etc/service/krb5 && \
 	mkdir -p /etc/krb5.conf.d && \
-	kdb5_util create -s -P pass
+	kdb5_util create -s -P pass && \
+	mkdir -p /etc/service/krb5kdc && \
+	mkdir -p /etc/service/kadmind
 
-COPY ./kerberos.sh /etc/service/krb5/run
+COPY ./krb5kdc.sh /etc/service/krb5kdc/run
+COPY ./kadmind.sh /etc/service/kadmind/run
 
 RUN chmod -R 755 /etc/service
 
