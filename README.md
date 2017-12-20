@@ -8,3 +8,9 @@ In short... this is somewhat painful.
   * Has a different init system (at `/etc/runit`)... still need to configure this better
   * Still had the permission issue... which I learned can be fixed by creating the directory `/etc/krb5.conf.d`
   * Lots of permissions issues still to work through before things will be functional!
+
+- Problems with baseimage...
+  * runit has some [peculiar behavior...](http://smarden.org/runit/runsv.8.html)
+    > If ./run exits ... runsv restarts ./run.
+  * which does not pair well with [kerberos](https://web.mit.edu/kerberos/krb5-devel/doc/admin/install_kdc.html)
+    > Each server daemon will fork and run in the background.
