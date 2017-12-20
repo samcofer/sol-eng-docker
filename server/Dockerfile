@@ -7,14 +7,15 @@ RUN yum update -y && \
     krb5-libs \
     krb5-server \
     krb5-workstation \
-    initscripts && \
+    && \
   yum clean all
 
 COPY ./krb5.conf /etc/krb5.conf
 COPY kdc.conf /var/kerberos/krb5kdc/kdc.conf
 COPY kadm5.acl /var/kerberos/krb5kdc/kadm5.acl
 
-RUN kdb5_util create -s -P pass && kadmind
+RUN kdb5_util create -s -P pass
+      ##systemctl start krb5kdc
 
 # systemd related prep
 ENV container docker
