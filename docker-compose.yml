@@ -4,7 +4,7 @@ services:
   k-server:
     build:
       context: ./server
-    volumes:
-      - ./server/krb5.conf:/etc/krb5.conf
-      - ./server/kdc.conf:/var/kerberos/krb5kdc/kdc.conf
-      - ./server/kadm5.acl:/var/kerberos/krb5kdc/kadm5.acl
+#    volumes:
+#      - ./server/krb5.conf:/etc/krb5.conf
+#      - ./server/kdc.conf:/var/kerberos/krb5kdc/kdc.conf
+#      - ./server/kadm5.acl:/var/kerberos/krb5kdc/kadm5.acl
