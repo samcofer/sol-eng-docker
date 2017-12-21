@@ -24,5 +24,9 @@ RUN chmod -R 644 /etc/krb* && \
 
 #RUN chmod -R 755 /etc/service
 
+EXPOSE 464
+EXPOSE 749
+EXPOSE 88
+
 # when container is starting
 CMD ["/usr/bin/supervisord", "-n", "-c", "/etc/supervisord.conf"]
