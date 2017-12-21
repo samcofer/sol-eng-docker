@@ -8,7 +8,7 @@ RUN apt-get update && \
 # kerberos server
 RUN apt-get install -y ntp krb5-user supervisor
 
-COPY krb5.conf /etc/krb5.conf
+COPY ../krb5.conf /etc/krb5.conf
 
 copy client-supervisord.conf /etc/supervisord.conf
 
