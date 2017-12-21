@@ -11,3 +11,9 @@ services:
       dockerfile: simple-client/Dockerfile
     links:
       - k-server
+  k-rstudio:
+    build:
+      context: ./cluster
+      dockerfile: rstudio/Dockerfile
+    links:
+      - k-server
