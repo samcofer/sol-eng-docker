@@ -8,13 +8,16 @@ RUN apt-get update && \
 # kerberos server
 RUN apt-get install -y ntp krb5-user supervisor
 
-COPY ../krb5.conf /etc/krb5.conf
+COPY krb5.conf /etc/krb5.conf
 
-copy client-supervisord.conf /etc/supervisord.conf
+copy simple-client/supervisord.conf /etc/supervisord.conf
 
 RUN chmod -R 644 /etc/krb* && \
 	mkdir -p /etc/krb5.conf.d && \
 	mkdir -p /var/log/supervisord
+
+# create a user
+RUN useradd -m -p $(openssl passwd -1 momo) -s /bin/bash bobo
 
 # when container is starting
 CMD ["/usr/bin/supervisord", "-n", "-c", "/etc/supervisord.conf"]

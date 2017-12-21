@@ -1,4 +1,28 @@
-In short... this is somewhat painful.
+# Kerberos on Docker
+
+For the purposes of internal testing, this repo houses Kerberos running in a docker network orchestrated by `docker-compose.yml`.  Some simple users/passwords are included out of the box:
+
+On Kerberos (which runs on k-server)
+| user | password |
+|------|----------|
+|n/a   |pass      |
+|ubuntu|ubuntu    |
+|bobo  |momo      |
+
+On simple-client:
+|user | password  |
+|-----|-----------|
+|bobo |momo       |
+
+This user can be tested with:
+```bash
+kinit bobo
+<enter password>
+klist
+```
+
+# Development Process
+In short... we outline the painful development process that we went through below.
 
 - Using CentOS was extraordinarily painful due to a weird credential issue... also, `systemd` does not seem to have good support inside Docker
 
