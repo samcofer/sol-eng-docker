@@ -11,9 +11,22 @@ services:
       dockerfile: simple-client/Dockerfile
     links:
       - k-server
-  k-rstudio:
+#  k-rstudio:
+#    build:
+#      context: ./cluster
+#      dockerfile: rstudio/Dockerfile
+#    links:
+#      - k-server
+  k-ssh-client:
     build:
       context: ./cluster
-      dockerfile: rstudio/Dockerfile
+      dockerfile: ssh-client/Dockerfile
+    links:
+      - k-server
+      - k-ssh-server
+  k-ssh-server:
+    build:
+      context: ./cluster
+      dockerfile: ssh-server/Dockerfile
     links:
       - k-server
