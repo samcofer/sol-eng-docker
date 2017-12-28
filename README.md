@@ -80,6 +80,16 @@ Long term: I like the idea of a lighter-weight image, but Ubuntu suffices for no
  - [Admin local](https://web.mit.edu/kerberos/krb5-1.12/doc/admin/admin_commands/kadmin_local.html)
  - [Credential Cache](https://web.mit.edu/kerberos/krb5-1.12/doc/basic/ccache_def.html)
 
+### SSH
+ - [tutorial](https://uz.sns.it/~enrico/site/posts/kerberos/password-less-ssh-login-with-kerberos.html)
+ - [another tutorial](https://docstore.mik.ua/orelly/networking_2ndEd/ssh/ch11_04.htm)
+ - [client side example](https://blog.milessteele.com/posts/2014-03-17-kerberos-ssh.html)
+ - [pam and kerberos... overkill?](https://www.linux.iastate.edu/content/using-pam-kerberos-authentication-and-group-access-control)
+ - [useful!](https://sathisharthars.com/2013/05/07/configuring-ssh-with-kerberos-authentication/)
+
+### Debugging
+ - [issue with host name](https://www.redhat.com/archives/freeipa-users/2014-April/msg00182.html)
+
 ### Services
 #### systemd
 A lot of times, this requires you to bind mount `/sys/fs/cgroup` into the container, which I'm not sure I have on a Mac.
