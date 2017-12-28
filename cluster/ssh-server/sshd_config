@@ -52,14 +52,14 @@ ChallengeResponseAuthentication no
 #PasswordAuthentication yes
 
 # Kerberos options
-#KerberosAuthentication no
+KerberosAuthentication yes
 #KerberosGetAFSToken no
 #KerberosOrLocalPasswd yes
 #KerberosTicketCleanup yes
 
 # GSSAPI options
-#GSSAPIAuthentication no
-#GSSAPICleanupCredentials yes
+GSSAPIAuthentication yes
+GSSAPICleanupCredentials yes
 
 X11Forwarding yes
 X11DisplayOffset 10
