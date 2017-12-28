@@ -1,0 +1,10 @@
+version: '2.3'
+services:
+
+  k-rstudio:
+    hostname: k-rstudio
+    build:
+      context: ./cluster
+      dockerfile: rstudio/Dockerfile
+    links:
+      - k-server

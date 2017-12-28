@@ -2,31 +2,14 @@ version: '2.3'
 services:
 
   k-server:
+    hostname: k-server
     build:
       context: ./cluster
       dockerfile: server/Dockerfile
   k-simple-client:
+    hostname: k-simple-client
     build:
       context: ./cluster
       dockerfile: simple-client/Dockerfile
-    links:
-      - k-server
-#  k-rstudio:
-#    build:
-#      context: ./cluster
-#      dockerfile: rstudio/Dockerfile
-#    links:
-#      - k-server
-  k-ssh-client:
-    build:
-      context: ./cluster
-      dockerfile: ssh-client/Dockerfile
-    links:
-      - k-server
-      - k-ssh-server
-  k-ssh-server:
-    build:
-      context: ./cluster
-      dockerfile: ssh-server/Dockerfile
     links:
       - k-server
