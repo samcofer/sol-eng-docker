@@ -21,6 +21,8 @@ kinit bobo
 klist
 ```
 
+**NOTE:** All users in [the users file](cluster/users) will be automatically created throughout the system (in Kerberos and locally on each individual container).  Thank you, `awk`!!
+
 # Development Process
 In short... we outline the painful development process that we went through below.
 

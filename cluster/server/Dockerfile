@@ -25,7 +25,10 @@ EXPOSE 464
 EXPOSE 749
 EXPOSE 88
 
-RUN kadmin.local -q "addprinc -pw momo bobo"
+# create users
+COPY users /tmp/users
+RUN awk ' { system("kadmin.local -q \"addprinc -pw "$2" "$1"\"") } ' /tmp/users && \
+        rm /tmp/users
 
 # when container is starting
 CMD ["/usr/bin/supervisord", "-n", "-c", "/etc/supervisord.conf"]
