@@ -87,11 +87,12 @@ RUN RSTUDIO_LATEST=$(wget --no-check-certificate -qO- https://s3.amazonaws.com/r
 EXPOSE 8787
 
 # kerberos server
-RUN apt-get update && apt-get install -y ntp krb5-user libpam-krb5
+RUN apt-get update && apt-get install -y ntp krb5-user libpam-krb5 openssh-client
 
 COPY krb5.conf /etc/krb5.conf
 
 COPY rstudio/supervisord.conf /etc/supervisord.conf
+COPY ssh_config /etc/ssh/ssh_config
 
 COPY rstudio/rserver.conf /etc/rstudio/rserver.conf
 COPY rstudio/pam-rstudio /etc/pam.d/rstudio
