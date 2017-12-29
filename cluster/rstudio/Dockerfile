@@ -100,8 +100,11 @@ COPY rstudio/pam-rstudio-session /etc/pam.d/rstudio-session
 RUN chmod -R 644 /etc/krb* && \
 	mkdir -p /etc/krb5.conf.d
 
-# create a user
-RUN useradd -m -p $(openssl passwd -1 momo) -s /bin/bash bobo
+# create users
+COPY users /tmp/users
+RUN awk ' { pass=system("openssl passwd -1 "$2); system("useradd -m -p "pass" -s /bin/bash "$1) } ' /tmp/users && \
+        rm /tmp/users
+
 
 ## automatically link a shared volume for kitematic users
 VOLUME /home/rstudio/kitematic
