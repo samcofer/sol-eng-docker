@@ -23,6 +23,30 @@ klist
 
 **NOTE:** All users in [the users file](cluster/users) will be automatically created throughout the system (in Kerberos and locally on each individual container).  Thank you, `awk`!!
 
+# Get Started
+
+We have attempted to make this project somewhat modular.  To test Kerberos with SSH, you can execute something like:
+
+```bash
+docker-compose -f kerberos-base.yml -f kerberos-ssh.yml up
+```
+
+Then connect to the running `k-ssh-server` and `k-ssh-client` containers with `docker exec -it <container name> bash`.  Consult the respective `README.md` files for more specific information.
+
+On the other hand, if you want to test with RStudio:
+
+```bash
+docker-compose -f kerberos-base.yml -f kerberos-rstudio.yml up
+```
+
+You will need to take care of the license for RStudio Server Pro, and then you should be able to authenticate using Kerberos. The most fun to (presently) be had is to set up all of the above by executing:
+
+```bash
+docker-compose -f kerberos-base.yml -f kerberos-rstudio.yml -f kerberos-ssh.yml up
+```
+
+Then get things operational per the respective `README.md` files, log into RStudio Server Pro, and ssh to `k-ssh-server`.  Blam!  No authentication question.  Yep.  Thank you, Kerberos.
+
 # Development Process
 In short... we outline the painful development process that we went through below.
 
@@ -32,7 +56,7 @@ In short... we outline the painful development process that we went through belo
 
 - Moved to baseimage, a lightweight Ubuntu image
   * Has a different init system (at `/etc/runit`)... still need to configure this better
-  * Still had the permission issue... which I learned can be fixed by creating the directory `/etc/krb5.conf.d`
+  * Still had the permission issue... which I learned can be fixed by creating the directory `/etc/krb5.conf.d` (thanks for the unhelpful error message, Kerberos)
   * Lots of permissions issues still to work through before things will be functional!
   * The UID issue was resolved by using file-based credential store (removing the KEYRING credential store)
 
