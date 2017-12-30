@@ -3,13 +3,15 @@
 For the purposes of internal testing, this repo houses Kerberos running in a docker network orchestrated by `docker-compose.yml`.  Some simple users/passwords are included out of the box:
 
 On Kerberos (which runs on k-server)
-| user | password |
-|------|----------|
-|n/a   |pass      |
-|ubuntu|ubuntu    |
-|bobo  |momo      |
+
+| user | password | role |
+|------|----------|------|
+|n/a   |pass      |master|
+|ubuntu|ubuntu    |admin |
+|bobo  |momo      |user  |
 
 On simple-client:
+
 |user | password  |
 |-----|-----------|
 |bobo |momo       |
