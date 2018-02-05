@@ -1,0 +1,3 @@
+[submodule "cluster/connect"]
+	path = cluster/connect
+	url = https://github.com/rstudio/connect.git

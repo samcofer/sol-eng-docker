@@ -1,0 +1,18 @@
+version: '2.3'
+services:
+
+  connect:
+    hostname: connect
+    build:
+      context: ./cluster
+      dockerfile: connect/docker/xenial/Dockerfile
+    ports:
+      - 3939:3939
+      - 3443:3443
+      - 3030:3030
+    privileged: true
+    volumes:
+      - ./cluster/connect:/connect
+    command: dumb-init ./scripts/start-licensed.sh ./bin/connect --config config/development.gcfg
+    links:
+      - k-server
