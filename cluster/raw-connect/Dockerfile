@@ -32,6 +32,7 @@ RUN apt-get install -y gdebi-core wget && \
 	wget https://s3.amazonaws.com/rstudio-connect/ubuntu-12.04/x86_64/rstudio-connect_1.5.12.1-10_amd64.deb && \
 	dpkg -i rstudio-connect_1.5.12.1-10_amd64.deb
 
+COPY ./raw-connect/rstudio-connect.gcfg /etc/rstudio-connect/rstudio-connect.gcfg
 
 # when container is starting
 CMD ["/usr/bin/supervisord", "-n", "-c", "/etc/supervisord.conf"]
