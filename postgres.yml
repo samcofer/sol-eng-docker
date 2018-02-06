@@ -1,0 +1,9 @@
+version: '2.3'
+services:
+
+  k-postgres:
+    hostname: k-postgres
+    build:
+      context: ./cluster
+      dockerfile: postgres/Dockerfile
+
