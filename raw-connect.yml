@@ -1,0 +1,15 @@
+version: '2.3'
+services:
+
+  connect:
+    hostname: connect
+    build:
+      context: ./cluster
+      dockerfile: raw-connect/Dockerfile
+    ports:
+      - 3939:3939
+      - 3443:3443
+      - 3030:3030
+    privileged: true
+    links:
+      - k-server
