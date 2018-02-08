@@ -28,6 +28,7 @@ EXPOSE 88
 # create users
 COPY users /tmp/users
 RUN awk ' { system("kadmin.local -q \"addprinc -pw "$2" "$1"\"") } ' /tmp/users && \
+	awk ' { pass=system("openssl passwd -1 "$2); system("useradd -m -p "pass" -s /bin/bash "$1) } ' /tmp/users && \
         rm /tmp/users
 
 # when container is starting
