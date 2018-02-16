@@ -10,6 +10,7 @@ The way this image is set up:
 - Installs Kerberos software
 - Provisions with a Kerberos configuration script, and configuration "overwrite" files to overwrite what is provided by `initdb`, so that we do not have to persist database state with a volume
 - Provisions the image (and the database) with users based on the [users](../users) file
+- Executes the configuration script as part of the entrypoint
 
 Some pain points we hit:
 
