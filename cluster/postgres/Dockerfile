@@ -27,6 +27,7 @@ RUN apt-get remove -y postgresql-$PG_MAJOR postgresql-client-$PG_MAJOR && apt-ge
 
 ENV PG_MAJOR=10.1
 ENV PG_VERSION=10.1.0
+ENV PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/lib/postgresql/${PG_MAJOR}/bin
 # build postgres from source
 RUN apt-get install -y \
 	gcc \
@@ -46,14 +47,21 @@ RUN apt-get install -y \
 	make && \
 	make install
 	
-
-# provision with configuration script
-COPY postgres/config_postgres_krb5.sh /docker-entrypoint-initdb.d/config_postgres_krb5.sh
-RUN chmod +x /docker-entrypoint-initdb.d/config_postgres_krb5.sh
-
 # provision with config files
 COPY postgres/pg_hba.conf /tmp/pg_hba.conf
 COPY postgres/postgresql.conf /tmp/postgresql.conf
+COPY postgres/pg_ident.conf /tmp/pg_ident.conf
+
+# provision with configuration script
+COPY postgres/config_postgres_krb5.sh /docker-entrypoint-initdb.d/config_postgres_krb5.sh
+RUN chmod +x /docker-entrypoint-initdb.d/config_postgres_krb5.sh && \
+  chmod 777 /var/log && \
+  chmod 777 /etc && \
+  # b/c chown flag not currently supported on COPY
+  chown postgres:postgres /tmp/pg_hba.conf && \
+  chown postgres:postgres /tmp/postgresql.conf && \
+  chown postgres:postgres /tmp/pg_ident.conf
+
 
 # RUN su postgres -c "psql  -c 'CREATE ROLE \"postgres/docker-rstudio.com@DOCKER-RSTUDIO.COM\" SUPERUSER LOGIN'"
 

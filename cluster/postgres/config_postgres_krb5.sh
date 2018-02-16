@@ -1,3 +1,4 @@
+#!/bin/bash
 # expects to be executed as the postgres user
 
 # set-up kerb stuff
@@ -9,19 +10,17 @@ kinit -k -t /etc/krb5.keytab  postgres/k-postgres
 chown postgres:postgres /etc/krb5.keytab
 
 # configure database
-psql -c 'CREATE ROLE \"postgres/k-postgres@DOCKER-RSTUDIO.COM\" SUPERUSER LOGIN'
+psql -c 'CREATE ROLE "postgres/k-postgres@DOCKER-RSTUDIO.COM" SUPERUSER LOGIN'
 
-chown postgres:postgres /tmp/pg_hba.conf 
-chown postgres:postgres /tmp/postgresql.conf
-
-cp /tmp/pg_hba.conf /var/lib/postgresql/data/pg_hba.conf
-cp /tmp/postgresql.conf /var/lib/postgresql/data/postgresql.conf
+cp /tmp/pg_hba.conf ${PGDATA}/pg_hba.conf
+cp /tmp/postgresql.conf ${PGDATA}/postgresql.conf
+cp /tmp/pg_ident.conf ${PGDATA}/pg_ident.conf
 
 # seed users in the database
 # - presumes that /tmp/users is still around
-awk ' { system("psql -h localhost -d postgres -p 5432 -c '\''CREATE ROLE \""$1"@DOCKER-RSTUDIO.COM\" WITH LOGIN;'\''") } ' /tmp/users
+awk ' { system("psql -h localhost -d postgres -p 5432 -c '\''CREATE ROLE \""$1"\" WITH LOGIN;'\''") } ' /tmp/users
 
 # reload database params
-usr/lib/postgresql/${PG_MAJOR}/bin/pg_ctl reload
+/usr/lib/postgresql/${PG_MAJOR}/bin/pg_ctl reload
 
 
