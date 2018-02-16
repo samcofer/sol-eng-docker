@@ -12,8 +12,6 @@ RUN apt-get install -y \
 	krb5-user \
 	ntp
 
-	
-
 COPY krb5.conf /etc/krb5.conf
 
 RUN chmod -R 644 /etc/krb* && \
@@ -21,12 +19,14 @@ RUN chmod -R 644 /etc/krb* && \
 
 # create users
 COPY users /tmp/users
-RUN awk ' { pass=system("openssl passwd -1 "$2); system("useradd -m -p "pass" -s /bin/bash "$1) } ' /tmp/users && \
-        rm /tmp/users
+RUN awk ' { pass=system("openssl passwd -1 "$2); system("useradd -m -p "pass" -s /bin/bash "$1) } ' /tmp/users 
+# - leave it around to create database users, too
 
 # remove previous postgres install
 RUN apt-get remove -y postgresql-$PG_MAJOR postgresql-client-$PG_MAJOR && apt-get autoremove -y
 
+ENV PG_MAJOR=10.1
+ENV PG_VERSION=10.1.0
 # build postgres from source
 RUN apt-get install -y \
 	gcc \
@@ -35,24 +35,21 @@ RUN apt-get install -y \
 	zlib1g-dev \
 	libgss-dev \
 	libkrb5-dev && \
-	wget https://ftp.postgresql.org/pub/source/v10.1/postgresql-10.1.tar.gz && \
-	gunzip postgresql-10.1.tar.gz && \
-	tar xf postgresql-10.1.tar && \
-	cd postgresql-10.1 && \
+	wget https://ftp.postgresql.org/pub/source/v${PG_MAJOR}/postgresql-${PG_MAJOR}.tar.gz && \
+	gunzip postgresql-${PG_MAJOR}.tar.gz && \
+	tar xf postgresql-${PG_MAJOR}.tar && \
+	cd postgresql-${PG_MAJOR} && \
 	./configure \
 	  --with-gssapi \
-	  --prefix=/usr/lib/postgresql/10.1 \
+	  --prefix=/usr/lib/postgresql/${PG_MAJOR} \
 	  && \
 	make && \
 	make install
 	
-ENV PG_MAJOR=10.1
-ENV PG_VERSION=10.1.0
-ENV PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/lib/postgresql/10.1/bin
 
 # provision with configuration script
-COPY postgres/config_postgres_krb5.sh /usr/local/bin/config_postgres_krb5.sh
-RUN chmod +x /usr/local/bin/config_postgres_krb5.sh
+COPY postgres/config_postgres_krb5.sh /docker-entrypoint-initdb.d/config_postgres_krb5.sh
+RUN chmod +x /docker-entrypoint-initdb.d/config_postgres_krb5.sh
 
 # provision with config files
 COPY postgres/pg_hba.conf /tmp/pg_hba.conf
