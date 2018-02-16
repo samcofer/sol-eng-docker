@@ -75,6 +75,12 @@ In short... we outline the painful development process that we went through belo
 
 Long term: I like the idea of a lighter-weight image, but Ubuntu suffices for now!  (And it's really nice to have something working in a realistic fashion)
 
+## Postgres Setup
+
+- Setting an environment variable `KRB5_TRACE=/path/to/filename` turns out to be MASSIVELY helpful on the client side!
+- I also turned up logging verbosity on Postgres server (which helped)  and on Kerberos server (which didn't help)
+- It was important that the keytab was readable by the postgres service (dunce me did not make sure that was possible)
+- Then the big trick is making sure that DNS lookup is happening properly, as well as realm lookup, and the auth user is matching in the database
 
 
 # Research & Links
