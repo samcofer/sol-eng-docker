@@ -9,6 +9,4 @@ services:
       dockerfile: postgres/Dockerfile
     links:
       - k-server
-    stdin_open: true
-    tty: true
 
