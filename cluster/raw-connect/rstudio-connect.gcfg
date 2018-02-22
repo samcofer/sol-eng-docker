@@ -29,7 +29,7 @@ RunAsCurrentUser = true
 [PAM]
 UseSession = true  ; Enable PAM sessions
 Service = rstudio-connect
-SessionService = rstudio-connect-session
 ForwardPassword = true ; Forward the current user's password into the PAM session
 PasswordLifetime = 1h ; Cache passwords for 1 hour(s) after login
 AuthenticatedSessionService = rstudio-connect-session ; PAM service that accepts credentials
+
