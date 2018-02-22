@@ -27,9 +27,7 @@ RUN wget $CONNECT_BINARY_URL -O /rstudio-connect.deb && \
     gdebi -n rstudio-connect.deb && \
     rm /rstudio-connect.deb
 
-RUN wget -O /usr/local/bin/dumb-init https://github.com/~nit_1.1.3_amd64 && chmod +x /usr/local/bin/dumb-init
-
-COPY ./raw-connect/rstudio-connect.gcfg /etc/rstudio-connect/rstudio-connect.gcfg
+RUN wget -O /usr/local/bin/dumb-init https://github.com/Yelp/dumb-init/releases/download/v1.1.3/dumb-init_1.1.3_amd64 && chmod +x /usr/local/bin/dumb-init
 
 # because licensing
 RUN apt-get -y install sudo
@@ -41,20 +39,26 @@ RUN apt-get install -y \
     krb5-user \
     libpam-krb5
 
+# create users
+COPY users /tmp/users
+RUN awk ' { pass=system("openssl passwd -1 "$2); system("useradd -m -p "pass" -s /bin/bash "$1) } ' /tmp/users && \
+        rm /tmp/users
+
+COPY ./raw-connect/rstudio-connect.gcfg /etc/rstudio-connect/rstudio-connect.gcfg
+
 COPY krb5.conf /etc/krb5.conf
 
 COPY ssh_config /etc/ssh/ssh_config
+
+COPY pam /etc/pam.d/rstudio-connect
+COPY pam-session /etc/pam.d/rstudio-connect-session
 
 RUN chmod -R 644 /etc/krb* && \
 	mkdir -p /etc/krb5.conf.d && \
 	mkdir -p /var/log/supervisord
 
 
-# create users
-COPY users /tmp/users
-RUN awk ' { pass=system("openssl passwd -1 "$2); system("useradd -m -p "pass" -s /bin/bash "$1) } ' /tmp/users && \
-        rm /tmp/users
-
-
-# need a command to set up the license manager (with an ARG?)
-CMD dumb-init /opt/rstudio-connect/bin/connect --config /etc/rstudio-connect/rstudio-connect.gcfg
+# setup init
+COPY ./raw-connect/start-licensed.sh /start-licensed.sh
+RUN chmod +x /start-licensed.sh
+CMD dumb-init /start-licensed.sh /opt/rstudio-connect/bin/connect --config /etc/rstudio-connect/rstudio-connect.gcfg
