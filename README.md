@@ -83,6 +83,15 @@ Long term: I like the idea of a lighter-weight image, but Ubuntu suffices for no
 - Then the big trick is making sure that DNS lookup is happening properly, as well as realm lookup, and the auth user is matching in the database
 
 
+## LDAP
+
+It looks like OpenLDAP might be the ticket for setting up LDAP (and integrating with Kerberos):
+ - [Docker Image](https://github.com/osixia/docker-openldap)
+ - [Kerberos instructions](https://web.mit.edu/kerberos/krb5-latest/doc/admin/conf_ldap.html)
+
+We really should think about how to make this "properly" modular... so you can choose LDAP + Kerberos, just LDAP, just Kerberos, etc.
+ 
+
 # Research & Links
 
 ### PAM and Kerberos
