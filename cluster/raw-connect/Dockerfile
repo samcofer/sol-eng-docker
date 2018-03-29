@@ -12,6 +12,7 @@ RUN apt-get update -y -qq && \
     lsb-release \
     ntp \
     rrdtool \
+    unixodbc-dev \
     vim \
     wget
 
