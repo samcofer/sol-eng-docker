@@ -24,8 +24,8 @@ RUN apt-get install -y apt-transport-https \
 
 # Install Connect
 ARG CONNECT_BINARY_URL
-RUN wget $CONNECT_BINARY_URL -O /rstudio-connect.deb && \
-    gdebi -n rstudio-connect.deb && \
+COPY $CONNECT_BINARY_URL /rstudio-connect.deb
+RUN gdebi -n rstudio-connect.deb && \
     rm /rstudio-connect.deb
 
 RUN wget -O /usr/local/bin/dumb-init https://github.com/Yelp/dumb-init/releases/download/v1.1.3/dumb-init_1.1.3_amd64 && chmod +x /usr/local/bin/dumb-init
