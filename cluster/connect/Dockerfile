@@ -45,7 +45,7 @@ COPY users /tmp/users
 RUN awk ' { pass=system("openssl passwd -1 "$2); system("useradd -m -p "pass" -s /bin/bash "$1) } ' /tmp/users && \
         rm /tmp/users
 
-COPY ./raw-connect/rstudio-connect.gcfg /etc/rstudio-connect/rstudio-connect.gcfg
+COPY ./connect/rstudio-connect.gcfg /etc/rstudio-connect/rstudio-connect.gcfg
 
 COPY krb5.conf /etc/krb5.conf
 
@@ -60,6 +60,6 @@ RUN chmod -R 644 /etc/krb* && \
 
 
 # setup init
-COPY ./raw-connect/start-licensed.sh /start-licensed.sh
+COPY ./connect/start-licensed.sh /start-licensed.sh
 RUN chmod +x /start-licensed.sh
 CMD dumb-init /start-licensed.sh /opt/rstudio-connect/bin/connect --config /etc/rstudio-connect/rstudio-connect.gcfg
