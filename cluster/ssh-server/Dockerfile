@@ -31,6 +31,8 @@ COPY users /tmp/users
 RUN awk ' { pass=system("openssl passwd -1 "$2); system("useradd -m -p "pass" -s /bin/bash "$1) } ' /tmp/users && \
         rm /tmp/users
 
+COPY ssh-server/docker-entrypoint.sh /docker-entrypoint.sh
 
 # when container is starting
+ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["/usr/bin/supervisord", "-n", "-c", "/etc/supervisord.conf"]
