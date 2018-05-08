@@ -2,6 +2,7 @@
 
 echo "Startup"
 
+/container/tool/run
 
 mkdir /tmp/ldif_output
 
