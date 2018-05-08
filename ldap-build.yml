@@ -1,0 +1,28 @@
+version: '2.3'
+services:
+
+  openldap:
+    hostname: openldap
+    image: k-ldap
+    build: 
+      context: ./cluster
+      dockerfile: ./ldap/Dockerfile
+    ports:
+       - 389:389
+       - 636:636
+
+  admin:
+    hostname: admin
+    image: osixia/phpldapadmin
+    ports:
+      - 443:443
+      - 80:80
+    environment:
+      - PHPLDAPADMIN_LDAP_HOSTS=openldap
+    links:
+      - openldap
+
+networks:
+  default:
+    external:
+      name: ${NETWORK}
