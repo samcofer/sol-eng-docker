@@ -5,7 +5,7 @@ services:
     hostname: connect
     build:
       context: ./cluster
-      dockerfile: raw-connect/Dockerfile
+      dockerfile: connect/Dockerfile
       args:
         #- CONNECT_BINARY_URL=https://s3.amazonaws.com/rstudio-connect/ubuntu-12.04/x86_64/rstudio-connect_1.5.12.1-10_amd64.deb
         - CONNECT_BINARY_URL=rstudio-connect_1.6.1-2801_amd64.deb
