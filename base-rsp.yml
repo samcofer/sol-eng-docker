@@ -3,7 +3,7 @@ services:
 
   base-rsp:
     hostname: base-rsp
-    entrypoint: bash
+    command: bash
     build:
       context: ./cluster
       dockerfile: base-rsp/Dockerfile
