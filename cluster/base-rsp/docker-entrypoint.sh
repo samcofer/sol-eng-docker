@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+#set -x
 
 if [ -z "${RSP_LICENSE}" ]; then
     echo >&2 'error: The RSP_LICENSE variable is not set.'
@@ -28,7 +28,4 @@ activate
 trap deactivate EXIT 
 
 echo "Starting RStudio Server Pro"
-/usr/lib/rstudio-server/bin/rserver --server-daemonize 0
-
-tail -F /var/log/rstudio-server.log && \ 
-wait
+"$@"
