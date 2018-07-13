@@ -8,6 +8,7 @@ RUN apt-get update && \
 	#a2enmod proxy_http && \
 	#a2enmod proxy_wstunnel
 
+RUN echo "momo" | htpasswd -c -i /usr/local/apache2/passwords bobo
 
 COPY ./proxy.conf /usr/local/apache2/conf/httpd.conf
 
