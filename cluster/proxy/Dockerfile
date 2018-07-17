@@ -8,7 +8,10 @@ RUN apt-get update && \
 	#a2enmod proxy_http && \
 	#a2enmod proxy_wstunnel
 
-RUN echo "momo" | htpasswd -c -i /usr/local/apache2/passwords bobo
+
+# create users
+COPY users /tmp/users
+RUN awk ' {system("if [ ! -f /usr/local/apache2/passwords ]; then htpasswd -b -c /usr/local/apache2/passwords "$1" "$2"; else htpasswd -b /usr/local/apache2/passwords "$1" "$2"; fi;") } ' /tmp/users && \
+        rm /tmp/users
 
 COPY ./proxy.conf /usr/local/apache2/conf/httpd.conf
-
