@@ -8,8 +8,8 @@ services:
       dockerfile: rstudio-proxy/Dockerfile
     ports:
       - 8787:8787
-#    links:
-#      - apache-proxy
+    links:
+      - apache-proxy
 
   apache-proxy:
     hostname: apache-proxy
