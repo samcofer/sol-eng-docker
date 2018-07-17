@@ -87,10 +87,10 @@ RUN RSTUDIO_LATEST=$(wget --no-check-certificate -qO- https://s3.amazonaws.com/r
 EXPOSE 8787
 
 
-COPY rstudio/supervisord.conf /etc/supervisord.conf
+COPY rstudio-proxy/supervisord.conf /etc/supervisord.conf
 COPY ssh_config /etc/ssh/ssh_config
 
-COPY rstudio/rserver.conf /etc/rstudio/rserver.conf
+COPY rstudio-proxy/rserver.conf /etc/rstudio/rserver.conf
 COPY secure-proxy-user-header /etc/rstudio/secure-proxy-user-header
 
 # create users
