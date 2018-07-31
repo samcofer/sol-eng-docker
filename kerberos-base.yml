@@ -13,3 +13,9 @@ services:
       dockerfile: simple-client/Dockerfile
     links:
       - k-server
+
+networks:
+  default:
+    external:
+      name: ${NETWORK}
+

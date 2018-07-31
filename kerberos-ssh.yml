@@ -16,3 +16,8 @@ services:
       dockerfile: ssh-server/Dockerfile
     links:
       - k-server
+
+networks:                                                                                            │
+  default:                                                                                           │
+    external:                                                                                        │
+      name: ${NETWORK}
