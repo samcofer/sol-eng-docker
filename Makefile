@@ -38,23 +38,23 @@ kerb-server-up:
 
 kerb-server-down:
 	NETWORK=${NETWORK} \
-        docker-compose -f kerberos-base.yml down
+        docker-compose -f kerberos-base.yml -f make-network.yml down
 
 kerb-ssh-up:
 	NETWORK=${NETWORK} \
-        docker-compose -f kerberos-base.yml -f kerberos-ssh.yml up -d
+        docker-compose -f kerberos-base.yml -f kerberos-ssh.yml -f make-network.yml up -d
 
 kerb-ssh-down:
 	NETWORK=${NETWORK} \
-        docker-compose -f kerberos-base.yml -f kerberos-ssh.yml down
+        docker-compose -f kerberos-base.yml -f kerberos-ssh.yml -f make-network.yml down
 
 kerb-rsp-up:
 	NETWORK=${NETWORK} \
-        docker-compose -f kerberos-rstudio.yml up -d
+        docker-compose -f kerberos-base.yml -f kerberos-rstudio.yml -f make-network.yml up -d
 
 kerb-rsp-down:
 	NETWORK=${NETWORK} \
-        docker-compose -f kerberos-rstudio.yml down
+        docker-compose -f kerberos-base.yml -f kerberos-rstudio.yml -f make-network.yml down
 
 test-build: 
 	if [ ! -e "${DB2_TARGZ}" ]; then \
