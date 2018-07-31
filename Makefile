@@ -34,7 +34,7 @@ network-down:
 
 kerb-server-up:
 	NETWORK=${NETWORK} \
-        docker-compose -f kerberos-base.yml up
+        docker-compose -f kerberos-base.yml up -d
 
 kerb-server-down:
 	NETWORK=${NETWORK} \
@@ -42,7 +42,7 @@ kerb-server-down:
 
 kerb-ssh-up:
 	NETWORK=${NETWORK} \
-        docker-compose -f kerberos-ssh.yml up
+        docker-compose -f kerberos-ssh.yml up -d
 
 kerb-ssh-down:
 	NETWORK=${NETWORK} \
@@ -50,7 +50,7 @@ kerb-ssh-down:
 
 kerb-rsp-up:
 	NETWORK=${NETWORK} \
-        docker-compose -f kerberos-rstudio.yml up 
+        docker-compose -f kerberos-rstudio.yml up -d
 
 kerb-rsp-down:
 	NETWORK=${NETWORK} \
