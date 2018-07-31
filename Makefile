@@ -34,7 +34,7 @@ network-down:
 
 kerb-server-up:
 	NETWORK=${NETWORK} \
-        docker-compose -f kerberos-base.yml up -d
+        docker-compose -f kerberos-base.yml -f make-network.yml up -d
 
 kerb-server-down:
 	NETWORK=${NETWORK} \
