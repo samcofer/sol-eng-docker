@@ -17,7 +17,7 @@ services:
     links:
       - k-server
 
-networks:                                                                                            │
-  default:                                                                                           │
-    external:                                                                                        │
+networks:
+  default:
+    external:
       name: ${NETWORK}

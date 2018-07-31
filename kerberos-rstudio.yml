@@ -10,7 +10,7 @@ services:
       - 8787:8787
     links:
       - k-server
-networks:                                                                                            │
-  default:                                                                                           │
-    external:                                                                                        │
+networks:
+  default:
+    external:
       name: ${NETWORK}
