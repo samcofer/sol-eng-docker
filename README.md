@@ -1,3 +1,7 @@
+# Common Problems
+
+- docker cache outdated: let's say it has been a while and your docker cache needs `apt-get update` to be run in order to install things.  `docker-compose -f myfile.yml build --no-cache myservice` can get you unstuck! 
+
 # Kerberos on Docker
 
 For the purposes of internal testing, this repo houses Kerberos running in a docker network orchestrated by `docker-compose.yml`.  Some simple users/passwords are included out of the box:
