@@ -32,6 +32,9 @@ network-down:
 		docker network rm ${NETWORK}; \
 	fi;
 
+#---------------------------------------------
+# Kerberos
+#---------------------------------------------
 kerb-server-up:
 	NETWORK=${NETWORK} \
         docker-compose -f kerberos-base.yml -f make-network.yml up -d
@@ -55,6 +58,23 @@ kerb-rsp-up:
 kerb-rsp-down:
 	NETWORK=${NETWORK} \
         docker-compose -f kerberos-base.yml -f kerberos-rstudio.yml -f make-network.yml down
+
+#---------------------------------------------
+# Proxy 
+#---------------------------------------------
+
+proxy-apache-up:
+	NETWORK=${NETWORK} \
+        docker-compose -f proxy.yml -f make-network.yml up -d
+
+proxy-apache-down:
+	NETWORK=${NETWORK} \
+        docker-compose -f proxy.yml -f make-network.yml down
+
+#---------------------------------------------
+# Other 
+#---------------------------------------------
+
 
 test-build: 
 	if [ ! -e "${DB2_TARGZ}" ]; then \
