@@ -1,4 +1,0 @@
-auth        required      pam_krb5.so debug
-account     [default=bad success=ok user_unknown=ignore] pam_krb5.so debug
-password    sufficient    pam_krb5.so use_authtok debug
-session     requisite     pam_krb5.so debug
