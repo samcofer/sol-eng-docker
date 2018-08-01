@@ -7,7 +7,7 @@ services:
       context: ./cluster
       dockerfile: rstudio-proxy/Dockerfile
     ports:
-      - 8787:8787
+      - 8788:8787
     links:
       - apache-proxy
 
@@ -17,5 +17,5 @@ services:
       context: ./cluster
       dockerfile: proxy/Dockerfile
     ports:
-      - 80:80
+      - 81:80
 
