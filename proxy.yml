@@ -1,0 +1,23 @@
+version: '2.3'
+services:
+
+  rstudio-proxy:
+    hostname: rstudio-proxy
+    build:
+      context: ./cluster
+      dockerfile: rstudio-proxy/Dockerfile
+    environment:
+      - RSP_LICENSE
+    ports:
+      - 8788:8787
+    links:
+      - apache-proxy
+
+  apache-proxy:
+    hostname: apache-proxy
+    build:
+      context: ./cluster
+      dockerfile: proxy/Dockerfile
+    ports:
+      - 81:80
+
