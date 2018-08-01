@@ -3,6 +3,7 @@ PWD := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 PROJECT=auth-docker
 NETWORK=${PROJECT}_default
 SCALE=1
+RSP_LICENSE=$(RSP_LICENSE)
 
 
 test-env-up: network-up db-up
@@ -65,6 +66,7 @@ kerb-rsp-down:
 
 proxy-apache-up:
 	NETWORK=${NETWORK} \
+        RSP_LICENSE=${RSP_LICENSE} \
         docker-compose -f proxy.yml -f make-network.yml up -d
 
 proxy-apache-down:
