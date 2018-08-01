@@ -72,6 +72,17 @@ proxy-apache-down:
         docker-compose -f proxy.yml -f make-network.yml down
 
 #---------------------------------------------
+# Base RSP
+#---------------------------------------------
+rsp-up:
+	NETWORK=${NETWORK} \
+	docker-compose -f base-rsp.yml -f make-network.yml up -d
+
+rsp-down:
+	NETWORK=${NETWORK} \
+	docker-compose -f base-rsp.yml -f make-network.yml down
+
+#---------------------------------------------
 # Other 
 #---------------------------------------------
 
