@@ -15,3 +15,4 @@ List current tickets with `klist` and look at the keytab with `klist -kt`
 ## To Do ##
 
 - Add rsyslogd to the mix with `apt-get install -y rsyslog`.  It is executed with `rsyslogd`, but can probably be called from [`supervisord.conf`](./supervisord.conf) somehow, as well.
+- Add `ssh-keyscan -H ssh-server >> /etc/ssh/ssh_known_hosts` to entrypoint scripts for clients... presuming that the SSH service is up and healthy... which probably should have its own health-check, to be honest...
