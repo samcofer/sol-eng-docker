@@ -9,13 +9,6 @@ test-env-up: network-up db-up
 
 test-env-down: network-down db-down
 
-connect-up:
-	NETWORK=${NETWORK} \
-	docker-compose -f kerberos-base.yml -f kerberos-ssh.yml -f raw-connect.yml up
-
-connect-down:
-	NETWORK=${NETWORK} \
-	docker-compose -f kerberos-base.yml -f kerberos.ssh.yml -f raw-connect.yml down
 
 kerb-up: kerb-server-up kerb-ssh-up kerb-rstudio-up
 
@@ -39,6 +32,7 @@ network-down:
 		echo "Removing network: ${NETWORK}"; \
 		docker network rm ${NETWORK}; \
 	fi;
+
 
 #---------------------------------------------
 # Kerberos
@@ -67,6 +61,14 @@ kerb-rsp-down:
 	NETWORK=${NETWORK} \
         docker-compose -f kerberos-base.yml -f kerberos-rstudio.yml -f make-network.yml down
 
+kerb-rsc-up:
+	NETWORK=${NETWORK} \
+	RSC_LICENSE=$(RSC_LICENSE) \
+	docker-compose -f kerberos-base.yml -f connect.yml -f make-network.yml up
+
+kerb-rsc-down:
+	NETWORK=${NETWORK} \
+	docker-compose -f kerberos-base.yml -f connect.yml -f make-network.yml down
 #---------------------------------------------
 # Proxy 
 #---------------------------------------------
