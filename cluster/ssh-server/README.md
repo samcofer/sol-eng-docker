@@ -16,3 +16,6 @@ List current tickets with `klist` and look at the keytab with `klist -kt`
 
 - Add rsyslogd to the mix with `apt-get install -y rsyslog`.  It is executed with `rsyslogd`, but can probably be called from [`supervisord.conf`](./supervisord.conf) somehow, as well.
 - Add `ssh-keyscan -H ssh-server >> /etc/ssh/ssh_known_hosts` to entrypoint scripts for clients... presuming that the SSH service is up and healthy... which probably should have its own health-check, to be honest...
+    - https://unix.stackexchange.com/questions/33271/how-to-avoid-ssh-asking-permission
+    - https://www.techrepublic.com/article/how-to-easily-add-an-ssh-fingerprint-to-your-knownhosts-file-in-linux/
+    - https://unix.stackexchange.com/questions/3651/making-ssh-hosts-global-to-all-the-users-on-the-computer
