@@ -6,6 +6,8 @@ services:
     build:
       context: ./cluster
       dockerfile: rstudio-proxy/Dockerfile
+    environment:
+      - RSP_LICENSE
     ports:
       - 8788:8787
     links:
