@@ -44,7 +44,6 @@ RUN RSTUDIO_LATEST=$(wget --no-check-certificate -qO- https://s3.amazonaws.com/r
 RUN wget -O /usr/local/bin/dumb-init https://github.com/Yelp/dumb-init/releases/download/v1.1.3/dumb-init_1.1.3_amd64 \
   && chmod +x /usr/local/bin/dumb-init
 
-COPY rstudio-proxy/supervisord.conf /etc/supervisord.conf
 COPY ssh_config /etc/ssh/ssh_config
 
 COPY rstudio-proxy/rserver.conf /etc/rstudio/rserver.conf
