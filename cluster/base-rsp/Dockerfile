@@ -52,8 +52,8 @@ RUN wget -O /usr/local/bin/dumb-init https://github.com/Yelp/dumb-init/releases/
 COPY base-rsp/rserver.conf /etc/rstudio/rserver.conf
 
 COPY users /tmp/users
-RUN awk ' { pass=system("openssl passwd -1 "$2); system("useradd -m -p "pass" -s /bin/bash "$1) } ' /tmp/users && \
-        rm /tmp/users
+RUN awk ' { system("useradd -m -s /bin/bash "$1" && echo "$1":"$2" | chpasswd") } ' /tmp/users && \
+	rm /tmp/users
 
 COPY ./base-rsp/docker-entrypoint.sh /docker-entrypoint.sh
 ENTRYPOINT ["/usr/local/bin/dumb-init", "--", "/docker-entrypoint.sh"]
