@@ -1,0 +1,12 @@
+version: '2.3'
+services:
+
+  base-rsp:
+    hostname: base-rsp
+    build:
+      context: ./cluster
+      dockerfile: base-rsp/Dockerfile
+    environment:
+      - RSP_LICENSE
+    ports:
+      - 8787:8787
