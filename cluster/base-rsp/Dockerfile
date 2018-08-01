@@ -57,7 +57,7 @@ RUN awk ' { pass=system("openssl passwd -1 "$2); system("useradd -m -p "pass" -s
 
 COPY ./base-rsp/docker-entrypoint.sh /docker-entrypoint.sh
 ENTRYPOINT ["/usr/local/bin/dumb-init", "--", "/docker-entrypoint.sh"]
-CMD ["/usr/lib/rstudio-server/bin/rserver"]
+CMD ["/usr/lib/rstudio-server/bin/rserver --server-daemonize 0"]
 
 EXPOSE 8787
 
