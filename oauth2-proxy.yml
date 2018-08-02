@@ -1,0 +1,20 @@
+version: '2.3'
+services:
+  oauth2-proxy:
+    image: wingedkiwi/oauth2-proxy
+    environment:
+      # .env file with ENV_VAR_NAME=value, one per line.
+      - OAUTH2_PROXY_CLIENT_ID=${OAUTH2_PROXY_CLIENT_ID}
+      - OAUTH2_PROXY_CLIENT_SECRET=${OAUTH2_PROXY_CLIENT_SECRET}
+      - OAUTH2_PROXY_COOKIE_SECRET=${OAUTH2_PROXY_COOKIE_SECRET}
+    command: 
+      - oauth2_proxy
+      - --provider=github
+      - --http-address=http://0.0.0.0:80
+      - --upstream=http://connect:3939/
+      - --redirect-url=http://localhost/oauth2/callback
+      - --email-domain=*
+      - -cookie-secure=false
+    ports:
+      - "80:80"
+
