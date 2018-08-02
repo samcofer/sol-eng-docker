@@ -42,7 +42,8 @@ RUN apt-get install -y \
 
 # create users
 COPY users /tmp/users
-RUN awk ' { system("useradd -m -s /bin/bash "$1" && echo "$1":"$2" | chpasswd ") } ' /tmp/users && \
+RUN awk ' { system("useradd -m -s /bin/bash -p tmp "$1) } ' /tmp/users && \
+	awk ' { system("echo "$1":"$2" | chpasswd ") } ' /tmp/users && \
 	awk ' { system("usermod -aG rstudio-connect "$1) } ' /tmp/users && \
         rm /tmp/users
 
