@@ -64,7 +64,7 @@ kerb-rsp-down:
 kerb-rsc-up:
 	NETWORK=${NETWORK} \
 	RSC_LICENSE=$(RSC_LICENSE) \
-	docker-compose -f kerberos-base.yml -f connect.yml -f make-network.yml up
+	docker-compose -f kerberos-base.yml -f connect.yml -f make-network.yml up -d
 
 kerb-rsc-down:
 	NETWORK=${NETWORK} \
