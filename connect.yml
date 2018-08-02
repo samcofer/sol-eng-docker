@@ -7,12 +7,9 @@ services:
       context: ./cluster
       dockerfile: connect/Dockerfile
       args:
-        #- CONNECT_BINARY_URL=https://s3.amazonaws.com/rstudio-connect/ubuntu-12.04/x86_64/rstudio-connect_1.5.12.1-10_amd64.deb
         - CONNECT_BINARY_URL=rstudio-connect_1.6.6.1-4_amd64.deb
     ports:
       - 3939:3939
-      - 3443:3443
-      - 3030:3030
     privileged: true
     environment:
       - CONNECT_LICENSE
