@@ -42,8 +42,9 @@ RUN apt-get install -y \
 
 # create users
 COPY users /tmp/users
-RUN awk ' { pass=system("openssl passwd -1 "$2); system("useradd -m -p "pass" -s /bin/bash "$1) } ' /tmp/users && \
+RUN awk ' { system("useradd -m -s /bin/bash "$1" && echo "$1":"$2" | chpasswd && usermod -aG rstudio-connect "$1) } ' /tmp/users && \
         rm /tmp/users
+
 
 COPY ./connect/rstudio-connect.gcfg /etc/rstudio-connect/rstudio-connect.gcfg
 
