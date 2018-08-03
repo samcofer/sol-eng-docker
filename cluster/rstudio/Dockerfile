@@ -95,8 +95,8 @@ COPY rstudio/supervisord.conf /etc/supervisord.conf
 COPY ssh_config /etc/ssh/ssh_config
 
 COPY rstudio/rserver.conf /etc/rstudio/rserver.conf
-COPY rstudio/pam-rstudio /etc/pam.d/rstudio
-COPY rstudio/pam-rstudio-session /etc/pam.d/rstudio-session
+COPY pam /etc/pam.d/rstudio
+COPY pam-session /etc/pam.d/rstudio-session
 
 RUN chmod -R 644 /etc/krb* && \
 	mkdir -p /etc/krb5.conf.d
