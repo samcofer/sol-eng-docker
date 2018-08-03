@@ -22,4 +22,7 @@ Listen = :3939
 
 [Authentication]
 ; Specifies the type of user authentication.
-Provider = password
+Provider = proxy
+
+[ProxyAuth]
+UsernameHeader = X-Forwarded-User
