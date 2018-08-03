@@ -43,9 +43,9 @@ RUN awk ' { system("useradd -m -s /bin/bash -p tmp "$1) } ' /tmp/users && \
 	awk ' { system("usermod -aG rstudio-connect "$1) } ' /tmp/users && \
         rm /tmp/users
 
-COPY ./oauth-connect/rstudio-connect.gcfg /etc/rstudio-connect/rstudio-connect.gcfg
+COPY ./oauth2-connect/rstudio-connect.gcfg /etc/rstudio-connect/rstudio-connect.gcfg
 
 # setup init
-COPY ./oauth-connect/start-licensed.sh /start-licensed.sh
+COPY ./oauth2-connect/start-licensed.sh /start-licensed.sh
 RUN chmod +x /start-licensed.sh
 CMD dumb-init /start-licensed.sh /opt/rstudio-connect/bin/connect --config /etc/rstudio-connect/rstudio-connect.gcfg
