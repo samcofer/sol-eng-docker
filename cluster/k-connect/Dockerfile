@@ -58,8 +58,7 @@ COPY pam /etc/pam.d/rstudio-connect
 COPY pam-session /etc/pam.d/rstudio-connect-session
 
 RUN chmod -R 644 /etc/krb* && \
-	mkdir -p /etc/krb5.conf.d && \
-	mkdir -p /var/log/supervisord
+	mkdir -p /etc/krb5.conf.d
 
 
 # setup init
