@@ -21,7 +21,7 @@ services:
     command: 
       - --provider=github
       - --http-address=http://0.0.0.0:80
-      - --upstream=http://oauth2-connect:3939/
+      - --upstream=http://oauth2-debug:8080/
       - --redirect-url=http://${OAUTH2_HOST}/oauth2/callback
       - --email-domain=*
       - --cookie-secure=false
@@ -40,7 +40,7 @@ services:
     links:
       - oauth2-proxy
 
-#  oauth2-debug:
-#    hostname: oauth2-debug
-#    image: brndnmtthws/nginx-echo-headers
+  oauth2-debug:
+    hostname: oauth2-debug
+    image: brndnmtthws/nginx-echo-headers
     
