@@ -25,4 +25,4 @@ Listen = :3939
 Provider = proxy
 
 [ProxyAuth]
-UsernameHeader = X-Forwarded-User
+UsernameHeader = X-Secret-User-Header
