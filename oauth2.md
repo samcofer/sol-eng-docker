@@ -4,6 +4,11 @@ There are a handful of examples that use the [oauth2_proxy](https://github.com/b
 
 In order to use these examples, you will first need to [register a Github oauth application](https://github.com/settings/developers).  This will provide the values that you need for `CLIENT_ID` and `CLIENT_SECRET`.  
 
+## Helpful Tips
+
+* Navigating to `/oauth2/sign_out` in the browser will log out of the oauth2_proxy. Note that this does not clear the GitHub memory, so signing back in is as easy as a click. Not sure how to completely clear the cache - there is probably some cookie that needs to be cleared.
+* If you enable Multi-Factor Authentication (MFA) on your GitHub account (which you should do), this proxy seamlessly adds MFA to your RStudio products!
+
 ## Environment Variables
 
 The OAUTH service is dependent on several environment variables.  To explore or use them yourself, it is best to copy the [example](./.env.example) to `.env` with something like:
