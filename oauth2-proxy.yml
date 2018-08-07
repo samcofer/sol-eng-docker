@@ -21,7 +21,7 @@ services:
     command: 
       - --provider=github
       - --http-address=http://0.0.0.0:80
-      - --upstream=http://oauth2-debug:8080/
+      - --upstream=http://oauth2-connect:3939/
       - --redirect-url=http://${OAUTH2_HOST}/oauth2/callback
       - --email-domain=*
       - --cookie-secure=false
