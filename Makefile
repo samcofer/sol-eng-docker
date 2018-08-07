@@ -82,6 +82,17 @@ proxy-apache-down:
         docker-compose -f proxy.yml -f make-network.yml down
 
 #---------------------------------------------
+# OAuth2 Proxy
+#---------------------------------------------
+proxy-oauth-up:
+	NETWORK=${NETWORK} \
+	docker-compose -f oauth2-proxy.yml -f make-network.yml up -d
+
+proxy-oauth-down:
+	NETWORK=${NETWORK} \
+	docker-compose -f oauth2-proxy.yml -f make-network.yml down
+
+#---------------------------------------------
 # Base RSP
 #---------------------------------------------
 rsp-up:
