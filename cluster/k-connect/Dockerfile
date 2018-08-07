@@ -48,7 +48,7 @@ RUN awk ' { system("useradd -m -s /bin/bash -p tmp "$1) } ' /tmp/users && \
         rm /tmp/users
 
 
-COPY ./connect/rstudio-connect.gcfg /etc/rstudio-connect/rstudio-connect.gcfg
+COPY ./k-connect/rstudio-connect.gcfg /etc/rstudio-connect/rstudio-connect.gcfg
 
 COPY krb5.conf /etc/krb5.conf
 
@@ -58,11 +58,10 @@ COPY pam /etc/pam.d/rstudio-connect
 COPY pam-session /etc/pam.d/rstudio-connect-session
 
 RUN chmod -R 644 /etc/krb* && \
-	mkdir -p /etc/krb5.conf.d && \
-	mkdir -p /var/log/supervisord
+	mkdir -p /etc/krb5.conf.d
 
 
 # setup init
-COPY ./connect/start-licensed.sh /start-licensed.sh
+COPY ./k-connect/start-licensed.sh /start-licensed.sh
 RUN chmod +x /start-licensed.sh
 CMD dumb-init /start-licensed.sh /opt/rstudio-connect/bin/connect --config /etc/rstudio-connect/rstudio-connect.gcfg
