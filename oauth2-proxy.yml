@@ -7,6 +7,7 @@ services:
       - ./cluster/oauth2-nginx/nginx.conf:/etc/nginx/nginx.conf:ro
     links: 
       - oauth2-proxy
+      - oauth2-connect
     ports:
       - "80:80"
 
@@ -26,6 +27,8 @@ services:
       - --email-domain=*
       - --cookie-secure=false
       - --set-xauthrequest
+    links:
+      - oauth2-connect
 
   oauth2-connect:
     hostname: oauth2-connect
@@ -37,10 +40,8 @@ services:
     privileged: true
     environment:
       - CONNECT_LICENSE
-    links:
-      - oauth2-proxy
 
-  oauth2-debug:
-    hostname: oauth2-debug
-    image: brndnmtthws/nginx-echo-headers
+  #oauth2-debug:
+  #  hostname: oauth2-debug
+  #  image: brndnmtthws/nginx-echo-headers
     
