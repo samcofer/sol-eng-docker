@@ -43,7 +43,7 @@ kerb-server-up:
 
 kerb-server-down:
 	NETWORK=${NETWORK} \
-        docker-compose -f kerberos-base.yml -f make-network.yml down
+        docker-compose -f kerberos-base.yml -f make-network.yml down k-server k-simple-client
 
 kerb-ssh-up:
 	NETWORK=${NETWORK} \
@@ -51,7 +51,7 @@ kerb-ssh-up:
 
 kerb-ssh-down:
 	NETWORK=${NETWORK} \
-        docker-compose -f kerberos-base.yml -f kerberos-ssh.yml -f make-network.yml down
+        docker-compose -f kerberos-base.yml -f kerberos-ssh.yml -f make-network.yml down k-ssh-server k-ssh-client
 
 kerb-rsp-up:
 	NETWORK=${NETWORK} \
@@ -59,16 +59,16 @@ kerb-rsp-up:
 
 kerb-rsp-down:
 	NETWORK=${NETWORK} \
-        docker-compose -f kerberos-base.yml -f kerberos-rstudio.yml -f make-network.yml down
+        docker-compose -f kerberos-base.yml -f kerberos-rstudio.yml -f make-network.yml down k-rstudio
 
 kerb-rsc-up:
 	NETWORK=${NETWORK} \
 	CONNECT_LICENSE=$(CONNECT_LICENSE) \
-	docker-compose -f kerberos-base.yml -f connect.yml -f make-network.yml up -d
+	docker-compose -f kerberos-base.yml -f kerberos-connect.yml -f make-network.yml up -d
 
 kerb-rsc-down:
 	NETWORK=${NETWORK} \
-	docker-compose -f kerberos-base.yml -f connect.yml -f make-network.yml down
+	docker-compose -f kerberos-base.yml -f kerberos-connect.yml -f make-network.yml down k-connect
 #---------------------------------------------
 # Proxy 
 #---------------------------------------------
@@ -80,6 +80,17 @@ proxy-apache-up:
 proxy-apache-down:
 	NETWORK=${NETWORK} \
         docker-compose -f proxy.yml -f make-network.yml down
+
+#---------------------------------------------
+# OAuth2 Proxy
+#---------------------------------------------
+proxy-oauth-up:
+	NETWORK=${NETWORK} \
+	docker-compose -f oauth2-proxy.yml -f make-network.yml up -d
+
+proxy-oauth-down:
+	NETWORK=${NETWORK} \
+	docker-compose -f oauth2-proxy.yml -f make-network.yml down
 
 #---------------------------------------------
 # Base RSP
