@@ -29,9 +29,11 @@ Then change the oauth2-related configuration variables accordingly.
     * If you are redirecting (with a 307) for authentication, then that service ought to send you back to / when completed, so the nginx proxy can bypass authentication and proxy_pass to the right resources
     * map statement is used to do if-like things... dynamic variable creation, etc.
     * The x-rsc-request header is important to Connect functioning properly! An example on nginx:
+
 ```
 proxy_set_header X-RSC-Request $scheme://$host:$server_port$request_uri;
 ```
+
     * the oauth2-debug service is a container that echoes the HTTP requests (and headers) that reach it.  This makes it invaluable for debugging a HTTP proxy like `nginx`
     * `proxy_pass` forwards traffic to an upstream service transparently
     * `proxy_redirect` rewrites responses from the upstream service to ensure they are treated accurately when they reach the client
