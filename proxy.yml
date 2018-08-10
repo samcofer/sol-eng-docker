@@ -13,11 +13,19 @@ services:
     links:
       - apache-proxy
 
+  shiny-proxy:
+    hostname: shiny-proxy
+    image: rocker/shiny
+    ports:
+      - 3839:3838
+    links: 
+      - apache-proxy
+
   apache-proxy:
     hostname: apache-proxy
     build:
       context: ./cluster
       dockerfile: proxy/Dockerfile
     ports:
-      - 81:80
+      - 80:80
 
