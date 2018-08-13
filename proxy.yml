@@ -13,24 +13,6 @@ services:
     links:
       - apache-proxy
 
-  shiny-proxy:
-    hostname: shiny-proxy
-    image: rocker/shiny
-    ports:
-      - 3839:3838
-    links: 
-      - apache-proxy
-
-  base-rsp:
-    hostname: base-rsp
-    build:
-      context: ./cluster
-      dockerfile: base-rsp/Dockerfile
-    environment:
-      - RSP_LICENSE
-    ports:
-      - 9889:8787
-
   apache-proxy:
     hostname: apache-proxy
     build:
