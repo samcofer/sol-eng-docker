@@ -5,7 +5,7 @@ services:
     hostname: apache-simple
     build:
       context: ./cluster
-      dockerfile: apache-proxy-simple/Dockerfile
+      dockerfile: apache-simple/Dockerfile
     ports:
       - 80:80
 
