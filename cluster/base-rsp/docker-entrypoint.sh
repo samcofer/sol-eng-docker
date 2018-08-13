@@ -28,4 +28,4 @@ activate
 trap deactivate EXIT 
 
 echo "Starting RStudio Server Pro"
-"$@"
+exec "$@"

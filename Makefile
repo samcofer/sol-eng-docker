@@ -10,9 +10,9 @@ test-env-up: network-up db-up
 test-env-down: network-down db-down
 
 
-kerb-up: kerb-server-up kerb-ssh-up kerb-rstudio-up
+kerb-up: network-up kerb-server-up kerb-ssh-up kerb-rsp-up kerb-rsc-up
 
-kerb-down: kerb-rstudio-down kerb-ssh-down kerb-server-down
+kerb-down: kerb-rsc-down kerb-rsp-down kerb-ssh-down kerb-server-down
 
 
 network-up:
@@ -72,14 +72,23 @@ kerb-rsc-down:
 #---------------------------------------------
 # Proxy 
 #---------------------------------------------
-proxy-apache-up:
+apache-auth-up:
 	NETWORK=${NETWORK} \
         RSP_LICENSE=$(RSP_LICENSE) \
-        docker-compose -f proxy.yml -f make-network.yml up -d
+        docker-compose -f apache-auth.yml -f make-network.yml up -d
 
-proxy-apache-down:
+apache-auth-down:
 	NETWORK=${NETWORK} \
-        docker-compose -f proxy.yml -f make-network.yml down
+        docker-compose -f apache-auth.yml -f make-network.yml down
+
+apache-simple-up:
+	NETWORK=${NETWORK} \
+        RSP_LICENSE=$(RSP_LICENSE) \
+        docker-compose -f apache-simple.yml -f base-rsp.yml -f base-ssp.yml -f make-network.yml up -d
+
+apache-simple-down:
+	NETWORK=${NETWORK} \
+        docker-compose -f apache-simple.yml -f base-rsp.yml -f base-ssp.yml -f make-network.yml down
 
 #---------------------------------------------
 # OAuth2 Proxy

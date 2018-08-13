@@ -1,0 +1,11 @@
+version: '2.3'
+services:
+
+  apache-simple:
+    hostname: apache-simple
+    build:
+      context: ./cluster
+      dockerfile: apache-simple/Dockerfile
+    ports:
+      - 80:80
+
