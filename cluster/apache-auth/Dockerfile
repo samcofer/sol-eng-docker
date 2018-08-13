@@ -14,4 +14,4 @@ COPY users /tmp/users
 RUN awk ' {system("if [ ! -f /usr/local/apache2/passwords ]; then htpasswd -b -c /usr/local/apache2/passwords "$1" "$2"; else htpasswd -b /usr/local/apache2/passwords "$1" "$2"; fi;") } ' /tmp/users && \
         rm /tmp/users
 
-COPY ./apache-proxy-auth.conf /usr/local/apache2/conf/httpd.conf
+COPY ./apache-auth.conf /usr/local/apache2/conf/httpd.conf
