@@ -17,7 +17,7 @@ services:
     hostname: apache-proxy
     build:
       context: ./cluster
-      dockerfile: proxy/Dockerfile
+      dockerfile: apache-proxy-auth/Dockerfile
     ports:
       - 80:80
 
