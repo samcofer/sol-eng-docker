@@ -11,13 +11,13 @@ services:
     ports:
       - 8788:8787
     links:
-      - apache-proxy
+      - apache-auth
 
-  apache-proxy:
-    hostname: apache-proxy
+  apache-auth:
+    hostname: apache-auth
     build:
       context: ./cluster
-      dockerfile: apache-proxy-auth/Dockerfile
+      dockerfile: apache-auth/Dockerfile
     ports:
       - 80:80
 
