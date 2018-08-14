@@ -19,6 +19,13 @@ cp .env.example .env
 
 Then change the oauth2-related configuration variables accordingly.
 
+## Getting Started
+
+Once you have set appropriate secrets, you should be able to get started with.  This will use the [oauth2-proxy.yml](./oauth2-proxy.yml) file with `docker-compose` to start the necessary containers using your provided variables.
+
+```
+make proxy-oauth-up
+```
 
 # Lessons Learned
 
