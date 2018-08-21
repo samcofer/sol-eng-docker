@@ -12,13 +12,18 @@ services:
       - "80:80"
 
   oauth2-proxy:
-    image: a5huynh/oauth2_proxy
+    #image: a5huynh/oauth2_proxy
+    hostname: oauth2-proxy
+    build:
+      context: ./cluster
+      dockerfile: oauth2-proxy/Dockerfile
     environment:
       # .env file with ENV_VAR_NAME=value, one per line.
       - OAUTH2_PROXY_CLIENT_ID=${OAUTH2_PROXY_CLIENT_ID}
       - OAUTH2_PROXY_CLIENT_SECRET=${OAUTH2_PROXY_CLIENT_SECRET}
       - OAUTH2_PROXY_COOKIE_SECRET=${OAUTH2_PROXY_COOKIE_SECRET}
       - OAUTH2_HOST=${OAUTH2_HOST}
+    #entrypoint: sh
     command: 
       - --provider=github
       - --http-address=http://0.0.0.0:80
@@ -27,7 +32,7 @@ services:
       - --email-domain=*
       - --cookie-secure=false
       - --set-xauthrequest
-      - --scope=(no scope)
+      - --scope=user:email
     links:
       - oauth2-connect
 
@@ -42,7 +47,7 @@ services:
     environment:
       - CONNECT_LICENSE
 
-  #oauth2-debug:
-  #  hostname: oauth2-debug
-  #  image: brndnmtthws/nginx-echo-headers
+  oauth2-debug:
+    hostname: oauth2-debug
+    image: brndnmtthws/nginx-echo-headers
     
