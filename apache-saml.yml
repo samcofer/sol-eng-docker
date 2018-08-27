@@ -1,0 +1,25 @@
+version: '2.3'
+services:
+  saml-idp:
+    hostname: saml-idp
+    image: kristophjunge/test-saml-idp
+    ports:
+      - 8080:8080
+      - 8443:8443
+    environment:
+      - SIMPLESAMLPHP_SP_ENTITY_ID=http://apache-saml
+      #- SIMPLESAMLPHP_SP_ASSERTION_CONSUMER_SERVICE=http://localhost/simplesaml/module.php/saml/sp/saml2-acs.php/test-sp
+      #- SIMPLESAMLPHP_SP_SINGLE_LOGOUT_SERVICE=http://localhost/simplesaml/module.php/saml/sp/saml2-logout.php/test-sp
+
+  apache-saml:
+    hostname: apache-saml
+    build:
+      context: ./cluster
+      dockerfile: apache-saml/Dockerfile
+    ports:
+      - 80:80
+
+
+  oauth2-debug:
+    hostname: oauth2-debug
+    image: brndnmtthws/nginx-echo-headers
