@@ -17,7 +17,7 @@ RUN apt-get update -y -qq && \
     wget
 
 # install R apt
-RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 0x51716619e084dab9
 RUN echo "deb https://cran.rstudio.com/~/ubuntu $(lsb_release -cs)/" >> /etc/apt/sources.list.d/cran-rstudio.list
 RUN apt-get install -y apt-transport-https \
 	r-base
