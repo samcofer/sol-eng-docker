@@ -1,5 +1,4 @@
 FROM httpd:2.4
-COPY ./apache-simple.conf /usr/local/apache2/conf/httpd.conf
 
 # install system deps
 RUN apt-get update && \
@@ -26,11 +25,11 @@ RUN cd /usr/src && \
 	make && \
 	make install
 
+COPY ./apache-saml/httpd.conf /usr/local/apache2/conf/httpd.conf
+COPY ./apache-saml/mellon.conf /usr/local/apache2/conf/mellon.conf
+COPY ./apache-saml/idp-metadata.xml /usr/local/apache2/conf/idp-metadata.xml
 
-	
-
-	
-
-
-
+COPY ./apache-saml/apache_saml.cert /usr/local/apache2/mellon/apache_saml.cert
+COPY ./apache-saml/apache_saml.key /usr/local/apache2/mellon/apache_saml.key
+COPY ./apache-saml/apache_saml.xml /usr/local/apache2/mellon/apache_saml.xml
 
