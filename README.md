@@ -23,6 +23,10 @@ Then look to specific sub-project pages (above) for detailed make commands to ge
 
 - docker cache outdated: let's say it has been a while and your docker cache needs `apt-get update` to be run in order to install things.  `docker-compose -f myfile.yml build --no-cache myservice` can get you unstuck! 
 
+## Apache
+
+- `ProxyPass` and `ProxyPassReverse` are not allowed within an `<If>` block... sad. Also, trying to use variables has also been painful
+
 ## Init Systems
 
 There are a slew of them... [S6](todo), [systemctl](todo), [runit](todo), systemd (avoid like the plague in Docker), and [dumb-init](todo), just to name a few.
