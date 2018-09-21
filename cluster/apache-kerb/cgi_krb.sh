@@ -10,10 +10,10 @@
 #
 ######################################################################
 
-#PATH=/usr/heimdal/bin:$PATH
-
 # Output HTML header
-echo Content-type: text/plain
+echo Content-type: text/html
+echo Status: 302
+echo Location: /
 echo
 
 # $REMOTE_USER should be set by httpd
@@ -30,7 +30,12 @@ if [ -z "$KRB5CCNAME" ]; then
 fi
 
 # Do Kerberos stuff
-klist
+klist >> /tmp/output.txt
+
+# another way to redirect
+# echo '<head><meta http-equiv="refresh" content="0; url=/"/></head>'
+
+# sleep to let us inspect the server if we want to
+sleep 30
 
 exit 0
-
