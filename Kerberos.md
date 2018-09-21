@@ -100,6 +100,15 @@ Long term: I like the idea of a lighter-weight image, but Ubuntu suffices for no
     - In Kerberos context, you have to be sure that authentication _is_ in fact required (otherwise no Kerberos magic can happen)
     - [Some example bash scripts](http://www.yolinux.com/TUTORIALS/BashShellCgi.html)... [and a kerberos specific one](http://modauthkerb.sourceforge.net/credential-cache-example.script)
     - [A general overview](https://www.techrepublic.com/blog/diy-it-guy/diy-enable-cgi-on-your-apache-server/)
+    - The weird thing here is that we either have to request the CGI script directly... or execute it every time..?
+        - Have to figure out how to take the temporary credential cache and get a new one!
+        - Maybe we can tell the browser to cache the request as long as the ticket is valid for? Or something?...
+        - We _do_ have a TGT, so that is good!
+        - [Some thoughts on this process](https://github.com/jcmturner/gokrb5/issues/7)
+        - Basically, this would be much more trivial if I was RStudio... it's hard b/c when the Apache process dies, the cache goes bye-bye
+        - Not to mention the fact that I am going to be on another host... so I may need to SSH onto the RStudio box and issue a ticket?
+        - Not to mention the fact that the ticket issued on RStudio will not be tied to any PAM session or anything, so it will just expire
+        - We are [getting to the heart](https://serverfault.com/questions/422778/how-to-automate-kinit-process-to-obtain-tgt-for-kerberos) of tickets, TGT, and keytabs here, people! 
 
 - TODO - a tinyproxy instance to make browsing easy without weird URL stuff...?
 - TODO - a way to enable `KRB5_TRACE` for apache child processess... need to set ENV vars for child processes
