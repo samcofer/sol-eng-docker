@@ -88,6 +88,9 @@ Long term: I like the idea of a lighter-weight image, but Ubuntu suffices for no
  > failed to verify krb5 credentials: Permission denied, yet the auth.log shows tickets were granted
 - Need to set default realm for services (i.e. `apache-kerb DOCKER-RSTUDIO.COM`) since we are not using FQDN
 - Need to understand keytabs a bit better...
+    - [generating a keytab](https://docs.tibco.com/pub/spotfire_server/7.6.1/doc/html/tsas_admin_help/GUID-27726F6E-569C-4704-8433-5CCC0232EC79.html)
+    - [helpful post on curl negotiate](https://stackoverflow.com/questions/38509837/when-using-negotiate-with-curl-is-a-keytab-file-required)
+    - [headless keytabs](https://community.hortonworks.com/questions/2435/why-is-kinit-with-a-headless-keytab-failing.html)
 - Your service name _matters a lot!!!_. `Wrong principal name` issues may be related to the service trying to guess what its own name is and that guess conflicting with the client... [Thank you, SO](https://stackoverflow.com/questions/14687245/apache-sends-wrong-server-principal-name-to-kerberos)
 - [Apache `mod_auth_kerb`](http://modauthkerb.sourceforge.net/configure.html) for the win
 - Maybe a way in [nginx](https://stackoverflow.com/questions/37795107/how-to-kerberos-authentication-with-nginx) as well?
