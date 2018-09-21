@@ -82,12 +82,15 @@ Long term: I like the idea of a lighter-weight image, but Ubuntu suffices for no
 - It was important that the keytab was readable by the postgres service (dunce me did not make sure that was possible)
 - Then the big trick is making sure that DNS lookup is happening properly, as well as realm lookup, and the auth user is matching in the database
 
-## SSO
+## Single-Sign-On (SSO)
 
 - Need to set permissions on the service keytab to be readable... [random help](https://users.ece.cmu.edu/~allbery/lambdabot/logs/kerberos/2008-02-17.txt) 
  > failed to verify krb5 credentials: Permission denied, yet the auth.log shows tickets were granted
 - Need to set default realm for services (i.e. `apache-kerb DOCKER-RSTUDIO.COM`) since we are not using FQDN
 - Need to understand keytabs a bit better...
+- Your service name _matters a lot!!!_. `Wrong principal name` issues may be related to the service trying to guess what its own name is and that guess conflicting with the client...
+- [Apache `mod_auth_kerb`](http://modauthkerb.sourceforge.net/configure.html) for the win
+- Maybe a way in [nginx](https://stackoverflow.com/questions/37795107/how-to-kerberos-authentication-with-nginx) as well?
 
 # Research & Links
 
