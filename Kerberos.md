@@ -109,7 +109,19 @@ Long term: I like the idea of a lighter-weight image, but Ubuntu suffices for no
         - Not to mention the fact that I am going to be on another host... so I may need to SSH onto the RStudio box and issue a ticket?
         - Not to mention the fact that the ticket issued on RStudio will not be tied to any PAM session or anything, so it will just expire
         - We are [getting to the heart](https://serverfault.com/questions/422778/how-to-automate-kinit-process-to-obtain-tgt-for-kerberos) of tickets, TGT, and keytabs here, people! 
+    - More on [constrained delegation](https://www.coresecurity.com/blog/kerberos-delegation-spns-and-more)
 
+### Useful `curl` commands
+
+```bash
+# simple kerberos authentication via the browser
+curl -v -i -u : --negotiate http://apache-kerb:80/ 
+
+# to allow delegation (kerberos usage on the server)
+curl --delegation always -v -i -u : --negotiate http://apache-kerb:80/cgi-bin/krb.sh
+```
+
+### TODO
 - TODO - a tinyproxy instance to make browsing easy without weird URL stuff...?
 - TODO - a way to enable `KRB5_TRACE` for apache child processess... need to set ENV vars for child processes
 
