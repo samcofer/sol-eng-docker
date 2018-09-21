@@ -15,4 +15,7 @@ kadmin -p ubuntu/admin -w ubuntu -q "ktadd -k /etc/krb5.keytab apache-kerb/apach
 kadmin -p ubuntu/admin -w ubuntu -q "addprinc -randkey HTTP/apache-kerb"
 kadmin -p ubuntu/admin -w ubuntu -q "ktadd -k /etc/krb5.keytab HTTP/apache-kerb"
 
+# fix permissions
+chmod +r /etc/krb5.keytab
+
 exec "$@"
