@@ -94,6 +94,12 @@ Long term: I like the idea of a lighter-weight image, but Ubuntu suffices for no
 - Your service name _matters a lot!!!_. `Wrong principal name` issues may be related to the service trying to guess what its own name is and that guess conflicting with the client... [Thank you, SO](https://stackoverflow.com/questions/14687245/apache-sends-wrong-server-principal-name-to-kerberos)
 - [Apache `mod_auth_kerb`](http://modauthkerb.sourceforge.net/configure.html) for the win
 - Maybe a way in [nginx](https://stackoverflow.com/questions/37795107/how-to-kerberos-authentication-with-nginx) as well?
+- Adding CGI scripts to apache is pretty cool
+    - Make sure the script itself is executable
+    - [Make sure `cgid_module` is enabled](http://httpd.apache.org/docs/current/howto/cgi.html)
+    - In Kerberos context, you have to be sure that authentication _is_ in fact required (otherwise no Kerberos magic can happen)
+    - [Some example bash scripts](http://www.yolinux.com/TUTORIALS/BashShellCgi.html)... [and a kerberos specific one](http://modauthkerb.sourceforge.net/credential-cache-example.script)
+    - [A general overview](https://www.techrepublic.com/blog/diy-it-guy/diy-enable-cgi-on-your-apache-server/)
 
 - TODO - a tinyproxy instance to make browsing easy without weird URL stuff...?
 - TODO - a way to enable `KRB5_TRACE` for apache child processess... need to set ENV vars for child processes
