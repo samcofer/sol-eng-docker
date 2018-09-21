@@ -9,5 +9,10 @@ sleep 10
 kadmin -p ubuntu/admin -w ubuntu -q "addprinc -randkey host/apache-kerb"
 kadmin -p ubuntu/admin -w ubuntu -q "ktadd -k /etc/krb5.keytab host/apache-kerb"
 
-exec "$@"
+kadmin -p ubuntu/admin -w ubuntu -q "addprinc -randkey apache-kerb/apache-kerb"
+kadmin -p ubuntu/admin -w ubuntu -q "ktadd -k /etc/krb5.keytab apache-kerb/apache-kerb"
 
+kadmin -p ubuntu/admin -w ubuntu -q "addprinc -randkey HTTP/apache-kerb"
+kadmin -p ubuntu/admin -w ubuntu -q "ktadd -k /etc/krb5.keytab HTTP/apache-kerb"
+
+exec "$@"
