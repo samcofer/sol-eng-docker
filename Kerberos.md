@@ -95,6 +95,9 @@ Long term: I like the idea of a lighter-weight image, but Ubuntu suffices for no
 - [Apache `mod_auth_kerb`](http://modauthkerb.sourceforge.net/configure.html) for the win
 - Maybe a way in [nginx](https://stackoverflow.com/questions/37795107/how-to-kerberos-authentication-with-nginx) as well?
 
+- TODO - a tinyproxy instance to make browsing easy without weird URL stuff...?
+- TODO - a way to enable `KRB5_TRACE` for apache child processess... need to set ENV vars for child processes
+
 # Research & Links
 
 ### PAM and Kerberos
