@@ -90,15 +90,14 @@ proxy-connect-down:
 	NETWORK=${NETWORK} \
 	docker-compose -f compose/proxy-connect.yml down
 
-#apache-simple-up:
-#	NETWORK=${NETWORK} \
-#        RSP_LICENSE=$(RSP_LICENSE) \
-#        docker-compose -f compose/apache-simple.yml -f compose/base-rsp.yml -f compose/base-ssp.yml -f compose/make-network.yml up -d
-#
-#apache-simple-down:
-#	NETWORK=${NETWORK} \
-#        docker-compose -f compose/apache-simple.yml -f compose/base-rsp.yml -f compose/base-ssp.yml -f compose/make-network.yml down
-#
+apache-simple-up:
+	NETWORK=${NETWORK} \
+        docker-compose -f compose/proxy-basic.yml -f compose/make-network.yml up -d apache-simple
+
+apache-simple-down:
+	NETWORK=${NETWORK} \
+        docker-compose -f compose/proxy-basic.yml -f compose/make-network.yml stop apache-simple
+
 #---------------------------------------------
 # OAuth2 Proxy
 #---------------------------------------------
