@@ -5,7 +5,7 @@ services:
     container_name: k-postgres
     hostname: k-postgres
     build:
-      context: ./cluster
+      context: ../cluster
       dockerfile: postgres/Dockerfile
     links:
       - k-server

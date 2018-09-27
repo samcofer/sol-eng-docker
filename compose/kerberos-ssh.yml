@@ -4,7 +4,7 @@ services:
   k-ssh-client:
     hostname: k-ssh-client
     build:
-      context: ./cluster
+      context: ../cluster
       dockerfile: ssh-client/Dockerfile
     links:
       - k-server
@@ -12,7 +12,7 @@ services:
   k-ssh-server:
     hostname: k-ssh-server
     build:
-      context: ./cluster
+      context: ../cluster
       dockerfile: ssh-server/Dockerfile
     links:
       - k-server
