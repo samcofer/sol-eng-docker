@@ -1,0 +1,15 @@
+version: "2.3"
+services:
+
+  oauth2-connect:
+    hostname: oauth2-connect
+    build:
+      context: ../cluster
+      dockerfile: oauth2-connect/Dockerfile
+      args:
+        - CONNECT_BINARY_URL=rstudio-connect_1.6.6.1-4_amd64.deb
+    privileged: true
+    environment:
+      - CONNECT_LICENSE
+
+    
