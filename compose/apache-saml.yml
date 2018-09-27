@@ -11,12 +11,12 @@ services:
       - SIMPLESAMLPHP_SP_ASSERTION_CONSUMER_SERVICE=http://localhost/secret/postResponse
       - SIMPLESAMLPHP_SP_SINGLE_LOGOUT_SERVICE=http://localhost/secret/logout
     volumes:
-      - ./cluster/users.php:/var/www/simplesamlphp/config/authsources.php
+      - ../cluster/users.php:/var/www/simplesamlphp/config/authsources.php
 
   apache-saml:
     hostname: apache-saml
     build:
-      context: ./cluster
+      context: ../cluster
       dockerfile: apache-saml/Dockerfile
     ports:
       - 80:80
@@ -29,7 +29,7 @@ services:
   oauth2-connect:
     hostname: oauth2-connect
     build:
-      context: ./cluster
+      context: ../cluster
       dockerfile: oauth2-connect/Dockerfile
       args:
         - CONNECT_BINARY_URL=rstudio-connect_1.6.6.1-4_amd64.deb
