@@ -39,78 +39,78 @@ network-down:
 #---------------------------------------------
 kerb-server-up:
 	NETWORK=${NETWORK} \
-        docker-compose -f compose/kerberos-base.yml -f make-network.yml up -d
+        docker-compose -f compose/kerberos-base.yml -f compose/make-network.yml up -d
 
 kerb-server-down:
 	NETWORK=${NETWORK} \
-        docker-compose -f compose/kerberos-base.yml -f make-network.yml down k-server k-simple-client
+        docker-compose -f compose/kerberos-base.yml -f compose/make-network.yml down k-server k-simple-client
 
 kerb-ssh-up:
 	NETWORK=${NETWORK} \
-        docker-compose -f compose/kerberos-base.yml -f compose/kerberos-ssh.yml -f make-network.yml up -d
+        docker-compose -f compose/kerberos-base.yml -f compose/kerberos-ssh.yml -f compose/make-network.yml up -d
 
 kerb-ssh-down:
 	NETWORK=${NETWORK} \
-        docker-compose -f compose/kerberos-base.yml -f compose/kerberos-ssh.yml -f make-network.yml down k-ssh-server k-ssh-client
+        docker-compose -f compose/kerberos-base.yml -f compose/kerberos-ssh.yml -f compose/make-network.yml down k-ssh-server k-ssh-client
 
 kerb-rsp-up:
 	NETWORK=${NETWORK} \
-        docker-compose -f compose/kerberos-base.yml -f compose/kerberos-rstudio.yml -f make-network.yml up -d
+        docker-compose -f compose/kerberos-base.yml -f compose/kerberos-rstudio.yml -f compose/make-network.yml up -d
 
 kerb-rsp-down:
 	NETWORK=${NETWORK} \
-        docker-compose -f compose/kerberos-base.yml -f compose/kerberos-rstudio.yml -f make-network.yml down k-rstudio
+        docker-compose -f compose/kerberos-base.yml -f compose/kerberos-rstudio.yml -f compose/make-network.yml down k-rstudio
 
 kerb-rsc-up:
 	NETWORK=${NETWORK} \
 	CONNECT_LICENSE=$(CONNECT_LICENSE) \
-	docker-compose -f compose/kerberos-base.yml -f compose/kerberos-connect.yml -f make-network.yml up -d
+	docker-compose -f compose/kerberos-base.yml -f compose/kerberos-connect.yml -f compose/make-network.yml up -d
 
 kerb-rsc-down:
 	NETWORK=${NETWORK} \
-	docker-compose -f compose/kerberos-base.yml -f compose/kerberos-connect.yml -f make-network.yml down k-connect
+	docker-compose -f compose/kerberos-base.yml -f compose/kerberos-connect.yml -f compose/make-network.yml down k-connect
 #---------------------------------------------
 # Proxy 
 #---------------------------------------------
 apache-auth-up:
 	NETWORK=${NETWORK} \
         RSP_LICENSE=$(RSP_LICENSE) \
-        docker-compose -f apache-auth.yml -f make-network.yml up -d
+        docker-compose -f apache-auth.yml -f compose/make-network.yml up -d
 
 apache-auth-down:
 	NETWORK=${NETWORK} \
-        docker-compose -f apache-auth.yml -f make-network.yml down
+        docker-compose -f apache-auth.yml -f compose/make-network.yml down
 
 #apache-simple-up:
 #	NETWORK=${NETWORK} \
 #        RSP_LICENSE=$(RSP_LICENSE) \
-#        docker-compose -f apache-simple.yml -f base-rsp.yml -f base-ssp.yml -f make-network.yml up -d
+#        docker-compose -f apache-simple.yml -f compose/base-rsp.yml -f compose/base-ssp.yml -f compose/make-network.yml up -d
 #
 #apache-simple-down:
 #	NETWORK=${NETWORK} \
-#        docker-compose -f apache-simple.yml -f base-rsp.yml -f base-ssp.yml -f make-network.yml down
+#        docker-compose -f apache-simple.yml -f compose/base-rsp.yml -f compose/base-ssp.yml -f compose/make-network.yml down
 #
 #---------------------------------------------
 # OAuth2 Proxy
 #---------------------------------------------
 proxy-oauth-up:
 	NETWORK=${NETWORK} \
-	docker-compose -f oauth2-proxy.yml -f make-network.yml up -d
+	docker-compose -f oauth2-proxy.yml -f compose/make-network.yml up -d
 
 proxy-oauth-down:
 	NETWORK=${NETWORK} \
-	docker-compose -f oauth2-proxy.yml -f make-network.yml down
+	docker-compose -f oauth2-proxy.yml -f compose/make-network.yml down
 
 #---------------------------------------------
 # Base RSP
 #---------------------------------------------
 rsp-up:
 	NETWORK=${NETWORK} \
-	docker-compose -f base-rsp.yml -f make-network.yml up -d
+	docker-compose -f compose/base-rsp.yml -f compose/make-network.yml up -d
 
 rsp-down:
 	NETWORK=${NETWORK} \
-	docker-compose -f base-rsp.yml -f make-network.yml down
+	docker-compose -f compose/base-rsp.yml -f compose/make-network.yml down
 
 #---------------------------------------------
 # Other 
