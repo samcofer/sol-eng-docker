@@ -43,7 +43,7 @@ kerb-server-up:
 
 kerb-server-down:
 	NETWORK=${NETWORK} \
-        docker-compose -f compose/kerberos-base.yml -f compose/make-network.yml down k-server k-simple-client
+        docker-compose -f compose/kerberos-base.yml -f compose/make-network.yml stop k-server k-simple-client
 
 kerb-ssh-up:
 	NETWORK=${NETWORK} \
@@ -51,7 +51,7 @@ kerb-ssh-up:
 
 kerb-ssh-down:
 	NETWORK=${NETWORK} \
-        docker-compose -f compose/kerberos-base.yml -f compose/kerberos-ssh.yml -f compose/make-network.yml down k-ssh-server k-ssh-client
+        docker-compose -f compose/kerberos-base.yml -f compose/kerberos-ssh.yml -f compose/make-network.yml stop k-ssh-server k-ssh-client
 
 kerb-rsp-up:
 	NETWORK=${NETWORK} \
@@ -59,7 +59,7 @@ kerb-rsp-up:
 
 kerb-rsp-down:
 	NETWORK=${NETWORK} \
-        docker-compose -f compose/kerberos-base.yml -f compose/kerberos-rstudio.yml -f compose/make-network.yml down k-rstudio
+        docker-compose -f compose/kerberos-base.yml -f compose/kerberos-rstudio.yml -f compose/make-network.yml stop k-rstudio
 
 kerb-rsc-up:
 	NETWORK=${NETWORK} \
@@ -68,7 +68,7 @@ kerb-rsc-up:
 
 kerb-rsc-down:
 	NETWORK=${NETWORK} \
-	docker-compose -f compose/kerberos-base.yml -f compose/kerberos-connect.yml -f compose/make-network.yml down k-connect
+	docker-compose -f compose/kerberos-base.yml -f compose/kerberos-connect.yml -f compose/make-network.yml stop k-connect
 #---------------------------------------------
 # Proxy 
 #---------------------------------------------
