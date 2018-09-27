@@ -39,36 +39,36 @@ network-down:
 #---------------------------------------------
 kerb-server-up:
 	NETWORK=${NETWORK} \
-        docker-compose -f kerberos-base.yml -f make-network.yml up -d
+        docker-compose -f compose/kerberos-base.yml -f make-network.yml up -d
 
 kerb-server-down:
 	NETWORK=${NETWORK} \
-        docker-compose -f kerberos-base.yml -f make-network.yml down k-server k-simple-client
+        docker-compose -f compose/kerberos-base.yml -f make-network.yml down k-server k-simple-client
 
 kerb-ssh-up:
 	NETWORK=${NETWORK} \
-        docker-compose -f kerberos-base.yml -f kerberos-ssh.yml -f make-network.yml up -d
+        docker-compose -f compose/kerberos-base.yml -f compose/kerberos-ssh.yml -f make-network.yml up -d
 
 kerb-ssh-down:
 	NETWORK=${NETWORK} \
-        docker-compose -f kerberos-base.yml -f kerberos-ssh.yml -f make-network.yml down k-ssh-server k-ssh-client
+        docker-compose -f compose/kerberos-base.yml -f compose/kerberos-ssh.yml -f make-network.yml down k-ssh-server k-ssh-client
 
 kerb-rsp-up:
 	NETWORK=${NETWORK} \
-        docker-compose -f kerberos-base.yml -f kerberos-rstudio.yml -f make-network.yml up -d
+        docker-compose -f compose/kerberos-base.yml -f compose/kerberos-rstudio.yml -f make-network.yml up -d
 
 kerb-rsp-down:
 	NETWORK=${NETWORK} \
-        docker-compose -f kerberos-base.yml -f kerberos-rstudio.yml -f make-network.yml down k-rstudio
+        docker-compose -f compose/kerberos-base.yml -f compose/kerberos-rstudio.yml -f make-network.yml down k-rstudio
 
 kerb-rsc-up:
 	NETWORK=${NETWORK} \
 	CONNECT_LICENSE=$(CONNECT_LICENSE) \
-	docker-compose -f kerberos-base.yml -f kerberos-connect.yml -f make-network.yml up -d
+	docker-compose -f compose/kerberos-base.yml -f compose/kerberos-connect.yml -f make-network.yml up -d
 
 kerb-rsc-down:
 	NETWORK=${NETWORK} \
-	docker-compose -f kerberos-base.yml -f kerberos-connect.yml -f make-network.yml down k-connect
+	docker-compose -f compose/kerberos-base.yml -f compose/kerberos-connect.yml -f make-network.yml down k-connect
 #---------------------------------------------
 # Proxy 
 #---------------------------------------------
