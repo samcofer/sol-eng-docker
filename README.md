@@ -20,6 +20,16 @@ To get started, you will need to install:
 
 Then look to specific sub-project pages (above) for detailed make commands to get things built and started.
 
+# Organization
+
+## [Docker Compose](./compose)
+
+The [`./compose`](./compose) directory houses `docker-compose` `YAML` configuration files. Feel free to use them directly or see how they are used in the `Makefile`
+
+## [Cluster](./cluster)
+
+The [`./cluster`](./cluster) directory is where individual nodes, configuration files, Dockerfiles and other useful tidbits are stored.
+
 # Common Problems
 
 - docker cache outdated: let's say it has been a while and your docker cache needs `apt-get update` to be run in order to install things.  `docker-compose -f myfile.yml build --no-cache myservice` can get you unstuck! 
