@@ -4,7 +4,7 @@ services:
   rstudio-proxy:
     hostname: rstudio-proxy
     build:
-      context: ./cluster
+      context: ../cluster
       dockerfile: rstudio-proxy/Dockerfile
     environment:
       - RSP_LICENSE
@@ -16,7 +16,7 @@ services:
   apache-auth:
     hostname: apache-auth
     build:
-      context: ./cluster
+      context: ../cluster
       dockerfile: apache-auth/Dockerfile
     ports:
       - 80:80
