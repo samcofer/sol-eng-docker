@@ -5,7 +5,7 @@ services:
     hostname: apache-simple
     image: httpd:2.4
     volumes:
-      - ./cluster/apache-simple.conf:/usr/local/apache2/conf/httpd.conf
+      - ../cluster/apache-simple.conf:/usr/local/apache2/conf/httpd.conf
     ports:
       - "80"
 
@@ -15,7 +15,7 @@ services:
     hostname: apache-support-ssp
     image: httpd:2.4
     volumes: 
-      - ./cluster/apache-support-ssp.conf:/usr/local/apache2/conf/httpd.conf
+      - ../cluster/apache-support-ssp.conf:/usr/local/apache2/conf/httpd.conf
     ports:
       - "80"
 
@@ -23,7 +23,7 @@ services:
     hostname: nginx-support-ssp
     image: nginx
     volumes:
-      - ./cluster/nginx-support-ssp.conf:/etc/nginx/nginx.conf:ro
+      - ../cluster/nginx-support-ssp.conf:/etc/nginx/nginx.conf:ro
     ports:
       - "80"
 
@@ -33,7 +33,7 @@ services:
     hostname: apache-support-rsp
     image: httpd:2.4
     volumes: 
-      - ./cluster/apache-support-rsp.conf:/usr/local/apache2/conf/httpd.conf
+      - ../cluster/apache-support-rsp.conf:/usr/local/apache2/conf/httpd.conf
     ports:
       - "80"
 
@@ -41,6 +41,6 @@ services:
     hostname: nginx-support-rsp
     image: nginx
     volumes:
-      - ./cluster/nginx-support-rsp.conf:/etc/nginx/nginx.conf:ro
+      - ../cluster/nginx-support-rsp.conf:/etc/nginx/nginx.conf:ro
     ports:
       - "80"
