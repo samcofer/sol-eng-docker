@@ -116,28 +116,28 @@ rsp-down:
 # Other 
 #---------------------------------------------
 
-
-test-build: 
-	if [ ! -e "${DB2_TARGZ}" ]; then \
-		aws s3 cp s3://${S3_BUCKET}/${DB2_TARGZ} ./${DB2_TARGZ}; \
-	else \
-		echo "DB2 ODBC tar.gz already exists.  Not pulling"; \
-	fi; \
-	if [ ! -e "${ORACLE_RPM}" ]; then \
-		aws s3 cp s3://${S3_BUCKET}/${ORACLE_RPM} ./${ORACLE_RPM}; \
-	else \
-		echo "Oracle Instant Client RPM already exists.  Not pulling"; \
-	fi; \
-	DB2_TARGZ=${DB2_TARGZ} \
-	ORACLE_RPM=${ORACLE_RPM} \
-	docker-compose -f test-container.yml -p ${PROJECT} build
-
-test-up: 
-	NETWORK=${NETWORK} \
-	docker-compose -f test-container.yml -p ${PROJECT} up -d
-
-test-down:
-	NETWORK=${NETWORK} \
-	docker-compose -f test-container.yml -p ${PROJECT} stop test-process
-
+#
+#test-build: 
+#	if [ ! -e "${DB2_TARGZ}" ]; then \
+#		aws s3 cp s3://${S3_BUCKET}/${DB2_TARGZ} ./${DB2_TARGZ}; \
+#	else \
+#		echo "DB2 ODBC tar.gz already exists.  Not pulling"; \
+#	fi; \
+#	if [ ! -e "${ORACLE_RPM}" ]; then \
+#		aws s3 cp s3://${S3_BUCKET}/${ORACLE_RPM} ./${ORACLE_RPM}; \
+#	else \
+#		echo "Oracle Instant Client RPM already exists.  Not pulling"; \
+#	fi; \
+#	DB2_TARGZ=${DB2_TARGZ} \
+#	ORACLE_RPM=${ORACLE_RPM} \
+#	docker-compose -f test-container.yml -p ${PROJECT} build
+#
+#test-up: 
+#	NETWORK=${NETWORK} \
+#	docker-compose -f test-container.yml -p ${PROJECT} up -d
+#
+#test-down:
+#	NETWORK=${NETWORK} \
+#	docker-compose -f test-container.yml -p ${PROJECT} stop test-process
+#
 #.PHONY: db-up-redshift db-down-redshift db-up-db2 db-down-db2
