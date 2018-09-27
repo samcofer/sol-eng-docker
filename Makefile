@@ -81,15 +81,15 @@ apache-auth-down:
 	NETWORK=${NETWORK} \
         docker-compose -f apache-auth.yml -f make-network.yml down
 
-apache-simple-up:
-	NETWORK=${NETWORK} \
-        RSP_LICENSE=$(RSP_LICENSE) \
-        docker-compose -f apache-simple.yml -f base-rsp.yml -f base-ssp.yml -f make-network.yml up -d
-
-apache-simple-down:
-	NETWORK=${NETWORK} \
-        docker-compose -f apache-simple.yml -f base-rsp.yml -f base-ssp.yml -f make-network.yml down
-
+#apache-simple-up:
+#	NETWORK=${NETWORK} \
+#        RSP_LICENSE=$(RSP_LICENSE) \
+#        docker-compose -f apache-simple.yml -f base-rsp.yml -f base-ssp.yml -f make-network.yml up -d
+#
+#apache-simple-down:
+#	NETWORK=${NETWORK} \
+#        docker-compose -f apache-simple.yml -f base-rsp.yml -f base-ssp.yml -f make-network.yml down
+#
 #---------------------------------------------
 # OAuth2 Proxy
 #---------------------------------------------
