@@ -4,7 +4,7 @@ services:
   k-connect:
     hostname: k-connect
     build:
-      context: ./cluster
+      context: ../cluster
       dockerfile: k-connect/Dockerfile
       args:
         - CONNECT_BINARY_URL=rstudio-connect_1.6.6.1-4_amd64.deb
