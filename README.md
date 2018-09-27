@@ -4,8 +4,9 @@ This project houses docker infrastructure for quickly setting up, configuring, a
 
 ## Sub-Projects
 
-- [Kerberos](./Kerberos.md)
+- [Kerberos](./kerberos.md)
 - [Oauth2 Proxy](./oauth2.md)
+- [General Proxy](./proxy.md)
 
 
 # Getting Started
