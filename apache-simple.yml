@@ -19,6 +19,14 @@ services:
     ports:
       - "80"
 
+  nginx-support-ssp:
+    hostname: nginx-support-ssp
+    image: nginx
+    volumes:
+      - ./cluster/nginx-support-ssp.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - "80"
+
 # from support article
 # https://support.rstudio.com/hc/en-us/articles/200552326-Running-RStudio-Server-with-a-Proxy
   apache-support-rsp:
@@ -29,3 +37,10 @@ services:
     ports:
       - "80"
 
+  nginx-support-rsp:
+    hostname: nginx-support-rsp
+    image: nginx
+    volumes:
+      - ./cluster/nginx-support-rsp.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - "80"
