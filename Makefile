@@ -81,6 +81,15 @@ apache-auth-down:
 	NETWORK=${NETWORK} \
         docker-compose -f compose/apache-auth.yml -f compose/make-network.yml down
 
+proxy-connect-up:
+	NETWORK=${NETWORK} \
+	CONNECT_LICENSE=${CONNECT_LICENSE} \
+	docker-compose -f compose/proxy-connect.yml -f compose/make-network.yml up -d
+
+proxy-connect-down:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/proxy-connect.yml down
+
 #apache-simple-up:
 #	NETWORK=${NETWORK} \
 #        RSP_LICENSE=$(RSP_LICENSE) \
@@ -100,6 +109,18 @@ proxy-oauth-up:
 proxy-oauth-down:
 	NETWORK=${NETWORK} \
 	docker-compose -f compose/oauth2-proxy.yml -f compose/make-network.yml down
+
+#---------------------------------------------
+# SAML Proxy
+#---------------------------------------------
+
+proxy-saml-up:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/apache-saml.yml -f compose/make-network.yml up -d
+
+proxy-saml-down:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/apache-saml.yml -f compose/make-network.yml down
 
 #---------------------------------------------
 # Base RSP
