@@ -39,105 +39,105 @@ network-down:
 #---------------------------------------------
 kerb-server-up:
 	NETWORK=${NETWORK} \
-        docker-compose -f kerberos-base.yml -f make-network.yml up -d
+        docker-compose -f compose/kerberos-base.yml -f compose/make-network.yml up -d
 
 kerb-server-down:
 	NETWORK=${NETWORK} \
-        docker-compose -f kerberos-base.yml -f make-network.yml down k-server k-simple-client
+        docker-compose -f compose/kerberos-base.yml -f compose/make-network.yml stop k-server k-simple-client
 
 kerb-ssh-up:
 	NETWORK=${NETWORK} \
-        docker-compose -f kerberos-base.yml -f kerberos-ssh.yml -f make-network.yml up -d
+        docker-compose -f compose/kerberos-base.yml -f compose/kerberos-ssh.yml -f compose/make-network.yml up -d
 
 kerb-ssh-down:
 	NETWORK=${NETWORK} \
-        docker-compose -f kerberos-base.yml -f kerberos-ssh.yml -f make-network.yml down k-ssh-server k-ssh-client
+        docker-compose -f compose/kerberos-base.yml -f compose/kerberos-ssh.yml -f compose/make-network.yml stop k-ssh-server k-ssh-client
 
 kerb-rsp-up:
 	NETWORK=${NETWORK} \
-        docker-compose -f kerberos-base.yml -f kerberos-rstudio.yml -f make-network.yml up -d
+        docker-compose -f compose/kerberos-base.yml -f compose/kerberos-rstudio.yml -f compose/make-network.yml up -d
 
 kerb-rsp-down:
 	NETWORK=${NETWORK} \
-        docker-compose -f kerberos-base.yml -f kerberos-rstudio.yml -f make-network.yml down k-rstudio
+        docker-compose -f compose/kerberos-base.yml -f compose/kerberos-rstudio.yml -f compose/make-network.yml stop k-rstudio
 
 kerb-rsc-up:
 	NETWORK=${NETWORK} \
 	CONNECT_LICENSE=$(CONNECT_LICENSE) \
-	docker-compose -f kerberos-base.yml -f kerberos-connect.yml -f make-network.yml up -d
+	docker-compose -f compose/kerberos-base.yml -f compose/kerberos-connect.yml -f compose/make-network.yml up -d
 
 kerb-rsc-down:
 	NETWORK=${NETWORK} \
-	docker-compose -f kerberos-base.yml -f kerberos-connect.yml -f make-network.yml down k-connect
+	docker-compose -f compose/kerberos-base.yml -f compose/kerberos-connect.yml -f compose/make-network.yml stop k-connect
 #---------------------------------------------
 # Proxy 
 #---------------------------------------------
 apache-auth-up:
 	NETWORK=${NETWORK} \
         RSP_LICENSE=$(RSP_LICENSE) \
-        docker-compose -f apache-auth.yml -f make-network.yml up -d
+        docker-compose -f compose/apache-auth.yml -f compose/make-network.yml up -d
 
 apache-auth-down:
 	NETWORK=${NETWORK} \
-        docker-compose -f apache-auth.yml -f make-network.yml down
+        docker-compose -f compose/apache-auth.yml -f compose/make-network.yml down
 
-apache-simple-up:
-	NETWORK=${NETWORK} \
-        RSP_LICENSE=$(RSP_LICENSE) \
-        docker-compose -f apache-simple.yml -f base-rsp.yml -f base-ssp.yml -f make-network.yml up -d
-
-apache-simple-down:
-	NETWORK=${NETWORK} \
-        docker-compose -f apache-simple.yml -f base-rsp.yml -f base-ssp.yml -f make-network.yml down
-
+#apache-simple-up:
+#	NETWORK=${NETWORK} \
+#        RSP_LICENSE=$(RSP_LICENSE) \
+#        docker-compose -f compose/apache-simple.yml -f compose/base-rsp.yml -f compose/base-ssp.yml -f compose/make-network.yml up -d
+#
+#apache-simple-down:
+#	NETWORK=${NETWORK} \
+#        docker-compose -f compose/apache-simple.yml -f compose/base-rsp.yml -f compose/base-ssp.yml -f compose/make-network.yml down
+#
 #---------------------------------------------
 # OAuth2 Proxy
 #---------------------------------------------
 proxy-oauth-up:
 	NETWORK=${NETWORK} \
-	docker-compose -f oauth2-proxy.yml -f make-network.yml up -d
+	docker-compose -f compose/oauth2-proxy.yml -f compose/make-network.yml up -d
 
 proxy-oauth-down:
 	NETWORK=${NETWORK} \
-	docker-compose -f oauth2-proxy.yml -f make-network.yml down
+	docker-compose -f compose/oauth2-proxy.yml -f compose/make-network.yml down
 
 #---------------------------------------------
 # Base RSP
 #---------------------------------------------
 rsp-up:
 	NETWORK=${NETWORK} \
-	docker-compose -f base-rsp.yml -f make-network.yml up -d
+	docker-compose -f compose/base-rsp.yml -f compose/make-network.yml up -d
 
 rsp-down:
 	NETWORK=${NETWORK} \
-	docker-compose -f base-rsp.yml -f make-network.yml down
+	docker-compose -f compose/base-rsp.yml -f compose/make-network.yml down
 
 #---------------------------------------------
 # Other 
 #---------------------------------------------
 
-
-test-build: 
-	if [ ! -e "${DB2_TARGZ}" ]; then \
-		aws s3 cp s3://${S3_BUCKET}/${DB2_TARGZ} ./${DB2_TARGZ}; \
-	else \
-		echo "DB2 ODBC tar.gz already exists.  Not pulling"; \
-	fi; \
-	if [ ! -e "${ORACLE_RPM}" ]; then \
-		aws s3 cp s3://${S3_BUCKET}/${ORACLE_RPM} ./${ORACLE_RPM}; \
-	else \
-		echo "Oracle Instant Client RPM already exists.  Not pulling"; \
-	fi; \
-	DB2_TARGZ=${DB2_TARGZ} \
-	ORACLE_RPM=${ORACLE_RPM} \
-	docker-compose -f test-container.yml -p ${PROJECT} build
-
-test-up: 
-	NETWORK=${NETWORK} \
-	docker-compose -f test-container.yml -p ${PROJECT} up -d
-
-test-down:
-	NETWORK=${NETWORK} \
-	docker-compose -f test-container.yml -p ${PROJECT} stop test-process
-
+#
+#test-build: 
+#	if [ ! -e "${DB2_TARGZ}" ]; then \
+#		aws s3 cp s3://${S3_BUCKET}/${DB2_TARGZ} ./${DB2_TARGZ}; \
+#	else \
+#		echo "DB2 ODBC tar.gz already exists.  Not pulling"; \
+#	fi; \
+#	if [ ! -e "${ORACLE_RPM}" ]; then \
+#		aws s3 cp s3://${S3_BUCKET}/${ORACLE_RPM} ./${ORACLE_RPM}; \
+#	else \
+#		echo "Oracle Instant Client RPM already exists.  Not pulling"; \
+#	fi; \
+#	DB2_TARGZ=${DB2_TARGZ} \
+#	ORACLE_RPM=${ORACLE_RPM} \
+#	docker-compose -f test-container.yml -p ${PROJECT} build
+#
+#test-up: 
+#	NETWORK=${NETWORK} \
+#	docker-compose -f test-container.yml -p ${PROJECT} up -d
+#
+#test-down:
+#	NETWORK=${NETWORK} \
+#	docker-compose -f test-container.yml -p ${PROJECT} stop test-process
+#
 #.PHONY: db-up-redshift db-down-redshift db-up-db2 db-down-db2
