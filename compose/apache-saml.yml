@@ -21,8 +21,3 @@ services:
     ports:
       - 80:80
 
-
-#  oauth2-debug:
-#    hostname: oauth2-debug
-#    image: brndnmtthws/nginx-echo-headers
-
