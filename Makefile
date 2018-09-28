@@ -90,6 +90,14 @@ proxy-connect-down:
 	NETWORK=${NETWORK} \
 	docker-compose -f compose/proxy-connect.yml down
 
+proxy-debug-up:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/proxy-debug.yml -f compose/make-network.yml up -d
+
+proxy-debug-down:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/proxy-debug.yml -f compose/make-network.yml down
+
 apache-simple-up:
 	NETWORK=${NETWORK} \
         docker-compose -f compose/proxy-basic.yml -f compose/make-network.yml up -d apache-simple
