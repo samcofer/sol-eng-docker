@@ -1,0 +1,13 @@
+version: '2.3'
+services:
+
+  base-ssp:
+    hostname: base-ssp 
+    build:
+      context: ../cluster
+      dockerfile: base-ssp/Dockerfile
+    environment:
+      - SHINY_SERVER_LICENSE
+    ports:
+      - 3838:3838
+
