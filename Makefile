@@ -81,6 +81,18 @@ apache-auth-down:
 	NETWORK=${NETWORK} \
         docker-compose -f compose/apache-auth.yml -f compose/make-network.yml down
 
+apache-simple-up:
+	NETWORK=${NETWORK} \
+        docker-compose -f compose/proxy-basic.yml -f compose/make-network.yml up -d apache-simple
+
+apache-simple-down:
+	NETWORK=${NETWORK} \
+        docker-compose -f compose/proxy-basic.yml -f compose/make-network.yml stop apache-simple
+
+#---------------------------------------------
+# Proxy Products
+#---------------------------------------------
+
 proxy-connect-up:
 	NETWORK=${NETWORK} \
 	CONNECT_LICENSE=${CONNECT_LICENSE} \
@@ -97,14 +109,6 @@ proxy-debug-up:
 proxy-debug-down:
 	NETWORK=${NETWORK} \
 	docker-compose -f compose/proxy-debug.yml -f compose/make-network.yml down
-
-apache-simple-up:
-	NETWORK=${NETWORK} \
-        docker-compose -f compose/proxy-basic.yml -f compose/make-network.yml up -d apache-simple
-
-apache-simple-down:
-	NETWORK=${NETWORK} \
-        docker-compose -f compose/proxy-basic.yml -f compose/make-network.yml stop apache-simple
 
 #---------------------------------------------
 # OAuth2 Proxy
