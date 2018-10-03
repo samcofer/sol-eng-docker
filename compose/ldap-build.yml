@@ -5,8 +5,8 @@ services:
     hostname: openldap
     image: k-ldap
     build: 
-      context: ./cluster
-      dockerfile: ./ldap/Dockerfile
+      context: ../cluster
+      dockerfile: ldap/Dockerfile
     ports:
        - 389:389
        - 636:636
