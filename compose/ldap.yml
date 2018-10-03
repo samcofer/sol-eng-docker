@@ -18,8 +18,3 @@ services:
       - PHPLDAPADMIN_LDAP_HOSTS=openldap
     links:
       - openldap
-
-networks:
-  default:
-    external:
-      name: ${NETWORK}
