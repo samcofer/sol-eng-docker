@@ -5,6 +5,11 @@ putting that in a docker container is hard).
 
 ## Getting started
 
+Get started by executing:
+```
+make ldap-server-up
+```
+
 The `osixia/ldap` docker container comes provisioned with a domain of
 `dc=example,dc=org`. To log into the browser, connect on the secure port (which
 will yell at you because our cert is bogus). Then, login as:
@@ -36,6 +41,11 @@ description: The Subtree to Add!
 ```
 
 ## Connect
+
+Connect with LDAP configuration can be started with:
+```
+make ldap-connect-up
+```
 
 Connect in a docker container provides an interesting experience when it comes
 to LDAP:
