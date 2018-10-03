@@ -1,0 +1,23 @@
+version: '2.3'
+services:
+
+  connect:
+    hostname: connect
+    build:
+      context: ../cluster
+      dockerfile: ./ldap-connect/Dockerfile
+      args:
+        - CONNECT_BINARY_URL=rstudio-connect_1.6.8.2-12_amd64.deb
+    ports:
+      - 3939:3939
+    privileged: true
+    environment:
+      - CONNECT_LICENSE
+    links:
+      - pg-connect
+
+  pg-connect:
+    hostname: pg-connect
+    image: postgres:10
+    environment:
+      POSTGRES_PASSWORD: test

@@ -1,0 +1,20 @@
+version: '2.3'
+services:
+
+  openldap:
+    hostname: openldap
+    image: osixia/openldap
+    ports:
+       - 389:389
+       - 636:636
+
+  admin:
+    hostname: admin
+    image: osixia/phpldapadmin
+    ports:
+      - "443"
+      - "80"
+    environment:
+      - PHPLDAPADMIN_LDAP_HOSTS=openldap
+    links:
+      - openldap
