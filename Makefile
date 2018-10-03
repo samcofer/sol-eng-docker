@@ -113,6 +113,26 @@ rsp-down:
 	docker-compose -f compose/base-rsp.yml -f compose/make-network.yml down
 
 #---------------------------------------------
+# LDAP
+#---------------------------------------------
+ldap-up: ldap-server-up ldap-connect-up
+ldap-down: ldap-connect-down ldap-server-down
+
+ldap-server-up:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/ldap.yml -f compose/make-network.yml up -d
+ldap-server-down:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/ldap.yml -f compose/make-network.yml down
+
+ldap-connect-up:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/ldap-connect.yml -f compose/make-network.yml up -d
+ldap-connect-down:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/ldap-connect.yml -f compose/make-network.yml up -d
+
+#---------------------------------------------
 # Other 
 #---------------------------------------------
 
