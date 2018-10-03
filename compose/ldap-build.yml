@@ -22,7 +22,3 @@ services:
     links:
       - openldap
 
-networks:
-  default:
-    external:
-      name: ${NETWORK}
