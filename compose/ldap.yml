@@ -5,8 +5,12 @@ services:
     hostname: openldap
     image: osixia/openldap
     ports:
-       - 389:389
-       - 636:636
+       #- "389"
+       - "636"
+    volumes:
+      - "./users.ldif:/container/service/slapd/assets/config/bootstrap/ldif/50-bootstrap.ldif"
+    command:
+      - ["--copy-service"]
 
   admin:
     hostname: admin
