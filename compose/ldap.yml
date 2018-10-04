@@ -9,8 +9,7 @@ services:
        - "636"
     volumes:
       - "./users.ldif:/container/service/slapd/assets/config/bootstrap/ldif/50-bootstrap.ldif"
-    command:
-      - ["--copy-service"]
+    command: ["--copy-service"]
 
   admin:
     hostname: admin
