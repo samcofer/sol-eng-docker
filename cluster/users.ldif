@@ -9,21 +9,21 @@
 
 version: 1
 
-# Entry 1: dc=example,dc=org
-dn: dc=example,dc=org
-dc: example
-o: Example Inc.
-objectclass: top
-objectclass: dcObject
-objectclass: organization
-
-# Entry 2: cn=admin,dc=example,dc=org
-dn: cn=admin,dc=example,dc=org
-cn: admin
-description: LDAP administrator
-objectclass: simpleSecurityObject
-objectclass: organizationalRole
-userpassword: {SSHA}+FquX8RcwTtBPo7mu2pgSvjaQYX9HpCL
+## Entry 1: dc=example,dc=org
+#dn: dc=example,dc=org
+#dc: example
+#o: Example Inc.
+#objectclass: top
+#objectclass: dcObject
+#objectclass: organization
+#
+## Entry 2: cn=admin,dc=example,dc=org
+#dn: cn=admin,dc=example,dc=org
+#cn: admin
+#description: LDAP administrator
+#objectclass: simpleSecurityObject
+#objectclass: organizationalRole
+#userpassword: {SSHA}+FquX8RcwTtBPo7mu2pgSvjaQYX9HpCL
 
 # Entry 3: cn=rstudio-connect,dc=example,dc=org
 dn: cn=rstudio-connect,dc=example,dc=org
