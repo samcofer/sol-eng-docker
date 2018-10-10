@@ -8,6 +8,7 @@ This project houses docker infrastructure for quickly setting up, configuring, a
 - [Oauth2 Proxy](./oauth2.md)
 - [SAML](./saml.md)
 - [General Proxy](./proxy.md)
+- [LDAP](./ldap.md)
 
 # Getting Started
 
