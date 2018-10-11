@@ -14,7 +14,7 @@ services:
     environment:
       - CONNECT_LICENSE
     volumes:
-      - ../cluster/ldap-connect/rstudio-connect.gcfg:/etc/rstudio-connect/rstudio-connect.gcfg
+      - ../ldap-connect.gcfg:/etc/rstudio-connect/rstudio-connect.gcfg
     depends_on:
       pg-connect:
         condition: service_healthy
