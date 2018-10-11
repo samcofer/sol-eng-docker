@@ -1,11 +1,11 @@
 version: '2.3'
 services:
 
-  connect:
-    hostname: connect
+  ldap-connect:
+    hostname: ldap-connect
     build:
       context: ../cluster
-      dockerfile: ./ldap-connect/Dockerfile
+      dockerfile: ./base-connect/Dockerfile
       args:
         - CONNECT_BINARY_URL=rstudio-connect_1.6.8.2-12_amd64.deb
     ports:
@@ -13,6 +13,8 @@ services:
     privileged: true
     environment:
       - CONNECT_LICENSE
+    volumes:
+      - ../cluster/ldap-connect/rstudio-connect.gcfg:/etc/rstudio-connect/rstudio-connect.gcfg
     depends_on:
       pg-connect:
         condition: service_healthy
