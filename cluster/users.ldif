@@ -89,6 +89,7 @@ gidnumber: 500
 givenname: Bobo
 homedirectory: /home/users/bobo
 loginshell: /bin/sh
+mail: bobo@test.com
 objectclass: inetOrgPerson
 objectclass: posixAccount
 objectclass: top
@@ -145,6 +146,7 @@ gidnumber: 500
 givenname: Test
 homedirectory: /home/users/test
 loginshell: /bin/sh
+mail: test@test.com
 objectclass: inetOrgPerson
 objectclass: posixAccount
 objectclass: top
