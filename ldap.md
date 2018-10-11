@@ -14,6 +14,12 @@ This creates the necessary network (`make network-up`), the LDAP server (`make l
 and starts RStudio Connect as well (`make ldap-connect-up`). The users and passwords pre-provisioned
 are [listed here](./cluster/users).
 
+You must have the environment variable `CONNECT_LICENSE` set to a valid license
+value locally (in the environment where `make` is executed). Contact #support
+if you need or have questions about a license.
+
+### LDAP Configuration
+
 The `osixia/ldap` docker container comes provisioned with a domain of
 `dc=example,dc=org`. To log into the browser, connect to the [`ldapadmin`](./compose/ldap.yml)
 container (whose port 80 is mapped to some ephemeral port on your host by default)
