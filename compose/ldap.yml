@@ -13,8 +13,8 @@ services:
       - LDAP_TLS=false
     command: ["--copy-service"]
 
-  admin:
-    hostname: admin
+  ldapadmin:
+    hostname: ldapadmin
     image: osixia/phpldapadmin
     ports:
       #- "443" # secure port - use for HTTPS
