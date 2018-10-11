@@ -72,9 +72,11 @@ kerb-rsp-down:
 	NETWORK=${NETWORK} \
         docker-compose -f compose/kerberos-base.yml -f compose/kerberos-rstudio.yml -f compose/make-network.yml stop k-rstudio
 
-kerb-rsc-up:
+kerb-rsc-up: download-connect kerb-rsc-up-hide
+kerb-rsc-up-hide:
 	NETWORK=${NETWORK} \
-	CONNECT_LICENSE=$(CONNECT_LICENSE) \
+	CONNECT_LICENSE=$(CONNECT_LICENSE) \ 
+	CONNECT_BINARY_URL=${CONNECT_BINARY_URL} \
 	docker-compose -f compose/kerberos-base.yml -f compose/kerberos-connect.yml -f compose/make-network.yml up -d
 
 kerb-rsc-down:
@@ -104,9 +106,11 @@ apache-simple-down:
 # Proxy Products
 #---------------------------------------------
 
-proxy-connect-up:
+proxy-connect-up: download-connect proxy-connect-up-hide
+proxy-connect-up-hide:
 	NETWORK=${NETWORK} \
-	CONNECT_LICENSE=${CONNECT_LICENSE} \
+	CONNECT_LICENSE=$(CONNECT_LICENSE) \
+	CONNECT_BINARY_URL=${CONNECT_BINARY_URL} \
 	docker-compose -f compose/proxy-connect.yml -f compose/make-network.yml up -d
 
 proxy-connect-down:
@@ -171,6 +175,7 @@ ldap-server-down:
 ldap-connect-up: download-connect ldap-connect-up-hide
 ldap-connect-up-hide:
 	NETWORK=${NETWORK} \
+	CONNECT_LICENSE=$(CONNECT_LICENSE) \
 	CONNECT_BINARY_URL=${CONNECT_BINARY_URL} \
 	docker-compose -f compose/ldap-connect.yml -f compose/make-network.yml up -d
 
