@@ -11,23 +11,27 @@ make ldap-server-up
 ```
 
 The `osixia/ldap` docker container comes provisioned with a domain of
-`dc=example,dc=org`. To log into the browser, connect on the secure port (which
-will yell at you because our cert is bogus). Then, login as:
+`dc=example,dc=org`. To log into the browser, connect to the [`ldapadmin`](./compose/ldap.yml)
+container (whose port 80 is mapped to some ephemeral port on your host by default)
+
+Then, login as:
 
 ```
 user: cn=admin,dc=example,dc=org
 pass: admin
 ```
 
-Then you will be able to add / provision users, groups, etc.
+This will give you access to alter / update the LDAP configuration from your
+browser.  A handful of  users are provisioned in the system by default, and
+have users/passwords listed [here](./cluster/users). For example, `user/pass` pairs
+`bobo/momo`, `test/test` and `jen/jen`.
 
 ### Provision Users
 
-Provisioning users is presently a manual process that should ultimately be
-improved by providing a `.ldif` file.  If you want a more complex tree
-structure, you will need to "import" through the ldap-admin container. If using
-Connect, you will also need to define several attributes (email, first / last
-name, etc.).
+Provisioning users can be done manually or by editing the appropriate [`.ldif`
+file](./cluster/users.ldif).  If you want a more complex tree structure, you
+will need to "import" through the ldap-admin container. If using Connect, you
+will also need to define several attributes (email, first / last name, etc.).
 
 An example ldif for adding a subtree under `dc=example,dc=org` is:
 ```
@@ -55,10 +59,10 @@ to LDAP:
  - Stopping the Connect service in a docker container also removes the docker
    container
 
-As a result of this, we incorporated a postgres configuration into the Connect
-compose file. `usermanager` should work. Just be judicious about the fact that
-interacting with Connect in the browser while using `usermanager` _could_
-potentially cause some strange consequences.
+As a result of this, we incorporated a postgres configuration into the [Connect
+compose file](./compose/ldap-connect.yml). `usermanager` should work. Just be
+judicious about the fact that interacting with Connect in the browser while
+using `usermanager` _could_ potentially cause some strange consequences.
 
 
 ## Resources
@@ -66,3 +70,5 @@ potentially cause some strange consequences.
 - [Article about provisioning LDAP store](https://www.openldap.org/doc/admin22/dbtools.html)
 - [Information about OpenLDAP](http://www.openldap.org/doc/admin24/guide.html)
 - [osixia docker openldap docs](https://github.com/osixia/docker-openldap)
+- [osixia docker openldap admin docs](https://github.com/osixia/docker-phpLDAPadmin)
+- [Docker health check! Super helpful](https://github.com/peter-evans/docker-compose-healthcheck)

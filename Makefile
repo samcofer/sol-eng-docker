@@ -130,7 +130,7 @@ ldap-connect-up:
 	docker-compose -f compose/ldap-connect.yml -f compose/make-network.yml up -d
 ldap-connect-down:
 	NETWORK=${NETWORK} \
-	docker-compose -f compose/ldap-connect.yml -f compose/make-network.yml up -d
+	docker-compose -f compose/ldap-connect.yml -f compose/make-network.yml down
 
 #---------------------------------------------
 # Other 

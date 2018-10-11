@@ -13,11 +13,19 @@ services:
     privileged: true
     environment:
       - CONNECT_LICENSE
-    links:
-      - pg-connect
+    depends_on:
+      pg-connect:
+        condition: service_healthy
 
   pg-connect:
     hostname: pg-connect
     image: postgres:10
     environment:
       POSTGRES_PASSWORD: test
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+
