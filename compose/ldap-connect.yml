@@ -7,14 +7,14 @@ services:
       context: ../cluster
       dockerfile: ./base-connect/Dockerfile
       args:
-        - CONNECT_BINARY_URL=rstudio-connect_1.6.8.2-12_amd64.deb
+        - CONNECT_BINARY_URL
     ports:
       - 3939:3939
     privileged: true
     environment:
       - CONNECT_LICENSE
     volumes:
-      - ../ldap-connect.gcfg:/etc/rstudio-connect/rstudio-connect.gcfg
+      - ../cluster/ldap-connect.gcfg:/etc/rstudio-connect/rstudio-connect.gcfg
     depends_on:
       pg-connect:
         condition: service_healthy
