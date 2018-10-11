@@ -7,8 +7,12 @@ putting that in a docker container is hard).
 
 Get started by executing:
 ```
-make ldap-server-up
+make ldap-up
 ```
+
+This creates the necessary network (`make network-up`), the LDAP server (`make ldap-server-up`),
+and starts RStudio Connect as well (`make ldap-connect-up`). The users and passwords pre-provisioned
+are [listed here](./cluster/users).
 
 The `osixia/ldap` docker container comes provisioned with a domain of
 `dc=example,dc=org`. To log into the browser, connect to the [`ldapadmin`](./compose/ldap.yml)
