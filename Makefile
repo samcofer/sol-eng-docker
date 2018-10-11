@@ -1,21 +1,22 @@
+#!make
 PWD := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 
 PROJECT=auth-docker
 NETWORK=${PROJECT}_default
 SCALE=1
-CONNECT_BINARY_URL=rstudio-connect_1.6.8.2-12_amd64.deb
+CONNECT_BINARY_URL=rstudio-connect_1.6.9-3645_amd64.deb
 
+test-env-up: network-up
 
-test-env-up: network-up db-up
-
-test-env-down: network-down db-down
-
+test-env-down: network-down
 
 kerb-up: network-up kerb-server-up kerb-ssh-up kerb-rsp-up kerb-rsc-up
 
 kerb-down: kerb-rsc-down kerb-rsp-down kerb-ssh-down kerb-server-down
 
-
+#---------------------------------------------
+# Network
+#---------------------------------------------
 network-up:
 	$(eval NETWORK_EXISTS=$(shell docker network inspect ${NETWORK} > /dev/null 2>&1 && echo 0 || echo 1))
 	@if [ "${NETWORK_EXISTS}" = "1" ] ; then \
@@ -34,6 +35,15 @@ network-down:
 		docker network rm ${NETWORK}; \
 	fi;
 
+#---------------------------------------------
+# Helpers
+#---------------------------------------------
+download-connect:
+	@if [ ! -e "./cluster/${CONNECT_BINARY_URL}" ]; then \
+		echo "File ./cluster/${CONNECT_BINARY_URL} does not exist... downloading"; \
+		wget https://s3.amazonaws.com/rstudio-connect/${CONNECT_BINARY_URL} \
+		  -O ./cluster/${CONNECT_BINARY_URL}; \
+	fi;
 
 #---------------------------------------------
 # Kerberos
@@ -116,7 +126,7 @@ rsp-down:
 #---------------------------------------------
 # LDAP
 #---------------------------------------------
-ldap-up: ldap-server-up ldap-connect-up
+ldap-up: network-up ldap-server-up ldap-connect-up
 ldap-down: ldap-connect-down ldap-server-down
 
 ldap-server-up:
@@ -126,7 +136,8 @@ ldap-server-down:
 	NETWORK=${NETWORK} \
 	docker-compose -f compose/ldap.yml -f compose/make-network.yml down
 
-ldap-connect-up:
+ldap-connect-up: download-connect ldap-connect-up-hide
+ldap-connect-up-hide:
 	NETWORK=${NETWORK} \
 	CONNECT_BINARY_URL=${CONNECT_BINARY_URL} \
 	docker-compose -f compose/ldap-connect.yml -f compose/make-network.yml up -d
