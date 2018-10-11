@@ -30,6 +30,17 @@ browser.  A handful of  users are provisioned in the system by default, and
 have users/passwords listed [here](./cluster/users). For example, `user/pass` pairs
 `bobo/momo`, `test/test` and `jen/jen`.
 
+### Useful `make` targets
+
+```
+make ldap-up
+make ldap-down
+make network-up ldap-server-up ldap-connect-up
+make ldap-connect-down ldap-server-down network-down
+
+make download-connect
+```
+
 ### Provision Users
 
 Provisioning users can be done manually or by editing the appropriate [`.ldif`
