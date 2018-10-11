@@ -5,10 +5,12 @@ services:
     hostname: proxy-connect
     build:
       context: ../cluster
-      dockerfile: proxy-connect/Dockerfile
+      dockerfile: base-connect/Dockerfile
       args:
-        - CONNECT_BINARY_URL=rstudio-connect_1.6.6.1-4_amd64.deb
+        - CONNECT_BINARY_URL
     privileged: true
+    volumes:
+      - ../cluster/proxy-connect.gcfg:/etc/rstudio-connect/rstudio-connect.gcfg
     environment:
       - CONNECT_LICENSE
 
