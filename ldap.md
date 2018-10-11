@@ -70,3 +70,5 @@ using `usermanager` _could_ potentially cause some strange consequences.
 - [Article about provisioning LDAP store](https://www.openldap.org/doc/admin22/dbtools.html)
 - [Information about OpenLDAP](http://www.openldap.org/doc/admin24/guide.html)
 - [osixia docker openldap docs](https://github.com/osixia/docker-openldap)
+- [osixia docker openldap admin docs](https://github.com/osixia/docker-phpLDAPadmin)
+- [Docker health check! Super helpful](https://github.com/peter-evans/docker-compose-healthcheck)
