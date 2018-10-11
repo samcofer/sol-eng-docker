@@ -6,9 +6,9 @@ This project houses docker infrastructure for quickly setting up, configuring, a
 
 - [Kerberos](./kerberos.md)
 - [Oauth2 Proxy](./oauth2.md)
+- [SAML](./saml.md)
 - [General Proxy](./proxy.md)
 - [LDAP](./ldap.md)
-
 
 # Getting Started
 
@@ -45,6 +45,10 @@ build.
 - docker cache outdated: let's say it has been a while and your docker cache
   needs `apt-get update` to be run in order to install things.  `docker-compose 
   -f myfile.yml build --no-cache myservice` can get you unstuck! 
+
+## Apache
+
+- `ProxyPass` and `ProxyPassReverse` are not allowed within an `<If>` block... sad. Also, trying to use variables has also been painful
 
 ## Init Systems
 

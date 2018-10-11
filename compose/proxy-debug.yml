@@ -1,0 +1,6 @@
+version: "2.3"
+services:
+  oauth2-debug:
+    hostname: oauth2-debug
+    image: brndnmtthws/nginx-echo-headers
+
