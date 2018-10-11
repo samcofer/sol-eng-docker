@@ -4,20 +4,23 @@ services:
   openldap:
     hostname: openldap
     image: osixia/openldap
-    ports:
-       #- "389"
-       - "636"
+    #ports:
+       #- "389" # insecure port - use if LDAP_TLS=false
+       #- "636" # secure port - use if LDAP_TLS=true
     volumes:
       - ../cluster/users.ldif:/container/service/slapd/assets/config/bootstrap/ldif/50-bootstrap.ldif
+    environment:
+      - LDAP_TLS=false
     command: ["--copy-service"]
 
   admin:
     hostname: admin
     image: osixia/phpldapadmin
     ports:
-      - "443"
-      - "80"
+      #- "443" # secure port - use for HTTPS
+      - "80" # insecure port - use for HTTP
     environment:
       - PHPLDAPADMIN_LDAP_HOSTS=openldap
+      - PHPLDAPADMIN_HTTPS=false
     links:
       - openldap
