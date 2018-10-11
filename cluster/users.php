@@ -5,17 +5,41 @@ $config = array(
     ),
     'example-userpass' => array(
         'exampleauth:UserPass',
-        'user1:user1pass' => array(
-            'uid' => array('1'),
-            'eduPersonAffiliation' => array('group1'),
-	    'user' => 'user1',
-            'email' => 'user1@example.com',
+        'joe:joe' => array(
+            'uid' => array('1000'),
+            'eduPersonAffiliation' => array('engineering'),
+	    'user' => 'joe',
+            'email' => 'joe@test.com',
         ),
-        'user2:user2pass' => array(
-            'uid' => array('2'),
-            'eduPersonAffiliation' => array('group2'),
-	    'user' => 'user2',
-            'email' => 'user2@example.com',
+        'julie:julie' => array(
+            'uid' => array('1001'),
+            'eduPersonAffiliation' => array('engineering'),
+	    'user' => 'julie',
+            'email' => 'julie@test.com',
+        ),
+        'bobo:momo' => array(
+            'uid' => array('1002'),
+            'eduPersonAffiliation' => array('finance'),
+	    'user' => 'bobo',
+            'email' => 'bobo@etest.com',
+        ),
+        'john:john' => array(
+            'uid' => array('1003'),
+            'eduPersonAffiliation' => array('finance'),
+	    'user' => 'john',
+            'email' => 'john@etest.com',
+        ),
+        'jen:jen' => array(
+            'uid' => array('1004'),
+            'eduPersonAffiliation' => array('support'),
+	    'user' => 'jen',
+            'email' => 'jen@test.com',
+        ),
+        'test:test' => array(
+            'uid' => array('1005'),
+            'eduPersonAffiliation' => array('support'),
+	    'user' => 'test',
+            'email' => 'test@test.com',
         ),
     ),
 );
