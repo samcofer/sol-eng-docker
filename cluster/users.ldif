@@ -54,7 +54,7 @@ objectclass: posixAccount
 objectclass: top
 sn: Golly
 uid: joe
-uidnumber: 1015
+uidnumber: 1000
 userpassword: {MD5}j/MkifkvM0FmlL6P3C1MIg==
 
 # Entry 6: cn=julie,dc=engineering,dc=example,dc=org
@@ -70,7 +70,7 @@ objectclass: posixAccount
 objectclass: top
 sn: Jolly
 uid: julie
-uidnumber: 1013
+uidnumber: 1001
 userpassword: {MD5}FvEvXoN54ivpleUF6/wbhA==
 
 # Entry 7: dc=finance,dc=example,dc=org
@@ -82,7 +82,22 @@ objectclass: dcObject
 objectclass: organization
 objectclass: top
 
-# Entry 8: cn=john,dc=finance,dc=example,dc=org
+# Entry 8: cn=bobo,dc=finance,dc=example,dc=org
+dn: cn=bobo,dc=finance,dc=example,dc=org
+cn: bobo
+gidnumber: 500
+givenname: Bobo
+homedirectory: /home/users/bobo
+loginshell: /bin/sh
+objectclass: inetOrgPerson
+objectclass: posixAccount
+objectclass: top
+sn: Momo
+uid: bobo
+uidnumber: 1002
+userpassword: {MD5}BsVqiZSdYX3vUvNxw1e22w==
+
+# Entry 9: cn=john,dc=finance,dc=example,dc=org
 dn: cn=john,dc=finance,dc=example,dc=org
 cn: john
 gidnumber: 500
@@ -95,10 +110,10 @@ objectclass: posixAccount
 objectclass: top
 sn: Doe
 uid: john
-uidnumber: 1012
+uidnumber: 1003
 userpassword: {MD5}UnvVtdaJ4sMq6XTGIp/3hQ==
 
-# Entry 9: dc=support,dc=example,dc=org
+# Entry 10: dc=support,dc=example,dc=org
 dn: dc=support,dc=example,dc=org
 dc: support
 description: The Support Department
@@ -107,7 +122,7 @@ objectclass: dcObject
 objectclass: organization
 objectclass: top
 
-# Entry 10: cn=jen,dc=support,dc=example,dc=org
+# Entry 11: cn=jen,dc=support,dc=example,dc=org
 dn: cn=jen,dc=support,dc=example,dc=org
 cn: jen
 gidnumber: 500
@@ -120,6 +135,20 @@ objectclass: posixAccount
 objectclass: top
 sn: Juniper
 uid: jen
-uidnumber: 1014
+uidnumber: 1004
 userpassword: {MD5}sY6kRVC2jQ0BK9kBfEqGSg==
 
+# Entry 12: cn=test,dc=support,dc=example,dc=org
+dn: cn=test,dc=support,dc=example,dc=org
+cn: test
+gidnumber: 500
+givenname: Test
+homedirectory: /home/users/test
+loginshell: /bin/sh
+objectclass: inetOrgPerson
+objectclass: posixAccount
+objectclass: top
+sn: Tester
+uid: test
+uidnumber: 1005
+userpassword: {MD5}CY9rzUYh03PK3k6DJie09g==
