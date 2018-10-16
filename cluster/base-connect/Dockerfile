@@ -14,7 +14,14 @@ RUN apt-get update -y -qq && \
     rrdtool \
     unixodbc-dev \
     vim \
-    wget
+    wget \
+    python \ 
+    python-pip \ 
+    python3 \ 
+    python3-pip
+
+RUN pip3 install virtualenv
+RUN pip install virtualenv 
 
 # install R apt
 RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 0x51716619e084dab9
