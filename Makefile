@@ -4,7 +4,7 @@ PWD := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 PROJECT=auth-docker
 NETWORK=${PROJECT}_default
 SCALE=1
-CONNECT_BINARY_URL=rstudio-connect_1.6.9-3651_amd64.deb
+CONNECT_BINARY_URL=rstudio-connect_1.6.8.2-12_amd64.deb
 
 test-env-up: network-up
 
@@ -183,8 +183,14 @@ connect-up-hide:
 	CONNECT_BINARY_URL=${CONNECT_BINARY_URL} \
 	docker-compose -f compose/base-connect.yml -f compose/make-network.yml up -d
 
+connect-build:
+	NETWORK=${NETWORK} \
+	CONNECT_LICENSE=$(CONNECT_LICENSE) \
+	CONNECT_BINARY_URL=${CONNECT_BINARY_URL} \
+	docker-compose -f compose/base-connect.yml -f compose/make-network.yml build
+
 connect-down:
-	NETWORK=${NETWORK}
+	NETWORK=${NETWORK} \
 	docker-compose -f compose/base-connect.yml -f compose/make-network.yml down
 
 rsp-up:
