@@ -195,6 +195,14 @@ rsp-down:
 	NETWORK=${NETWORK} \
 	docker-compose -f compose/base-rsp.yml -f compose/make-network.yml down
 
+ssp-up:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/base-ssp.yml -f compose/make-network.yml up -d
+
+ssp-down:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/base-ssp.yml -f compose/make-network.yml down
+ 
 #---------------------------------------------
 # Other 
 #---------------------------------------------
