@@ -18,10 +18,8 @@ RUN apt-get update -y -qq && \
     python \ 
     python-pip \ 
     python3 \ 
-    python3-pip
+    python3-pip 
 
-RUN pip3 install virtualenv
-RUN pip install virtualenv 
 
 # install R apt
 RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 0x51716619e084dab9
@@ -38,6 +36,10 @@ RUN gdebi -n rstudio-connect.deb && \
 # install dumb-iinit
 RUN wget -O /usr/local/bin/dumb-init https://github.com/Yelp/dumb-init/releases/download/v1.1.3/dumb-init_1.1.3_amd64 && \
 	chmod +x /usr/local/bin/dumb-init
+
+RUN apt-get -y install \ 
+	python3-virtualenv \ 
+	python-virtualenv
 
 # because licensing
 RUN apt-get -y install sudo
