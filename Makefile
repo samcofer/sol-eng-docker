@@ -4,7 +4,7 @@ PWD := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 PROJECT=auth-docker
 NETWORK=${PROJECT}_default
 SCALE=1
-CONNECT_BINARY_URL=rstudio-connect_1.6.9-3645_amd64.deb
+CONNECT_BINARY_URL=rstudio-connect_1.6.9-3651_amd64.deb
 
 test-env-up: network-up
 
@@ -148,16 +148,6 @@ proxy-saml-down:
 	NETWORK=${NETWORK} \
 	docker-compose -f compose/apache-saml.yml -f compose/make-network.yml down
 
-#---------------------------------------------
-# Base RSP
-#---------------------------------------------
-rsp-up:
-	NETWORK=${NETWORK} \
-	docker-compose -f compose/base-rsp.yml -f compose/make-network.yml up -d
-
-rsp-down:
-	NETWORK=${NETWORK} \
-	docker-compose -f compose/base-rsp.yml -f compose/make-network.yml down
 
 #---------------------------------------------
 # LDAP
@@ -183,6 +173,36 @@ ldap-connect-down:
 	NETWORK=${NETWORK} \
 	docker-compose -f compose/ldap-connect.yml -f compose/make-network.yml down
 
+#---------------------------------------------
+# Base Products
+#---------------------------------------------
+connect-up: download-connect connect-up-hide
+connect-up-hide:
+	NETWORK=${NETWORK} \
+	CONNECT_LICENSE=$(CONNECT_LICENSE) \
+	CONNECT_BINARY_URL=${CONNECT_BINARY_URL} \
+	docker-compose -f compose/base-connect.yml -f compose/make-network.yml up -d
+
+connect-down:
+	NETWORK=${NETWORK}
+	docker-compose -f compose/base-connect.yml -f compose/make-network.yml down
+
+rsp-up:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/base-rsp.yml -f compose/make-network.yml up -d
+
+rsp-down:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/base-rsp.yml -f compose/make-network.yml down
+
+ssp-up:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/base-ssp.yml -f compose/make-network.yml up -d
+
+ssp-down:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/base-ssp.yml -f compose/make-network.yml down
+ 
 #---------------------------------------------
 # Other 
 #---------------------------------------------
