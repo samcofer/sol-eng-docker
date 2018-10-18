@@ -1,0 +1,10 @@
+version: '2.3'
+services:
+  cfssl:
+    hostname: cfssl
+    image: cfssl/cfssl
+    command: ["serve", "-ca", "/myCA.pem", "-ca-key", "/myCA.key"]
+    volumes: 
+      - ../cluster/myCA.key.insecure:/myCA.key
+      - ../cluster/myCA.pem:/myCA.pem
+
