@@ -3,8 +3,8 @@ services:
   cfssl:
     hostname: cfssl
     image: cfssl/cfssl
-    command: ["serve", "-ca", "/myCA.pem", "-ca-key", "/myCA.key", "-address", "cfssl"]
+    command: ["serve", "-ca", "/auth-docker.pem", "-ca-key", "/auth-docker.key.nopass", "-address", "cfssl"]
     volumes: 
-      - ../cluster/myCA.key.insecure:/myCA.key
-      - ../cluster/myCA.pem:/myCA.pem
+      - ../cluster/auth-docker.key.nopass:/auth-docker.key.nopass
+      - ../cluster/auth-docker.pem:/auth-docker.pem
 
