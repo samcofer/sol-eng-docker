@@ -9,7 +9,6 @@ pem_cert=auth-docker.pem
 openssl genrsa -des3 -out ${private_key} 2048
 
 # generate root certificate
-# expires on my birthday in 2021... which also happens to be my 30th. fun :)
 openssl req -x509 -new -nodes -key ${private_key} -sha256 -days 1000 -out ${pem_cert}
 
 # un-password-protect the key 
