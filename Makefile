@@ -46,6 +46,53 @@ download-connect:
 	fi;
 
 #---------------------------------------------
+# SSL
+#---------------------------------------------
+ssl-up:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/ssl.yml -f compose/make-network.yml up -d
+
+ssl-down:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/ssl.yml -f compose/make-network.yml down
+
+#---------------------------------------------
+# Base Products
+#---------------------------------------------
+connect-up: download-connect connect-up-hide
+connect-up-hide:
+	NETWORK=${NETWORK} \
+	CONNECT_LICENSE=$(CONNECT_LICENSE) \
+	CONNECT_BINARY_URL=${CONNECT_BINARY_URL} \
+	docker-compose -f compose/base-connect.yml -f compose/make-network.yml up -d
+
+connect-build:
+	NETWORK=${NETWORK} \
+	CONNECT_LICENSE=$(CONNECT_LICENSE) \
+	CONNECT_BINARY_URL=${CONNECT_BINARY_URL} \
+	docker-compose -f compose/base-connect.yml -f compose/make-network.yml build
+
+connect-down:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/base-connect.yml -f compose/make-network.yml down
+
+rsp-up:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/base-rsp.yml -f compose/make-network.yml up -d
+
+rsp-down:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/base-rsp.yml -f compose/make-network.yml down
+
+ssp-up:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/base-ssp.yml -f compose/make-network.yml up -d
+
+ssp-down:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/base-ssp.yml -f compose/make-network.yml down
+
+#---------------------------------------------
 # Kerberos
 #---------------------------------------------
 kerb-server-up:
@@ -173,42 +220,6 @@ ldap-connect-down:
 	NETWORK=${NETWORK} \
 	docker-compose -f compose/ldap-connect.yml -f compose/make-network.yml down
 
-#---------------------------------------------
-# Base Products
-#---------------------------------------------
-connect-up: download-connect connect-up-hide
-connect-up-hide:
-	NETWORK=${NETWORK} \
-	CONNECT_LICENSE=$(CONNECT_LICENSE) \
-	CONNECT_BINARY_URL=${CONNECT_BINARY_URL} \
-	docker-compose -f compose/base-connect.yml -f compose/make-network.yml up -d
-
-connect-build:
-	NETWORK=${NETWORK} \
-	CONNECT_LICENSE=$(CONNECT_LICENSE) \
-	CONNECT_BINARY_URL=${CONNECT_BINARY_URL} \
-	docker-compose -f compose/base-connect.yml -f compose/make-network.yml build
-
-connect-down:
-	NETWORK=${NETWORK} \
-	docker-compose -f compose/base-connect.yml -f compose/make-network.yml down
-
-rsp-up:
-	NETWORK=${NETWORK} \
-	docker-compose -f compose/base-rsp.yml -f compose/make-network.yml up -d
-
-rsp-down:
-	NETWORK=${NETWORK} \
-	docker-compose -f compose/base-rsp.yml -f compose/make-network.yml down
-
-ssp-up:
-	NETWORK=${NETWORK} \
-	docker-compose -f compose/base-ssp.yml -f compose/make-network.yml up -d
-
-ssp-down:
-	NETWORK=${NETWORK} \
-	docker-compose -f compose/base-ssp.yml -f compose/make-network.yml down
- 
 #---------------------------------------------
 # Other 
 #---------------------------------------------
