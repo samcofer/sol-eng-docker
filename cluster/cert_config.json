@@ -1,0 +1,14 @@
+{
+	"request": {
+		"hosts": ["my-hostname"],
+		"names": [
+			{
+				"C": "US",
+				"ST": "North Carolina",
+				"L": "Raleigh",
+				"O": "RSTUDIO-DOCKER.COM"
+			}
+		],
+		"CN": "my-hostname"
+	}
+}
