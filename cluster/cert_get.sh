@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if ( [[ -z `which curl` ]] || [[ -z `which jq` ]] ); then 
+if [[ -z `which curl` ]] || [[ -z `which jq` ]] ; then 
   echo 'ERROR: `curl` or `jq` not found. Both are required'; 
   exit 2;
 fi
