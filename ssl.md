@@ -43,6 +43,8 @@ configured intermediate certificates. PRs welcome :)
 - [Windows CA stuff](https://www2.microstrategy.com/producthelp/10.6/SystemAdmin/WebHelp/Lang_1033/Content/Admin/Adding_your_enterprise_CA_as_a_trusted_certificate.htm)
 - [Docker and actual HTTPS...?](https://docs.docker.com/ee/ucp/interlock/usage/tls/#let-your-service-handle-tls)
 - [how the encryption conversation works](https://www.digicert.com/ssl-cryptography.htm)
+- [Symantec overview (TONS of docs)](https://www.websecurity.symantec.com/security-topics/how-does-ssl-handshake-work)
+- [Resources for doing this in the public arena](https://www.keycdn.com/blog/ssl-trust)
 
 ## My Guess at an Overview / Brain Dump
 
