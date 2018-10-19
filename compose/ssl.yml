@@ -5,6 +5,6 @@ services:
     image: cfssl/cfssl
     command: ["serve", "-ca", "/auth-docker.pem", "-ca-key", "/auth-docker.key.nopass", "-address", "cfssl"]
     volumes: 
-      - ../cluster/auth-docker.key.nopass:/auth-docker.key.nopass
-      - ../cluster/auth-docker.pem:/auth-docker.pem
+      - ../cluster/ssl/auth-docker.key.nopass:/auth-docker.key.nopass
+      - ../cluster/ssl/auth-docker.pem:/auth-docker.pem
 
