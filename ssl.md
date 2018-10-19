@@ -21,13 +21,35 @@ certificate for your service
 # Development / Stop the "insecure" warnings
 
 To do this, you need to trust the Certificate Authority! Do so by importing
-[the root certificate](./cluster/ssl/auth-docker.pem) into your browser trusted
+[the root certificate](./cluster/ssl/auth-docker.pem) into your trusted
 certificates, or by specifying it with something like `curl --cacert
 auth-docker.pem https://myservice`
 
-**IMPORTANT NOTE**: This still does not work like we want from our browsers,
-because docker is an intermediary messing with things, and we have not yet
-configured intermediate certificates. PRs welcome :)
+## Mac
+
+### Chrome
+
+Chrome uses the Mac OS Keychain. 
+
+1. Open Mac Keychain app
+2. Go to `File > Import Items...`
+3. Select the private key file [./cluster/ssl/auth-docker.pem](./cluster/ssl/auth-docker.pem)
+4. Search for `auth-docker` in the search bar
+5. Double click on the root certificate in the list
+6. Expand the `Trust` section
+7. Change `When using this certificate:` select box to `Always Trust`
+
+### FireFox
+
+FireFox does _not_ use the MacOS Keychain. As a result, it requires configuring FireFox directly
+
+1. Navigate to `about:preferences#privacy`
+2. At the bottom, there is a button: `View Certificates`
+3. Go to the `Authorities` tab
+4. Click `Import...`
+5. Select the private key file [./cluster/ssl/auth-docker.pem](./cluster/ssl/auth-docker.pem)
+6. Check "Trust this CA to identify websites."
+7. Click "OK"
 
 # Learning SSL
 
