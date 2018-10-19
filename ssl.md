@@ -1,5 +1,33 @@
 # SSL
 
+# CA setup
+
+Current Password for auth-docker.key: `pass`
+
+Use [this shell script](./cluster/ssl/cert_authority_get.sh) to refresh /
+generate new CA tokens. Our current token expires in 7/14/2021
+
+# Adding SSL to a service
+
+- Ensure that the SSL key-generating service is up with `make ssl-up`. This
+  starts an api that can be used for generating certificates
+- Use the commands in the
+  [./cluster/ssl/cert_get.sh](./cluster/ssl/cert_get.sh) script along with the
+example config in [this json file](./cluster/ssl/cert_config.json) to get
+a certificate for your service
+- Configure your service to use the appropriate `.crt` and `.key` files
+
+# Development / Stop the "insecure" warnings
+
+To do this, you need to trust the Certificate Authority! Do so by importing
+[the root certificate](./cluster/ssl/auth-docker.pem) into your browser trusted
+certificates, or by specifying it with something like `curl --cacert
+auth-docker.pem https://myservice`
+
+**IMPORTANT NOTE**: This still does not work like we want from our browsers,
+because docker is an intermediary messing with things, and we have not yet
+configured intermediate certificates. PRs welcome :)
+
 # Learning SSL
 
 - [Useful article on setting up a CA](https://deliciousbrains.com/ssl-certificate-authority-for-local-https-development/)
@@ -11,9 +39,5 @@
 - [simple-ca docker container](https://github.com/jcmoraisjr/simple-ca)
 - [SSL on Docker and Traefik](https://jimfrenette.com/2018/03/ssl-certificate-authority-for-docker-and-traefik/)
 - [Windows CA stuff](https://www2.microstrategy.com/producthelp/10.6/SystemAdmin/WebHelp/Lang_1033/Content/Admin/Adding_your_enterprise_CA_as_a_trusted_certificate.htm)
-
-
-# CA setup
-
-Password: `pass`
+- [Docker and actual HTTPS...?](https://docs.docker.com/ee/ucp/interlock/usage/tls/#let-your-service-handle-tls)
 
