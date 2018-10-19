@@ -51,6 +51,29 @@ FireFox does _not_ use the MacOS Keychain. As a result, it requires configuring 
 6. Check "Trust this CA to identify websites."
 7. Click "OK"
 
+## Ubuntu / Debian
+
+This worked on at least one Debian server... see this [semi-helpful
+link](https://manuals.gfi.com/en/kerio/connect/content/server-configuration/ssl-certificates/adding-trusted-root-certificates-to-the-server-1605.html)
+below for the pointers that led me there. `/usr/local/share/ca-certificates` is
+also supposed to be a thing, along with `sudo update-ca-certificates`... but it
+did not work in my testing.
+
+```
+cat auth-docker.pem >> /etc/ssl/certs/ca-certificates.crt
+```
+
+Test success with
+```
+curl https://some-service/
+```
+
+## Others
+
+A [semi-helpful
+link](https://manuals.gfi.com/en/kerio/connect/content/server-configuration/ssl-certificates/adding-trusted-root-certificates-to-the-server-1605.html)
+or a google search can go a long ways!
+
 # Learning SSL
 
 - [Useful article on setting up a CA](https://deliciousbrains.com/ssl-certificate-authority-for-local-https-development/)
