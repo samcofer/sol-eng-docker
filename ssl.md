@@ -90,6 +90,7 @@ or a google search can go a long ways!
 - [how the encryption conversation works](https://www.digicert.com/ssl-cryptography.htm)
 - [Symantec overview (TONS of docs)](https://www.websecurity.symantec.com/security-topics/how-does-ssl-handshake-work)
 - [Resources for doing this in the public arena](https://www.keycdn.com/blog/ssl-trust)
+- [Apparently we should call it TLS?](https://curl.haxx.se/docs/sslcerts.html)
 
 ## My Guess at an Overview / Brain Dump
 
