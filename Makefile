@@ -169,6 +169,12 @@ ldap-connect-up-hide:
 	CONNECT_BINARY_URL=${CONNECT_BINARY_URL} \
 	docker-compose -f compose/ldap-connect.yml -f compose/make-network.yml up -d
 
+ldap-connect-build: download-connect ldap-connect-build-hide
+ldap-connect-build-hide:
+	NETWORK=${NETWORK} \
+	CONNECT_BINARY_URL=${CONNECT_BINARY_URL} \
+	docker-compose -f compose/ldap-connect.yml -f compose/make-network.yml build
+
 ldap-connect-down:
 	NETWORK=${NETWORK} \
 	docker-compose -f compose/ldap-connect.yml -f compose/make-network.yml down
