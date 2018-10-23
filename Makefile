@@ -4,7 +4,7 @@ PWD := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 PROJECT=auth-docker
 NETWORK=${PROJECT}_default
 SCALE=1
-CONNECT_BINARY_URL=rstudio-connect_1.6.8.2-12_amd64.deb
+CONNECT_BINARY_URL=rstudio-connect_1.6.9-3688_amd64.deb
 
 test-env-up: network-up
 
@@ -216,6 +216,12 @@ ldap-connect-up-hide:
 	CONNECT_LICENSE=$(CONNECT_LICENSE) \
 	CONNECT_BINARY_URL=${CONNECT_BINARY_URL} \
 	docker-compose -f compose/ldap-connect.yml -f compose/make-network.yml up -d
+
+ldap-connect-build: download-connect ldap-connect-build-hide
+ldap-connect-build-hide:
+	NETWORK=${NETWORK} \
+	CONNECT_BINARY_URL=${CONNECT_BINARY_URL} \
+	docker-compose -f compose/ldap-connect.yml -f compose/make-network.yml build
 
 ldap-connect-down:
 	NETWORK=${NETWORK} \
