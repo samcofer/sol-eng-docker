@@ -7,7 +7,7 @@ services:
       context: ../cluster
       dockerfile: ./base-connect/Dockerfile
       args:
-        - CONNECT_BINARY_URL=${CONNECT_BINARY_URL}
+        - CONNECT_BINARY_URL
     ports:
       - 3939:3939
     privileged: true
