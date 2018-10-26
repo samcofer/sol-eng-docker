@@ -76,7 +76,7 @@ gidnumber: 500
 givenname: Joe
 homedirectory: /home/users/joe
 loginshell: /bin/sh
-mail: joe@test.com
+mail: joe@example.org
 objectclass: inetOrgPerson
 objectclass: posixAccount
 objectclass: top
@@ -92,7 +92,7 @@ gidnumber: 500
 givenname: Julie
 homedirectory: /home/users/julie
 loginshell: /bin/sh
-mail: julie@test.com
+mail: julie@example.org
 objectclass: inetOrgPerson
 objectclass: posixAccount
 objectclass: top
@@ -133,7 +133,7 @@ gidnumber: 500
 givenname: Bobo
 homedirectory: /home/users/bobo
 loginshell: /bin/sh
-mail: bobo@test.com
+mail: bobo@example.org
 objectclass: inetOrgPerson
 objectclass: posixAccount
 objectclass: top
@@ -149,7 +149,7 @@ gidnumber: 500
 givenname: John
 homedirectory: /home/users/john
 loginshell: /bin/sh
-mail: john@test.com
+mail: john@example.org
 objectclass: inetOrgPerson
 objectclass: posixAccount
 objectclass: top
@@ -174,7 +174,7 @@ gidnumber: 500
 givenname: Jen
 homedirectory: /home/users/jen
 loginshell: /bin/sh
-mail: jen@test.com
+mail: jen@example.org
 objectclass: inetOrgPerson
 objectclass: posixAccount
 objectclass: top
@@ -190,7 +190,7 @@ gidnumber: 500
 givenname: Test
 homedirectory: /home/users/test
 loginshell: /bin/sh
-mail: test@test.com
+mail: test@example.org
 objectclass: inetOrgPerson
 objectclass: posixAccount
 objectclass: top
