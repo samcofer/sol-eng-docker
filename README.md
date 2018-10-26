@@ -24,7 +24,7 @@ Then look to specific sub-project pages (above) for detailed make commands to ge
 
 # Examples
 
-A couple of examples that might interest you
+A handful of examples that might interest you
 ```
 make ldap-up
 make connect-up
