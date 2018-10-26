@@ -22,6 +22,17 @@ To get started, you will need to install:
 
 Then look to specific sub-project pages (above) for detailed make commands to get things built and started.
 
+# Examples
+
+A couple of examples that might interest you
+```
+make ldap-up
+make connect-up
+make rsp-up
+make kerb-up
+make proxy-connect-up proxy-saml-up
+```
+
 # Organization
 
 ## [Docker Compose](./compose)
