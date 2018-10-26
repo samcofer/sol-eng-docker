@@ -4,8 +4,8 @@ services:
   openldap:
     hostname: openldap
     image: osixia/openldap
-    #ports:
-       #- "389" # insecure port - use if LDAP_TLS=false
+    ports:
+       - "389" # insecure port - use if LDAP_TLS=false
        #- "636" # secure port - use if LDAP_TLS=true
     volumes:
       - ../cluster/users.ldif:/container/service/slapd/assets/config/bootstrap/ldif/50-bootstrap.ldif
