@@ -13,6 +13,14 @@ curl -H "Authorization: Bearer $TOKEN" --cacert $CACERT $K8S/healthz
 
 # update launcher.conf file
 
+echo "api-url=$K8S" > /etc/rstudio/launcher.kubernetes.conf
+echo "auth-token=$TOKEN" >> /etc/rstudio/launcher.kubernetes.conf
+
+mkdir -p /usr/local/share/ca-certificates/Kubernetes
+cat $CACERT > /usr/local/share/ca-certificates/Kubernetes/cert-Kubernetes.crt
+update-ca-certificates
+
+
 if [ -z "${RSP_LICENSE}" ]; then
     echo >&2 'error: The RSP_LICENSE variable is not set.'
     "$@"
