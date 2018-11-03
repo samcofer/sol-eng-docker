@@ -1,0 +1,12 @@
+version: '3.3'
+services:
+
+  launcher-rsp:
+    hostname: launcher-rsp
+    build:
+      context: ../cluster
+      dockerfile: launcher-rsp/Dockerfile
+    environment:
+      - RSP_LICENSE
+    ports:
+      - 8787:8787
