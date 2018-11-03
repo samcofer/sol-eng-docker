@@ -59,5 +59,7 @@ CMD ["/usr/lib/rstudio-server/bin/rserver", "--server-daemonize=0"]
 
 COPY ./launcher-rsp/launcher.conf /etc/rstudio/launcher.conf
 
+RUN apt-get install -y curl
+
 EXPOSE 8787
 
