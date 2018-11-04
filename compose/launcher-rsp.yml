@@ -10,3 +10,12 @@ services:
       - RSP_LICENSE
     ports:
       - 8787:8787
+
+  launcher-session:
+    hostname: launcher-session
+    build:
+      context: ../cluster
+      dockerfile: launcher-session/Dockerfile
+      args:
+        R_VERSION: "3.5.1"
+
