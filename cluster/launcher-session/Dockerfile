@@ -1,6 +1,13 @@
-FROM rstudio/r-session:trusty-1.2.1070-1
+FROM rstudio/r-session:trusty-preview
 
 ARG R_VERSION=3.5.1
+
+# Add cran apt repo (and sources)
+RUN apt-get update -qq && \
+	apt-get install -qq -y apt-transport-https && \
+	echo "deb https://cran.rstudio.com/bin/linux/ubuntu trusty-cran35/" >> /etc/apt/sources.list.d/cran-rstudio.list && \
+        echo "deb-src https://cran.rstudio.com/bin/linux/ubuntu trusty-cran35/" >> /etc/apt/sources.list.d/cran-rstudio.list && \
+	apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 0x51716619e084dab9
 
 RUN set -x && \
 	apt-get update && \
@@ -10,7 +17,7 @@ RUN set -x && \
 	git
 
 # R dependencies
-RUN apt-get build-dep -y r-base
+RUN apt-get -y build-dep r-base
 
 # Build $R_VERSION from source
 RUN mkdir -p /opt/R && cd /opt/R \
@@ -19,7 +26,12 @@ RUN mkdir -p /opt/R && cd /opt/R \
     && cd R-$R_VERSION  \
     && ./configure --prefix=/opt/R/$R_VERSION --enable-R-shlib \
     && make \
-    && make install
+    && make install \
+    && cd / \
+    && rm -r /opt/R/R-$R_VERSION.tar.gz \
+    && rm -r /opt/R/R-$R_VERSION
+
+RUN chmod 777 /home
 
 # Set the locale
 RUN locale-gen en_US.UTF-8
