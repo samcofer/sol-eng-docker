@@ -3,6 +3,7 @@ services:
 
   launcher-rsp:
     hostname: launcher-rsp
+    image: compose_launcher-rsp:1
     build:
       context: ../cluster
       dockerfile: launcher-rsp/Dockerfile
@@ -13,6 +14,7 @@ services:
 
   launcher-session:
     hostname: launcher-session
+    image: colearendt/rsession-demo:prelaunch
     build:
       context: ../cluster
       dockerfile: launcher-session/Dockerfile
