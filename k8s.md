@@ -1,8 +1,16 @@
 # Kubernetes
 
+
 ## Debugging Tips
 
 ```
+
+# ensure your kubectl context is set properly
+kubectl config current-context
+
+# on mac
+kubectl config use-context docker-for-desktop
+
 # get pods in a namespace
 kubectl get pods --namespace=rstudio
 
