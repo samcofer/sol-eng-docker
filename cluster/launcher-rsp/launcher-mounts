@@ -1,0 +1,10 @@
+Host: nfs01
+Path: /
+MountPath: /home/
+ReadOnly: false
+
+Host: nfs02
+Path: /
+MountPath: /tmp/diagnostics
+ReadOnly: false
+
