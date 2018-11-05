@@ -1,5 +1,24 @@
 # Kubernetes
 
+## Debugging Tips
+
+```
+# get pods in a namespace
+kubectl get pods --namespace=rstudio
+
+# get a specific pod
+kubectl get pods --namespace specific-pod-name -o yaml | less
+
+# get a specific pod's docker id to use in docker logs
+kubectl get pods --namespace=rstudio specific-pod-name -o json | jq -r '.status.containerStatuses[0].containerID' | sed 's/docker:\/\///'
+
+# port-forward
+kubectl port-forward --namespace=rstudio specific-pod-name host-port:guest-port
+
+# get interactive shell (only dealing with single-container pods)
+kubectl exec -it --namespace=rstudio specific-pod-name -- /bin/bash
+```
+
 ## Resources
 
 ### Gold
