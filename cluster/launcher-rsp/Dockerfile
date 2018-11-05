@@ -59,7 +59,10 @@ CMD ["/usr/lib/rstudio-server/bin/rserver", "--server-daemonize=0"]
 
 COPY ./launcher-rsp/launcher.conf /etc/rstudio/launcher.conf
 
-RUN apt-get install -y curl
+RUN apt-get install -y curl strace nfs-common vim && \
+	groupadd devs && groupadd devops && \
+	usermod -aG devs bobo && usermod -aG devops bobo
 
 EXPOSE 8787
 
+COPY ./launcher-rsp/supervisor.sh /supervisor.sh
