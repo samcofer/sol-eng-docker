@@ -66,3 +66,4 @@ RUN apt-get install -y curl strace nfs-common vim && \
 EXPOSE 8787
 
 COPY ./launcher-rsp/supervisor.sh /supervisor.sh
+COPY ./launcher-rsp/launcher-mounts /etc/rstudio/launcher-mounts
