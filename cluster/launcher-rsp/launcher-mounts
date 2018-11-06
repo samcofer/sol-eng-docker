@@ -1,9 +1,9 @@
-Host: nfs01
+Host: nfs01.rstudio.svc.cluster.local
 Path: /
 MountPath: /home/
 ReadOnly: false
 
-Host: nfs02
+Host: nfs02.rstudio.svc.cluster.local
 Path: /
 MountPath: /tmp/diagnostics
 ReadOnly: false
