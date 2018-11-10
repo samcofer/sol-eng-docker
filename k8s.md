@@ -1,10 +1,22 @@
 # Kubernetes
 
+## Setup tweaks that prevent automation
+
+- Need to figure out how to put secrets into the container without hard-coding the license...
+- The NFS server needs home directories
+- The NFS server needs to be mounted at creation onto the RSP server
+- The job launcher needs to be started...
+- User UIDs need to be mapped... we should probably specify these in our docker images for consistency
+- Need to figure out health checks to k8s stuff, so we can keep executing commands
+- Need to track through [this issue](https://github.com/kubernetes/kubernetes/issues/44528) 
+(and related links) so that we can get service names working and not use our
+ClusterIP hack...
+- Need to forward port 8787 so that it is accessible, we can interact with RSP, etc.
+- Need to get RSP version and RSP session version in sync
 
 ## Debugging Tips
 
 ```
-
 # ensure your kubectl context is set properly
 kubectl config current-context
 
@@ -25,6 +37,9 @@ kubectl port-forward --namespace=rstudio specific-pod-name host-port:guest-port
 
 # get interactive shell (only dealing with single-container pods)
 kubectl exec -it --namespace=rstudio specific-pod-name -- /bin/bash
+
+# figure out the clusterIP for a service (nfs01)
+kubectl describe services --namespace=rstudio nfs01
 ```
 
 ## Resources
@@ -64,6 +79,10 @@ Debugging Overview:
 - Try different options (`-o vers=4`, `-o nolock`)
 - Try different paths (`nfs01:/`, `nfs01:/actual/path`, `nfs01:/share`)
 - Permissions / ownership / UID mapping can be weird... (`ls -lha` and `id myuser` are your friends)
+
+Wins:
+- Use the ClusterIP of the node (`kubectl describe services --namespace=rstudio nfs01`)
+- [Read about the problem of resolving service names. This is promising for the future! ](https://github.com/kubernetes/kubernetes/issues/44528)
 
 Links:
 - [general troubleshooting](https://wiki.archlinux.org/index.php/NFS/Troubleshooting)
