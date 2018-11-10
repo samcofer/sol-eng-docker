@@ -1,9 +1,9 @@
 FROM httpd:2.4
 
 # install system deps
+	#pkg-config \
 RUN apt-get update && \
 	apt-get install -y \
-	pkg-config \
 	autoconf \
 	gcc \
 	gdebi \
@@ -17,6 +17,7 @@ RUN apt-get update && \
 RUN apt-get install -y \
 	libssl-dev \
 	libxmlsec1-dev \
+	make \
 	liblasso3-dev
 
 # build and install mod_auth_mellon
