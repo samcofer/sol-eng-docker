@@ -5,9 +5,10 @@
 - Need to figure out how to put secrets into the container without hard-coding the license...
 - The NFS server needs home directories
 - The NFS server needs to be mounted at creation onto the RSP server
-- The job launcher needs to be started...
+- The NFS server needs to support multiple exports (how does that work with NFS v4?)
+- The job launcher needs to be started... (can that happen before RSP is started?)
 - User UIDs need to be mapped... we should probably specify these in our docker images for consistency
-- Need to figure out health checks to k8s stuff, so we can keep executing commands
+- Need to figure out health checks to k8s stuff, so we can keep executing commands without `sleep`
 - Need to track through [this issue](https://github.com/kubernetes/kubernetes/issues/44528) 
 (and related links) so that we can get service names working and not use our
 ClusterIP hack...
