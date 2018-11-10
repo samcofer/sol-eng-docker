@@ -40,6 +40,17 @@ kubectl exec -it --namespace=rstudio specific-pod-name -- /bin/bash
 
 # figure out the clusterIP for a service (nfs01)
 kubectl describe services --namespace=rstudio nfs01
+
+# create secret secret-name/secret-key/secret-value
+echo 'secret-value' > secret-key.txt
+kubectl create secret --namespace=rstudio generic secret-name --from-file=./secret-key.txt
+
+# get secrets
+kubectl get secrets
+kubectl describe secrets/secret-name
+
+# get secret details
+kubectl get secret secret-name -o yaml
 ```
 
 ## Resources
