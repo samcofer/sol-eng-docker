@@ -27,6 +27,13 @@ spec:
         - containerPort: 8787
         securityContext:
           privileged: true
+        volumeMounts:
+          - name: nfs
+            mountPath: "/home"
+      volumes:
+      - name: nfs
+        persistentVolumeClaim:
+          claimName: nfs
 ---
 apiVersion: v1
 kind: Service
