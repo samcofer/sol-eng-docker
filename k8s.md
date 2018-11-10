@@ -13,6 +13,7 @@
 ClusterIP hack...
 - Need to forward port 8787 so that it is accessible, we can interact with RSP, etc.
 - Need to get RSP version and RSP session version in sync
+- Need to consolidate commands to set up k8s (user profiles, namespace, etc.)
 
 ## Debugging Tips
 
