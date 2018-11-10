@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: launcher
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: launcher
+  template:
+    metadata:
+      labels:
+        app: launcher
+    spec:
+      containers:
+      - name: launcher
+        image: compose_launcher-rsp:4
+        env:
+        - name: RSP_LICENSE
+          valueFrom:
+            secretKeyRef:
+              name: license
+              key: rsp
+        #command: ["sleep","10000"]
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8787
+        securityContext:
+          privileged: true
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: launcher
+spec:
+  type: NodePort
+  selector:
+    app: launcher
+  ports:
+  - port: 8787
