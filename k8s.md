@@ -46,13 +46,14 @@ kubectl describe services --namespace=rstudio nfs01
 
 ### Gold
 
+- [How to use secrets](https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/)
+- [Kubectl cheatsheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)
 - [K8s for compose/swarm users](https://hackernoon.com/a-kubernetes-guide-for-docker-swarm-users-c14c8aa266cc)
 - [Using the API from inside K8s](https://medium.com/@pczarkowski/the-kubernetes-api-call-is-coming-from-inside-the-cluster-f1a115bd2066)
 - [How to get Services to interact](https://kubernetes.io/docs/concepts/services-networking/connect-applications-service/)
 - [More pod conversation topics](https://www.quora.com/How-do-I-establish-communication-between-pods-in-Kubernetes)
 
-
-### Formal Docs on YAML Syntax
+### Formal Docs
 
 - [Pod](https://kubernetes.io/docs/concepts/workloads/pods/pod/)
 - [Configure a pod container](https://kubernetes.io/docs/tasks/configure-pod-container/)
@@ -61,13 +62,19 @@ kubectl describe services --namespace=rstudio nfs01
 - [More Auth?](https://kubernetes.io/docs/reference/access-authn-authz/rbac/)
 - [Service Accounts](https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/)
 - [Secrets](https://kubernetes.io/docs/concepts/configuration/secret/)
+- [Kubelet](https://kubernetes.io/docs/reference/command-line-tools-reference/kubelet/)
 
 ### Random Topics
 
+- [Debugging DNS resolution](https://kubernetes.io/docs/tasks/administer-cluster/dns-debugging-resolution/)
+- [Custom DNS stuff](https://kubernetes.io/docs/tasks/administer-cluster/dns-custom-nameservers/)
+- [More DNS for services/pods/etc.](https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/)
+- [Pods and Volume Storage](https://kubernetes.io/docs/tasks/configure-pod-container/configure-volume-storage/)
 - [Get an interactive shell in a container](https://kubernetes.io/docs/tasks/debug-application-cluster/get-shell-running-container/)
 - [Compose and Kubernetes](https://kubernetes.io/docs/tasks/configure-pod-container/translate-compose-kubernetes/)
 - [Define env vars](https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/)
 - [Docker stack deploy](https://docs.docker.com/engine/reference/commandline/stack_deploy/)
+- [how to use strace](https://www.tecmint.com/strace-commands-for-troubleshooting-and-debugging-linux/)
 
 ## Nightmares in NFS Land
 
@@ -82,7 +89,13 @@ Debugging Overview:
 
 Wins:
 - Use the ClusterIP of the node (`kubectl describe services --namespace=rstudio nfs01`)
-- [Read about the problem of resolving service names. This is promising for the future! ](https://github.com/kubernetes/kubernetes/issues/44528)
+- **----->>>** [Read about the problem of resolving service names. This is
+  promising for the future!
+](https://github.com/kubernetes/kubernetes/issues/44528)
+
+- [Persistent Volumes on K8s](https://medium.com/platformer-blog/nfs-persistent-volumes-with-kubernetes-a-case-study-ce1ed6e2c266)
+- [Another nfs k8s issue](https://github.com/kubernetes/kubernetes/issues/44377)
+- [Networking and URL resolution](https://blog.heptio.com/configuring-your-linux-host-to-resolve-a-local-kubernetes-clusters-service-urls-a8c7bdb212a7)
 
 Links:
 - [general troubleshooting](https://wiki.archlinux.org/index.php/NFS/Troubleshooting)
@@ -97,5 +110,6 @@ Links:
 - [docker nfs server / client](https://github.com/cpuguy83/docker-nfs-server)
 - [related blog post](https://container42.com/2014/03/29/docker-quicktip-4-remote-volumes/)
 
-- [how to use strace](https://www.tecmint.com/strace-commands-for-troubleshooting-and-debugging-linux/)
+- [minikube nfs issues](https://github.com/kubernetes/minikube/issues/2218)
 
+- [nfsv4 on k8s](https://www.reddit.com/r/homelab/comments/7x3xoq/nfs_4_on_kubernetes/)
