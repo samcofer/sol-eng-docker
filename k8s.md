@@ -3,6 +3,7 @@
 ## Setup tweaks that prevent automation
 
 - Need to figure out how to put secrets into the container without hard-coding the license...
+- Need to consolidate commands to set up k8s (user profiles, namespace, etc.)
 - The NFS server needs home directories
 - The NFS server needs to be mounted at creation onto the RSP server
 - The NFS server needs to support multiple exports (how does that work with NFS v4?)
@@ -12,9 +13,9 @@
 - Need to track through [this issue](https://github.com/kubernetes/kubernetes/issues/44528) 
 (and related links) so that we can get service names working and not use our
 ClusterIP hack...
-- Need to forward port 8787 so that it is accessible, we can interact with RSP, etc.
+- Need to forward port 8787 so that it is accessible, we can interact with RSP, etc. (similarly for the dashboard)
 - Need to get RSP version and RSP session version in sync
-- Need to consolidate commands to set up k8s (user profiles, namespace, etc.)
+- Ensure the appropriate service account is [being used](https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/) with `spec.serviceAccountName`?
 
 ## Debugging Tips
 
