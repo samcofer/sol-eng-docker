@@ -2,20 +2,22 @@
 
 ## Setup tweaks that prevent automation
 
-- Need to figure out how to put secrets into the container without hard-coding the license...
-- Need to consolidate commands to set up k8s (user profiles, namespace, etc.)
-- The NFS server needs home directories
-- The NFS server needs to be mounted at creation onto the RSP server
-- The NFS server needs to support multiple exports (how does that work with NFS v4?)
-- The job launcher needs to be started... (can that happen before RSP is started?)
-- User UIDs need to be mapped... we should probably specify these in our docker images for consistency
-- Need to figure out health checks to k8s stuff, so we can keep executing commands without `sleep`
-- Need to track through [this issue](https://github.com/kubernetes/kubernetes/issues/44528) 
-(and related links) so that we can get service names working and not use our
-ClusterIP hack...
-- Need to forward port 8787 so that it is accessible, we can interact with RSP, etc. (similarly for the dashboard)
-- Need to get RSP version and RSP session version in sync
-- Ensure the appropriate service account is [being used](https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/) with `spec.serviceAccountName`?
+[x] Need to figure out how to put secrets into the container without hard-coding the license...
+[x] Need to consolidate commands to set up k8s (user profiles, namespace, etc.)
+[x] Setup LDAP server in k8s
+[ ] Use LDAP to provision the users / home directories / etc. as needed
+[ ] User UIDs need to be mapped... we should probably specify these in our docker images for consistency
+[ ] The NFS server needs home directories
+[ ] The NFS server needs to be mounted at creation onto the RSP server
+[x] The NFS server needs to support multiple exports (how does that work with NFS v4?)
+[ ] The job launcher needs to be started... (can that happen before RSP is started?)
+[ ] Maybe split the job launcher into its own service?
+[ ] Need to figure out health checks to k8s stuff, so we can keep executing commands without `sleep`
+[ ] Need to track through [this issue](https://github.com/kubernetes/kubernetes/issues/44528) 
+(and related links) so that we can get service names working and not use our clusterIP hack...
+[ ] Need to auto-forward port 8787 so that it is accessible, we can interact with RSP, etc. (similarly for the dashboard)
+[ ] Need to get RSP version and RSP session version in sync
+[ ] Ensure the appropriate service account is [being used](https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/) with `spec.serviceAccountName`?
 
 ## Debugging Tips
 
@@ -110,6 +112,10 @@ Wins:
 - [Persistent Volumes on K8s](https://medium.com/platformer-blog/nfs-persistent-volumes-with-kubernetes-a-case-study-ce1ed6e2c266)
 - [Another nfs k8s issue](https://github.com/kubernetes/kubernetes/issues/44377)
 - [Networking and URL resolution](https://blog.heptio.com/configuring-your-linux-host-to-resolve-a-local-kubernetes-clusters-service-urls-a8c7bdb212a7)
+
+- [Avoid no_root_squash](https://www.tecmint.com/setting-up-nfs-server-with-kerberos-based-authentication/)
+- [Explaining no_root_squash](https://bencane.com/2012/11/23/nfs-setting-up-a-basic-nfs-file-system-share/)
+- [Explaining user mapping](https://unix.stackexchange.com/questions/9442/why-is-file-ownership-inconsistent-between-two-systems-mounting-the-same-nfs-sha)
 
 Links:
 - [general troubleshooting](https://wiki.archlinux.org/index.php/NFS/Troubleshooting)
