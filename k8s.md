@@ -21,6 +21,10 @@
   used](https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/)
 with `spec.serviceAccountName`?
 
+## To Do
+
+- rebuild the RSP pod while sessions are in flight... sessions get disconnected / picked up / but then a 401 error...
+
 ## Debugging Tips
 
 ```
