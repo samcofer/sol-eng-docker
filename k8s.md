@@ -8,7 +8,7 @@
 - [ ] Use LDAP to provision the users / home directories / etc. as needed
 - [ ] User UIDs need to be mapped... we should probably specify these in our docker images for consistency
 - [ ] The NFS server needs home directories
-- [ ] The NFS server needs to be mounted at creation onto the RSP server
+- [x] The NFS server needs to be mounted at creation onto the RSP server
 - [x] The NFS server needs to support multiple exports (how does that work with NFS v4?)
 - [ ] The job launcher needs to be started... (can that happen before RSP is started?)
 - [ ] Maybe split the job launcher into its own service?
