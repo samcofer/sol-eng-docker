@@ -13,25 +13,26 @@ spec:
         app: ldap
     spec:
       containers:
-      - name: ldap
+      - name: openldap
         image: osixia/openldap
         env:
         - name: LDAP_TLS
-          value: false
-        command: ["--copy-service"]
+          value: "false"
+        args: ["--copy-service"]
         imagePullPolicy: Never
         ports:
         - containerPort: 389
         volumeMounts:
           - name: ldap-users
             mountPath: "/container/service/slapd/assets/config/bootstrap/ldif/50-bootstrap.ldif"
+            subPath: "50-bootstrap.ldif"
       - name: ldapadmin
         image: osixia/phpldapadmin
         env:
         - name: PHPLDAPADMIN_LDAP_HOSTS
-          value: openldap
+          value: "localhost"
         - name: PHPLDAPADMIN_HTTPS
-          value: false
+          value: "false"
         imagePullPolicy: Never
         ports:
         - containerPort: 80
@@ -41,6 +42,7 @@ spec:
           name: ldap-users
           items:
           - key: users.ldif
+            path: "50-bootstrap.ldif"
       restartPolicy: Always
 ---
 apiVersion: v1
@@ -53,4 +55,3 @@ spec:
     app: ldap
   ports:
   - port: 389
-  - port: 80
