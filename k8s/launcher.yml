@@ -21,10 +21,10 @@ spec:
             secretKeyRef:
               name: license
               key: rsp
-        #command: ["sleep","10000"]
+        args: ["/usr/lib/rstudio-server/bin/rstudio-launcher"]
         imagePullPolicy: Never
         ports:
-        - containerPort: 8787
+        - containerPort: 5559
         securityContext:
           privileged: true
         volumeMounts:
@@ -44,4 +44,4 @@ spec:
   selector:
     app: launcher
   ports:
-  - port: 8787
+  - port: 5559
