@@ -10,8 +10,8 @@
 - [ ] The NFS server needs home directories
 - [x] The NFS server needs to be mounted at creation onto the RSP server
 - [x] The NFS server needs to support multiple exports (how does that work with NFS v4?)
-- [ ] The job launcher needs to be started... (can that happen before RSP is started?)
-- [ ] Maybe split the job launcher into its own service?
+- [x] The job launcher needs to be started... (can that happen before RSP is started?)
+- [x] Maybe split the job launcher into its own service?
 - [ ] Need to figure out health checks to k8s stuff, so we can keep executing commands without `sleep`
 - [ ] Need to track through [this issue](https://github.com/kubernetes/kubernetes/issues/44528) 
 (and related links) so that we can get service names working and not use our clusterIP hack...
@@ -23,7 +23,19 @@ with `spec.serviceAccountName`?
 
 ## To Do
 
+### Cleanup
+
+- why doesn't the license activation deactivate on container teardown? :(
+- pull out the launcher bits from RSP... and the RSP bits from launcher!
+
+### Product
+
 - rebuild the RSP pod while sessions are in flight... sessions get disconnected / picked up / but then a 401 error...
+- separate RSP / launcher... then the homepage does not load at all if launcher is not working 
+- rstudio-launcher > somefile 2>&1 gives no output... and nothing in the file...
+- how restrictive is the `launcher.conf` URL?
+- does launcher _actually_ need the `job-launcher` role? I'm not using it...?
+- does launcher need the home directory...?
 
 ## Debugging Tips
 
