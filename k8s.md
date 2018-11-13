@@ -86,10 +86,13 @@ kubectl get secret secret-name -o yaml
 - [Using the API from inside K8s](https://medium.com/@pczarkowski/the-kubernetes-api-call-is-coming-from-inside-the-cluster-f1a115bd2066)
 - [How to get Services to interact](https://kubernetes.io/docs/concepts/services-networking/connect-applications-service/)
 - [More pod conversation topics](https://www.quora.com/How-do-I-establish-communication-between-pods-in-Kubernetes)
+- [k8s `command` / `args` vs Docker Entrypoint / Cmd](https://stackoverflow.com/questions/44316361/difference-between-docker-entrypoint-and-kubernetes-container-spec-command)
 
 ### Formal Docs
 
 - [Pod](https://kubernetes.io/docs/concepts/workloads/pods/pod/)
+- [ConfigMap (i.e. mount a file into a pod)](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/)
+    - [And an example](https://stackoverflow.com/questions/33415913/whats-the-best-way-to-share-mount-one-file-into-a-pod)
 - [Configure a pod container](https://kubernetes.io/docs/tasks/configure-pod-container/)
 - [Service](https://kubernetes.io/docs/concepts/services-networking/service/)
 - [Authentication](https://kubernetes.io/docs/reference/access-authn-authz/authentication/)
