@@ -118,6 +118,8 @@ kubectl get secret secret-name -o yaml
 Unfortunately, I have travelled down a deep dark hole related to NFS. My aim: NFS server in a docker container. A handful of people say it is possible. 
 I have successfully achieved read and modify files, but _create file_ fails for some crazy reason.
 
+**UPDATE:** This turns out to have been a "Mac" thing. Apparently `no_root_squash` is not understood on Mac... so don't use it in your NFS config!
+
 Debugging Overview:
 - Try different protocols (`-t nfs`, `-t nfs4`)
 - Try different options (`-o vers=4`, `-o nolock`)
