@@ -22,6 +22,7 @@ spec:
               name: license
               key: rsp
         args: ["/usr/lib/rstudio-server/bin/rstudio-launcher"]
+        #command: ["sleep","10000"]
         imagePullPolicy: Never
         ports:
         - containerPort: 5559
