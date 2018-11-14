@@ -1,19 +1,21 @@
 version: '2.3'
 services:
 
-  openldap:
-    hostname: openldap
+  multi-openldap:
+    hostname: multi-openldap
     image: osixia/openldap
     ports:
        - "389" # insecure port - use if LDAP_TLS=false
        #- "636" # secure port - use if LDAP_TLS=true
     volumes:
       - ../cluster/users.ldif:/container/service/slapd/assets/config/bootstrap/ldif/50-bootstrap.ldif
+      - ../cluster/data/slapd/database:/var/lib/ldap
+      - ../cluster/data/slapd/config:/etc/ldap/slapd.d
     environment:
       - LDAP_TLS=false
     command: ["--copy-service"]
 
-  ldapadmin:
+  multi-ldapadmin:
     hostname: ldapadmin
     image: osixia/phpldapadmin
     ports:
@@ -23,4 +25,4 @@ services:
       - PHPLDAPADMIN_LDAP_HOSTS=openldap
       - PHPLDAPADMIN_HTTPS=false
     links:
-      - openldap
+      - multi-openldap:openldap
