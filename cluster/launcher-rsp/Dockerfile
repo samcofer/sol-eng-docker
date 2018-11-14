@@ -50,24 +50,19 @@ RUN \
 #ENTRYPOINT ["/usr/local/bin/dumb-init", "--", "/docker-entrypoint.sh"]
 #CMD ["/usr/lib/rstudio-server/bin/rserver", "--server-daemonize=0"]
 
-COPY launcher-rsp/rserver.conf /etc/rstudio/rserver.conf
-
-#COPY users /tmp/users
-#RUN awk ' { system("useradd -m -s /bin/bash "$1" && echo "$1":"$2" | chpasswd") } ' /tmp/users && \
-#	rm /tmp/users
-
+COPY ./launcher-rsp/rserver.conf /etc/rstudio/rserver.conf
 COPY ./launcher-rsp/docker-entrypoint.sh /docker-entrypoint.sh
 COPY ./launcher-rsp/launcher.conf /etc/rstudio/launcher.conf
-
-# debugging tools
-RUN apt-get install -y curl strace nfs-common vim sssd
-
-EXPOSE 8787
-
 COPY ./launcher-rsp/supervisor.sh /supervisor.sh
 COPY ./launcher-rsp/launcher-mounts /etc/rstudio/launcher-mounts
 
-COPY ./sssd.conf /etc/sssd.conf
+# debugging tools
+RUN apt-get install -y curl strace nfs-common vim sssd sssd-ldap
+
+EXPOSE 8787
+
+# configure ldap
+COPY ./sssd.conf /etc/sssd/sssd.conf
 COPY ./rstudio-sssd /etc/pam.d/rstudio
 COPY ./rstudio-session-sssd /etc/pam.d/rstudio-session
 
