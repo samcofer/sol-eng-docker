@@ -27,6 +27,8 @@ with `spec.serviceAccountName`?
 
 - why doesn't the license activation deactivate on container teardown? :(
 - pull out the launcher bits from RSP... and the RSP bits from launcher!
+- is the s6 ugliness worth it?
+- what sort of weirdness is happening with home directories being nonstandard...? clean this up in ldap!
 
 ### Product
 
@@ -35,7 +37,8 @@ with `spec.serviceAccountName`?
 - rstudio-launcher > somefile 2>&1 gives no output... and nothing in the file...
 - how restrictive is the `launcher.conf` URL?
 - does launcher _actually_ need the `job-launcher` role? I'm not using it...?
-- does launcher need the home directory...?
+- does launcher need the home directory...? (seems like it)
+- is there a way to provision users on the launcher server... RSP gets it from PAM logon...
 
 ## Debugging Tips
 
