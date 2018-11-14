@@ -66,16 +66,17 @@ COPY ./sssd.conf /etc/sssd/sssd.conf
 COPY ./rstudio-sssd /etc/pam.d/rstudio
 COPY ./rstudio-session-sssd /etc/pam.d/rstudio-session
 
+ENV S6_VERSION=${S6_VERSION:-v1.21.4.0}
 RUN wget -P /tmp/ https://github.com/just-containers/s6-overlay/releases/download/${S6_VERSION}/s6-overlay-amd64.tar.gz \
   && tar xzf /tmp/s6-overlay-amd64.tar.gz -C / \
-  && mkdir -p /etc/services.d/rstudio 
-  && echo '#!/usr/bin/with-contenv bash \
-          \n## load /etc/environment vars first: \
-            \n for line in $( cat /etc/environment ) ; do export $line ; done \
-          \n exec /usr/lib/rstudio-server/bin/rserver --server-daemonize 0' \
-          > /etc/services.d/rstudio/run \
-  && echo '#!/bin/bash \
-          \n rstudio-server stop' \
-          > /etc/services.d/rstudio/finish
+  && mkdir -p /etc/services.d/rstudio
+COPY ./launcher-rsp/run /etc/services.d/rstudio/run
+COPY ./launcher-rsp/finish /etc/services.d/rstudio/finish
+
+# adhoc fixes to make it work...
+RUN mkdir -p /home/users && \
+	 chmod -R 777 /home/users && \
+	chmod -R 777 /etc/services.d/rstudio
+
 
 CMD ["/init"]
