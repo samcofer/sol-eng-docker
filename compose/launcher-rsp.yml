@@ -3,7 +3,7 @@ services:
 
   launcher-rsp:
     hostname: launcher-rsp
-    image: compose_launcher-rsp:4
+    image: compose_launcher-rsp:6
     build:
       context: ../cluster
       dockerfile: launcher-rsp/Dockerfile
@@ -11,6 +11,17 @@ services:
       - RSP_LICENSE
     ports:
       - 8787:8787
+
+  launcher:
+    hostname: launcher
+    image: compose_launcher
+    build:
+      context: ../cluster
+      dockerfile: launcher/Dockerfile
+    environment:
+      - RSP_LICENSE
+    ports:
+      - 5559:5559
 
   launcher-session:
     hostname: launcher-session
