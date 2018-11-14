@@ -14,14 +14,14 @@ spec:
     spec:
       containers:
       - name: launcher
-        image: compose_launcher-rsp:4
+        image: compose_launcher:latest
         env:
         - name: RSP_LICENSE
           valueFrom:
             secretKeyRef:
               name: license
               key: rsp
-        args: ["/usr/lib/rstudio-server/bin/rstudio-launcher"]
+        #args: ["/usr/lib/rstudio-server/bin/rstudio-launcher"]
         #command: ["sleep","10000"]
         imagePullPolicy: Never
         ports:
