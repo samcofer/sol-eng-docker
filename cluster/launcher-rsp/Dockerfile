@@ -43,27 +43,44 @@ RUN \
   ## use more robust file locking to avoid errors when using shared volumes:
   && echo 'lock-type=advisory' >> /etc/rstudio/file-locks
 
+# commented for now because RSP does not log well in docker :(
 # add dumb-init init system
-RUN wget -O /usr/local/bin/dumb-init https://github.com/Yelp/dumb-init/releases/download/v1.1.3/dumb-init_1.1.3_amd64 \
-  && chmod +x /usr/local/bin/dumb-init
+#RUN wget -O /usr/local/bin/dumb-init https://github.com/Yelp/dumb-init/releases/download/v1.1.3/dumb-init_1.1.3_amd64 \
+#  && chmod +x /usr/local/bin/dumb-init
+#ENTRYPOINT ["/usr/local/bin/dumb-init", "--", "/docker-entrypoint.sh"]
+#CMD ["/usr/lib/rstudio-server/bin/rserver", "--server-daemonize=0"]
 
 COPY launcher-rsp/rserver.conf /etc/rstudio/rserver.conf
 
-COPY users /tmp/users
-RUN awk ' { system("useradd -m -s /bin/bash "$1" && echo "$1":"$2" | chpasswd") } ' /tmp/users && \
-	rm /tmp/users
+#COPY users /tmp/users
+#RUN awk ' { system("useradd -m -s /bin/bash "$1" && echo "$1":"$2" | chpasswd") } ' /tmp/users && \
+#	rm /tmp/users
 
 COPY ./launcher-rsp/docker-entrypoint.sh /docker-entrypoint.sh
-ENTRYPOINT ["/usr/local/bin/dumb-init", "--", "/docker-entrypoint.sh"]
-CMD ["/usr/lib/rstudio-server/bin/rserver", "--server-daemonize=0"]
-
 COPY ./launcher-rsp/launcher.conf /etc/rstudio/launcher.conf
 
-RUN apt-get install -y curl strace nfs-common vim && \
-	groupadd devs && groupadd devops && \
-	usermod -aG devs bobo && usermod -aG devops bobo
+# debugging tools
+RUN apt-get install -y curl strace nfs-common vim sssd
 
 EXPOSE 8787
 
 COPY ./launcher-rsp/supervisor.sh /supervisor.sh
 COPY ./launcher-rsp/launcher-mounts /etc/rstudio/launcher-mounts
+
+COPY ./sssd.conf /etc/sssd.conf
+COPY ./rstudio-sssd /etc/pam.d/rstudio
+COPY ./rstudio-session-sssd /etc/pam.d/rstudio-session
+
+RUN wget -P /tmp/ https://github.com/just-containers/s6-overlay/releases/download/${S6_VERSION}/s6-overlay-amd64.tar.gz \
+  && tar xzf /tmp/s6-overlay-amd64.tar.gz -C / \
+  && mkdir -p /etc/services.d/rstudio 
+  && echo '#!/usr/bin/with-contenv bash \
+          \n## load /etc/environment vars first: \
+            \n for line in $( cat /etc/environment ) ; do export $line ; done \
+          \n exec /usr/lib/rstudio-server/bin/rserver --server-daemonize 0' \
+          > /etc/services.d/rstudio/run \
+  && echo '#!/bin/bash \
+          \n rstudio-server stop' \
+          > /etc/services.d/rstudio/finish
+
+CMD ["/init"]
