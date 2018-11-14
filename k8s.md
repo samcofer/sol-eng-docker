@@ -29,6 +29,9 @@ with `spec.serviceAccountName`?
 - pull out the launcher bits from RSP... and the RSP bits from launcher!
 - is the s6 ugliness worth it?
 - what sort of weirdness is happening with home directories being nonstandard...? clean this up in ldap!
+    - the user that is provisioned in the session container probably has a default home directory...
+    - yes, home directory does not seem to be mapped from the launcher server to the session
+    - `/home/user` works fine, but `/home/users/user` does not (even when set correctly on rsp / launcher)
 
 ### Product
 
@@ -39,6 +42,7 @@ with `spec.serviceAccountName`?
 - does launcher _actually_ need the `job-launcher` role? I'm not using it...?
 - does launcher need the home directory...? (seems like it)
 - is there a way to provision users on the launcher server... RSP gets it from PAM logon...
+    - UID / GID _has_ to be the same, or problems!
 
 ## Debugging Tips
 
