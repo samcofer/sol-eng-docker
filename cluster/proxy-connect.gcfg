@@ -26,3 +26,4 @@ Provider = proxy
 
 [ProxyAuth]
 UsernameHeader = X-Secret-User-Header
+Logging = true
