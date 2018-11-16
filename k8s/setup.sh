@@ -17,5 +17,5 @@ res=$?
 if [ $res ]; then
   echo 'the ldap-users configmap does not exist in the rstudio namespace'
   echo 'creating configmap ldap-users'
-  kubectl create configmap --namespace=rstudio ldap-users --from-file ../cluster/users.ldif
+  kubectl create configmap --namespace=rstudio ldap-users --from-file ./cluster/users.ldif
 fi
