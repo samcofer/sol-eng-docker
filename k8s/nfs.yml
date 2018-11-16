@@ -18,7 +18,7 @@ spec:
         args: ["/var/home"]
         env:
         - name: NFS_OPTS
-          value: fsid=0,no_subtree_check,no_auth_nlm,insecure
+          value: rw,async,fsid=0,no_subtree_check,no_auth_nlm,insecure
         volumeMounts:
         - mountPath: /var/home
           name: home-volume
