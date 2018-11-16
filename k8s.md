@@ -1,5 +1,27 @@
 # Kubernetes
 
+## Getting Started
+
+```
+# create rstudio namespace and LDAP seed users
+make k8s-setup
+
+# set up nfs
+make k8s-nfs-up
+
+# ip hack...
+make k8s-nfs-fix-ip
+
+# stand up ldap
+make k8s-ldap-up
+
+# stand up launcher
+make k8s-launcher-ldap-up
+
+# stand up rsp
+make k8s-launcher-rsp-ldap-up
+```
+
 ## Setup tweaks that prevent automation
 
 - [x] Need to figure out how to put secrets into the container without hard-coding the license...
@@ -17,7 +39,7 @@
 (and related links) so that we can get service names working and not use our clusterIP hack...
 - [ ] Need to auto-forward port 8787 so that it is accessible, we can interact with RSP, etc. (similarly for the dashboard)
 - [ ] Need to get RSP version and RSP session version in sync
-- [ ] Ensure the appropriate service account is [being
+- [x] Ensure the appropriate service account is [being
   used](https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/)
 with `spec.serviceAccountName`?
 
@@ -28,6 +50,7 @@ with `spec.serviceAccountName`?
 - why doesn't the license activation deactivate on container teardown? :(
 - pull out the launcher bits from RSP... and the RSP bits from launcher!
 - is the s6 ugliness worth it?
+- need to set up a persistent node location for the home directories...
 - what sort of weirdness is happening with home directories being nonstandard...? clean this up in ldap!
     - the user that is provisioned in the session container probably has a default home directory...
     - yes, home directory does not seem to be mapped from the launcher server to the session
