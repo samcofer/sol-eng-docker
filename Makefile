@@ -49,18 +49,20 @@ download-connect:
 k8s-setup:
 	./k8s/setup.sh
 
-k8s-helpers:
-	source ./k8s/helpers.sh
+#k8s-helpers:
+#	source ./k8s/helpers.sh
 
 k8s-nfs-up:
 	kubectl --namespace=rstudio apply -f ./k8s/nfs.yml
 k8s-nfs-down:
 	kubectl --namespace=rstudio delete -f ./k8s/nfs.yml
 
-# be sure the IP is set properly!
+k8s-nfs-ip-fix:
+	./k8s/ip_hack.sh
+
 k8s-nfs-pv-up:
-	echo 'be sure the IP is set properly in ./k8s/pv.yml !!' \
-	echo 'you can get it with `kubectl --namespace=rstudio describe service nfs01`' \
+	echo 'be sure the IP is set properly in ./k8s/pv.yml !!' && \
+	echo 'you can get it with `kubectl --namespace=rstudio describe service nfs01`' && \
 	kubectl --namespace=rstudio apply -f ./k8s/pv.yml
 k8s-nfs-pv-down:
 	kubectl --namespace=rstudio delete -f ./k8s/pv.yml
@@ -68,17 +70,34 @@ k8s-nfs-pv-down:
 k8s-create-secret-rsp:
 	kubectl --namespace=rstudio create secret generic license --from-file=./k8s/rsp
 
+k8s-ldap-up:
+	kubectl --namespace=rstudio apply -f ./k8s/ldap.yml
+k8s-ldap-down:
+	kubectl --namespace=rstudio delete -f ./k8s/ldap.yml
+
 k8s-launcher-up:
-	echo 'be sure the IP is set properly in ./cluster/launcher-rsp/launcher-mounts!!' \
-	echo 'you can get it with `kubectl --namespace=rstudio describe service nfs01`' \
+	echo 'be sure the IP is set properly in ./cluster/launcher-rsp/launcher-mounts!!' && \
+	echo 'you can get it with `kubectl --namespace=rstudio describe service nfs01`' && \
 	kubectl --namespace=rstudio apply -f ./k8s/launcher.yml
 k8s-launcher-down:
 	kubectl --namespace=rstudio delete -f ./k8s/launcher.yml
 
+k8s-launcher-ldap-up:
+	echo 'be sure the IP is set properly in ./cluster/launcher-rsp/launcher-mounts!!' && \
+	echo 'you can get it with `kubectl --namespace=rstudio describe service nfs01`' && \
+	kubectl --namespace=rstudio apply -f ./k8s/launcher-ldap.yml
+k8s-launcher-ldap-down:
+	kubectl --namespace=rstudio delete -f ./k8s/launcher-ldap.yml
+
 k8s-rsp-up:
-	kubectl --namespace=rstudio apply -f ./k8s/launcher.yml
+	kubectl --namespace=rstudio apply -f ./k8s/rsp.yml
 k8s-rsp-down:
-	kubectl --namespace=rstudio delete -f ./k8s/launcher.yml
+	kubectl --namespace=rstudio delete -f ./k8s/rsp.yml
+
+k8s-rsp-ldap-up:
+	kubectl --namespace=rstudio apply -f ./k8s/rsp-ldap.yml
+k8s-rsp-ldap-down:
+	kubectl --namespace=rstudio delete -f ./k8s/rsp-ldap.yml
 
 #---------------------------------------------
 # Kerberos
