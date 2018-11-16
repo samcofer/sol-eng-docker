@@ -50,11 +50,8 @@ RUN \
 #ENTRYPOINT ["/usr/local/bin/dumb-init", "--", "/docker-entrypoint.sh"]
 #CMD ["/usr/lib/rstudio-server/bin/rserver", "--server-daemonize=0"]
 
-COPY ./launcher-rsp/rserver.conf /etc/rstudio/rserver.conf
-COPY ./launcher-rsp/docker-entrypoint.sh /docker-entrypoint.sh
-COPY ./launcher-rsp/launcher.conf /etc/rstudio/launcher.conf
-COPY ./launcher-rsp/supervisor.sh /supervisor.sh
-COPY ./launcher-rsp/launcher-mounts /etc/rstudio/launcher-mounts
+COPY ./launcher-rsp-ldap/rserver.conf /etc/rstudio/rserver.conf
+COPY ./launcher-rsp-ldap/supervisor.sh /supervisor.sh
 
 # debugging tools
 RUN apt-get install -y curl strace nfs-common vim sssd sssd-ldap
@@ -70,13 +67,12 @@ ENV S6_VERSION=${S6_VERSION:-v1.21.4.0}
 RUN wget -P /tmp/ https://github.com/just-containers/s6-overlay/releases/download/${S6_VERSION}/s6-overlay-amd64.tar.gz \
   && tar xzf /tmp/s6-overlay-amd64.tar.gz -C / \
   && mkdir -p /etc/services.d/rstudio
-COPY ./launcher-rsp/run /etc/services.d/rstudio/run
-COPY ./launcher-rsp/finish /etc/services.d/rstudio/finish
+
+COPY ./launcher-rsp-ldap/run /etc/services.d/rstudio/run
+COPY ./launcher-rsp-ldap/finish /etc/services.d/rstudio/finish
 
 # adhoc fixes to make it work...
-RUN mkdir -p /home/users && \
-	 chmod -R 777 /home/users && \
-	chmod -R 777 /etc/services.d/rstudio
+RUN chmod -R 777 /etc/services.d/rstudio
 
 
 CMD ["/init"]
