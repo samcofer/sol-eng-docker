@@ -10,9 +10,6 @@ test-env-up: network-up
 
 test-env-down: network-down
 
-kerb-up: network-up kerb-server-up kerb-ssh-up kerb-rsp-up kerb-rsc-up
-
-kerb-down: kerb-rsc-down kerb-rsp-down kerb-ssh-down kerb-server-down
 
 #---------------------------------------------
 # Network
@@ -96,6 +93,10 @@ ssp-down:
 #---------------------------------------------
 # Kerberos
 #---------------------------------------------
+kerb-up: network-up kerb-server-up kerb-ssh-up kerb-rsp-up kerb-rsc-up
+
+kerb-down: kerb-rsc-down kerb-rsp-down kerb-ssh-down kerb-server-down
+
 kerb-server-up:
 	NETWORK=${NETWORK} \
         docker-compose -f compose/kerberos-base.yml -f compose/make-network.yml up -d

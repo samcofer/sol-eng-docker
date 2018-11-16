@@ -1,3 +1,4 @@
 .env
 *.deb
 *.log
+cluster/data
