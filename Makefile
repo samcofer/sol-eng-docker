@@ -85,6 +85,7 @@ k8s-launcher-down:
 k8s-launcher-ldap-up:
 	echo 'be sure the IP is set properly in ./cluster/launcher-rsp/launcher-mounts!!' && \
 	echo 'you can get it with `kubectl --namespace=rstudio describe service nfs01`' && \
+	docker-compose -f compose/launcher-rsp-ldap.yml build launcher-ldap && \
 	kubectl --namespace=rstudio apply -f ./k8s/launcher-ldap.yml
 k8s-launcher-ldap-down:
 	kubectl --namespace=rstudio delete -f ./k8s/launcher-ldap.yml
@@ -95,6 +96,7 @@ k8s-rsp-down:
 	kubectl --namespace=rstudio delete -f ./k8s/rsp.yml
 
 k8s-rsp-ldap-up:
+	docker-compose -f compose/launcher-rsp-ldap.yml build launcher-rsp-ldap && \
 	kubectl --namespace=rstudio apply -f ./k8s/rsp-ldap.yml
 k8s-rsp-ldap-down:
 	kubectl --namespace=rstudio delete -f ./k8s/rsp-ldap.yml
