@@ -15,9 +15,10 @@ spec:
       containers:
       - name: nfs01
         image: colearendt/nfs-server-alpine:latest
+        args: ["/var/home"]
         env:
-        - name: SHARED_DIRECTORY
-          value: "/var/home" 
+        - name: NFS_OPTS
+          value: fsid=0,no_subtree_check,no_auth_nlm,insecure
         volumeMounts:
         - mountPath: /var/home
           name: home-volume
