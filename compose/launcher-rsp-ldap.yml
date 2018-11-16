@@ -3,7 +3,7 @@ services:
 
   launcher-rsp-ldap:
     hostname: launcher-rsp-ldap
-    image: compose_launcher-rsp-ldap
+    image: rstudio/launcher-rsp-ldap
     build:
       context: ../cluster
       dockerfile: launcher-rsp-ldap/Dockerfile
@@ -14,7 +14,7 @@ services:
 
   launcher-ldap:
     hostname: launcher-ldap
-    image: compose_launcher-ldap
+    image: rstudio/launcher-ldap
     build:
       context: ../cluster
       dockerfile: launcher-ldap/Dockerfile
@@ -25,7 +25,7 @@ services:
 
   launcher-session:
     hostname: launcher-session
-    image: colearendt/rsession-demo:prelaunch
+    image: colearendt/rsession-demo
     build:
       context: ../cluster
       dockerfile: launcher-session/Dockerfile
