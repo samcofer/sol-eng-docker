@@ -67,7 +67,7 @@ k8s-nfs-pv-up:
 k8s-nfs-pv-down:
 	kubectl --namespace=rstudio delete -f ./k8s/pv.yml
 
-k8s-create-secret-rsp:
+k8s-secret-rsp:
 	kubectl --namespace=rstudio create secret generic license --from-file=./k8s/rsp
 
 k8s-ldap-up:
