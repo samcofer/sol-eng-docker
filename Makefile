@@ -4,7 +4,7 @@ PWD := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 PROJECT=auth-docker
 NETWORK=${PROJECT}_default
 SCALE=1
-CONNECT_BINARY_URL=rstudio-connect_1.6.9-3688_amd64.deb
+CONNECT_BINARY_URL=rstudio-connect_1.6.10-3_amd64.deb
 
 test-env-up: network-up
 
@@ -160,6 +160,12 @@ proxy-connect-up-hide:
 	CONNECT_LICENSE=$(CONNECT_LICENSE) \
 	CONNECT_BINARY_URL=${CONNECT_BINARY_URL} \
 	docker-compose -f compose/proxy-connect.yml -f compose/make-network.yml up -d
+
+proxy-connect-build: download-connect proxy-connect-build-hide
+proxy-connect-build-hide:
+	NETWORK=${NETWORK} \
+	CONNECT_BINARY_URL=${CONNECT_BINARY_URL} \
+	docker-compose -f compose/proxy-connect.yml -f compose/make-network.yml build
 
 proxy-connect-down:
 	NETWORK=${NETWORK} \
