@@ -16,5 +16,11 @@ activate() {
         exit 1
     fi     
 }
+
+# start sssd
+# we should really be a bit more sophisticated...
+sssd
+
 activate
+
  exec /usr/lib/rstudio-server/bin/rserver --server-daemonize 0
