@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: launcher
-        image: compose_launcher:latest
+        image: rstudio/launcher-ldap
         env:
         - name: RSP_LICENSE
           valueFrom:
