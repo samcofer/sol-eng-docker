@@ -12,6 +12,9 @@ make k8s-nfs-up
 # ip hack...
 make k8s-nfs-fix-ip
 
+# stand up pv
+make k8s-nfs-pv-up
+
 # stand up ldap
 make k8s-ldap-up
 
