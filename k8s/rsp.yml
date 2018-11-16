@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: rsp
-        image: compose_launcher-rsp:4
+        image: rstudio/launcher-rsp
         env:
         - name: RSP_LICENSE
           valueFrom:
