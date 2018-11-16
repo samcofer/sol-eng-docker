@@ -3,7 +3,7 @@ services:
 
   launcher-rsp:
     hostname: launcher-rsp
-    image: compose_launcher-rsp:6
+    image: rstudio/launcher-rsp
     build:
       context: ../cluster
       dockerfile: launcher-rsp/Dockerfile
