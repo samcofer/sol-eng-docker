@@ -15,6 +15,10 @@ make k8s-nfs-fix-ip
 # stand up ldap
 make k8s-ldap-up
 
+# create secret for licensing rsp
+echo 'MY_LICENSE_KEY' > k8s/rsp
+make k8s-secret-rsp
+
 # stand up launcher
 make k8s-launcher-ldap-up
 
@@ -55,6 +59,9 @@ with `spec.serviceAccountName`?
     - the user that is provisioned in the session container probably has a default home directory...
     - yes, home directory does not seem to be mapped from the launcher server to the session
     - `/home/user` works fine, but `/home/users/user` does not (even when set correctly on rsp / launcher)
+- need to implement `sssd` in the `S6` init script...
+- need to figure out why the home directory is not writable by default...
+- need to switch home directories to `/home/user`
 
 ### Product
 
