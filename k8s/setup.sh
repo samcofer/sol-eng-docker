@@ -1,7 +1,7 @@
 # build rstudio namespace
 ns=`kubectl get namespace rstudio`
 res=$?
-if [ $res ]; then
+if [ $res -gt 0 ]; then
   echo 'rstudio namespace does not exist'
   echo 'creating rstudio namespace'
   kubectl create namespace rstudio
@@ -14,7 +14,7 @@ fi
 # build configmap for LDAP seed users
 ldap_users=`kubectl get configmap --namespace=rstudio ldap-users`
 res=$?
-if [ $res ]; then
+if [ $res -gt 0 ]; then
   echo 'the ldap-users configmap does not exist in the rstudio namespace'
   echo 'creating configmap ldap-users'
   kubectl create configmap --namespace=rstudio ldap-users --from-file ./cluster/users.ldif
