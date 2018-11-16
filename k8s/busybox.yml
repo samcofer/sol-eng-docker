@@ -1,6 +1,7 @@
 # This mounts the nfs volume claim into /mnt and continuously
 # overwrites /mnt/index.html with the time and hostname of the pod.
 
+# beware... these sleep intervals can be horrible to tearing down the pods
 apiVersion: v1
 kind: ReplicationController
 metadata:
