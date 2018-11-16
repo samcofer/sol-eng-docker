@@ -7,7 +7,7 @@ fi
 
 ip_addr=`kubectl --namespace=rstudio get service nfs01 -o json | jq -r '.spec.clusterIP'`
 res=$?
-if [ $res ]; then
+if [ $res -gt 0 ]; then
   echo "ERROR getting IP address: ${ip_addr}"
   exit 1
 fi
