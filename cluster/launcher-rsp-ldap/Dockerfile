@@ -72,7 +72,7 @@ COPY ./launcher-rsp-ldap/run /etc/services.d/rstudio/run
 COPY ./launcher-rsp-ldap/finish /etc/services.d/rstudio/finish
 
 # adhoc fixes to make it work...
-RUN chmod -R 777 /etc/services.d/rstudio
-
+RUN chmod -R 777 /etc/services.d/rstudio && \
+	chmod 600 /etc/sssd/sssd.conf
 
 CMD ["/init"]
