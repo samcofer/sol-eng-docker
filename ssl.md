@@ -80,6 +80,15 @@ or a google search can go a long ways!
 - [Star Trek example](https://datacenteroverlords.com/2011/09/25/ssl-who-do-you-trust/)
 - [cfssl api docs](https://github.com/cloudflare/cfssl/tree/master/doc/api)
 
+## HTTPS Behind a Reverse Proxy
+
+- Important to use the words "end-to-end", "upstream," or "re-encrypting" when searching
+- [WELL written nginx example](https://reinout.vanrees.org/weblog/2017/05/02/https-behind-proxy.html)
+- [get apache to avoid re-checking certs](http://httpd.apache.org/docs/2.4/mod/mod_ssl.html#sslproxycheckpeercn)
+- [common problems with certs](https://www.apachelounge.com/viewtopic.php?t=6770)
+- [SO post exlaining](https://security.stackexchange.com/questions/83082/end-to-end-encryption-with-a-reverse-proxy-and-an-application-server)
+- [random example](https://ubuntuforums.org/showthread.php?t=2064909)
+
 ## Some Examples and Helpers
 
 - [Check internet SSL cert](http://web.archive.org/web/20100811030528/http://www.digicert.com:80/help)
