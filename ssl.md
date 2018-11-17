@@ -89,6 +89,12 @@ or a google search can go a long ways!
 - [SO post exlaining](https://security.stackexchange.com/questions/83082/end-to-end-encryption-with-a-reverse-proxy-and-an-application-server)
 - [random example](https://ubuntuforums.org/showthread.php?t=2064909)
 
+## Apache and SSL
+
+- [ssl and apache overview](https://www.digicert.com/csr-ssl-installation/apache-openssl.htm)
+- [rewrite http to https](https://wiki.apache.org/httpd/RewriteHTTPToHTTPS)
+- [http to https redirect](https://www.namecheap.com/support/knowledgebase/article.aspx/9821/38/redirect-to-https-on-apache)
+
 ## Some Examples and Helpers
 
 - [Check internet SSL cert](http://web.archive.org/web/20100811030528/http://www.digicert.com:80/help)
