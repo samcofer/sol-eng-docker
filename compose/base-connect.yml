@@ -3,6 +3,7 @@ services:
 
   connect:
     hostname: connect
+    image: rstudio/base-connect
     build:
       context: ../cluster
       dockerfile: ./base-connect/Dockerfile
