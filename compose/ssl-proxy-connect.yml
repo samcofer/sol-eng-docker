@@ -1,0 +1,18 @@
+version: "2.3"
+services:
+
+  ssl-proxy-connect:
+    hostname: ssl-proxy-connect
+    image: rstudio/ssl-proxy-connect
+    build:
+      context: ../cluster
+      dockerfile: ssl-proxy-connect/Dockerfile
+      args:
+        - CONNECT_BINARY_URL
+    privileged: true
+    volumes:
+      - ../cluster/ssl-proxy-connect/rstudio-connect.gcfg:/etc/rstudio-connect/rstudio-connect.gcfg
+    environment:
+      - CONNECT_LICENSE
+
+    
