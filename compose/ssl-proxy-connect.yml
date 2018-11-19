@@ -10,6 +10,9 @@ services:
       args:
         - CONNECT_BINARY_URL
     privileged: true
+    #command: ["bash"]
+    ports:
+     - "3939"
     volumes:
       - ../cluster/ssl-proxy-connect/rstudio-connect.gcfg:/etc/rstudio-connect/rstudio-connect.gcfg
     environment:
