@@ -70,6 +70,7 @@ RUN wget -P /tmp/ https://github.com/just-containers/s6-overlay/releases/downloa
 
 COPY ./launcher-rsp-ldap/run /etc/services.d/rstudio/run
 COPY ./launcher-rsp-ldap/finish /etc/services.d/rstudio/finish
+COPY ./launcher-rsp-ldap/launcher-mounts /etc/rstudio/launcher-mounts
 
 # adhoc fixes to make it work...
 RUN chmod -R 777 /etc/services.d/rstudio && \
