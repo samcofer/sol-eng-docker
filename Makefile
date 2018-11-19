@@ -60,7 +60,7 @@ ssl-proxy-connect-up-hide:
 	CONNECT_BINARY_URL=${CONNECT_BINARY_URL} \
 	docker-compose -f compose/ssl-proxy-connect.yml -f compose/make-network.yml up -d
 
-ssl-proxy-connect-build: download-connect proxy-connect-build-hide
+ssl-proxy-connect-build: download-connect ssl-proxy-connect-build-hide
 ssl-proxy-connect-build-hide:
 	NETWORK=${NETWORK} \
 	CONNECT_BINARY_URL=${CONNECT_BINARY_URL} \
