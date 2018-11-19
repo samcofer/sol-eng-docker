@@ -22,9 +22,11 @@ Executable = /usr/bin/python
 Executable = /usr/bin/python3
 
 	
-[Http]
+[Https]
 ; RStudio Connect will listen on this network address for HTTP connections.
 Listen = :3939
+Key = /ssl-connect.key
+Certificate = /ssl-connect.crt
 
 [Authentication]
 ; Specifies the type of user authentication.
