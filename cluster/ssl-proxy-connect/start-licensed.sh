@@ -26,6 +26,7 @@ activate
 # trap process exits and deactivate our license.
 trap deactivate EXIT
 
+echo 'Executing SSL script'
 # set up SSL
 /cert_get.sh /cert_config.json
 
