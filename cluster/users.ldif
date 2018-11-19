@@ -74,7 +74,7 @@ dn: cn=joe,dc=engineering,dc=example,dc=org
 cn: joe
 gidnumber: 500
 givenname: Joe
-homedirectory: /home/users/joe
+homedirectory: /home/joe
 loginshell: /bin/sh
 mail: joe@example.org
 objectclass: inetOrgPerson
@@ -90,7 +90,7 @@ dn: cn=julie,dc=engineering,dc=example,dc=org
 cn: julie
 gidnumber: 500
 givenname: Julie
-homedirectory: /home/users/julie
+homedirectory: /home/julie
 loginshell: /bin/sh
 mail: julie@example.org
 objectclass: inetOrgPerson
@@ -115,7 +115,7 @@ dn: cn=ashley,dc=finance,dc=example,dc=org
 cn: ashley
 gidnumber: 500
 givenname: Ashley
-homedirectory: /home/users/ashley
+homedirectory: /home/ashley
 loginshell: /bin/sh
 mail: ashley@example.com
 objectclass: inetOrgPerson
@@ -131,7 +131,7 @@ dn: cn=bobo,dc=finance,dc=example,dc=org
 cn: bobo
 gidnumber: 500
 givenname: Bobo
-homedirectory: /home/users/bobo
+homedirectory: /home/bobo
 loginshell: /bin/sh
 mail: bobo@example.org
 objectclass: inetOrgPerson
@@ -147,7 +147,7 @@ dn: cn=john,dc=finance,dc=example,dc=org
 cn: john
 gidnumber: 500
 givenname: John
-homedirectory: /home/users/john
+homedirectory: /home/john
 loginshell: /bin/sh
 mail: john@example.org
 objectclass: inetOrgPerson
@@ -172,7 +172,7 @@ dn: cn=jen,dc=support,dc=example,dc=org
 cn: jen
 gidnumber: 500
 givenname: Jen
-homedirectory: /home/users/jen
+homedirectory: /home/jen
 loginshell: /bin/sh
 mail: jen@example.org
 objectclass: inetOrgPerson
@@ -188,7 +188,7 @@ dn: cn=test,dc=support,dc=example,dc=org
 cn: test
 gidnumber: 500
 givenname: Test
-homedirectory: /home/users/test
+homedirectory: /home/test
 loginshell: /bin/sh
 mail: test@example.org
 objectclass: inetOrgPerson
