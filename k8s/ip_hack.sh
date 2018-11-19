@@ -21,7 +21,7 @@ echo "Replacing in cluster/launcher-rsp/launcher-mounts"
 cat cluster/launcher-rsp/launcher-mounts | sed "s/Host: [0-9]*\.[0-9]*\.[0-9]*\.[0-9]*/Host: ${ip_addr}/" > ...tmpfile
 mv ...tmpfile cluster/launcher-rsp/launcher-mounts
 
-echo "Replacing in cluster/launcher-ldap/launcher-mounts"
+echo "Replacing in cluster/launcher-rsp-ldap/launcher-mounts"
 cat cluster/launcher-ldap/launcher-mounts | sed "s/Host: [0-9]*\.[0-9]*\.[0-9]*\.[0-9]*/Host: ${ip_addr}/" > ...tmpfile
 mv ...tmpfile cluster/launcher-ldap/launcher-mounts
 
