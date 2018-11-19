@@ -7,6 +7,5 @@ COPY ./launcher-ldap/finish /etc/services.d/rstudio/finish
 RUN chmod -R 777 /etc/services.d/rstudio
 
 COPY ./launcher-ldap/launcher.conf /etc/rstudio/launcher.conf
-COPY ./launcher-ldap/launcher-mounts /etc/rstudio/launcher-mounts
 
 CMD ["/init"]
