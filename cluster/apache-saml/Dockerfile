@@ -40,3 +40,8 @@ COPY ./apache-saml/apache_saml.cert /usr/local/apache2/mellon/apache_saml.cert
 COPY ./apache-saml/apache_saml.key /usr/local/apache2/mellon/apache_saml.key
 COPY ./apache-saml/apache_saml.xml /usr/local/apache2/mellon/apache_saml.xml
 
+# install tools for SSL (if needed)
+RUN apt-get install -y curl jq
+
+COPY ./ssl/cert_get.sh /usr/local/apache2/cert_get.sh
+COPY ./apache-saml/cert_config.json /usr/local/apache2/cert_config.json
