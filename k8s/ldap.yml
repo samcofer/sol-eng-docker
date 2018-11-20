@@ -19,7 +19,7 @@ spec:
         - name: LDAP_TLS
           value: "false"
         args: ["--copy-service"]
-        imagePullPolicy: Never
+        #imagePullPolicy: Never
         ports:
         - containerPort: 389
         volumeMounts:
