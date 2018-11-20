@@ -33,7 +33,7 @@ spec:
           value: "localhost"
         - name: PHPLDAPADMIN_HTTPS
           value: "false"
-        imagePullPolicy: Never
+        #imagePullPolicy: Never
         ports:
         - containerPort: 80
       volumes:
