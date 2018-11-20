@@ -28,7 +28,7 @@ echo 'MY_LICENSE_KEY' > k8s/rsp
 make k8s-secret-rsp
 
 # stand up rsp
-make k8s-launcher-rsp-ldap-up
+make k8s-rsp-ldap-up
 
 # stand up launcher
 make k8s-launcher-ldap-up
