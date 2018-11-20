@@ -161,6 +161,35 @@ kubectl get secret secret-name -o yaml
 - [Docker stack deploy](https://docs.docker.com/engine/reference/commandline/stack_deploy/)
 - [how to use strace](https://www.tecmint.com/strace-commands-for-troubleshooting-and-debugging-linux/)
 
+## Docker for Mac Debugging
+
+I encountered a strange issue where Docker for Mac Kubernetes would not start. This is a fairly common problem, apparently:
+
+- [On Mac](https://github.com/docker/for-mac/issues/2536)
+- [More Mac](https://github.com/docker/for-mac/issues/1348)
+- [And More](https://github.com/docker/for-mac/issues/1025)
+- [Really, more?](https://github.com/docker/for-mac/issues/2985)
+- [Literally. Everyone is having this problem](https://github.com/docker/for-mac/issues/2720)
+- [On Windows](https://github.com/docker/for-win/issues/1649)
+
+Some really useful debugging practices:
+
+- [Use the Console](https://blog.couchbase.com/docker-daemon-log-mac/)
+
+And some therapeutic but fruitless ones:
+
+- Delete `~/.kube`
+- Delete `~/.docker`
+- Reset to Factory Settings
+- Nuke the entire installation
+- Delete the `Docker.qcow2` file that has been eating my hard drive
+
+And the solution:
+
+- Change my DNS nameserver to 8.8.8.8 got me a partial fix, but then I could not resolve docker-for-desktop.localdomain.
+- Fiddling with my router settings to enable MultiCast DNS and mDHCP... or something... it fixed the issue. Weird
+- Keep an eye on the Console logs! Wacky stuff going on in there!
+
 ## Nightmares in NFS Land
 
 Unfortunately, I have travelled down a deep dark hole related to NFS. My aim: NFS server in a docker container. A handful of people say it is possible. 
