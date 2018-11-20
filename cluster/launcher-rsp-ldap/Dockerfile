@@ -76,4 +76,6 @@ COPY ./launcher-rsp-ldap/launcher-mounts /etc/rstudio/launcher-mounts
 RUN chmod -R 777 /etc/services.d/rstudio && \
 	chmod 600 /etc/sssd/sssd.conf
 
+COPY ./launcher.pem /etc/rstudio/launcher.pem
+
 CMD ["/init"]
