@@ -2,6 +2,11 @@
 
 ## Getting Started
 
+You will need a working Kubernetes installation with `kubectl`, along with `jq`, `curl`, `docker` and `make`.
+
+The easiest way to do this on Mac is with the Kubernetes installation that is bundled with Docker.
+Then do `brew install jq` too! It's a pretty awesome tool.
+
 ```
 # create rstudio namespace and LDAP seed users
 make k8s-setup
