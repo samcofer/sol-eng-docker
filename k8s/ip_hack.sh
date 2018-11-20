@@ -22,8 +22,8 @@ cat cluster/launcher-rsp/launcher-mounts | sed "s/Host: [0-9]*\.[0-9]*\.[0-9]*\.
 mv ...tmpfile cluster/launcher-rsp/launcher-mounts
 
 echo "Replacing in cluster/launcher-rsp-ldap/launcher-mounts"
-cat cluster/launcher-ldap/launcher-mounts | sed "s/Host: [0-9]*\.[0-9]*\.[0-9]*\.[0-9]*/Host: ${ip_addr}/" > ...tmpfile
-mv ...tmpfile cluster/launcher-ldap/launcher-mounts
+cat cluster/launcher-rsp-ldap/launcher-mounts | sed "s/Host: [0-9]*\.[0-9]*\.[0-9]*\.[0-9]*/Host: ${ip_addr}/" > ...tmpfile
+mv ...tmpfile cluster/launcher-rsp-ldap/launcher-mounts
 
 echo "Replacing in k8s/pv.yml"
 cat k8s/pv.yml | sed "s/server: [0-9]*\.[0-9]*\.[0-9]*\.[0-9]*/server: ${ip_addr}/" > ...tmpfile
