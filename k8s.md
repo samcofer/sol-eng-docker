@@ -34,9 +34,9 @@ make k8s-launcher-ldap-up
 - [x] Need to figure out how to put secrets into the container without hard-coding the license...
 - [x] Need to consolidate commands to set up k8s (user profiles, namespace, etc.)
 - [x] Setup LDAP server in k8s
-- [ ] Use LDAP to provision the users / home directories / etc. as needed
-- [ ] User UIDs need to be mapped... we should probably specify these in our docker images for consistency
-- [ ] The NFS server needs home directories
+- [x] Use LDAP to provision the users / home directories / etc. as needed
+- [x] User UIDs need to be mapped... we should probably specify these in our docker images for consistency
+- [x] The NFS server needs home directories
 - [x] The NFS server needs to be mounted at creation onto the RSP server
 - [x] The NFS server needs to support multiple exports (how does that work with NFS v4?)
 - [x] The job launcher needs to be started... (can that happen before RSP is started?)
@@ -54,28 +54,30 @@ with `spec.serviceAccountName`?
 
 ### Cleanup
 
-- why doesn't the license activation deactivate on container teardown? :(
-- pull out the launcher bits from RSP... and the RSP bits from launcher!
-- is the s6 ugliness worth it?
-- need to set up a persistent node location for the home directories...
-- what sort of weirdness is happening with home directories being nonstandard...? clean this up in ldap!
+- [ ] why doesn't the license activation deactivate on container teardown? :(
+- [x] pull out the launcher bits from RSP... and the RSP bits from launcher!
+- [ ] is the s6 ugliness worth it?
+- [x] need to set up a persistent node location for the home directories...
+- [ ] what sort of weirdness is happening with home directories being nonstandard...? clean this up in ldap!
     - the user that is provisioned in the session container probably has a default home directory...
     - yes, home directory does not seem to be mapped from the launcher server to the session
     - `/home/user` works fine, but `/home/users/user` does not (even when set correctly on rsp / launcher)
-- need to implement `sssd` in the `S6` init script...
-- need to figure out why the home directory is not writable by default...
-- need to switch home directories to `/home/user`
+- [x] need to implement `sssd` in the `S6` init script...
+- [x] need to figure out why the home directory is not writable by default...
+- [x] need to switch home directories to `/home/user`
 
 ### Product
 
-- rebuild the RSP pod while sessions are in flight... sessions get disconnected / picked up / but then a 401 error...
-- separate RSP / launcher... then the homepage does not load at all if launcher is not working 
-- rstudio-launcher > somefile 2>&1 gives no output... and nothing in the file...
-- how restrictive is the `launcher.conf` URL?
-- does launcher _actually_ need the `job-launcher` role? I'm not using it...?
-- does launcher need the home directory...? (seems like it)
-- is there a way to provision users on the launcher server... RSP gets it from PAM logon...
+- [ ] rebuild the RSP pod while sessions are in flight... sessions get disconnected / picked up / but then a 401 error...
+    - Need to make the .pem .pub files persistent
+- [x] separate RSP / launcher... then the homepage does not load at all if launcher is not working (reported. waits 2 minutes for timeout)
+- [x] rstudio-launcher > somefile 2>&1 gives no output... and nothing in the file... (same problem as RSP... come on 1.3!)
+- [ ] how restrictive is the `launcher.conf` URL? (Pretty restrictive... cannot use a domain name)
+- [x] does launcher _actually_ need the `job-launcher` role? I'm not using it...? NO! It doesn't!
+- [x] does launcher need the home directory...? (seems like it)... YES
+- [x] is there a way to provision users on the launcher server... RSP gets it from PAM logon...
     - UID / GID _has_ to be the same, or problems!
+    - This can be done via LDAP / SSSD! Too cool! The `/etc/nsswitch.conf` file takes care of it. Test with `getent passwd username`
 
 ## Debugging Tips
 
@@ -120,6 +122,7 @@ kubectl get secret secret-name -o yaml
 
 ### Gold
 
+- [debug a stopped container](https://stackoverflow.com/questions/20813486/exploring-docker-containers-file-system)
 - [How to use secrets](https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/)
 - [Kubectl cheatsheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)
 - [K8s for compose/swarm users](https://hackernoon.com/a-kubernetes-guide-for-docker-swarm-users-c14c8aa266cc)
