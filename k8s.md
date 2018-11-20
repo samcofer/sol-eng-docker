@@ -10,7 +10,7 @@ make k8s-setup
 make k8s-nfs-up
 
 # ip hack...
-make k8s-nfs-fix-ip
+make k8s-nfs-ip-fix
 
 # stand up pv
 make k8s-nfs-pv-up
@@ -22,11 +22,11 @@ make k8s-ldap-up
 echo 'MY_LICENSE_KEY' > k8s/rsp
 make k8s-secret-rsp
 
-# stand up launcher
-make k8s-launcher-ldap-up
-
 # stand up rsp
 make k8s-launcher-rsp-ldap-up
+
+# stand up launcher
+make k8s-launcher-ldap-up
 ```
 
 ## Setup tweaks that prevent automation
