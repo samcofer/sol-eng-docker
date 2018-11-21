@@ -20,8 +20,6 @@ spec:
         imagePullPolicy: Never
         ports:
         - containerPort: 5559
-        securityContext:
-          privileged: true
 ---
 apiVersion: v1
 kind: Service
