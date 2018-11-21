@@ -15,12 +15,6 @@ spec:
       containers:
       - name: launcher
         image: rstudio/launcher-ldap
-        env:
-        - name: RSP_LICENSE
-          valueFrom:
-            secretKeyRef:
-              name: license
-              key: rsp
         #args: ["/usr/lib/rstudio-server/bin/rstudio-launcher"]
         #command: ["sleep","10000"]
         imagePullPolicy: Never
