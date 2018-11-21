@@ -6,6 +6,8 @@ NETWORK=${PROJECT}_default
 SCALE=1
 CONNECT_BINARY_URL=rstudio-connect_1.6.8.2-12_amd64.deb
 
+RSP_VERSION=1.2.1070-1
+
 test-env-up: network-up
 
 test-env-down: network-down
@@ -100,6 +102,10 @@ k8s-rsp-ldap-up:
 	kubectl --namespace=rstudio apply -f ./k8s/rsp-ldap.yml
 k8s-rsp-ldap-down:
 	kubectl --namespace=rstudio delete -f ./k8s/rsp-ldap.yml
+
+launcher-session-build:
+	RSP_VERSION=${RSP_VERSION} \
+	docker-compose -f compose/launcher-rsp.yml build launcher-session
 
 #---------------------------------------------
 # Kerberos
