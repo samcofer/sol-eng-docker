@@ -25,10 +25,11 @@ services:
 
   launcher-session:
     hostname: launcher-session
-    image: colearendt/rsession-demo:prelaunch
+    image: colearendt/rsession-demo:${RSP_VERSION}
     build:
       context: ../cluster
       dockerfile: launcher-session/Dockerfile
       args:
         R_VERSION: "3.5.1"
+        RSP_VERSION: ${RSP_VERSION}
 
