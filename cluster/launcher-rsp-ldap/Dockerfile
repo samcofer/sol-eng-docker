@@ -25,6 +25,8 @@ RUN apt-get update \
     lsb-release \
     psmisc \
     python-setuptools \
+    sssd \
+    sssd-ldap \
     sudo \
     wget \
     rrdtool \
@@ -51,10 +53,6 @@ RUN \
 #CMD ["/usr/lib/rstudio-server/bin/rserver", "--server-daemonize=0"]
 
 COPY ./launcher-rsp-ldap/rserver.conf /etc/rstudio/rserver.conf
-COPY ./launcher-rsp-ldap/supervisor.sh /supervisor.sh
-
-# debugging tools
-RUN apt-get install -y curl strace nfs-common vim sssd sssd-ldap
 
 EXPOSE 8787
 
@@ -63,6 +61,7 @@ COPY ./sssd.conf /etc/sssd/sssd.conf
 COPY ./rstudio-sssd /etc/pam.d/rstudio
 COPY ./rstudio-session-sssd /etc/pam.d/rstudio-session
 
+# install S6
 ENV S6_VERSION=${S6_VERSION:-v1.21.4.0}
 RUN wget -P /tmp/ https://github.com/just-containers/s6-overlay/releases/download/${S6_VERSION}/s6-overlay-amd64.tar.gz \
   && tar xzf /tmp/s6-overlay-amd64.tar.gz -C / \
@@ -73,7 +72,7 @@ COPY ./launcher-rsp-ldap/finish /etc/services.d/rstudio/finish
 COPY ./launcher-rsp-ldap/launcher-mounts /etc/rstudio/launcher-mounts
 
 # adhoc fixes to make it work...
-RUN chmod -R 777 /etc/services.d/rstudio && \
+RUN chmod -R 775 /etc/services.d/rstudio && \
 	chmod 600 /etc/sssd/sssd.conf
 
 COPY ./launcher.pem /etc/rstudio/launcher.pem
