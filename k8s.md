@@ -73,7 +73,7 @@ with `spec.serviceAccountName`?
 
 ### Product
 
-- [ ] rebuild the RSP pod while sessions are in flight... sessions get disconnected / picked up / but then a 401 error...
+- [x] rebuild the RSP pod while sessions are in flight... sessions get disconnected / picked up / but then a 401 error...
     - Need to make the .pem .pub files persistent
 - [x] separate RSP / launcher... then the homepage does not load at all if launcher is not working (reported. waits 2 minutes for timeout)
 - [x] rstudio-launcher > somefile 2>&1 gives no output... and nothing in the file... (same problem as RSP... come on 1.3!)
