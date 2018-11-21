@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rsp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rsp
+  template:
+    metadata:
+      labels:
+        app: rsp
+    spec:
+      containers:
+      - name: rsp
+        image: rstudio/launcher-rsp
+        env:
+        - name: RSP_LICENSE
+          valueFrom:
+            secretKeyRef:
+              name: license
+              key: rsp
+        #command: ["sleep","10000"]
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8787
+        securityContext:
+          privileged: true
+        volumeMounts:
+          - name: nfs
+            mountPath: "/home"
+      volumes:
+      - name: nfs
+        persistentVolumeClaim:
+          claimName: nfs
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rsp
+spec:
+  type: NodePort
+  selector:
+    app: rsp
+  ports:
+  - port: 8787
