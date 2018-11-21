@@ -138,8 +138,9 @@ with `spec.serviceAccountName`?
 - [x] is there a way to provision users on the launcher server... RSP gets it from PAM logon...
     - UID / GID _has_ to be the same, or problems!
     - This can be done via LDAP / SSSD! Too cool! The `/etc/nsswitch.conf` file takes care of it. Test with `getent passwd username`
-- [ ] Does the launcher need `/home` mounted? Hopefully not!
-- [ ] Does the launcher need licensing? Hopefully not!
+- [x] Does the launcher need `/home` mounted? It does not!
+- [x] Does the launcher need licensing? Nope!
+- [x] Does launcher need privileged? No!
 - [ ] Is there a way to use a persistentVolumeClaim for the launcher sessions?
 - [ ] Does RSP need R installed when the launcher is being used? Hopefully not!
 - [ ] Changing the image for an existing session is possible, but throws an ugly / indecipherable error
