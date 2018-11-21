@@ -145,6 +145,7 @@ with `spec.serviceAccountName`?
 - [ ] Does RSP need R installed when the launcher is being used? Hopefully not!
 - [ ] Changing the image for an existing session is possible, but throws an ugly / indecipherable error
 - [ ] Some sessions start as disconnected... is this a product of my `supervisor.sh`?
+- [ ] Configuring the session stuff in `rserver.conf` (i.e. `rsession-exec-supervisor`) is a bit weird...
 
 ## Debugging Tips
 
