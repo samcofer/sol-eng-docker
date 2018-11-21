@@ -142,6 +142,8 @@ with `spec.serviceAccountName`?
 - [ ] Does the launcher need licensing? Hopefully not!
 - [ ] Is there a way to use a persistentVolumeClaim for the launcher sessions?
 - [ ] Does RSP need R installed when the launcher is being used? Hopefully not!
+- [ ] Changing the image for an existing session is possible, but throws an ugly / indecipherable error
+- [ ] Some sessions start as disconnected... is this a product of my `supervisor.sh`?
 
 ## Debugging Tips
 
