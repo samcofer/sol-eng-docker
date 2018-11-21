@@ -1,4 +1,6 @@
-FROM rstudio/r-session:trusty-preview
+ARG RSP_VERSION
+
+FROM rstudio/r-session:trusty-${RSP_VERSION}
 
 ARG R_VERSION=3.5.1
 
@@ -38,10 +40,11 @@ RUN locale-gen en_US.UTF-8
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
-ENV RSTUDIO_R_PRELAUNCH_SCRIPT=/prelaunch.sh
 
-COPY ./launcher-session/prelaunch.sh /prelaunch.sh
-COPY ./launcher-rsp/supervisor.sh /supervisor.sh
+#ENV RSTUDIO_R_PRELAUNCH_SCRIPT=/prelaunch.sh
 
-RUN apt-get install -y strace nfs-common && mkdir -p /tmp/diagnostics
+#COPY ./launcher-session/prelaunch.sh /prelaunch.sh
+#COPY ./launcher-rsp/supervisor.sh /supervisor.sh
+
+#RUN apt-get install -y strace nfs-common && mkdir -p /tmp/diagnostics
 
