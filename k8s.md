@@ -2,10 +2,19 @@
 
 ## Getting Started
 
-You will need a working Kubernetes installation with `kubectl`, along with `jq`, `curl`, `docker` and `make`.
+You will need:
+- a working Kubernetes installation with `kubectl` on your `PATH`
+- `jq`
+- `curl`
+- `docker`
+- `make`.
 
-The easiest way to do this on Mac is with the Kubernetes installation that is bundled with Docker.
-Then do `brew install jq` too! It's a pretty awesome tool.
+The easiest way to do this on Mac is with the Kubernetes installation that is
+bundled with Docker (see more below).  Then do `brew install jq` too! It's a
+pretty awesome tool.
+
+You will also need a license (right now for RSP) that is used below. For more
+tips on getting started, check out the section below on setup.
 
 ```
 # create rstudio namespace and LDAP seed users
@@ -40,6 +49,50 @@ echo 'MY_LICENSE_KEY' > k8s/rsp
 make k8s-ldap-all-up
 ```
 
+## More Setup
+
+### Helpers
+
+We have some helper aliases that you can use for convenience:
+```
+source k8s/helpers.sh
+
+# alias for `kubectl --namespace=rstudio`
+kr get pods
+```
+
+### Docker Kubernetes for Mac
+
+There is an [analog for
+Windows](https://blog.docker.com/2018/01/docker-windows-desktop-now-kubernetes/)
+that we have not tested yet.
+
+In any case, [this
+tutorial](https://rominirani.com/tutorial-getting-started-with-kubernetes-with-docker-on-mac-7f58467203fd)
+has a few (out-of-date) recommendations that are helpful!
+
+### The Kubernetes Dashboard
+
+When you're done, make sure to install and port-forward the Kubernetes
+dashboard, which is helpful for debugging (even though the logging is a little
+weird).
+
+```
+kubectl create -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml
+
+# manual port-forwarding
+kubectl --namespace=kube-system get pods
+kubectl --namespace=kube-system port-forward <paste kubernetes-dashboard-pod-name here> 8443:8443
+
+# magical automatic-ness with a horrible URL
+kubectl proxy
+
+# then go to the following in your browser:
+# https://<master-ip>:<apiserver-port>/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/
+```
+
+[More on the magical automatic-ness](https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/)
+
 ## Setup tweaks that prevent automation
 
 - [x] Need to figure out how to put secrets into the container without hard-coding the license...
@@ -67,12 +120,8 @@ with `spec.serviceAccountName`?
 
 - [ ] why doesn't the license activation deactivate on container teardown? :(
 - [x] pull out the launcher bits from RSP... and the RSP bits from launcher!
-- [ ] is the s6 ugliness worth it?
+- [ ] is the s6 ugliness worth it? figure out how to get logging...
 - [x] need to set up a persistent node location for the home directories...
-- [ ] what sort of weirdness is happening with home directories being nonstandard...? clean this up in ldap!
-    - the user that is provisioned in the session container probably has a default home directory...
-    - yes, home directory does not seem to be mapped from the launcher server to the session
-    - `/home/user` works fine, but `/home/users/user` does not (even when set correctly on rsp / launcher)
 - [x] need to implement `sssd` in the `S6` init script...
 - [x] need to figure out why the home directory is not writable by default...
 - [x] need to switch home directories to `/home/user`
@@ -89,6 +138,10 @@ with `spec.serviceAccountName`?
 - [x] is there a way to provision users on the launcher server... RSP gets it from PAM logon...
     - UID / GID _has_ to be the same, or problems!
     - This can be done via LDAP / SSSD! Too cool! The `/etc/nsswitch.conf` file takes care of it. Test with `getent passwd username`
+- [ ] Does the launcher need `/home` mounted? Hopefully not!
+- [ ] Does the launcher need licensing? Hopefully not!
+- [ ] Is there a way to use a persistentVolumeClaim for the launcher sessions?
+- [ ] Does RSP need R installed when the launcher is being used? Hopefully not!
 
 ## Debugging Tips
 
