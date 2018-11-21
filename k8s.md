@@ -34,6 +34,12 @@ make k8s-rsp-ldap-up
 make k8s-launcher-ldap-up
 ```
 
+If you are naive and trusting of our rigor, you can try the very optimistic "do it all at once"
+```
+echo 'MY_LICENSE_KEY' > k8s/rsp
+make k8s-ldap-all-up
+```
+
 ## Setup tweaks that prevent automation
 
 - [x] Need to figure out how to put secrets into the container without hard-coding the license...
