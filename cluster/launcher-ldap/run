@@ -11,10 +11,12 @@ NAMESPACE=$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace)
 # check k8s health
 curl -H "Authorization: Bearer $TOKEN" --cacert $CACERT $K8S/healthz
 
-# update launcher.conf file
-
-echo "api-url=$K8S" > /etc/rstudio/launcher.kubernetes.conf
-echo "auth-token=$TOKEN" >> /etc/rstudio/launcher.kubernetes.conf
+# update launcher.kubernetes.conf file
+cat << EOF > /etc/rstudio/launcher.kubernetes.conf
+api-url=$K8S
+auth-token=$TOKEN
+profile-conf=/etc/rstudio/launcher.kubernetes.profile.conf
+EOF
 
 mkdir -p /usr/local/share/ca-certificates/Kubernetes
 cat $CACERT > /usr/local/share/ca-certificates/Kubernetes/cert-Kubernetes.crt
