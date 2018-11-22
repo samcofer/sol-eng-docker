@@ -170,6 +170,8 @@ with `spec.serviceAccountName`?
   start again from a different image
 - [ ] When a config error in `launcher.kubernetes.conf`, nothing useful is logged as an error...
   maybe part of the problem here is that I am in docker, where all logs are useless?
+- [ ] Smarter package installation that is more linux-aware... different distributions will install
+  to the same location = package nightmare :scream: Yuck! Probably only a single distro for now
 
 ## Debugging Tips
 
