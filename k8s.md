@@ -158,6 +158,9 @@ with `spec.serviceAccountName`?
   `supervisor.sh`?
 - [ ] Configuring the session stuff in `rserver.conf` (i.e.
   `rsession-exec-supervisor`) is a bit weird...
+- [ ] System changes to the container are not supported... we throw away the container
+  whenever the session suspends. If you made changes, those will be discarded and you will
+  start again from a different image
 
 ## Debugging Tips
 
