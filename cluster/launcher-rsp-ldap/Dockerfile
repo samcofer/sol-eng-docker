@@ -25,13 +25,15 @@ RUN apt-get update \
     lsb-release \
     psmisc \
     python-setuptools \
-    sssd \
-    sssd-ldap \
     sudo \
     wget \
     rrdtool \
     && wget -O libssl1.0.0.deb http://ftp.debian.org/debian/pool/main/o/openssl/libssl1.0.0_1.0.1t-1+deb8u8_amd64.deb \
     && gdebi -n libssl1.0.0.deb
+
+RUN apt-get install -y \
+    sssd \
+    sssd-ldap
 
 ## Download and install RStudio Server Pro
 ## Attempts to detect latest version, otherwise falls back to version given in $VER
