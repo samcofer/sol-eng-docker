@@ -8,6 +8,6 @@ RUN chmod -R 777 /etc/services.d/rstudio
 
 COPY ./launcher-ldap/launcher.conf /etc/rstudio/launcher.conf
 COPY ./launcher.pub /etc/rstudio/launcher.pub
-COPY ./launcher-ldap/launcher.kubernetes.profile.conf /etc/rstudio/launcher.kubernetes.profile.conf
+COPY ./launcher-ldap/launcher.kubernetes.profiles.conf /etc/rstudio/launcher.kubernetes.profiles.conf
 
 CMD ["/init"]
