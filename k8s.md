@@ -161,6 +161,8 @@ with `spec.serviceAccountName`?
 - [ ] System changes to the container are not supported... we throw away the container
   whenever the session suspends. If you made changes, those will be discarded and you will
   start again from a different image
+- [ ] When a config error in `launcher.kubernetes.conf`, nothing useful is logged as an error...
+  maybe part of the problem here is that I am in docker, where all logs are useless?
 
 ## Debugging Tips
 
