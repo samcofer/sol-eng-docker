@@ -172,6 +172,8 @@ with `spec.serviceAccountName`?
   maybe part of the problem here is that I am in docker, where all logs are useless?
 - [ ] Smarter package installation that is more linux-aware... different distributions will install
   to the same location = package nightmare :scream: Yuck! Probably only a single distro for now
+- [ ] Let the IDE sit for a while... longer than some timeout window, then hit the blue home button
+  redirects to the wrong location?
 
 ## Debugging Tips
 
