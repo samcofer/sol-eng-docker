@@ -119,8 +119,8 @@ with `spec.serviceAccountName`?
 ### Cleanup
 
 - [ ] why doesn't the license activation deactivate on container teardown? :(
-- [x] pull out the launcher bits from RSP... and the RSP bits from launcher!
 - [ ] is the s6 ugliness worth it? figure out how to get logging...
+- [x] pull out the launcher bits from RSP... and the RSP bits from launcher!
 - [x] need to set up a persistent node location for the home directories...
 - [x] need to implement `sssd` in the `S6` init script...
 - [x] need to figure out why the home directory is not writable by default...
@@ -128,24 +128,36 @@ with `spec.serviceAccountName`?
 
 ### Product
 
-- [x] rebuild the RSP pod while sessions are in flight... sessions get disconnected / picked up / but then a 401 error...
+- [ ] rebuild the RSP pod while sessions are in flight... sessions get
+  disconnected / picked up / but then a 401 error...
     - Need to make the .pem .pub files persistent
-- [x] separate RSP / launcher... then the homepage does not load at all if launcher is not working (reported. waits 2 minutes for timeout)
-- [x] rstudio-launcher > somefile 2>&1 gives no output... and nothing in the file... (same problem as RSP... come on 1.3!)
-- [ ] how restrictive is the `launcher.conf` URL? (Pretty restrictive... cannot use a domain name)
-- [x] does launcher _actually_ need the `job-launcher` role? I'm not using it...? NO! It doesn't!
+    - Turns out this is a little trickier than I thought... Need to do some
+      sleuthing on when launcher/rsp can communicate and when they cannot
+- [x] separate RSP / launcher... then the homepage does not load at all if
+  launcher is not working (reported. waits 2 minutes for timeout)
+- [x] rstudio-launcher > somefile 2>&1 gives no output... and nothing in the
+  file... (same problem as RSP... come on 1.3!)
+- [ ] how restrictive is the `launcher.conf` URL? (Pretty restrictive... cannot
+  use a domain name)
+- [x] does launcher _actually_ need the `job-launcher` role? I'm not using
+  it...? NO! It doesn't!
 - [x] does launcher need the home directory...? (seems like it)... YES
-- [x] is there a way to provision users on the launcher server... RSP gets it from PAM logon...
+- [x] is there a way to provision users on the launcher server... RSP gets it
+  from PAM logon...
     - UID / GID _has_ to be the same, or problems!
-    - This can be done via LDAP / SSSD! Too cool! The `/etc/nsswitch.conf` file takes care of it. Test with `getent passwd username`
+    - This can be done via LDAP / SSSD! Too cool! The `/etc/nsswitch.conf` file
+      takes care of it. Test with `getent passwd username`
 - [x] Does the launcher need `/home` mounted? It does not!
 - [x] Does the launcher need licensing? Nope!
 - [x] Does launcher need privileged? No!
 - [ ] Is there a way to use a persistentVolumeClaim for the launcher sessions?
 - [ ] Does RSP need R installed when the launcher is being used? Hopefully not!
-- [ ] Changing the image for an existing session is possible, but throws an ugly / indecipherable error
-- [ ] Some sessions start as disconnected... is this a product of my `supervisor.sh`?
-- [ ] Configuring the session stuff in `rserver.conf` (i.e. `rsession-exec-supervisor`) is a bit weird...
+- [ ] Changing the image for an existing session is possible, but throws an
+  ugly / indecipherable error
+- [ ] Some sessions start as disconnected... is this a product of my
+  `supervisor.sh`?
+- [ ] Configuring the session stuff in `rserver.conf` (i.e.
+  `rsession-exec-supervisor`) is a bit weird...
 
 ## Debugging Tips
 
