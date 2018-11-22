@@ -15,7 +15,7 @@ curl -H "Authorization: Bearer $TOKEN" --cacert $CACERT $K8S/healthz
 cat << EOF > /etc/rstudio/launcher.kubernetes.conf
 api-url=$K8S
 auth-token=$TOKEN
-profile-conf=/etc/rstudio/launcher.kubernetes.profile.conf
+profile-conf=/etc/rstudio/launcher.kubernetes.profiles.conf
 EOF
 
 mkdir -p /usr/local/share/ca-certificates/Kubernetes
