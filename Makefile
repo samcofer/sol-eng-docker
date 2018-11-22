@@ -54,6 +54,7 @@ k8s-ldap-all-up: k8s-setup k8s-nfs-up k8s-nfs-ip-fix k8s-nfs-pv-up \
 
 k8s-ldap-all-down: k8s-launcher-ldap-down k8s-rsp-ldap-down \
 	k8s-ldap-down k8s-nfs-pv-down \
+	kubectl --namespace=rstudio delete secret license \
 	k8s-nfs-down
 
 k8s-setup:
