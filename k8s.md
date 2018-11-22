@@ -125,6 +125,9 @@ with `spec.serviceAccountName`?
 - [x] need to implement `sssd` in the `S6` init script...
 - [x] need to figure out why the home directory is not writable by default...
 - [x] need to switch home directories to `/home/user`
+- [ ] need to make the "clean up" do a better job of handling partial
+  deployments. at present, it bombs when it fails at deleting something that
+  does not exist... is there a cleaner way to do cleanup or say "do not error"?
 
 ### Product
 
