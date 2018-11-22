@@ -128,6 +128,10 @@ with `spec.serviceAccountName`?
 - [ ] need to make the "clean up" do a better job of handling partial
   deployments. at present, it bombs when it fails at deleting something that
   does not exist... is there a cleaner way to do cleanup or say "do not error"?
+- [ ] need to make the IP address dependent files mount into the images...
+- [ ] need to decrease image size
+- [ ] need to save / push the images somewhere re-usable?
+- [ ] need to make all config files mounted into the image... easier to iterate on!
 
 ### Product
 
