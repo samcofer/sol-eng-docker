@@ -110,6 +110,7 @@ kubectl proxy
 (and related links) so that we can get service names working and not use our clusterIP hack...
 - [ ] Need to auto-forward port 8787 so that it is accessible, we can interact with RSP, etc. (similarly for the dashboard)
 - [ ] Need to get RSP version and RSP session version in sync
+    - [Relevant (and depressing) approach](https://github.com/kubernetes/kubernetes/issues/52787#issuecomment-369645645)
 - [x] Ensure the appropriate service account is [being
   used](https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/)
 with `spec.serviceAccountName`?
