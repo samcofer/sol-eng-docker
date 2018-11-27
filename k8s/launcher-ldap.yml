@@ -14,12 +14,23 @@ spec:
     spec:
       containers:
       - name: launcher
-        image: rstudio/launcher-ldap
+        image: us.gcr.io/rstudio-soleng/launcher-ldap
         #args: ["/usr/lib/rstudio-server/bin/rstudio-launcher"]
         #command: ["sleep","10000"]
-        imagePullPolicy: Never
+        #imagePullPolicy: Never
         ports:
         - containerPort: 5559
+        volumeMounts:
+        - name: launcher-pub
+          mountPath: "/etc/rstudio/launcher.pub"
+          subPath: "launcher.pub"
+      volumes:
+      - name: launcher-pub
+        configMap:
+          name: launcher-pub
+          items:
+          - key: launcher.pub
+            path: "launcher.pub"
 ---
 apiVersion: v1
 kind: Service
