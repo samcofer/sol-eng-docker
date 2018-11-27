@@ -36,6 +36,9 @@ spec:
           - name: launcher-pem
             mountPath: "/etc/rstudio/launcher.pem"
             subPath: "launcher.pem"
+          - name: launcher-pub
+            mountPath: "/etc/rstudio/launcher.pub"
+            subPath: "launcher.pub"
       volumes:
       - name: nfs
         persistentVolumeClaim:
@@ -49,10 +52,16 @@ spec:
       - name: launcher-pem
         configMap:
           name: launcher-pem
-          defaultMode: 256
+          defaultMode: 384
           items:
           - key: launcher.pem
             path: "launcher.pem"
+      - name: launcher-pub
+        configMap:
+          name: launcher-pub
+          items:
+          - key: launcher.pub
+            path: "launcher.pub"
 ---
 apiVersion: v1
 kind: Service
