@@ -12,6 +12,7 @@ spec:
       labels:
         app: launcher
     spec:
+      serviceAccount: job-launcher
       containers:
       - name: launcher
         image: us.gcr.io/rstudio-soleng/launcher-ldap
@@ -24,6 +25,9 @@ spec:
         - name: launcher-pub
           mountPath: "/etc/rstudio/launcher.pub"
           subPath: "launcher.pub"
+        - name: launcher-pem
+          mountPath: "/etc/rstudio/launcher.pem"
+          subPath: "launcher.pem"
       volumes:
       - name: launcher-pub
         configMap:
@@ -31,6 +35,13 @@ spec:
           items:
           - key: launcher.pub
             path: "launcher.pub"
+      - name: launcher-pem
+        configMap:
+          name: launcher-pem
+          defaultMode: 384
+          items:
+          - key: launcher.pem
+            path: "launcher.pem"
 ---
 apiVersion: v1
 kind: Service
