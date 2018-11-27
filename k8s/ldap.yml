@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: openldap
-        image: osixia/openldap
+        image: us.gcr.io/rstudio-soleng/openldap
         env:
         - name: LDAP_TLS
           value: "false"
@@ -27,7 +27,7 @@ spec:
             mountPath: "/container/service/slapd/assets/config/bootstrap/ldif/50-bootstrap.ldif"
             subPath: "50-bootstrap.ldif"
       - name: ldapadmin
-        image: osixia/phpldapadmin
+        image: us.gcr.io/rstudio-soleng/phpldapadmin
         env:
         - name: PHPLDAPADMIN_LDAP_HOSTS
           value: "localhost"
