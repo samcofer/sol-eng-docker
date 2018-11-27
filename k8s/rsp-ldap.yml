@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: rsp
-        image: rstudio/launcher-rsp-ldap
+        image: us.gcr.io/rstudio-soleng/launcher-rsp-ldap
         env:
         - name: RSP_LICENSE
           valueFrom:
@@ -22,7 +22,7 @@ spec:
               name: license
               key: rsp
         #command: ["sleep","10000"]
-        imagePullPolicy: Never
+        #imagePullPolicy: Never
         ports:
         - containerPort: 8787
         securityContext:
@@ -30,10 +30,29 @@ spec:
         volumeMounts:
           - name: nfs
             mountPath: "/home"
+          - name: launcher-mounts
+            mountPath: "/etc/rstudio/launcher-mounts"
+            subPath: "launcher-mounts"
+          - name: launcher-pem
+            mountPath: "/etc/rstudio/launcher.pem"
+            subPath: "launcher.pem"
       volumes:
       - name: nfs
         persistentVolumeClaim:
           claimName: nfs
+      - name: launcher-mounts
+        configMap:
+          name: launcher-mounts
+          items:
+          - key: launcher-mounts
+            path: "launcher-mounts"
+      - name: launcher-pem
+        configMap:
+          name: launcher-pem
+          defaultMode: 256
+          items:
+          - key: launcher.pem
+            path: "launcher.pem"
 ---
 apiVersion: v1
 kind: Service
