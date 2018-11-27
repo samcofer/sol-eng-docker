@@ -78,6 +78,15 @@ k8s-nfs-pv-up:
 k8s-nfs-pv-down:
 	kubectl --namespace=rstudio delete -f ./k8s/pv.yml
 
+
+k8s-nfs-launcher-mounts:
+	kubectl create configmap --namespace=rstudio launcher-mounts --from-file ./cluster/launcher-rsp-ldap/launcher-mounts
+
+k8s-launcher-keys:
+	kubectl create configmap --namespace=rstudio launcher-pem --from-file ./cluster/launcher.pem && \
+	kubectl create configmap --namespace=rstudio launcher-pub --from-file ./cluster/launcher.pub
+
+
 k8s-secret-rsp:
 	kubectl --namespace=rstudio create secret generic license --from-file=./k8s/rsp
 
@@ -96,7 +105,6 @@ k8s-launcher-down:
 k8s-launcher-ldap-up:
 	echo 'be sure the IP is set properly in ./cluster/launcher-rsp/launcher-mounts!!' && \
 	echo 'you can get it with `kubectl --namespace=rstudio describe service nfs01`' && \
-	docker-compose -f compose/launcher-rsp-ldap.yml build launcher-ldap && \
 	kubectl --namespace=rstudio apply -f ./k8s/launcher-ldap.yml
 k8s-launcher-ldap-down:
 	kubectl --namespace=rstudio delete -f ./k8s/launcher-ldap.yml
@@ -107,7 +115,6 @@ k8s-rsp-down:
 	kubectl --namespace=rstudio delete -f ./k8s/rsp.yml
 
 k8s-rsp-ldap-up:
-	docker-compose -f compose/launcher-rsp-ldap.yml build launcher-rsp-ldap && \
 	kubectl --namespace=rstudio apply -f ./k8s/rsp-ldap.yml
 k8s-rsp-ldap-down:
 	kubectl --namespace=rstudio delete -f ./k8s/rsp-ldap.yml
