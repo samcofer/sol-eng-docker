@@ -1,12 +1,27 @@
 version: '3.3'
 services:
 
-  float:
-    hostname: float
+  float-rsp:
+    hostname: float-rsp
     build:
       context: ../cluster
       dockerfile: ./float/Dockerfile
+      args: 
+        - "PRODUCT=rsp"
+        - "PORT=8989"
     ports:
       - "8989:8989"
     environment:
-      - "LICENSE"
+      - "LICENSE=$RSP_FLOAT_LICENSE"
+  float-connect:
+    hostname: float-connect
+    build:
+      context: ../cluster
+      dockerfile: ./float/Dockerfile
+      args: 
+        - "PRODUCT=connect"
+        - "PORT=8999"
+    ports:
+      - "8999:8999"
+    environment:
+      - "LICENSE=$CONNECT_FLOAT_LICENSE"
