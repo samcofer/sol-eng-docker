@@ -6,6 +6,10 @@ RUN apt-get update && \
 	gdebi-core \
 	wget
 
+# install dumb-iinit
+RUN wget -O /usr/local/bin/dumb-init https://github.com/Yelp/dumb-init/releases/download/v1.1.3/dumb-init_1.1.3_amd64 && \
+	chmod +x /usr/local/bin/dumb-init
+
 # install license server binary
 ARG PRODUCT=rsp
 ARG VERSION=1.0.9
@@ -17,5 +21,5 @@ RUN wget https://s3.amazonaws.com/rstudio-license-server/${PRODUCT}-license-serv
 
 COPY ./float/start-licensed.sh /start-licensed.sh
 COPY ./float/${PRODUCT}-license-server.conf /etc/${PRODUCT}-license-server.conf
-ENTRYPOINT [ "/start-licensed.sh" ]
+ENTRYPOINT [ "dumb-init", "/start-licensed.sh" ]
 EXPOSE ${PORT}
