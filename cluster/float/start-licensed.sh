@@ -4,14 +4,18 @@ if [ -z "$LICENSE" ]; then
     "$@"
     exit 1
 fi
-
+if [ -z "$PRODUCT" ]; then
+    echo >&2 'error: The PRODUCT variable is not set. Should be one of rsp, connect, rspm, ssp, rstudio'
+    "$@"
+    exit 1
+fi
 
 activate() {
     echo "Activating LICENSE ..."
-    /usr/lib/rsp-license-server/bin/license-server \
-	-pdets=/usr/lib/rsp-license-server/bin/license-server.dat \
-	-config=/etc/rsp-license-server.conf \
-	-pidfile=/var/run/rsp-license-server.pid \
+    /usr/lib/${PRODUCT}-license-server/bin/license-server \
+	-pdets=/usr/lib/${PRODUCT}-license-server/bin/license-server.dat \
+	-config=/etc/${PRODUCT}-license-server.conf \
+	-pidfile=/var/run/${PRODUCT}-license-server.pid \
 	-a=${LICENSE}
     if [ $? -ne 0 ]
     then
@@ -22,7 +26,7 @@ activate() {
 
 deactivate() {
     echo "Deactivating license ..."
-    /usr/lib/rsp-license-server/bin/license-server -deact >/dev/null 2>&1
+    /usr/lib/${PRODUCT}-license-server/bin/license-server -deact >/dev/null 2>&1
 }
 
 activate
@@ -31,10 +35,10 @@ activate
 trap deactivate EXIT
 
 echo "Starting server ..."
-/usr/lib/rsp-license-server/bin/license-server \
-	-pdets=/usr/lib/rsp-license-server/bin/license-server.dat \
-	-config=/etc/rsp-license-server.conf \
-	-pidfile=/var/run/rsp-license-server.pid \
+/usr/lib/${PRODUCT}-license-server/bin/license-server \
+	-pdets=/usr/lib/${PRODUCT}-license-server/bin/license-server.dat \
+	-config=/etc/${PRODUCT}-license-server.conf \
+	-pidfile=/var/run/${PRODUCT}-license-server.pid \
 	-x
 
 #"$@"
