@@ -6,11 +6,16 @@ RUN apt-get update && \
 	gdebi-core \
 	wget
 
-# get license server binaries
-RUN wget https://s3.amazonaws.com/rstudio-license-server/rsp-license-server-1.0.9-x86_64.deb \
-	-O rsp-license-server.deb && \
-	gdebi -n rsp-license-server.deb
+# install license server binary
+ARG PRODUCT=rsp
+ARG VERSION=1.0.9
+ARG PORT=8989
+RUN wget https://s3.amazonaws.com/rstudio-license-server/${PRODUCT}-license-server-${VERSION}-x86_64.deb \
+	-O ${PRODUCT}-license-server.deb && \
+	gdebi -n ${PRODUCT}-license-server.deb && \
+	rm ${PRODUCT}-license-server.deb
 
 COPY ./float/start-licensed.sh /start-licensed.sh
+COPY ./float/${PRODUCT}-license-server.conf /etc/${PRODUCT}-license-server.conf
 ENTRYPOINT [ "/start-licensed.sh" ]
-EXPOSE 8989
+EXPOSE ${PORT}
