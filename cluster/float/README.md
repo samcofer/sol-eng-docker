@@ -23,3 +23,8 @@ these images, using an environment variable to provide the LICENSE variable.
 | rspm    | 8969 | RSPM\_FLOAT\_LICENSE    |
 | ssp     | 8979 | SSP\_FLOAT\_LICENSE     |
 | rstudio | 9019 | RSTUDIO\_FLOAT\_LICENSE |
+
+## More Resources
+
+- [Floating License Server Downloads](https://www.rstudio.com/floating-license-servers/)
+- [Documentation](https://support.rstudio.com/hc/en-us/articles/115011574507-Floating-Licenses)
