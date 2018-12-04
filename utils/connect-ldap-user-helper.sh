@@ -3,6 +3,18 @@
 # $1 must be defined and should be a filename
 # if $2 is "encode", then the provider key will be base 64 encoded
 
+
+## How it works
+
+# - loop over lines in the file. for each line,
+# - use `cut` to grab first value - this is the Connect GUID
+# - use `cut` to grab the second value - this is the LDAP provider key
+# - If "encode" is passed to the script, we base64 encode the LDAP provider key
+# - We check that decoding the LDAP provider key gives us our original input
+#   (this is probably not necessary, since it does not even catch the one issue
+#   where `echo | base64` adds an errant newline character)
+# - Execute the usermanager to update the user in the Connect database
+
 if [ -z "$1" ] || [ ! -f "$1" ]; then
   echo "ERROR: you must provide a filename that exists (got: ${1})"
   exit 1
