@@ -9,6 +9,7 @@ This project houses docker infrastructure for quickly setting up, configuring, a
 - [SAML](./saml.md)
 - [General Proxy](./proxy.md)
 - [LDAP](./ldap.md)
+- [Kubernetes](./k8s.md)
 
 # Getting Started
 
