@@ -116,6 +116,16 @@ launcher-session-build:
 	docker-compose -f compose/launcher-rsp.yml build launcher-session
 
 #---------------------------------------------
+# Floating License Servers
+#---------------------------------------------
+float-up:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/float.yml -f compose/make-network.yml up -d
+float-down:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/float.yml -f compose/make-network.yml down 
+
+#---------------------------------------------
 # Kerberos
 #---------------------------------------------
 kerb-up: network-up kerb-server-up kerb-ssh-up kerb-rsp-up kerb-rsc-up
