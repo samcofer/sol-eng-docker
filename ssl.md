@@ -95,6 +95,12 @@ or a google search can go a long ways!
 - [rewrite http to https](https://wiki.apache.org/httpd/RewriteHTTPToHTTPS)
 - [http to https redirect](https://www.namecheap.com/support/knowledgebase/article.aspx/9821/38/redirect-to-https-on-apache)
 
+## nginx and SSL
+
+- [nginx and ssl](https://medium.com/@mtourne/how-to-use-nginx-for-ssl-termination-for-any-domain-dc2e2c630058)
+- [nginx redirect 80 to ssl](https://bjornjohansen.no/redirect-to-https-with-nginx)
+- [related configuration of nginx and ssl](https://bjornjohansen.no/securing-nginx-ssl)
+
 ## Some Examples and Helpers
 
 - [Check internet SSL cert](http://web.archive.org/web/20100811030528/http://www.digicert.com:80/help)
