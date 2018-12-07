@@ -44,3 +44,11 @@ services:
       - ../cluster/nginx-support-rsp.conf:/etc/nginx/nginx.conf:ro
     ports:
       - "80"
+
+  nginx-all:
+    hostname: nginx-all
+    image: nginx
+    volumes:
+      - ../cluster/nginx-all.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - "80"
