@@ -101,6 +101,12 @@ or a google search can go a long ways!
 - [nginx redirect 80 to ssl](https://bjornjohansen.no/redirect-to-https-with-nginx)
 - [related configuration of nginx and ssl](https://bjornjohansen.no/securing-nginx-ssl)
 
+## FREE Certificates from LetsEncrypt
+
+- [Getting Started](https://letsencrypt.org/getting-started/)
+- [Using certbot](https://certbot.eff.org/lets-encrypt/ubuntutrusty-nginx)
+- [user agreement](https://letsencrypt.org/documents/LE-SA-v1.2-November-15-2017.pdf)
+
 ## Some Examples and Helpers
 
 - [Check internet SSL cert](http://web.archive.org/web/20100811030528/http://www.digicert.com:80/help)
