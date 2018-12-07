@@ -7,6 +7,8 @@
 ;	
 ; SenderEmail = account@company.com
 SenderEmail = 
+ExpandedViewUI = true
+DefaultContentListView = "expanded"
 
 ; Address is a public URL for this RStudio Connect server. Must be configured
 ; to enable features like including links to your content in emails. If
