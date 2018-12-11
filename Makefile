@@ -4,7 +4,7 @@ PWD := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 PROJECT=auth-docker
 NETWORK=${PROJECT}_default
 SCALE=1
-CONNECT_BINARY_URL=rstudio-connect_1.6.11-3914_amd64.deb
+CONNECT_BINARY_URL=rstudio-connect_1.6.11-3933_amd64.deb
 
 RSP_VERSION=1.2.1070-1
 
