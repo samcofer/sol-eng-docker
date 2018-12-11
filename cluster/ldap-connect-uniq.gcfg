@@ -1,0 +1,48 @@
+; RStudio Connect configuration file
+
+[Server]
+; SenderEmail is an email address used by RStudio Connect to send outbound
+; email. The system will not be able to send administrative email until this
+; setting is configured.
+;
+; SenderEmail = account@company.com
+SenderEmail = 
+
+; Address is a public URL for this RStudio Connect server. Must be configured
+; to enable features like including links to your content in emails. If
+; Connect is deployed behind an HTTP proxy, this should be the URL for Connect
+; in terms of that proxy.
+;
+; Address = https://rstudio-connect.company.com
+Address =
+
+[Http]
+; RStudio Connect will listen on this network address for HTTP connections.
+Listen = :3939
+
+[Authentication]
+; Specifies the type of user authentication.
+Provider = ldap
+
+[ Database ]
+Provider = postgres
+
+[ Postgres ]
+URL = "postgres://postgres:test@pg-connect:5432/postgres?sslmode=disable"
+
+[ LDAP "My LDAP Server" ]
+ServerAddress = openldap:389
+UserObjectClass = posixAccount
+UniqueIdAttribute = entryUUID
+UserFirstNameAttribute = givenName
+UserLastNameAttribute = sn
+UserEmailAttribute = mail
+UsernameAttribute = cn
+UserSearchBaseDN = dc=example,dc=org
+BindDN = cn=admin,dc=example,dc=org
+BindPassword = admin
+GroupObjectClass = posixGroup
+GroupSearchBaseDN = dc=group,dc=example,dc=org
+GroupNameAttribute = cn
+GroupUniqueIdAttribute = entryUUID
+Logging = true
