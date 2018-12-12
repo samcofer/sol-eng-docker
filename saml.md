@@ -7,6 +7,7 @@ The following outlines the implementation of SAML used in the auth-docker repo, 
 - Login: Go to http://localhost . This will prompt you for authentication before permitting you to access backend resources
 - Logout: Go to http://localhost/secret/logout?ReturnTo=http://localhost
 	- NOTE: this is currently broken... so you will get a `BadRequest` response... however, LogOut will be successful... so just go to http://localhost and you will be prompted for authentication
+- If you want to login to the SAML IdP, the `user:pass` is `admin:secret`
 
 ## Tools Used
 
@@ -35,4 +36,5 @@ The following outlines the implementation of SAML used in the auth-docker repo, 
 - [wiki about SAML metadata](https://en.wikipedia.org/wiki/SAML_Metadata)
 - [deep dive on SAML stuff](https://groups.google.com/forum/#!topic/simplesamlphp/LwiLTF9APx0)
 
+- [SAML and SSL](https://docs.oracle.com/cd/E19182-01/820-0595/ggswc/index.html)
 

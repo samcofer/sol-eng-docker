@@ -15,10 +15,12 @@ RUN apt-get update && \
     && gdebi -n libssl1.0.0.deb
 
 RUN apt-get install -y \
+	curl \
+	jq \
+	liblasso3-dev \
 	libssl-dev \
 	libxmlsec1-dev \
-	make \
-	liblasso3-dev
+	make
 
 # build and install mod_auth_mellon
 RUN cd /usr/src && \
@@ -32,6 +34,7 @@ RUN cd /usr/src && \
 	make && \
 	make install
 
+# all the config files...
 COPY ./apache-saml/httpd.conf /usr/local/apache2/conf/httpd.conf
 COPY ./apache-saml/mellon.conf /usr/local/apache2/conf/mellon.conf
 COPY ./apache-saml/idp-metadata.xml /usr/local/apache2/conf/idp-metadata.xml
@@ -40,3 +43,5 @@ COPY ./apache-saml/apache_saml.cert /usr/local/apache2/mellon/apache_saml.cert
 COPY ./apache-saml/apache_saml.key /usr/local/apache2/mellon/apache_saml.key
 COPY ./apache-saml/apache_saml.xml /usr/local/apache2/mellon/apache_saml.xml
 
+COPY ./ssl/cert_get.sh /usr/local/apache2/cert_get.sh
+COPY ./apache-saml/cert_config.json /usr/local/apache2/cert_config.json

@@ -7,8 +7,6 @@
 ;	
 ; SenderEmail = account@company.com
 SenderEmail = 
-ExpandedViewUI = true
-DefaultContentListView = "expanded"
 
 ; Address is a public URL for this RStudio Connect server. Must be configured
 ; to enable features like including links to your content in emails. If
@@ -16,18 +14,17 @@ DefaultContentListView = "expanded"
 ; in terms of that proxy.
 ;	
 ; Address = https://rstudio-connect.company.com
-Address = http://localhost:3939
-
-[Python]
-Enabled = true
-Executable = /usr/bin/python
-Executable = /usr/bin/python3
-
+Address =
 	
-[Http]
-; RStudio Connect will listen on this network address for HTTP connections.
+[Https]
 Listen = :3939
+Key = /ssl-proxy-connect.key
+Certificate = /ssl-proxy-connect.crt
 
 [Authentication]
 ; Specifies the type of user authentication.
-Provider = password
+Provider = proxy
+
+[ProxyAuth]
+UsernameHeader = X-Secret-User-Header
+Logging = true

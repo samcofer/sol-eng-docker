@@ -4,7 +4,7 @@ PWD := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 PROJECT=auth-docker
 NETWORK=${PROJECT}_default
 SCALE=1
-CONNECT_BINARY_URL=rstudio-connect_1.6.8.2-12_amd64.deb
+CONNECT_BINARY_URL=rstudio-connect_1.6.11-3933_amd64.deb
 
 RSP_VERSION=1.2.1070-1
 
@@ -43,6 +43,71 @@ download-connect:
 		wget https://s3.amazonaws.com/rstudio-connect/${CONNECT_BINARY_URL} \
 		  -O ./cluster/${CONNECT_BINARY_URL}; \
 	fi;
+
+#---------------------------------------------
+# SSL
+#---------------------------------------------
+ssl-up:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/ssl.yml -f compose/make-network.yml up -d
+
+ssl-down:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/ssl.yml -f compose/make-network.yml down
+
+ssl-proxy-connect-up: download-connect ssl-proxy-connect-up-hide
+ssl-proxy-connect-up-hide:
+	NETWORK=${NETWORK} \
+	CONNECT_LICENSE=$(CONNECT_LICENSE) \
+	CONNECT_BINARY_URL=${CONNECT_BINARY_URL} \
+	docker-compose -f compose/ssl-proxy-connect.yml -f compose/make-network.yml up -d
+
+ssl-proxy-connect-build: download-connect ssl-proxy-connect-build-hide
+ssl-proxy-connect-build-hide:
+	NETWORK=${NETWORK} \
+	CONNECT_BINARY_URL=${CONNECT_BINARY_URL} \
+	docker-compose -f compose/ssl-proxy-connect.yml -f compose/make-network.yml build
+
+ssl-proxy-connect-down:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/ssl-proxy-connect.yml down
+
+#---------------------------------------------
+# Base Products
+#---------------------------------------------
+connect-up: download-connect connect-up-hide
+connect-up-hide:
+	NETWORK=${NETWORK} \
+	CONNECT_LICENSE=$(CONNECT_LICENSE) \
+	CONNECT_BINARY_URL=${CONNECT_BINARY_URL} \
+	docker-compose -f compose/base-connect.yml -f compose/make-network.yml up -d
+
+connect-build:
+	NETWORK=${NETWORK} \
+	CONNECT_LICENSE=$(CONNECT_LICENSE) \
+	CONNECT_BINARY_URL=${CONNECT_BINARY_URL} \
+	docker-compose -f compose/base-connect.yml -f compose/make-network.yml build
+
+connect-down:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/base-connect.yml -f compose/make-network.yml down
+
+rsp-up:
+	NETWORK=${NETWORK} \
+	RSP_LICENSE=$(RSP_LICENSE) \
+	docker-compose -f compose/base-rsp.yml -f compose/make-network.yml up -d
+
+rsp-down:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/base-rsp.yml -f compose/make-network.yml down
+
+ssp-up:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/base-ssp.yml -f compose/make-network.yml up -d
+
+ssp-down:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/base-ssp.yml -f compose/make-network.yml down
 
 #---------------------------------------------
 # Kubernetes
@@ -197,6 +262,12 @@ proxy-connect-up-hide:
 	CONNECT_BINARY_URL=${CONNECT_BINARY_URL} \
 	docker-compose -f compose/proxy-connect.yml -f compose/make-network.yml up -d
 
+proxy-connect-build: download-connect proxy-connect-build-hide
+proxy-connect-build-hide:
+	NETWORK=${NETWORK} \
+	CONNECT_BINARY_URL=${CONNECT_BINARY_URL} \
+	docker-compose -f compose/proxy-connect.yml -f compose/make-network.yml build
+
 proxy-connect-down:
 	NETWORK=${NETWORK} \
 	docker-compose -f compose/proxy-connect.yml down
@@ -263,42 +334,6 @@ ldap-connect-down:
 	NETWORK=${NETWORK} \
 	docker-compose -f compose/ldap-connect.yml -f compose/make-network.yml down
 
-#---------------------------------------------
-# Base Products
-#---------------------------------------------
-connect-up: download-connect connect-up-hide
-connect-up-hide:
-	NETWORK=${NETWORK} \
-	CONNECT_LICENSE=$(CONNECT_LICENSE) \
-	CONNECT_BINARY_URL=${CONNECT_BINARY_URL} \
-	docker-compose -f compose/base-connect.yml -f compose/make-network.yml up -d
-
-connect-build:
-	NETWORK=${NETWORK} \
-	CONNECT_LICENSE=$(CONNECT_LICENSE) \
-	CONNECT_BINARY_URL=${CONNECT_BINARY_URL} \
-	docker-compose -f compose/base-connect.yml -f compose/make-network.yml build
-
-connect-down:
-	NETWORK=${NETWORK} \
-	docker-compose -f compose/base-connect.yml -f compose/make-network.yml down
-
-rsp-up:
-	NETWORK=${NETWORK} \
-	docker-compose -f compose/base-rsp.yml -f compose/make-network.yml up -d
-
-rsp-down:
-	NETWORK=${NETWORK} \
-	docker-compose -f compose/base-rsp.yml -f compose/make-network.yml down
-
-ssp-up:
-	NETWORK=${NETWORK} \
-	docker-compose -f compose/base-ssp.yml -f compose/make-network.yml up -d
-
-ssp-down:
-	NETWORK=${NETWORK} \
-	docker-compose -f compose/base-ssp.yml -f compose/make-network.yml down
- 
 #---------------------------------------------
 # Other 
 #---------------------------------------------
