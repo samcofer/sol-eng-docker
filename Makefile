@@ -272,6 +272,15 @@ proxy-connect-down:
 	NETWORK=${NETWORK} \
 	docker-compose -f compose/proxy-connect.yml down
 
+proxy-rsp-up:
+	NETWORK=${NETWORK} \
+	RSP_LICENSE=$(RSP_LICENSE) \
+	docker-compose -f compose/proxy-rsp.yml -f compose/make-network.yml up -d
+
+proxy-rsp-down:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/proxy-rsp.yml -f compose/make-network.yml down
+
 proxy-debug-up:
 	NETWORK=${NETWORK} \
 	docker-compose -f compose/proxy-debug.yml -f compose/make-network.yml up -d
