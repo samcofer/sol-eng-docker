@@ -308,6 +308,10 @@ proxy-saml-up:
 	NETWORK=${NETWORK} \
 	docker-compose -f compose/apache-saml.yml -f compose/make-network.yml up -d
 
+proxy-saml-restart:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/apache-saml.yml -f compose/make-network.yml restart
+
 proxy-saml-down:
 	NETWORK=${NETWORK} \
 	docker-compose -f compose/apache-saml.yml -f compose/make-network.yml down
