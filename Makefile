@@ -86,6 +86,20 @@ k8s-launcher-keys:
 	kubectl create configmap --namespace=rstudio launcher-pem --from-file ./cluster/launcher.pem && \
 	kubectl create configmap --namespace=rstudio launcher-pub --from-file ./cluster/launcher.pub
 
+k8s-launcher-k8s-prof-conf:
+	kubectl create configmap --namespace=rstudio launcher-k8s-prof-conf --from-file ./cluster/launcher-ldap/launcher.kubernetes.profiles.conf
+k8s-launcher-k8s-prof-conf-down:
+	kubectl delete configmap --namespace=rstudio launcher-k8s-prof-conf
+
+k8s-launcher-k8s-conf:
+	kubectl create configmap --namespace=rstudio launcher-k8s-conf --from-file ./cluster/launcher-ldap/launcher.kubernetes.conf
+k8s-launcher-k8s-conf-down:
+	kubectl delete configmap --namespace=rstudio launcher-k8s-conf
+
+k8s-launcher-conf:
+	kubectl create configmap --namespace=rstudio launcher-conf --from-file ./cluster/launcher-ldap/launcher.conf
+k8s-launcher-conf-down:
+	kubectl delete configmap --namespace=rstudio launcher-conf
 
 k8s-secret-rsp:
 	kubectl --namespace=rstudio create secret generic license --from-file=./k8s/rsp
@@ -121,7 +135,7 @@ k8s-rsp-ldap-down:
 
 launcher-session-build:
 	RSP_VERSION=${RSP_VERSION} \
-	docker-compose -f compose/launcher-rsp.yml build launcher-session
+	docker-compose -f compose/launcher-rsp.yml build launcher-session launcher-session-alt
 
 #---------------------------------------------
 # Floating License Servers
