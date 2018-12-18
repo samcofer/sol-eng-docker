@@ -15,7 +15,7 @@ spec:
       serviceAccount: job-launcher
       containers:
       - name: launcher
-        image: us.gcr.io/rstudio-soleng/launcher-ldap
+        image: us.gcr.io/rstudio-soleng/launcher-ldap:latest
         #args: ["/usr/lib/rstudio-server/bin/rstudio-launcher"]
         #command: ["sleep","10000"]
         #imagePullPolicy: Never
@@ -28,7 +28,25 @@ spec:
         - name: launcher-pem
           mountPath: "/etc/rstudio/launcher.pem"
           subPath: "launcher.pem"
+        - name: launcher-k8s-prof-conf
+          mountPath: "/etc/rstudio/launcher.kubernetes.profiles.conf"
+          subPath: "launcher.kubernetes.profiles.conf"
+        - name: launcher-conf
+          mountPath: "/etc/rstudio/launcher.conf"
+          subPath: "launcher.conf"
       volumes:
+      - name: launcher-conf
+        configMap:
+          name: launcher-conf
+          items:
+          - key: launcher.conf
+            path: "launcher.conf"
+      - name: launcher-k8s-prof-conf
+        configMap:
+          name: launcher-k8s-prof-conf
+          items:
+          - key: launcher.kubernetes.profiles.conf
+            path: "launcher.kubernetes.profiles.conf"
       - name: launcher-pub
         configMap:
           name: launcher-pub
