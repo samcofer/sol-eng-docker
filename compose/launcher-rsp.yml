@@ -33,3 +33,13 @@ services:
         R_VERSION: "3.5.1"
         RSP_VERSION: ${RSP_VERSION}
 
+  launcher-session-alt:
+    hostname: launcher-session-alt
+    image: colearendt/rsession-demo-alt:${RSP_VERSION}
+    build:
+      context: ../cluster
+      dockerfile: launcher-session-alt/Dockerfile
+      args:
+        R_VERSION: "3.5.1"
+        RSP_VERSION: ${RSP_VERSION}
+
