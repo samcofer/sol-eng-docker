@@ -18,6 +18,13 @@ auth-token=$TOKEN
 profile-config=/etc/rstudio/launcher.kubernetes.profiles.conf
 EOF
 
+# update launcher-staging.kubernetes.conf file
+cat << EOF > /etc/rstudio/launcher-staging.kubernetes.conf
+api-url=$K8S
+auth-token=$TOKEN
+profile-config=/etc/rstudio/launcher.kubernetes.profiles.conf
+EOF
+
 mkdir -p /usr/local/share/ca-certificates/Kubernetes
 cat $CACERT > /usr/local/share/ca-certificates/Kubernetes/cert-Kubernetes.crt
 update-ca-certificates
