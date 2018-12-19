@@ -1,0 +1,14 @@
+{
+	"request": {
+		"hosts": ["ssl-connect"],
+		"names": [
+			{
+				"C": "US",
+				"ST": "North Carolina",
+				"L": "Raleigh",
+				"O": "RSTUDIO-DOCKER.COM"
+			}
+		],
+		"CN": "ssl-connect"
+	}
+}

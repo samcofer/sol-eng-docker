@@ -1,0 +1,21 @@
+version: "2.3"
+services:
+
+  ssl-connect:
+    hostname: ssl-connect
+    image: rstudio/ssl-connect
+    build:
+      context: ../cluster
+      dockerfile: ssl-connect/Dockerfile
+      args:
+        - CONNECT_BINARY_URL
+    privileged: true
+    #command: ["bash"]
+    ports:
+     - "3939"
+    volumes:
+      - ../cluster/ssl-connect/rstudio-connect.gcfg:/etc/rstudio-connect/rstudio-connect.gcfg
+    environment:
+      - CONNECT_LICENSE
+
+    

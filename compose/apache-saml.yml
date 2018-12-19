@@ -19,5 +19,6 @@ services:
       context: ../cluster
       dockerfile: apache-saml/Dockerfile
     ports:
-      - 80:80
+      - "80:80"
+      - "443:443"
 
