@@ -71,6 +71,11 @@ In any case, [this
 tutorial](https://rominirani.com/tutorial-getting-started-with-kubernetes-with-docker-on-mac-7f58467203fd)
 has a few (out-of-date) recommendations that are helpful!
 
+### Using GKE
+
+All you have to do to use Google Cloud is [change your `kubectl`
+context](https://cloud.google.com/kubernetes-engine/docs/how-to/cluster-access-for-kubectl)!!
+
 ### The Kubernetes Dashboard
 
 When you're done, make sure to install and port-forward the Kubernetes
