@@ -289,6 +289,12 @@ proxy-debug-down:
 	NETWORK=${NETWORK} \
 	docker-compose -f compose/proxy-debug.yml -f compose/make-network.yml down
 
+proxy-mitm-up:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/proxy-mitm.yml -f compose/make-network.yml up -d
+proxy-mitm-down:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/proxy-mitm.yml -f compose/make-network.yml down
 #---------------------------------------------
 # OAuth2 Proxy
 #---------------------------------------------
