@@ -4,7 +4,7 @@ PWD := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 PROJECT=auth-docker
 NETWORK=${PROJECT}_default
 SCALE=1
-CONNECT_BINARY_URL=rstudio-connect_1.6.11-3933_amd64.deb
+CONNECT_BINARY_URL=rstudio-connect_1.7.0-11_amd64.deb
 
 RSP_VERSION=1.2.1070-1
 
@@ -272,6 +272,15 @@ proxy-connect-down:
 	NETWORK=${NETWORK} \
 	docker-compose -f compose/proxy-connect.yml down
 
+proxy-rsp-up:
+	NETWORK=${NETWORK} \
+	RSP_LICENSE=$(RSP_LICENSE) \
+	docker-compose -f compose/proxy-rsp.yml -f compose/make-network.yml up -d
+
+proxy-rsp-down:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/proxy-rsp.yml -f compose/make-network.yml down
+
 proxy-debug-up:
 	NETWORK=${NETWORK} \
 	docker-compose -f compose/proxy-debug.yml -f compose/make-network.yml up -d
@@ -280,6 +289,12 @@ proxy-debug-down:
 	NETWORK=${NETWORK} \
 	docker-compose -f compose/proxy-debug.yml -f compose/make-network.yml down
 
+proxy-mitm-up:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/proxy-mitm.yml -f compose/make-network.yml up -d
+proxy-mitm-down:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/proxy-mitm.yml -f compose/make-network.yml down
 #---------------------------------------------
 # OAuth2 Proxy
 #---------------------------------------------
@@ -298,6 +313,10 @@ proxy-oauth-down:
 proxy-saml-up:
 	NETWORK=${NETWORK} \
 	docker-compose -f compose/apache-saml.yml -f compose/make-network.yml up -d
+
+proxy-saml-restart:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/apache-saml.yml -f compose/make-network.yml restart
 
 proxy-saml-down:
 	NETWORK=${NETWORK} \
