@@ -97,6 +97,11 @@ rsp-up:
 	RSP_LICENSE=$(RSP_LICENSE) \
 	docker-compose -f compose/base-rsp.yml -f compose/make-network.yml up -d
 
+rsp-build:
+	NETWORK=${NETWORK} \
+	RSP_LICENSE=$(RSP_LICENSE) \
+	docker-compose -f compose/base-rsp.yml -f compose/make-network.yml build
+
 rsp-down:
 	NETWORK=${NETWORK} \
 	docker-compose -f compose/base-rsp.yml -f compose/make-network.yml down
