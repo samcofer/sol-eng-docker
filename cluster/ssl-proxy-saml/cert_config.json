@@ -1,6 +1,6 @@
 {
 	"request": {
-		"hosts": ["apache-saml"],
+		"hosts": ["ssl-proxy-saml"],
 		"names": [
 			{
 				"C": "US",
@@ -9,6 +9,6 @@
 				"O": "RSTUDIO-DOCKER.COM"
 			}
 		],
-		"CN": "apache-saml"
+		"CN": "ssl-proxy-saml"
 	}
 }
