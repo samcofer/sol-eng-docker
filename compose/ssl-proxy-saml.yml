@@ -22,6 +22,8 @@ services:
     volumes:
       - "../cluster/ssl-proxy-saml/httpd.conf:/usr/local/apache2/conf/httpd.conf"
       - "../cluster/ssl-proxy-saml/apache_saml.xml:/usr/local/apache2/mellon/apache_saml.xml"
+      - "../cluster/ssl/cert_get.sh:/usr/local/apache2/cert_get.sh"
+      - "../cluster/ssl-proxy-saml/cert_config.json:/usr/local/apache2/cert_config.json"
     ports:
       - "80:80"
       - "443:443"
