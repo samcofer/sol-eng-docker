@@ -8,8 +8,8 @@ services:
       - 8443:8443
     environment:
       - SIMPLESAMLPHP_SP_ENTITY_ID=apache-saml
-      - SIMPLESAMLPHP_SP_ASSERTION_CONSUMER_SERVICE=https://localhost/secret/postResponse
-      - SIMPLESAMLPHP_SP_SINGLE_LOGOUT_SERVICE=https://localhost/secret/logout
+      - SIMPLESAMLPHP_SP_ASSERTION_CONSUMER_SERVICE=http://localhost/secret/postResponse
+      - SIMPLESAMLPHP_SP_SINGLE_LOGOUT_SERVICE=http://localhost/secret/logout
     volumes:
       - ../cluster/users.php:/var/www/simplesamlphp/config/authsources.php
 
@@ -18,9 +18,8 @@ services:
     build:
       context: ../cluster
       dockerfile: apache-saml/Dockerfile
-    command: "sh -c '/usr/local/apache2/cert_get.sh /usr/local/apache2/cert_config.json ; httpd-foreground'"
     volumes:
-      - ../cluster/apache-saml/httpd.conf:/usr/local/apache2/conf/httpd.conf
+      - ../cluster/apache-saml-all.conf:/usr/local/apache2/conf/httpd.conf
     ports:
       - "80:80"
       - "443:443"
