@@ -1,0 +1,14 @@
+{
+	"request": {
+		"hosts": ["apache-saml"],
+		"names": [
+			{
+				"C": "US",
+				"ST": "North Carolina",
+				"L": "Raleigh",
+				"O": "RSTUDIO-DOCKER.COM"
+			}
+		],
+		"CN": "apache-saml"
+	}
+}
