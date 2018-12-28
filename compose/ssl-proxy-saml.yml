@@ -1,0 +1,28 @@
+version: "2.3"
+services:
+  ssl-saml-idp:
+    hostname: saml-idp
+    image: kristophjunge/test-saml-idp
+    ports:
+      - 8080:8080
+      - 8443:8443
+    environment:
+      - SIMPLESAMLPHP_SP_ENTITY_ID=ssl-proxy-saml
+      - SIMPLESAMLPHP_SP_ASSERTION_CONSUMER_SERVICE=https://localhost/secret/postResponse
+      - SIMPLESAMLPHP_SP_SINGLE_LOGOUT_SERVICE=https://localhost/secret/logout
+    volumes:
+      - ../cluster/users.php:/var/www/simplesamlphp/config/authsources.php
+
+  ssl-proxy-saml:
+    hostname: ssl-proxy-saml
+    build:
+      context: ../cluster
+      dockerfile: apache-saml/Dockerfile
+    command: "sh -c '/usr/local/apache2/cert_get.sh /usr/local/apache2/cert_config.json ; httpd-foreground'"
+    volumes:
+      - "../cluster/ssl-proxy-saml/httpd.conf:/usr/local/apache2/conf/httpd.conf"
+      - "../cluster/ssl-proxy-saml/apache_saml.xml:/usr/local/apache2/mellon/apache_saml.xml"
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8991"
