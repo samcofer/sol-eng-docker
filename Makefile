@@ -72,6 +72,20 @@ ssl-proxy-connect-down:
 	NETWORK=${NETWORK} \
 	docker-compose -f compose/ssl-proxy-connect.yml down
 
+ssl-proxy-rsp-up:
+	NETWORK=${NETWORK} \
+	RSP_LICENSE=$(RSP_LICENSE) \
+	docker-compose -f compose/ssl-proxy-rsp.yml -f compose/make-network.yml up -d
+
+ssl-proxy-rsp-restart:
+	NETWORK=${NETWORK} \
+	RSP_LICENSE=$(RSP_LICENSE) \
+	docker-compose -f compose/ssl-proxy-rsp.yml -f compose/make-network.yml restart
+
+ssl-proxy-rsp-down:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/ssl-proxy-rsp.yml -f compose/make-network.yml down
+
 #---------------------------------------------
 # Base Products
 #---------------------------------------------
@@ -318,6 +332,10 @@ proxy-oauth-down:
 proxy-saml-up:
 	NETWORK=${NETWORK} \
 	docker-compose -f compose/apache-saml.yml -f compose/make-network.yml up -d
+
+proxy-saml-build:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/apache-saml.yml -f compose/make-network.yml build
 
 proxy-saml-restart:
 	NETWORK=${NETWORK} \
