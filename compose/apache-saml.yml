@@ -18,8 +18,9 @@ services:
     build:
       context: ../cluster
       dockerfile: apache-saml/Dockerfile
+    command: "sh -c '/usr/local/apache2/cert_get.sh /usr/local/apache2/cert_config.json ; httpd-foreground'"
     volumes:
-      - ../cluster/apache-saml-all.conf:/usr/local/apache2/conf/httpd.conf
+      - ../cluster/apache-saml/httpd.conf:/usr/local/apache2/conf/httpd.conf
     ports:
       - "80:80"
       - "443:443"
