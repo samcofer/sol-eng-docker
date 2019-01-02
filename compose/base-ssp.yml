@@ -10,4 +10,6 @@ services:
       - SSP_LICENSE
     ports:
       - 3838:3838
+    volumes:
+      - "../cluster/ssp-google.conf:/etc/shiny-server/shiny-server.conf"
 
