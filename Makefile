@@ -328,6 +328,21 @@ proxy-oauth-down:
 #---------------------------------------------
 # SAML Proxy
 #---------------------------------------------
+ssl-proxy-saml-up:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/ssl-proxy-saml.yml -f compose/make-network.yml up -d
+
+ssl-proxy-saml-build:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/ssl-proxy-saml.yml -f compose/make-network.yml build
+
+ssl-proxy-saml-restart:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/ssl-proxy-saml.yml -f compose/make-network.yml restart
+
+ssl-proxy-saml-down:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/ssl-proxy-saml.yml -f compose/make-network.yml down
 
 proxy-saml-up:
 	NETWORK=${NETWORK} \
