@@ -103,8 +103,11 @@ rsp-down:
 
 ssp-up:
 	NETWORK=${NETWORK} \
+	SSP_LICENSE=$(SSP_LICENSE) \
 	docker-compose -f compose/base-ssp.yml -f compose/make-network.yml up -d
-
+ssp-build:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/base-ssp.yml -f compose/make-network.yml build
 ssp-down:
 	NETWORK=${NETWORK} \
 	docker-compose -f compose/base-ssp.yml -f compose/make-network.yml down
@@ -246,10 +249,16 @@ apache-auth-down:
 apache-simple-up:
 	NETWORK=${NETWORK} \
         docker-compose -f compose/proxy-basic.yml -f compose/make-network.yml up -d apache-simple
-
 apache-simple-down:
 	NETWORK=${NETWORK} \
         docker-compose -f compose/proxy-basic.yml -f compose/make-network.yml stop apache-simple
+
+proxy-basic-up:
+	NETWORK=${NETWORK} \
+        docker-compose -f compose/proxy-basic.yml -f compose/make-network.yml up -d nginx-support-ssp
+proxy-basic-down:
+	NETWORK=${NETWORK} \
+        docker-compose -f compose/proxy-basic.yml -f compose/make-network.yml stop nginx-support-ssp
 
 #---------------------------------------------
 # Proxy Products
