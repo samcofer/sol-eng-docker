@@ -6,8 +6,8 @@ This project houses docker infrastructure for quickly setting up, configuring, a
 
 - [Kerberos](./kerberos.md)
 - [Oauth2 Proxy](./oauth2.md)
-- [SAML](./saml.md)
 - [General Proxy](./proxy.md)
+- [SAML](./saml.md)
 - [LDAP](./ldap.md)
 - [Kubernetes](./k8s.md)
 - [SSL/TLS/HTTPS](./ssl.md)
@@ -54,15 +54,29 @@ canonically start in [`./cluster`](./cluster)).  Assets that are used only for
 an individual build are canonically stored in a subfolder relevant to that
 build.
 
+## [Kubernetes](./k8s)
+
+The [`./k8s`](./k8s) directory is where individual kubernetes asset configuration files
+live. These will often build on or from [`./cluster`](./cluster) resources.
+
 # Common Problems
 
 - docker cache outdated: let's say it has been a while and your docker cache
   needs `apt-get update` to be run in order to install things.  `docker-compose 
   -f myfile.yml build --no-cache myservice` can get you unstuck! 
 
-## Apache
+# Conventions
 
-- `ProxyPass` and `ProxyPassReverse` are not allowed within an `<If>` block... sad. Also, trying to use variables has also been painful
+- RStudio Server is proxied at `/rstudio` or listens on 8787
+- Shiny Server is proxied at `/shiny` or listens on 3838
+- RStudio Connect is proxied at `/rsconnect` or listens on 3939
+- If at all possible, try to make images extensible and mount configuration
+files into the image at runtime (so you just have to restart the container, not
+rebuild it)
+- We use `dumb-init` whenever possible as a lightweight service manager
+- Proxied auth headers use `X-Secret-User-Header`
+- `make some-key-up` targets compose file `compose/some-key.yml` and executes `up -d`
+- `make some-key-down` targets compose file `compose/some-key.yml` and executes `down`
 
 ## Init Systems
 
