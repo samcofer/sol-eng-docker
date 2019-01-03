@@ -1,0 +1,14 @@
+{
+	"request": {
+		"hosts": ["ssl-proxy-rsp"],
+		"names": [
+			{
+				"C": "US",
+				"ST": "North Carolina",
+				"L": "Raleigh",
+				"O": "RSTUDIO-DOCKER.COM"
+			}
+		],
+		"CN": "ssl-proxy-rsp"
+	}
+}
