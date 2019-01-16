@@ -4,33 +4,31 @@ global:
   evaluation_interval: 10s
 
 scrape_configs:
-  - job_name: 'node'
-    ec2_sd_configs:
-      - region: us-east-2
-        port: 9100
-    relabel_configs:
-      - source_labels: [__meta_ec2_vpc_id]
-        regex: <VPC_ID> 
-        action: keep
-      - source_labels: [__meta_ec2_instance_id]
-        target_label: instance
-  - job_name: 'rstudio_connect'
-    ec2_sd_configs:
-      - region: us-east-2
-        port: 10100
-    relabel_configs:
-      - source_labels: [__meta_ec2_vpc_id]
-        regex: <VPC_ID> 
-        action: keep
-      - source_labels: [__meta_ec2_instance_id]
-        target_label: instance
-  - job_name: 'rstudio_server_pro'
-    ec2_sd_configs:
-      - region: us-east-2
-        port: 10101
-    relabel_configs:
-      - source_labels: [__meta_ec2_vpc_id]
-        regex: <VPC_ID> 
-        action: keep
-      - source_labels: [__meta_ec2_instance_id]
-        target_label: instance
+  - job_name: 'federate'
+    honor_labels: true
+    metrics_path: '/prom/federate'
+
+    params:
+      'match[]':
+        - '{__name__=~".+"}'
+    static_configs:
+      - targets:
+        - '18.224.33.73'
+        labels:
+          cluster: 'big-data'
+      - targets:
+        - '18.191.179.58'
+        labels:
+          cluster: 'machine-learning'
+      - targets:
+        - '18.222.213.231'
+        labels:
+          cluster: 'pro-admin'
+      - targets:
+        - '52.14.206.40'
+        labels:
+          cluster: 'rmarkdown'
+      - targets:
+        - '18.191.196.50'
+        labels:
+          cluster: 'shiny-in-prod'

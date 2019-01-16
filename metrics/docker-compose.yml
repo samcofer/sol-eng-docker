@@ -12,7 +12,7 @@ services:
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--storage.tsdb.path=/prometheus'
-      - '--web.external-url=/prom/'
+      - '--web.external-url=/'
 
 # grafana for pretty graphing
   grafana:
@@ -23,7 +23,7 @@ services:
     ports:
       - 3000:3000
     environment:
-      - "GF_SERVER_ROOT_URL=/grafana/"
+      - "GF_SERVER_ROOT_URL=/"
       - "GF_SECURITY_ADMIN_PASSWORD=soleng-admin"
     volumes:
       - grafana_data:/var/lib/grafana
