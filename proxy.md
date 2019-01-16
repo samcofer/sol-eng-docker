@@ -23,3 +23,4 @@ Server Pro. In this case, you cannot start an R session.
 - Websockets in Apache can be painful... if you're in HTTPS, use WSS!!
 - Always make sure that the right modules are loaded!! Otherwise you get weird
   behavior, thinking you have capabilities you do not
+- [Logging in Apache](https://www.loggly.com/ultimate-guide/apache-logging-basics/)

@@ -1,0 +1,34 @@
+version: '3'
+services:
+# prometheus server to collect data
+  prom:
+    image: prom/prometheus:v2.6.0
+    restart: always
+    ports:
+      - 9090:9090
+    volumes:
+      - ./prometheus/:/etc/prometheus/
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.external-url=/'
+
+# grafana for pretty graphing
+  grafana:
+    image: grafana/grafana:5.4.2
+    restart: always
+    depends_on:
+      - prom
+    ports:
+      - 3000:3000
+    environment:
+      - "GF_SERVER_ROOT_URL=/"
+      - "GF_SECURITY_ADMIN_PASSWORD=soleng-admin"
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana:/etc/grafana/provisioning
+
+volumes:
+  prometheus_data:
+  grafana_data:
