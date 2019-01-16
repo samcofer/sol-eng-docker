@@ -4,7 +4,7 @@ PWD := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 PROJECT=auth-docker
 NETWORK=${PROJECT}_default
 SCALE=1
-CONNECT_BINARY_URL=rstudio-connect_1.6.11-3933_amd64.deb
+CONNECT_BINARY_URL=rstudio-connect_1.7.0-11_amd64.deb
 
 RSP_VERSION=1.2.1070-1
 
@@ -72,6 +72,20 @@ ssl-proxy-connect-down:
 	NETWORK=${NETWORK} \
 	docker-compose -f compose/ssl-proxy-connect.yml down
 
+ssl-proxy-rsp-up:
+	NETWORK=${NETWORK} \
+	RSP_LICENSE=$(RSP_LICENSE) \
+	docker-compose -f compose/ssl-proxy-rsp.yml -f compose/make-network.yml up -d
+
+ssl-proxy-rsp-restart:
+	NETWORK=${NETWORK} \
+	RSP_LICENSE=$(RSP_LICENSE) \
+	docker-compose -f compose/ssl-proxy-rsp.yml -f compose/make-network.yml restart
+
+ssl-proxy-rsp-down:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/ssl-proxy-rsp.yml -f compose/make-network.yml down
+
 #---------------------------------------------
 # Base Products
 #---------------------------------------------
@@ -97,14 +111,22 @@ rsp-up:
 	RSP_LICENSE=$(RSP_LICENSE) \
 	docker-compose -f compose/base-rsp.yml -f compose/make-network.yml up -d
 
+rsp-build:
+	NETWORK=${NETWORK} \
+	RSP_LICENSE=$(RSP_LICENSE) \
+	docker-compose -f compose/base-rsp.yml -f compose/make-network.yml build
+
 rsp-down:
 	NETWORK=${NETWORK} \
 	docker-compose -f compose/base-rsp.yml -f compose/make-network.yml down
 
 ssp-up:
 	NETWORK=${NETWORK} \
+	SSP_LICENSE=$(SSP_LICENSE) \
 	docker-compose -f compose/base-ssp.yml -f compose/make-network.yml up -d
-
+ssp-build:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/base-ssp.yml -f compose/make-network.yml build
 ssp-down:
 	NETWORK=${NETWORK} \
 	docker-compose -f compose/base-ssp.yml -f compose/make-network.yml down
@@ -268,10 +290,16 @@ apache-auth-down:
 apache-simple-up:
 	NETWORK=${NETWORK} \
         docker-compose -f compose/proxy-basic.yml -f compose/make-network.yml up -d apache-simple
-
 apache-simple-down:
 	NETWORK=${NETWORK} \
         docker-compose -f compose/proxy-basic.yml -f compose/make-network.yml stop apache-simple
+
+proxy-basic-up:
+	NETWORK=${NETWORK} \
+        docker-compose -f compose/proxy-basic.yml -f compose/make-network.yml up -d nginx-support-ssp
+proxy-basic-down:
+	NETWORK=${NETWORK} \
+        docker-compose -f compose/proxy-basic.yml -f compose/make-network.yml stop nginx-support-ssp
 
 #---------------------------------------------
 # Proxy Products
@@ -294,6 +322,15 @@ proxy-connect-down:
 	NETWORK=${NETWORK} \
 	docker-compose -f compose/proxy-connect.yml down
 
+proxy-rsp-up:
+	NETWORK=${NETWORK} \
+	RSP_LICENSE=$(RSP_LICENSE) \
+	docker-compose -f compose/proxy-rsp.yml -f compose/make-network.yml up -d
+
+proxy-rsp-down:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/proxy-rsp.yml -f compose/make-network.yml down
+
 proxy-debug-up:
 	NETWORK=${NETWORK} \
 	docker-compose -f compose/proxy-debug.yml -f compose/make-network.yml up -d
@@ -302,6 +339,12 @@ proxy-debug-down:
 	NETWORK=${NETWORK} \
 	docker-compose -f compose/proxy-debug.yml -f compose/make-network.yml down
 
+proxy-mitm-up:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/proxy-mitm.yml -f compose/make-network.yml up -d
+proxy-mitm-down:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/proxy-mitm.yml -f compose/make-network.yml down
 #---------------------------------------------
 # OAuth2 Proxy
 #---------------------------------------------
@@ -316,10 +359,33 @@ proxy-oauth-down:
 #---------------------------------------------
 # SAML Proxy
 #---------------------------------------------
+ssl-proxy-saml-up:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/ssl-proxy-saml.yml -f compose/make-network.yml up -d
+
+ssl-proxy-saml-build:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/ssl-proxy-saml.yml -f compose/make-network.yml build
+
+ssl-proxy-saml-restart:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/ssl-proxy-saml.yml -f compose/make-network.yml restart
+
+ssl-proxy-saml-down:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/ssl-proxy-saml.yml -f compose/make-network.yml down
 
 proxy-saml-up:
 	NETWORK=${NETWORK} \
 	docker-compose -f compose/apache-saml.yml -f compose/make-network.yml up -d
+
+proxy-saml-build:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/apache-saml.yml -f compose/make-network.yml build
+
+proxy-saml-restart:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/apache-saml.yml -f compose/make-network.yml restart
 
 proxy-saml-down:
 	NETWORK=${NETWORK} \

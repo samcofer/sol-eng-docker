@@ -1,0 +1,9 @@
+version: "2.3"
+services:
+  proxy-mitm:
+    hostname: proxy-mitm
+    image: mitmproxy/mitmproxy
+    ports:
+      - "8090:8080"
+      - "8091:8081"
+    command: [ "mitmweb", "--web-iface", "0.0.0.0" ]

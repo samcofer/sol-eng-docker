@@ -18,7 +18,9 @@ services:
     build:
       context: ../cluster
       dockerfile: apache-saml/Dockerfile
+    volumes:
+      - ../cluster/apache-saml-all.conf:/usr/local/apache2/conf/httpd.conf
     ports:
       - "80:80"
       - "443:443"
-
+      - "8991"

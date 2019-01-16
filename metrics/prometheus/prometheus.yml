@@ -1,0 +1,34 @@
+# my global config
+global:
+  scrape_interval:     10s
+  evaluation_interval: 10s
+
+scrape_configs:
+  - job_name: 'federate'
+    honor_labels: true
+    metrics_path: '/prom/federate'
+
+    params:
+      'match[]':
+        - '{__name__=~".+"}'
+    static_configs:
+      - targets:
+        - '18.224.33.73'
+        labels:
+          cluster: 'big-data'
+      - targets:
+        - '18.191.179.58'
+        labels:
+          cluster: 'machine-learning'
+      - targets:
+        - '18.222.213.231'
+        labels:
+          cluster: 'pro-admin'
+      - targets:
+        - '52.14.206.40'
+        labels:
+          cluster: 'rmarkdown'
+      - targets:
+        - '18.191.196.50'
+        labels:
+          cluster: 'shiny-in-prod'
