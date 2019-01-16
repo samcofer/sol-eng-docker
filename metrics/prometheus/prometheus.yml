@@ -1,0 +1,36 @@
+# my global config
+global:
+  scrape_interval:     10s
+  evaluation_interval: 10s
+
+scrape_configs:
+  - job_name: 'node'
+    ec2_sd_configs:
+      - region: us-east-2
+        port: 9100
+    relabel_configs:
+      - source_labels: [__meta_ec2_vpc_id]
+        regex: <VPC_ID> 
+        action: keep
+      - source_labels: [__meta_ec2_instance_id]
+        target_label: instance
+  - job_name: 'rstudio_connect'
+    ec2_sd_configs:
+      - region: us-east-2
+        port: 10100
+    relabel_configs:
+      - source_labels: [__meta_ec2_vpc_id]
+        regex: <VPC_ID> 
+        action: keep
+      - source_labels: [__meta_ec2_instance_id]
+        target_label: instance
+  - job_name: 'rstudio_server_pro'
+    ec2_sd_configs:
+      - region: us-east-2
+        port: 10101
+    relabel_configs:
+      - source_labels: [__meta_ec2_vpc_id]
+        regex: <VPC_ID> 
+        action: keep
+      - source_labels: [__meta_ec2_instance_id]
+        target_label: instance
