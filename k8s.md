@@ -330,3 +330,19 @@ Links:
 - [minikube nfs issues](https://github.com/kubernetes/minikube/issues/2218)
 
 - [nfsv4 on k8s](https://www.reddit.com/r/homelab/comments/7x3xoq/nfs_4_on_kubernetes/)
+
+- [helm stuff](https://github.com/helm/helm)
+
+Ingress:
+- [traefik docs](https://docs.traefik.io/user-guide/kubernetes/)
+     - [traefik web ui](https://github.com/containous/traefik#web-ui)
+     - [traefik blog post](https://capgemini.github.io/kubernetes/kube-traefik/)
+- [Google Cloud network
+  overview](https://cloud.google.com/kubernetes-engine/docs/concepts/network-overview)
+( [and helpful
+section](https://cloud.google.com/kubernetes-engine/docs/concepts/network-overview#services)
+)
+- [Kubernetes Service Types Overview](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types)
+- [Kubernetes Ingress docs](https://kubernetes.io/docs/concepts/services-networking/ingress/)
+- [nginx-ingress](https://github.com/helm/charts/tree/master/stable/nginx-ingress)
+    - [more nginx ingress](https://cloud.google.com/community/tutorials/nginx-ingress-gke)
