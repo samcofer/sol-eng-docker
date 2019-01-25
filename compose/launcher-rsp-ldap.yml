@@ -7,6 +7,8 @@ services:
     build:
       context: ../cluster
       dockerfile: launcher-rsp-ldap/Dockerfile
+      args:
+        RSP_VERSION: ${RSP_VERSION}
     environment:
       - RSP_LICENSE
     ports:
@@ -25,10 +27,10 @@ services:
 
   launcher-session:
     hostname: launcher-session
-    image: colearendt/rsession-demo
+    image: rstudio/launcher-session
     build:
       context: ../cluster
       dockerfile: launcher-session/Dockerfile
       args:
         R_VERSION: "3.5.1"
-
+        RSP_VERSION: ${RSP_VERSION}
