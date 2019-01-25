@@ -40,7 +40,7 @@ RUN apt-get install -y \
 RUN \
   #RSTUDIO_LATEST=$(wget --no-check-certificate -qO- https://s3.amazonaws.com/rstudio-server/current.ver) \
   #&& [ -z "$RSTUDIO_VERSION" ] && RSTUDIO_VERSION=$RSTUDIO_LATEST || true \
-  wget -q https://s3.amazonaws.com/rstudio-ide-build/server/trusty/amd64/rstudio-server-pro-1.2.1086-1-amd64.deb -O rstudio-server-pro.deb \
+  wget -q https://s3.amazonaws.com/rstudio-ide-build/server/trusty/amd64/rstudio-server-pro-${RSTUDIO_VERSION}-amd64.deb -O rstudio-server-pro.deb \
   #&& wget -q http://download2.rstudio.org/rstudio-server-pro-${RSTUDIO_VERSION}-amd64.deb \
   && gdebi -n rstudio-server-pro.deb \
   && rm rstudio-server-pro.deb \
