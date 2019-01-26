@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: nfs01
-        image: us.gcr.io/rstudio-soleng/nfs-server-alpine:latest
+        image: rstudio/nfs-server-alpine:latest
         args: ["/var/home"]
         env:
         - name: NFS_OPTS

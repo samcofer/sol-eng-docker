@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: rsp
-        image: us.gcr.io/rstudio-soleng/launcher-rsp-ldap
+        image: rstudio/launcher-rsp-ldap
         env:
         - name: RSP_LICENSE
           valueFrom:
