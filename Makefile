@@ -6,7 +6,7 @@ NETWORK=${PROJECT}_default
 SCALE=1
 CONNECT_BINARY_URL=rstudio-connect_1.7.0-11_amd64.deb
 
-RSP_VERSION=1.2.1070-1
+RSP_VERSION=1.2.1186-1
 
 test-env-up: network-up
 
@@ -222,7 +222,7 @@ k8s-rsp-ldap-down:
 
 launcher-session-build:
 	RSP_VERSION=${RSP_VERSION} \
-	docker-compose -f compose/launcher-rsp.yml build launcher-session launcher-session-alt
+	docker-compose -f compose/launcher-rsp.yml build launcher-session
 
 #---------------------------------------------
 # Floating License Servers
