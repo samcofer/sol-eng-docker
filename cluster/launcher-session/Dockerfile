@@ -14,9 +14,15 @@ RUN apt-get update -qq && \
 RUN set -x && \
 	apt-get update && \
 	apt-get install -y \
-	libxml2-dev \
 	curl \
-	git
+	git \
+	g++ \
+	libblas3 \
+	libicu52 \
+	liblapack3 \
+	libxml2-dev \
+	libxt6 \
+	make
 
 # Get $R_VERSION
 RUN mkdir -p /opt/R && cd /opt/R \
