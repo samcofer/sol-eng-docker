@@ -25,7 +25,7 @@ services:
 
   launcher-session:
     hostname: launcher-session
-    image: colearendt/rsession-demo:${RSP_VERSION}
+    image: rstudio/launcher-session:${RSP_VERSION}
     build:
       context: ../cluster
       dockerfile: launcher-session/Dockerfile
@@ -35,7 +35,7 @@ services:
 
   launcher-session-alt:
     hostname: launcher-session-alt
-    image: colearendt/rsession-demo-alt:${RSP_VERSION}
+    image: rstudio/launcher-session:${RSP_VERSION}
     build:
       context: ../cluster
       dockerfile: launcher-session-alt/Dockerfile
