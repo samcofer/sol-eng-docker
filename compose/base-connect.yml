@@ -3,12 +3,13 @@ services:
 
   connect:
     hostname: connect
-    image: rstudio/base-connect
+    image: rstudio/sol-eng-connect:${CONNECT_VERSION}
     build:
       context: ../cluster
       dockerfile: ./base-connect/Dockerfile
       args:
         - CONNECT_BINARY_URL
+        - CONNECT_VERSION
     ports:
       - 3939
     privileged: true
