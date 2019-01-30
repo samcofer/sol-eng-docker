@@ -10,7 +10,7 @@ services:
       args:
         - CONNECT_BINARY_URL
     ports:
-      - 3939:3939
+      - 3939
     privileged: true
     environment:
       - CONNECT_LICENSE
