@@ -341,6 +341,7 @@ proxy-connect-down:
 proxy-rsp-up:
 	NETWORK=${NETWORK} \
 	RSP_LICENSE=$(RSP_LICENSE) \
+	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
 	docker-compose -f compose/proxy-rsp.yml -f compose/make-network.yml up -d
 
 proxy-rsp-down:
