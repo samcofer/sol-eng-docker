@@ -6,7 +6,9 @@ services:
     build:
       context: ../cluster
       dockerfile: base-rsp/Dockerfile
-    image: rstudio/base-rsp
+      args:
+        - RSTUDIO_VERSION=${RSTUDIO_VERSION}
+    image: rstudio/sol-eng-rstudio:${RSTUDIO_VERSION}
     environment:
       - RSP_LICENSE
     ports:
