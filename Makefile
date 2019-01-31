@@ -4,9 +4,10 @@ PWD := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 PROJECT=auth-docker
 NETWORK=${PROJECT}_default
 SCALE=1
-CONNECT_BINARY_URL=rstudio-connect_1.7.0-11_amd64.deb
+CONNECT_VERSION=1.7.0-11
+CONNECT_BINARY_URL=rstudio-connect_${CONNECT_VERSION}_amd64.deb
 
-RSP_VERSION=1.2.1186-1
+RSTUDIO_VERSION=1.2.1186-1
 
 test-env-up: network-up
 
@@ -96,10 +97,12 @@ connect-up-hide:
 	CONNECT_BINARY_URL=${CONNECT_BINARY_URL} \
 	docker-compose -f compose/base-connect.yml -f compose/make-network.yml up -d
 
+ #--scale connect=2
 connect-build:
 	NETWORK=${NETWORK} \
 	CONNECT_LICENSE=$(CONNECT_LICENSE) \
 	CONNECT_BINARY_URL=${CONNECT_BINARY_URL} \
+	CONNECT_VERSION=$(CONNECT_VERSION) \
 	docker-compose -f compose/base-connect.yml -f compose/make-network.yml build
 
 connect-down:
@@ -109,11 +112,13 @@ connect-down:
 rsp-up:
 	NETWORK=${NETWORK} \
 	RSP_LICENSE=$(RSP_LICENSE) \
+	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
 	docker-compose -f compose/base-rsp.yml -f compose/make-network.yml up -d
 
 rsp-build:
 	NETWORK=${NETWORK} \
 	RSP_LICENSE=$(RSP_LICENSE) \
+	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
 	docker-compose -f compose/base-rsp.yml -f compose/make-network.yml build
 
 rsp-down:
@@ -173,6 +178,16 @@ k8s-launcher-keys:
 	kubectl create configmap --namespace=rstudio launcher-pem --from-file ./cluster/launcher.pem && \
 	kubectl create configmap --namespace=rstudio launcher-pub --from-file ./cluster/launcher.pub
 
+k8s-launcher-ldap-config:
+	kubectl create configmap --namespace=rstudio launcher-config \
+		--from-file ./cluster/launcher.pem \
+		--from-file ./cluster/launcher.pub \
+		--from-file ./cluster/launcher-rsp-ldap/launcher-mounts \
+		--from-file ./cluster/launcher-ldap/launcher.kubernetes.profiles.conf \
+		--from-file ./cluster/launcher-ldap/launcher.kubernetes.conf \
+		--from-file ./cluster/launcher-ldap/launcher.conf \
+		--from-file ./cluster/launcher-rsp-ldap/rserver.conf
+
 k8s-launcher-k8s-prof-conf:
 	kubectl create configmap --namespace=rstudio launcher-k8s-prof-conf --from-file ./cluster/launcher-ldap/launcher.kubernetes.profiles.conf
 k8s-launcher-k8s-prof-conf-down:
@@ -221,7 +236,7 @@ k8s-rsp-ldap-down:
 	kubectl --namespace=rstudio delete -f ./k8s/rsp-ldap.yml
 
 launcher-session-build:
-	RSP_VERSION=${RSP_VERSION} \
+	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
 	docker-compose -f compose/launcher-rsp.yml build launcher-session
 
 #---------------------------------------------
@@ -297,6 +312,7 @@ apache-simple-down:
 proxy-basic-up:
 	NETWORK=${NETWORK} \
         docker-compose -f compose/proxy-basic.yml -f compose/make-network.yml up -d nginx-support-ssp
+
 proxy-basic-down:
 	NETWORK=${NETWORK} \
         docker-compose -f compose/proxy-basic.yml -f compose/make-network.yml stop nginx-support-ssp
