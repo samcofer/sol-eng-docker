@@ -1,6 +1,6 @@
 # https://github.com/rocker-org/rocker-versioned/blob/master/rstudio/devel/Dockerfile
 # https://www.rstudio.com/products/rstudio/download-commercial/ 
-FROM rocker/r-ver:3.4.3
+FROM ubuntu:xenial
 
 ARG RSTUDIO_VERSION
 ENV PATH=/usr/lib/rstudio-server/bin:$PATH
@@ -15,6 +15,7 @@ RUN apt-get update && \
 # Install system dependencies
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
+    curl \
     file \
     gdebi \
     git \
@@ -25,17 +26,22 @@ RUN apt-get update \
     lsb-release \
     psmisc \
     python-setuptools \
-    sudo \
-    wget \
     rrdtool \
-    && wget -O libssl1.0.0.deb http://ftp.debian.org/debian/pool/main/o/openssl/libssl1.0.0_1.0.1t-1+deb8u8_amd64.deb \
-    && gdebi -n libssl1.0.0.deb
+    sudo \
+    wget
+
+# install R
+ARG R_VERSION=3.5.1
+RUN mkdir -p /opt/R && \
+	curl https://cdn.rstudio.com/r/ubuntu-1604/R-${R_VERSION}-ubuntu-1604.tar.gz | \
+	tar xzvf - -C /opt/R/
 
 ## Download and install RStudio Server Pro
 ## Attempts to detect latest version, otherwise falls back to version given in $VER
 RUN RSTUDIO_LATEST=$(wget --no-check-certificate -qO- https://s3.amazonaws.com/rstudio-server/current.ver) \
   && [ -z "$RSTUDIO_VERSION" ] && RSTUDIO_VERSION=$RSTUDIO_LATEST || true \
-  && wget -q http://download2.rstudio.org/rstudio-server-pro-${RSTUDIO_VERSION}-amd64.deb \
+  && wget -q https://s3.amazonaws.com/rstudio-ide-build/server/trusty/amd64/rstudio-server-pro-${RSTUDIO_VERSION}-amd64.deb \
+  #&& wget -q http://download2.rstudio.org/rstudio-server-pro-${RSTUDIO_VERSION}-amd64.deb \
   && gdebi -n rstudio-server-pro-${RSTUDIO_VERSION}-amd64.deb \
   ## use more robust file locking to avoid errors when using shared volumes:
   && echo 'lock-type=advisory' >> /etc/rstudio/file-locks
