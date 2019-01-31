@@ -17,18 +17,24 @@ RUN apt-get update \
   && apt-get install -y --no-install-recommends \
     curl \
     file \
+    gcc \
     gdebi \
     git \
     libapparmor1 \
+    libblas3 \
     libcurl4-openssl-dev \
     libedit2 \
+    liblapack3 \
     libssl-dev \
+    libxt6 \
     lsb-release \
+    make \
     psmisc \
     python-setuptools \
     rrdtool \
     sudo \
     wget
+# gcc is only needed as a build dependency for packages
 
 # install R
 ARG R_VERSION=3.5.1
