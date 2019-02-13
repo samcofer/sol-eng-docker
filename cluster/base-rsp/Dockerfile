@@ -20,6 +20,7 @@ RUN apt-get update \
     gcc \
     gdebi \
     git \
+    g++ \
     libapparmor1 \
     libblas3 \
     libcurl4-openssl-dev \
@@ -34,7 +35,7 @@ RUN apt-get update \
     rrdtool \
     sudo \
     wget
-# gcc is only needed as a build dependency for packages
+# gcc & g++ are only needed as build dependencies for packages
 
 # install R
 ARG R_VERSION=3.5.1
