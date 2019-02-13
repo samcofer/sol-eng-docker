@@ -37,25 +37,25 @@ spec:
       volumes:
       - name: launcher-conf
         configMap:
-          name: launcher-conf
+          name: launcher-config
           items:
           - key: launcher.conf
             path: "launcher.conf"
       - name: launcher-k8s-prof-conf
         configMap:
-          name: launcher-k8s-prof-conf
+          name: launcher-config
           items:
           - key: launcher.kubernetes.profiles.conf
             path: "launcher.kubernetes.profiles.conf"
       - name: launcher-pub
         configMap:
-          name: launcher-pub
+          name: launcher-config
           items:
           - key: launcher.pub
             path: "launcher.pub"
       - name: launcher-pem
         configMap:
-          name: launcher-pem
+          name: launcher-config
           defaultMode: 384
           items:
           - key: launcher.pem
