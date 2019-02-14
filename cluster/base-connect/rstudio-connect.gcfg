@@ -6,7 +6,7 @@
 ; setting is configured.
 ;	
 ; SenderEmail = account@company.com
-SenderEmail = 
+SenderEmail = rsconnect@example.com
 ExpandedViewUI = true
 DefaultContentListView = "expanded"
 
