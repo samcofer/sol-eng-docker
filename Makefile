@@ -45,6 +45,14 @@ download-connect:
 		  -O ./cluster/${CONNECT_BINARY_URL}; \
 	fi;
 
+mail-up:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/mail.yml -f compose/make-network.yml up -d
+
+mail-down:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/mail.yml -f compose/make-network.yml down
+
 #---------------------------------------------
 # SSL
 #---------------------------------------------
@@ -94,6 +102,7 @@ connect-up: download-connect connect-up-hide
 connect-up-hide:
 	NETWORK=${NETWORK} \
 	CONNECT_LICENSE=$(CONNECT_LICENSE) \
+	CONNECT_VERSION=$(CONNECT_VERSION) \
 	CONNECT_BINARY_URL=${CONNECT_BINARY_URL} \
 	docker-compose -f compose/base-connect.yml -f compose/make-network.yml up -d
 
@@ -147,6 +156,16 @@ k8s-down: k8s-launcher-ldap-down \
 	k8s-launcher-ldap-config-down \
 	k8s-secret-rsp-down
 
+k8s-up: k8s-setup \
+	k8s-secret-rsp \
+	k8s-launcher-ldap-config \
+	k8s-nfs-up \
+	k8s-nfs-ip-fix \
+	k8s-nfs-pv-up \
+	k8s-ldap-up \
+	k8s-rsp-ldap-up \
+	k8s-launcher-ldap-up
+
 
 k8s-ldap-all-up: k8s-setup k8s-nfs-up k8s-nfs-ip-fix k8s-nfs-pv-up \
 	k8s-secret-rsp k8s-ldap-up \
@@ -192,7 +211,6 @@ k8s-launcher-ldap-config:
 		--from-file ./cluster/launcher.pub \
 		--from-file ./cluster/launcher-rsp-ldap/launcher-mounts \
 		--from-file ./cluster/launcher-ldap/launcher.kubernetes.profiles.conf \
-		--from-file ./cluster/launcher-ldap/launcher.kubernetes.conf \
 		--from-file ./cluster/launcher-ldap/launcher.conf \
 		--from-file ./cluster/launcher-rsp-ldap/rserver.conf
 
