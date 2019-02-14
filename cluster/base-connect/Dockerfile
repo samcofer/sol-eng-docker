@@ -6,12 +6,21 @@ RUN apt-get update -y -qq && \
     apt-transport-https \
     build-essential \
     curl \
+    gcc \
     gdebi-core \
-    libcurl4-gnutls-dev \
+    git \
+    g++ \
+    libblas3 \
+    libcurl4-openssl-dev \
+    libedit2 \
+    liblapack3 \
     libxml2-dev \
     libssl-dev \
+    libxt6 \
     lsb-release \
+    make \
     ntp \
+    psmisc \
     rrdtool \
     unixodbc-dev \
     vim \
@@ -21,7 +30,9 @@ RUN apt-get update -y -qq && \
     python-virtualenv \
     python3 \ 
     python3-pip \
-    python3-virtualenv
+    python3-virtualenv \
+    wget
+# gcc & g++ are only needed as build dependencies for packages
 
 # install R
 ARG R_VERSION=3.5.1
