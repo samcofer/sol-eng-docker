@@ -342,7 +342,15 @@ Ingress:
 ( [and helpful
 section](https://cloud.google.com/kubernetes-engine/docs/concepts/network-overview#services)
 )
+- [Google Cloud Load Balancing](https://cloud.google.com/kubernetes-engine/docs/tutorials/http-balancer)
 - [Kubernetes Service Types Overview](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types)
 - [Kubernetes Ingress docs](https://kubernetes.io/docs/concepts/services-networking/ingress/)
 - [nginx-ingress](https://github.com/helm/charts/tree/master/stable/nginx-ingress)
     - [more nginx ingress](https://cloud.google.com/community/tutorials/nginx-ingress-gke)
+
+Startup:
+- [Mount in an entrypoint](https://etoews.github.io/blog/2017/07/29/inject-an-executable-script-into-a-container-in-kubernetes/)
+
+TODO:
+- Kubernetes _NEEDS_ better docs on volumes, specifically DefaultMode
+    - Not sure if this is needed, but [converting octal to decimal](https://coolconversion.com/math/binary-octal-hexa-decimal/Convert_decimal_number_384_in_octal_)
