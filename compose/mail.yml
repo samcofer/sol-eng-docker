@@ -1,0 +1,32 @@
+version: "2.3"
+volumes:
+  mailbox:
+  sqlite:
+
+services:
+  smtp-sink:
+    build: ../cluster/smtp-sink/
+    image: smtp-sink
+    ports:
+      - "25"
+    volumes:
+      - mailbox:/home/smtp/Maildir/
+
+  courier-imap:
+    build: ../cluster/courier-imap/
+    image: courier-imap
+    ports:
+      - "143"
+    volumes:
+      - mailbox:/home/smtp/Maildir/
+
+  webmail:
+    build: ../cluster/webmail/
+    image: roundcube
+    environment:
+      - IMAP_HOSTNAME=courier-imap
+      - SMTP_HOSTNAME=smtp-sink
+    ports:
+      - "80"
+    volumes:
+      - sqlite:/var/lib/dbconfig-common/sqlite3/roundcube
