@@ -471,6 +471,13 @@ ldap-connect-down:
 	NETWORK=${NETWORK} \
 	docker-compose -f compose/ldap-connect.yml -f compose/make-network.yml down
 
+
+pg-up: 
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/pg.yml -f compose/make-network.yml up -d
+pg-down: 
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/pg.yml -f compose/make-network.yml down
 #---------------------------------------------
 # Other 
 #---------------------------------------------
