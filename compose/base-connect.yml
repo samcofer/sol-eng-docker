@@ -15,4 +15,6 @@ services:
     privileged: true
     environment:
       - CONNECT_LICENSE
+    volumes:
+      - ../cluster/base-connect/rstudio-connect.gcfg:/etc/rstudio-connect/rstudio-connect.gcfg
 
