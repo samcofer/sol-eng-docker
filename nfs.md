@@ -9,6 +9,8 @@ However, NFS is a pain to debug, so a separate file is also in order.
 
 - Set `privileged: true` if you are in a docker container or on Kubernetes
 - `exportfs -a` if you want to [refresh the exports](https://unix.stackexchange.com/questions/106122/mount-nfs-access-denied-by-server-while-mounting-on-ubuntu-machines)
+- [expose ports 111 and 2049](https://serverfault.com/questions/377170/which-ports-do-i-need-to-open-in-the-firewall-to-use-nfs)
+- use [`showmount -e nfs-server`](https://www.cyberciti.biz/faq/howto-see-shares-on-nfs-server-exported-filesystems/) to see exports
 
 
 ## [Add logging](https://kerneltalks.com/config/nfs-logs-in-linux/)
@@ -28,3 +30,4 @@ rpcdebug -m nfsd all
 ## Other Articles
 
 - [Access denied](https://www.centos.org/forums/viewtopic.php?t=56673)
+- [Install on Ubuntu](https://help.ubuntu.com/lts/serverguide/network-file-system.html.en)
