@@ -15,3 +15,4 @@ Logging = true
 IdPMetaData = https://dev-513394.oktapreview.com/app/exkjlcdh1pwj1s5Sn0h7/sso/saml/metadata
 UsernameAttribute = Username
 NameIdFormat = persistent
+SSOInitiated = IdPAndSP
