@@ -1,0 +1,17 @@
+; RStudio Connect configuration file
+
+[Server]
+SenderEmail = test@example.com
+Address = http://localhost:3939/
+	
+[Http]
+Listen = :3939
+
+[Authentication]
+Provider = saml
+
+[SAML]
+Logging = true
+IdPMetaData = https://dev-513394.oktapreview.com/app/exkjlcdh1pwj1s5Sn0h7/sso/saml/metadata
+UsernameAttribute = Username
+NameIdFormat = persistent
