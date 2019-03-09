@@ -424,6 +424,14 @@ ssl-proxy-saml-down:
 	NETWORK=${NETWORK} \
 	docker-compose -f compose/ssl-proxy-saml.yml -f compose/make-network.yml down
 
+proxy-saml-idp-up:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/saml-idp.yml -f compose/make-network.yml up -d
+
+proxy-saml-idp-down:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/saml-idp.yml -f compose/make-network.yml down
+
 proxy-saml-up:
 	NETWORK=${NETWORK} \
 	docker-compose -f compose/apache-saml.yml -f compose/make-network.yml up -d
