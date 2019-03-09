@@ -424,13 +424,23 @@ ssl-proxy-saml-down:
 	NETWORK=${NETWORK} \
 	docker-compose -f compose/ssl-proxy-saml.yml -f compose/make-network.yml down
 
-proxy-saml-idp-up:
+saml-idp-up:
 	NETWORK=${NETWORK} \
 	docker-compose -f compose/saml-idp.yml -f compose/make-network.yml up -d
 
-proxy-saml-idp-down:
+saml-idp-down:
 	NETWORK=${NETWORK} \
 	docker-compose -f compose/saml-idp.yml -f compose/make-network.yml down
+
+saml-connect-local-up:
+	NETWORK=${NETWORK} \
+	CONNECT_LICENSE=$(CONNECT_LICENSE) \
+	CONNECT_VERSION=$(CONNECT_VERSION) \
+	docker-compose -f compose/saml-connect-local.yml -f compose/make-network.yml up -d
+
+saml-connect-local-down:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/saml-connect-local.yml -f compose/make-network.yml down
 
 proxy-saml-up:
 	NETWORK=${NETWORK} \
