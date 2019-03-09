@@ -299,6 +299,8 @@ Debugging Overview:
 - Try different options (`-o vers=4`, `-o nolock`)
 - Try different paths (`nfs01:/`, `nfs01:/actual/path`, `nfs01:/share`)
 - Permissions / ownership / UID mapping can be weird... (`ls -lha` and `id myuser` are your friends)
+- **SET PRIVILEGED=TRUE in your K8S config!!!!**
+    - I lost several hours of my life to this nonsense. Please remember that the client needs `privileged: true` to mount NFS
 
 Wins:
 - Use the ClusterIP of the node (`kubectl describe services --namespace=rstudio nfs01`)
