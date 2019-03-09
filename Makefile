@@ -4,7 +4,8 @@ PWD := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 PROJECT=auth-docker
 NETWORK=${PROJECT}_default
 SCALE=1
-CONNECT_VERSION=1.7.0-11
+CONNECT_VERSION=1.7.1-4265
+#1.7.0-11
 CONNECT_BINARY_URL=rstudio-connect_${CONNECT_VERSION}_amd64.deb
 
 RSTUDIO_VERSION=1.2.1186-1
@@ -68,7 +69,7 @@ ssl-proxy-connect-up: download-connect ssl-proxy-connect-up-hide
 ssl-proxy-connect-up-hide:
 	NETWORK=${NETWORK} \
 	CONNECT_LICENSE=$(CONNECT_LICENSE) \
-	CONNECT_BINARY_URL=${CONNECT_BINARY_URL} \
+	CONNECT_VERSION=$(CONNECT_VERSION) \
 	docker-compose -f compose/ssl-proxy-connect.yml -f compose/make-network.yml up -d
 
 ssl-proxy-connect-build: download-connect ssl-proxy-connect-build-hide
@@ -103,14 +104,12 @@ connect-up-hide:
 	NETWORK=${NETWORK} \
 	CONNECT_LICENSE=$(CONNECT_LICENSE) \
 	CONNECT_VERSION=$(CONNECT_VERSION) \
-	CONNECT_BINARY_URL=${CONNECT_BINARY_URL} \
 	docker-compose -f compose/base-connect.yml -f compose/make-network.yml up -d
 
  #--scale connect=2
 connect-build:
 	NETWORK=${NETWORK} \
 	CONNECT_LICENSE=$(CONNECT_LICENSE) \
-	CONNECT_BINARY_URL=${CONNECT_BINARY_URL} \
 	CONNECT_VERSION=$(CONNECT_VERSION) \
 	docker-compose -f compose/base-connect.yml -f compose/make-network.yml build
 
@@ -458,7 +457,7 @@ ldap-connect-up: download-connect ldap-connect-up-hide
 ldap-connect-up-hide:
 	NETWORK=${NETWORK} \
 	CONNECT_LICENSE=$(CONNECT_LICENSE) \
-	CONNECT_BINARY_URL=${CONNECT_BINARY_URL} \
+	CONNECT_VERSION=$(CONNECT_VERSION) \
 	docker-compose -f compose/ldap-connect.yml -f compose/make-network.yml up -d
 
 ldap-connect-build: download-connect ldap-connect-build-hide
