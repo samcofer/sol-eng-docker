@@ -316,6 +316,10 @@ Wins:
 - [Explaining no_root_squash](https://bencane.com/2012/11/23/nfs-setting-up-a-basic-nfs-file-system-share/)
 - [Explaining user mapping](https://unix.stackexchange.com/questions/9442/why-is-file-ownership-inconsistent-between-two-systems-mounting-the-same-nfs-sha)
 
+- [NFS and Persistent Volumes on AWS](https://docs.giantswarm.io/guides/using-persistent-volumes-on-aws/)
+    - [aws storage classes](https://docs.aws.amazon.com/eks/latest/userguide/storage-classes.html)
+    - [explanation](https://www.jeffgeerling.com/blog/2019/expanding-k8s-pvs-eks-on-aws)
+
 Links:
 - [general troubleshooting](https://wiki.archlinux.org/index.php/NFS/Troubleshooting)
 - [nfs overview](https://www.tecmint.com/how-to-setup-nfs-server-in-linux/)
