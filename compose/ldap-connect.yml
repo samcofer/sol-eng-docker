@@ -3,13 +3,9 @@ services:
 
   ldap-connect:
     hostname: ldap-connect
-    build:
-      context: ../cluster
-      dockerfile: ./base-connect/Dockerfile
-      args:
-        - CONNECT_BINARY_URL
+    image: rstudio/sol-eng-connect:${CONNECT_VERSION}
     ports:
-      - 3939:3939
+      - "3939"
     privileged: true
     environment:
       - CONNECT_LICENSE
