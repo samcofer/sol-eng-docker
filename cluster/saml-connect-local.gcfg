@@ -15,5 +15,6 @@ Logging = true
 IdPMetaData = http://saml-idp:8080/simplesaml/saml2/idp/metadata.php
 UsernameAttribute = user
 EmailAttribute = email
-NameIdFormat = persistent
+UniqueIdAttribute = uid
+NameIdFormat = transient
 SSOInitiated = IdPAndSP
