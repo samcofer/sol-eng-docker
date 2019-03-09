@@ -110,6 +110,7 @@ connect-up-hide:
 connect-build:
 	NETWORK=${NETWORK} \
 	CONNECT_LICENSE=$(CONNECT_LICENSE) \
+	CONNECT_BINARY_URL=${CONNECT_BINARY_URL} \
 	CONNECT_VERSION=$(CONNECT_VERSION) \
 	docker-compose -f compose/base-connect.yml -f compose/make-network.yml build
 
