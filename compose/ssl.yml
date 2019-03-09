@@ -7,4 +7,6 @@ services:
     volumes: 
       - ../cluster/ssl/auth-docker.key.nopass:/auth-docker.key.nopass
       - ../cluster/ssl/auth-docker.pem:/auth-docker.pem
+    ports:
+      - "8888"
 
