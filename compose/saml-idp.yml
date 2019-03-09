@@ -8,8 +8,8 @@ services:
       - 8443:8443
     environment:
       - SIMPLESAMLPHP_SP_ENTITY_ID=saml-connect
-      - SIMPLESAMLPHP_SP_ASSERTION_CONSUMER_SERVICE=http://localhost:3939/secret/postResponse
-      - SIMPLESAMLPHP_SP_SINGLE_LOGOUT_SERVICE=http://localhost:3939/secret/logout
+      - SIMPLESAMLPHP_SP_ASSERTION_CONSUMER_SERVICE=http://localhost:3939/__login__/saml/acs
+      - SIMPLESAMLPHP_SP_SINGLE_LOGOUT_SERVICE=http://localhost:3939/__logout__
       # metadata url: http://localhost:8080/simplesaml/saml2/idp/metadata.php
       # in contrast to https://stackoverflow.com/questions/24043015/simplesamlphp-generating-sp-metadata
     volumes:
