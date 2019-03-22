@@ -4,9 +4,11 @@ PWD := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 PROJECT=auth-docker
 NETWORK=${PROJECT}_default
 SCALE=1
-CONNECT_BINARY_URL=rstudio-connect_1.7.0-11_amd64.deb
+CONNECT_VERSION=1.7.2-7
+#1.7.0-11
+CONNECT_BINARY_URL=rstudio-connect_${CONNECT_VERSION}_amd64.deb
 
-RSP_VERSION=1.2.1070-1
+RSTUDIO_VERSION=1.2.1186-1
 
 test-env-up: network-up
 
@@ -44,6 +46,14 @@ download-connect:
 		  -O ./cluster/${CONNECT_BINARY_URL}; \
 	fi;
 
+mail-up:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/mail.yml -f compose/make-network.yml up -d
+
+mail-down:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/mail.yml -f compose/make-network.yml down
+
 #---------------------------------------------
 # SSL
 #---------------------------------------------
@@ -59,7 +69,7 @@ ssl-proxy-connect-up: download-connect ssl-proxy-connect-up-hide
 ssl-proxy-connect-up-hide:
 	NETWORK=${NETWORK} \
 	CONNECT_LICENSE=$(CONNECT_LICENSE) \
-	CONNECT_BINARY_URL=${CONNECT_BINARY_URL} \
+	CONNECT_VERSION=$(CONNECT_VERSION) \
 	docker-compose -f compose/ssl-proxy-connect.yml -f compose/make-network.yml up -d
 
 ssl-proxy-connect-build: download-connect ssl-proxy-connect-build-hide
@@ -93,13 +103,16 @@ connect-up: download-connect connect-up-hide
 connect-up-hide:
 	NETWORK=${NETWORK} \
 	CONNECT_LICENSE=$(CONNECT_LICENSE) \
-	CONNECT_BINARY_URL=${CONNECT_BINARY_URL} \
+	CONNECT_VERSION=$(CONNECT_VERSION) \
 	docker-compose -f compose/base-connect.yml -f compose/make-network.yml up -d
 
-connect-build:
+ #--scale connect=2
+connect-build: download-connect connect-build-hide
+connect-build-hide:
 	NETWORK=${NETWORK} \
 	CONNECT_LICENSE=$(CONNECT_LICENSE) \
 	CONNECT_BINARY_URL=${CONNECT_BINARY_URL} \
+	CONNECT_VERSION=$(CONNECT_VERSION) \
 	docker-compose -f compose/base-connect.yml -f compose/make-network.yml build
 
 connect-down:
@@ -109,11 +122,12 @@ connect-down:
 rsp-up:
 	NETWORK=${NETWORK} \
 	RSP_LICENSE=$(RSP_LICENSE) \
+	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
 	docker-compose -f compose/base-rsp.yml -f compose/make-network.yml up -d
 
 rsp-build:
 	NETWORK=${NETWORK} \
-	RSP_LICENSE=$(RSP_LICENSE) \
+	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
 	docker-compose -f compose/base-rsp.yml -f compose/make-network.yml build
 
 rsp-down:
@@ -135,12 +149,32 @@ ssp-down:
 # Kubernetes
 #---------------------------------------------
 
+k8s-down: k8s-launcher-ldap-down \
+	k8s-rsp-ldap-down \
+	k8s-ldap-down \
+	k8s-nfs-pv-down \
+	k8s-nfs-down \
+	k8s-launcher-ldap-config-down \
+	k8s-secret-rsp-down
+
+k8s-up: k8s-setup \
+	k8s-secret-rsp \
+	k8s-launcher-ldap-config \
+	k8s-nfs-up \
+	k8s-nfs-ip-fix \
+	k8s-nfs-pv-up \
+	k8s-ldap-up \
+	k8s-rsp-ldap-up \
+	k8s-launcher-ldap-up
+
+
 k8s-ldap-all-up: k8s-setup k8s-nfs-up k8s-nfs-ip-fix k8s-nfs-pv-up \
 	k8s-secret-rsp k8s-ldap-up \
 	k8s-rsp-ldap-up k8s-launcher-ldap-up
 
 k8s-ldap-all-down: k8s-launcher-ldap-down k8s-rsp-ldap-down \
 	k8s-ldap-down k8s-nfs-pv-down \
+	kubectl --namespace=rstudio delete secret license \
 	k8s-nfs-down
 
 k8s-setup:
@@ -152,7 +186,7 @@ k8s-setup:
 k8s-nfs-up:
 	kubectl --namespace=rstudio apply -f ./k8s/nfs.yml
 k8s-nfs-down:
-	kubectl --namespace=rstudio delete -f ./k8s/nfs.yml
+	kubectl --namespace=rstudio delete --ignore-not-found=true -f ./k8s/nfs.yml
 
 k8s-nfs-ip-fix:
 	./k8s/ip_hack.sh
@@ -162,44 +196,80 @@ k8s-nfs-pv-up:
 	echo 'you can get it with `kubectl --namespace=rstudio describe service nfs01`' && \
 	kubectl --namespace=rstudio apply -f ./k8s/pv.yml
 k8s-nfs-pv-down:
-	kubectl --namespace=rstudio delete -f ./k8s/pv.yml
+	kubectl --namespace=rstudio delete --ignore-not-found=true -f ./k8s/pv.yml
+
+
+k8s-nfs-launcher-mounts:
+	kubectl create configmap --namespace=rstudio launcher-mounts --from-file ./cluster/launcher-rsp-ldap/launcher-mounts
+
+k8s-launcher-keys:
+	kubectl create configmap --namespace=rstudio launcher-pem --from-file ./cluster/launcher.pem && \
+	kubectl create configmap --namespace=rstudio launcher-pub --from-file ./cluster/launcher.pub
+
+k8s-launcher-ldap-config:
+	kubectl create configmap --namespace=rstudio launcher-config \
+		--from-file ./cluster/launcher.pem \
+		--from-file ./cluster/launcher.pub \
+		--from-file ./cluster/launcher-rsp-ldap/launcher-mounts \
+		--from-file ./cluster/launcher-ldap/launcher.kubernetes.profiles.conf \
+		--from-file ./cluster/launcher-ldap/launcher.conf \
+		--from-file ./cluster/launcher-rsp-ldap/rserver.conf
+
+k8s-launcher-ldap-config-down:
+	kubectl delete --namespace=rstudio --ignore-not-found=true configmap launcher-config
+
+k8s-launcher-k8s-prof-conf:
+	kubectl create configmap --namespace=rstudio launcher-k8s-prof-conf --from-file ./cluster/launcher-ldap/launcher.kubernetes.profiles.conf
+k8s-launcher-k8s-prof-conf-down:
+	kubectl delete configmap --namespace=rstudio launcher-k8s-prof-conf
+
+k8s-launcher-k8s-conf:
+	kubectl create configmap --namespace=rstudio launcher-k8s-conf --from-file ./cluster/launcher-ldap/launcher.kubernetes.conf
+k8s-launcher-k8s-conf-down:
+	kubectl delete configmap --namespace=rstudio launcher-k8s-conf
+
+k8s-launcher-conf:
+	kubectl create configmap --namespace=rstudio launcher-conf --from-file ./cluster/launcher-ldap/launcher.conf
+k8s-launcher-conf-down:
+	kubectl delete configmap --namespace=rstudio launcher-conf
 
 k8s-secret-rsp:
 	kubectl --namespace=rstudio create secret generic license --from-file=./k8s/rsp
 
+k8s-secret-rsp-down:
+	kubectl --namespace=rstudio delete --ignore-not-found=true secret license
+
 k8s-ldap-up:
 	kubectl --namespace=rstudio apply -f ./k8s/ldap.yml
 k8s-ldap-down:
-	kubectl --namespace=rstudio delete -f ./k8s/ldap.yml
+	kubectl --namespace=rstudio delete --ignore-not-found=true -f ./k8s/ldap.yml
 
 k8s-launcher-up:
 	echo 'be sure the IP is set properly in ./cluster/launcher-rsp/launcher-mounts!!' && \
 	echo 'you can get it with `kubectl --namespace=rstudio describe service nfs01`' && \
 	kubectl --namespace=rstudio apply -f ./k8s/launcher.yml
 k8s-launcher-down:
-	kubectl --namespace=rstudio delete -f ./k8s/launcher.yml
+	kubectl --namespace=rstudio delete --ignore-not-found=true -f ./k8s/launcher.yml
 
 k8s-launcher-ldap-up:
 	echo 'be sure the IP is set properly in ./cluster/launcher-rsp/launcher-mounts!!' && \
 	echo 'you can get it with `kubectl --namespace=rstudio describe service nfs01`' && \
-	docker-compose -f compose/launcher-rsp-ldap.yml build launcher-ldap && \
 	kubectl --namespace=rstudio apply -f ./k8s/launcher-ldap.yml
 k8s-launcher-ldap-down:
-	kubectl --namespace=rstudio delete -f ./k8s/launcher-ldap.yml
+	kubectl --namespace=rstudio delete --ignore-not-found=true -f ./k8s/launcher-ldap.yml
 
 k8s-rsp-up:
 	kubectl --namespace=rstudio apply -f ./k8s/rsp.yml
 k8s-rsp-down:
-	kubectl --namespace=rstudio delete -f ./k8s/rsp.yml
+	kubectl --namespace=rstudio delete --ignore-not-found=true -f ./k8s/rsp.yml
 
 k8s-rsp-ldap-up:
-	docker-compose -f compose/launcher-rsp-ldap.yml build launcher-rsp-ldap && \
 	kubectl --namespace=rstudio apply -f ./k8s/rsp-ldap.yml
 k8s-rsp-ldap-down:
-	kubectl --namespace=rstudio delete -f ./k8s/rsp-ldap.yml
+	kubectl --namespace=rstudio delete --ignore-not-found=true -f ./k8s/rsp-ldap.yml
 
 launcher-session-build:
-	RSP_VERSION=${RSP_VERSION} \
+	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
 	docker-compose -f compose/launcher-rsp.yml build launcher-session
 
 #---------------------------------------------
@@ -275,6 +345,7 @@ apache-simple-down:
 proxy-basic-up:
 	NETWORK=${NETWORK} \
         docker-compose -f compose/proxy-basic.yml -f compose/make-network.yml up -d nginx-support-ssp
+
 proxy-basic-down:
 	NETWORK=${NETWORK} \
         docker-compose -f compose/proxy-basic.yml -f compose/make-network.yml stop nginx-support-ssp
@@ -303,6 +374,7 @@ proxy-connect-down:
 proxy-rsp-up:
 	NETWORK=${NETWORK} \
 	RSP_LICENSE=$(RSP_LICENSE) \
+	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
 	docker-compose -f compose/proxy-rsp.yml -f compose/make-network.yml up -d
 
 proxy-rsp-down:
@@ -353,6 +425,24 @@ ssl-proxy-saml-down:
 	NETWORK=${NETWORK} \
 	docker-compose -f compose/ssl-proxy-saml.yml -f compose/make-network.yml down
 
+saml-idp-up:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/saml-idp.yml -f compose/make-network.yml up -d
+
+saml-idp-down:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/saml-idp.yml -f compose/make-network.yml down
+
+saml-connect-local-up:
+	NETWORK=${NETWORK} \
+	CONNECT_LICENSE=$(CONNECT_LICENSE) \
+	CONNECT_VERSION=$(CONNECT_VERSION) \
+	docker-compose -f compose/saml-connect-local.yml -f compose/make-network.yml up -d
+
+saml-connect-local-down:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/saml-connect-local.yml -f compose/make-network.yml down
+
 proxy-saml-up:
 	NETWORK=${NETWORK} \
 	docker-compose -f compose/apache-saml.yml -f compose/make-network.yml up -d
@@ -387,7 +477,7 @@ ldap-connect-up: download-connect ldap-connect-up-hide
 ldap-connect-up-hide:
 	NETWORK=${NETWORK} \
 	CONNECT_LICENSE=$(CONNECT_LICENSE) \
-	CONNECT_BINARY_URL=${CONNECT_BINARY_URL} \
+	CONNECT_VERSION=$(CONNECT_VERSION) \
 	docker-compose -f compose/ldap-connect.yml -f compose/make-network.yml up -d
 
 ldap-connect-build: download-connect ldap-connect-build-hide
@@ -400,6 +490,13 @@ ldap-connect-down:
 	NETWORK=${NETWORK} \
 	docker-compose -f compose/ldap-connect.yml -f compose/make-network.yml down
 
+
+pg-up: 
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/pg.yml -f compose/make-network.yml up -d
+pg-down: 
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/pg.yml -f compose/make-network.yml down
 #---------------------------------------------
 # Other 
 #---------------------------------------------

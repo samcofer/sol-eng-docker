@@ -1,7 +1,2 @@
 #!/bin/bash
-deactivate() {
-     echo "Deactivating license ..."
-     /usr/lib/rstudio-server/bin/license-manager deactivate >/dev/null 2>&1
-}
- rstudio-launcher stop
- deactivate
+rstudio-launcher stop

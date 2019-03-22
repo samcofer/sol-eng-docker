@@ -93,3 +93,4 @@ using `usermanager` _could_ potentially cause some strange consequences.
 - [osixia docker openldap docs](https://github.com/osixia/docker-openldap)
 - [osixia docker openldap admin docs](https://github.com/osixia/docker-phpLDAPadmin)
 - [Docker health check! Super helpful](https://github.com/peter-evans/docker-compose-healthcheck)
+- [SSSD caches credentials from LDAP. How to disable...](https://serverfault.com/questions/506507/sssd-and-ldap-authentication-cache/737232)

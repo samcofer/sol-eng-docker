@@ -1,0 +1,17 @@
+ARG RSTUDIO_VERSION
+FROM rstudio/sol-eng-rstudio:${RSTUDIO_VERSION}
+
+RUN apt-get install -y \
+    nfs-common \
+    sssd \
+    sssd-ldap
+
+# configure ldap
+COPY ./sssd.conf /etc/sssd/sssd.conf
+COPY ./rstudio-sssd /etc/pam.d/rstudio
+COPY ./rstudio-session-sssd /etc/pam.d/rstudio-session
+
+COPY ./rsp-ldap/docker-entrypoint /docker-entrypoint.sh
+
+# adhoc fixes to make it work...
+RUN chmod 600 /etc/sssd/sssd.conf

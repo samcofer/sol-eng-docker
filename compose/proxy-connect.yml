@@ -3,15 +3,9 @@ services:
 
   proxy-connect:
     hostname: proxy-connect
-    build:
-      context: ../cluster
-      dockerfile: base-connect/Dockerfile
-      args:
-        - CONNECT_BINARY_URL
+    image: rstudio/sol-eng-connect:${CONNECT_VERSION}
     privileged: true
     volumes:
       - ../cluster/proxy-connect.gcfg:/etc/rstudio-connect/rstudio-connect.gcfg
     environment:
       - CONNECT_LICENSE
-
-    

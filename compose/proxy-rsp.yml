@@ -3,9 +3,7 @@ services:
 
   proxy-rsp:
     hostname: proxy-rsp
-    build:
-      context: ../cluster
-      dockerfile: base-rsp/Dockerfile
+    image: rstudio/sol-eng-rstudio:${RSTUDIO_VERSION}
     environment:
       - RSP_LICENSE
     ports:

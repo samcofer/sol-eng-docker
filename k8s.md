@@ -71,6 +71,11 @@ In any case, [this
 tutorial](https://rominirani.com/tutorial-getting-started-with-kubernetes-with-docker-on-mac-7f58467203fd)
 has a few (out-of-date) recommendations that are helpful!
 
+### Using GKE
+
+All you have to do to use Google Cloud is [change your `kubectl`
+context](https://cloud.google.com/kubernetes-engine/docs/how-to/cluster-access-for-kubectl)!!
+
 ### The Kubernetes Dashboard
 
 When you're done, make sure to install and port-forward the Kubernetes
@@ -110,6 +115,7 @@ kubectl proxy
 (and related links) so that we can get service names working and not use our clusterIP hack...
 - [ ] Need to auto-forward port 8787 so that it is accessible, we can interact with RSP, etc. (similarly for the dashboard)
 - [ ] Need to get RSP version and RSP session version in sync
+    - [Relevant (and depressing) approach](https://github.com/kubernetes/kubernetes/issues/52787#issuecomment-369645645)
 - [x] Ensure the appropriate service account is [being
   used](https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/)
 with `spec.serviceAccountName`?
@@ -119,29 +125,61 @@ with `spec.serviceAccountName`?
 ### Cleanup
 
 - [ ] why doesn't the license activation deactivate on container teardown? :(
-- [x] pull out the launcher bits from RSP... and the RSP bits from launcher!
 - [ ] is the s6 ugliness worth it? figure out how to get logging...
+- [x] pull out the launcher bits from RSP... and the RSP bits from launcher!
 - [x] need to set up a persistent node location for the home directories...
 - [x] need to implement `sssd` in the `S6` init script...
 - [x] need to figure out why the home directory is not writable by default...
 - [x] need to switch home directories to `/home/user`
+- [ ] need to make the "clean up" do a better job of handling partial
+  deployments. at present, it bombs when it fails at deleting something that
+  does not exist... is there a cleaner way to do cleanup or say "do not error"?
+- [ ] need to make the IP address dependent files mount into the images...
+- [ ] need to decrease image size
+- [ ] need to save / push the images somewhere re-usable?
+- [ ] need to make all config files mounted into the image... easier to iterate on!
 
 ### Product
 
-- [x] rebuild the RSP pod while sessions are in flight... sessions get disconnected / picked up / but then a 401 error...
+- [ ] rebuild the RSP pod while sessions are in flight... sessions get
+  disconnected / picked up / but then a 401 error...
     - Need to make the .pem .pub files persistent
-- [x] separate RSP / launcher... then the homepage does not load at all if launcher is not working (reported. waits 2 minutes for timeout)
-- [x] rstudio-launcher > somefile 2>&1 gives no output... and nothing in the file... (same problem as RSP... come on 1.3!)
-- [ ] how restrictive is the `launcher.conf` URL? (Pretty restrictive... cannot use a domain name)
-- [x] does launcher _actually_ need the `job-launcher` role? I'm not using it...? NO! It doesn't!
+    - Turns out this is a little trickier than I thought... Need to do some
+      sleuthing on when launcher/rsp can communicate and when they cannot
+- [x] separate RSP / launcher... then the homepage does not load at all if
+  launcher is not working (reported. waits 2 minutes for timeout)
+- [x] rstudio-launcher > somefile 2>&1 gives no output... and nothing in the
+  file... (same problem as RSP... come on 1.3!)
+- [ ] how restrictive is the `launcher.conf` URL? (Pretty restrictive... cannot
+  use a domain name)
+- [x] does launcher _actually_ need the `job-launcher` role? I'm not using
+  it...? NO! It doesn't!
 - [x] does launcher need the home directory...? (seems like it)... YES
-- [x] is there a way to provision users on the launcher server... RSP gets it from PAM logon...
+- [x] is there a way to provision users on the launcher server... RSP gets it
+  from PAM logon...
     - UID / GID _has_ to be the same, or problems!
-    - This can be done via LDAP / SSSD! Too cool! The `/etc/nsswitch.conf` file takes care of it. Test with `getent passwd username`
-- [ ] Does the launcher need `/home` mounted? Hopefully not!
-- [ ] Does the launcher need licensing? Hopefully not!
+    - This can be done via LDAP / SSSD! Too cool! The `/etc/nsswitch.conf` file
+      takes care of it. Test with `getent passwd username`
+- [x] Does the launcher need `/home` mounted? It does not!
+- [x] Does the launcher need licensing? Nope!
+- [x] Does launcher need privileged? No!
 - [ ] Is there a way to use a persistentVolumeClaim for the launcher sessions?
 - [ ] Does RSP need R installed when the launcher is being used? Hopefully not!
+- [ ] Changing the image for an existing session is possible, but throws an
+  ugly / indecipherable error
+- [ ] Some sessions start as disconnected... is this a product of my
+  `supervisor.sh`?
+- [ ] Configuring the session stuff in `rserver.conf` (i.e.
+  `rsession-exec-supervisor`) is a bit weird...
+- [ ] System changes to the container are not supported... we throw away the container
+  whenever the session suspends. If you made changes, those will be discarded and you will
+  start again from a different image
+- [ ] When a config error in `launcher.kubernetes.conf`, nothing useful is logged as an error...
+  maybe part of the problem here is that I am in docker, where all logs are useless?
+- [ ] Smarter package installation that is more linux-aware... different distributions will install
+  to the same location = package nightmare :scream: Yuck! Probably only a single distro for now
+- [ ] Let the IDE sit for a while... longer than some timeout window, then hit the blue home button
+  redirects to the wrong location?
 
 ## Debugging Tips
 
@@ -261,6 +299,8 @@ Debugging Overview:
 - Try different options (`-o vers=4`, `-o nolock`)
 - Try different paths (`nfs01:/`, `nfs01:/actual/path`, `nfs01:/share`)
 - Permissions / ownership / UID mapping can be weird... (`ls -lha` and `id myuser` are your friends)
+- **SET PRIVILEGED=TRUE in your K8S config!!!!**
+    - I lost several hours of my life to this nonsense. Please remember that the client needs `privileged: true` to mount NFS
 
 Wins:
 - Use the ClusterIP of the node (`kubectl describe services --namespace=rstudio nfs01`)
@@ -276,6 +316,10 @@ Wins:
 - [Explaining no_root_squash](https://bencane.com/2012/11/23/nfs-setting-up-a-basic-nfs-file-system-share/)
 - [Explaining user mapping](https://unix.stackexchange.com/questions/9442/why-is-file-ownership-inconsistent-between-two-systems-mounting-the-same-nfs-sha)
 
+- [NFS and Persistent Volumes on AWS](https://docs.giantswarm.io/guides/using-persistent-volumes-on-aws/)
+    - [aws storage classes](https://docs.aws.amazon.com/eks/latest/userguide/storage-classes.html)
+    - [explanation](https://www.jeffgeerling.com/blog/2019/expanding-k8s-pvs-eks-on-aws)
+
 Links:
 - [general troubleshooting](https://wiki.archlinux.org/index.php/NFS/Troubleshooting)
 - [nfs overview](https://www.tecmint.com/how-to-setup-nfs-server-in-linux/)
@@ -288,7 +332,34 @@ Links:
 - [docker nfs server git repo](https://github.com/sjiveson/nfs-server-alpine)
 - [docker nfs server / client](https://github.com/cpuguy83/docker-nfs-server)
 - [related blog post](https://container42.com/2014/03/29/docker-quicktip-4-remote-volumes/)
+- [more volume stuff](https://matthewpalmer.net/kubernetes-app-developer/articles/kubernetes-volumes-example-nfs-persistent-volume.html)
 
 - [minikube nfs issues](https://github.com/kubernetes/minikube/issues/2218)
 
 - [nfsv4 on k8s](https://www.reddit.com/r/homelab/comments/7x3xoq/nfs_4_on_kubernetes/)
+
+- [helm stuff](https://github.com/helm/helm)
+
+- [k8s logging](https://kubernetes.io/docs/concepts/cluster-administration/logging/)
+
+Ingress:
+- [traefik docs](https://docs.traefik.io/user-guide/kubernetes/)
+     - [traefik web ui](https://github.com/containous/traefik#web-ui)
+     - [traefik blog post](https://capgemini.github.io/kubernetes/kube-traefik/)
+- [Google Cloud network
+  overview](https://cloud.google.com/kubernetes-engine/docs/concepts/network-overview)
+( [and helpful
+section](https://cloud.google.com/kubernetes-engine/docs/concepts/network-overview#services)
+)
+- [Google Cloud Load Balancing](https://cloud.google.com/kubernetes-engine/docs/tutorials/http-balancer)
+- [Kubernetes Service Types Overview](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types)
+- [Kubernetes Ingress docs](https://kubernetes.io/docs/concepts/services-networking/ingress/)
+- [nginx-ingress](https://github.com/helm/charts/tree/master/stable/nginx-ingress)
+    - [more nginx ingress](https://cloud.google.com/community/tutorials/nginx-ingress-gke)
+
+Startup:
+- [Mount in an entrypoint](https://etoews.github.io/blog/2017/07/29/inject-an-executable-script-into-a-container-in-kubernetes/)
+
+TODO:
+- Kubernetes _NEEDS_ better docs on volumes, specifically DefaultMode
+    - Not sure if this is needed, but [converting octal to decimal](https://coolconversion.com/math/binary-octal-hexa-decimal/Convert_decimal_number_384_in_octal_)

@@ -25,11 +25,21 @@ services:
 
   launcher-session:
     hostname: launcher-session
-    image: colearendt/rsession-demo:${RSP_VERSION}
+    image: rstudio/launcher-session:${RSTUDIO_VERSION}
     build:
       context: ../cluster
       dockerfile: launcher-session/Dockerfile
       args:
         R_VERSION: "3.5.1"
-        RSP_VERSION: ${RSP_VERSION}
+        RSTUDIO_VERSION: ${RSTUDIO_VERSION}
+
+  launcher-session-alt:
+    hostname: launcher-session-alt
+    image: rstudio/launcher-session:${RSTUDIO_VERSION}
+    build:
+      context: ../cluster
+      dockerfile: launcher-session-alt/Dockerfile
+      args:
+        R_VERSION: "3.5.1"
+        RSTUDIO_VERSION: ${RSTUDIO_VERSION}
 

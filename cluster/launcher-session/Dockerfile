@@ -14,24 +14,20 @@ RUN apt-get update -qq && \
 RUN set -x && \
 	apt-get update && \
 	apt-get install -y \
-	libxml2-dev \
 	curl \
-	git
+	git \
+	g++ \
+	libblas3 \
+	libicu52 \
+	liblapack3 \
+	libxml2-dev \
+	libxt6 \
+	make
 
-# R dependencies
-RUN apt-get -y build-dep r-base
-
-# Build $R_VERSION from source
+# Get $R_VERSION
 RUN mkdir -p /opt/R && cd /opt/R \
-    && wget https://cran.r-project.org/src/base/R-3/R-$R_VERSION.tar.gz \
-    && tar zxvf R-$R_VERSION.tar.gz \
-    && cd R-$R_VERSION  \
-    && ./configure --prefix=/opt/R/$R_VERSION --enable-R-shlib \
-    && make \
-    && make install \
-    && cd / \
-    && rm -r /opt/R/R-$R_VERSION.tar.gz \
-    && rm -r /opt/R/R-$R_VERSION
+    && curl https://cdn.rstudio.com/r/ubuntu-1404/R-${R_VERSION}-ubuntu-1404.tar.gz \
+      | tar xzvf - -C /opt/R/
 
 RUN chmod 777 /home
 

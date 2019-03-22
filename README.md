@@ -12,6 +12,7 @@ This project houses docker infrastructure for quickly setting up, configuring, a
 - [Kubernetes](./k8s.md)
 - [SSL/TLS/HTTPS](./ssl.md)
 - [Floating Licenses](./cluster/float/README.md)
+- [Metrics / Prometheus / Grafana](./metrics.md)
 
 # Getting Started
 

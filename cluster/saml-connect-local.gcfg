@@ -1,0 +1,20 @@
+; RStudio Connect configuration file
+
+[Server]
+SenderEmail = test@example.com
+Address = http://localhost:3939/
+	
+[Http]
+Listen = :3939
+
+[Authentication]
+Provider = saml
+
+[SAML]
+Logging = true
+IdPMetaData = http://saml-idp:8080/simplesaml/saml2/idp/metadata.php
+UsernameAttribute = user
+EmailAttribute = email
+UniqueIdAttribute = uid
+NameIdFormat = transient
+SSOInitiated = IdPAndSP
