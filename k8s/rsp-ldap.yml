@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: rsp
-        image: rstudio/launcher-rsp-ldap
+        image: rstudio/sol-eng-rstudio:ldap-1.2.1186-1
         env:
         - name: RSP_LICENSE
           valueFrom:
@@ -45,20 +45,20 @@ spec:
           claimName: nfs
       - name: launcher-mounts
         configMap:
-          name: launcher-mounts
+          name: launcher-config
           items:
           - key: launcher-mounts
             path: "launcher-mounts"
       - name: launcher-pem
         configMap:
-          name: launcher-pem
+          name: launcher-config
           defaultMode: 384
           items:
           - key: launcher.pem
             path: "launcher.pem"
       - name: launcher-pub
         configMap:
-          name: launcher-pub
+          name: launcher-config
           items:
           - key: launcher.pub
             path: "launcher.pub"
