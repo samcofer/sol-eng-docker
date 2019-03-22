@@ -332,12 +332,15 @@ Links:
 - [docker nfs server git repo](https://github.com/sjiveson/nfs-server-alpine)
 - [docker nfs server / client](https://github.com/cpuguy83/docker-nfs-server)
 - [related blog post](https://container42.com/2014/03/29/docker-quicktip-4-remote-volumes/)
+- [more volume stuff](https://matthewpalmer.net/kubernetes-app-developer/articles/kubernetes-volumes-example-nfs-persistent-volume.html)
 
 - [minikube nfs issues](https://github.com/kubernetes/minikube/issues/2218)
 
 - [nfsv4 on k8s](https://www.reddit.com/r/homelab/comments/7x3xoq/nfs_4_on_kubernetes/)
 
 - [helm stuff](https://github.com/helm/helm)
+
+- [k8s logging](https://kubernetes.io/docs/concepts/cluster-administration/logging/)
 
 Ingress:
 - [traefik docs](https://docs.traefik.io/user-guide/kubernetes/)
