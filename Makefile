@@ -296,6 +296,9 @@ kerb-server-down:
 	NETWORK=${NETWORK} \
         docker-compose -f compose/kerberos-base.yml -f compose/make-network.yml down
 
+kerb-ssh-build:
+	NETWORK=${NETWORK} \
+        docker-compose -f compose/kerberos-ssh.yml -f compose/make-network.yml build
 kerb-ssh-up:
 	NETWORK=${NETWORK} \
         docker-compose -f compose/kerberos-ssh.yml -f compose/make-network.yml up -d
@@ -327,8 +330,8 @@ kerb-connect-build-hide:
 kerb-connect-up: download-connect kerb-connect-up-hide
 kerb-connect-up-hide:
 	NETWORK=${NETWORK} \
-	CONNECT_LICENSE=$(CONNECT_LICENSE) \ 
-	CONNECT_BINARY_URL=${CONNECT_BINARY_URL} \
+	CONNECT_LICENSE=$(CONNECT_LICENSE) \
+	CONNECT_BINARY_URL=$(CONNECT_BINARY_URL) \
 	CONNECT_VERSION=$(CONNECT_VERSION) \
 	docker-compose -f compose/kerberos-connect.yml -f compose/make-network.yml up -d
 
