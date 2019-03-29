@@ -292,18 +292,16 @@ kerb-down: kerb-rsc-down kerb-rsp-down kerb-ssh-down kerb-server-down
 kerb-server-up:
 	NETWORK=${NETWORK} \
         docker-compose -f compose/kerberos-base.yml -f compose/make-network.yml up -d
-
 kerb-server-down:
 	NETWORK=${NETWORK} \
-        docker-compose -f compose/kerberos-base.yml -f compose/make-network.yml stop k-server k-simple-client
+        docker-compose -f compose/kerberos-base.yml -f compose/make-network.yml down
 
 kerb-ssh-up:
 	NETWORK=${NETWORK} \
-        docker-compose -f compose/kerberos-base.yml -f compose/kerberos-ssh.yml -f compose/make-network.yml up -d
-
+        docker-compose -f compose/kerberos-ssh.yml -f compose/make-network.yml up -d
 kerb-ssh-down:
 	NETWORK=${NETWORK} \
-        docker-compose -f compose/kerberos-base.yml -f compose/kerberos-ssh.yml -f compose/make-network.yml stop k-ssh-server k-ssh-client
+        docker-compose -f compose/kerberos-ssh.yml -f compose/make-network.yml down
 
 kerb-rsp-build:
 	NETWORK=${NETWORK} \
