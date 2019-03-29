@@ -11,7 +11,7 @@ COPY ./sssd.conf /etc/sssd/sssd.conf
 COPY ./rstudio-sssd /etc/pam.d/rstudio
 COPY ./rstudio-session-sssd /etc/pam.d/rstudio-session
 
-COPY ./rsp-ldap/docker-entrypoint /docker-entrypoint.sh
+COPY ./ldap-rsp/docker-entrypoint.sh /docker-entrypoint.sh
 
 # adhoc fixes to make it work...
 RUN chmod 600 /etc/sssd/sssd.conf
