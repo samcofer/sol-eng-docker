@@ -305,12 +305,17 @@ kerb-ssh-down:
 	NETWORK=${NETWORK} \
         docker-compose -f compose/kerberos-base.yml -f compose/kerberos-ssh.yml -f compose/make-network.yml stop k-ssh-server k-ssh-client
 
+kerb-rsp-build:
+	NETWORK=${NETWORK} \
+	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
+        docker-compose -f compose/kerberos-base.yml -f compose/kerberos-rstudio.yml -f compose/make-network.yml build k-rstudio
 kerb-rsp-up:
 	NETWORK=${NETWORK} \
+	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
         docker-compose -f compose/kerberos-base.yml -f compose/kerberos-rstudio.yml -f compose/make-network.yml up -d
-
 kerb-rsp-down:
 	NETWORK=${NETWORK} \
+	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
         docker-compose -f compose/kerberos-base.yml -f compose/kerberos-rstudio.yml -f compose/make-network.yml stop k-rstudio
 
 kerb-rsc-up: download-connect kerb-rsc-up-hide
@@ -509,7 +514,7 @@ ldap-rsp-up:
 ldap-rsp-down:
 	NETWORK=${NETWORK} \
 	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
-	docker-compose -f compose/ldap-rsp.yml -f compose/make-network.yml
+	docker-compose -f compose/ldap-rsp.yml -f compose/make-network.yml down
 
 #---------------------------------------------
 # Other 
