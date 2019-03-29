@@ -337,7 +337,7 @@ kerb-connect-up-hide:
 
 kerb-connect-down:
 	NETWORK=${NETWORK} \
-	docker-compose -f compose/kerberos-connect.yml -f compose/make-network.yml stop k-connect
+	docker-compose -f compose/kerberos-connect.yml -f compose/make-network.yml down
 #---------------------------------------------
 # Proxy 
 #---------------------------------------------
