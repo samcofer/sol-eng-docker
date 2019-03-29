@@ -3,7 +3,8 @@ FROM rstudio/sol-eng-connect:${CONNECT_VERSION}
 ENV DEBIAN_FRONTEND=noninteractive  
 
 # ssh & kerberos
-RUN apt-get install -y \
+RUN apt-get update && \
+    apt-get install -y \
     openssh-client \
     krb5-user \
     libpam-krb5
