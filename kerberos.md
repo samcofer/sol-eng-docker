@@ -38,7 +38,7 @@ Then connect to the running `k-ssh-server` and `k-ssh-client` containers with `d
 On the other hand, if you want to test with RStudio:
 
 ```bash
-make network-up kerb-server-up kerb-ssh-up kerb-rstudio-up
+make network-up kerb-server-up kerb-ssh-up kerb-rsp-up
 ```
 
 The license for RStudio Server Pro should be in an environment variable `RSP_LICENSE`.  This will get read by the build process and passed along / activated by the container. Then get things operational per the respective `README.md` files, log into RStudio Server Pro, and ssh to `k-ssh-server`. Blam!  No authentication question. Yep. Thank you, Kerberos.
@@ -46,7 +46,7 @@ The license for RStudio Server Pro should be in an environment variable `RSP_LIC
 There is even a kerberized Connect instance. To authenticate to the only available service (SSH), you will need a crafty Shiny app like [this one](todo) that gives you a shell. Again, only do-able thanks to Kerberos!
 
 ```bash
-make network-up kerb-server-up kerb-ssh-up kerb-rsc-up
+make network-up kerb-server-up kerb-ssh-up kerb-connect-up
 ```
 
 # Development Process
