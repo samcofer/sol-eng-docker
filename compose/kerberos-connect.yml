@@ -3,9 +3,10 @@ services:
 
   kerberos-connect:
     hostname: kerberos-connect
+    image: rstudio/sol-eng-connect:kerberos-${CONNECT_VERSION}
     build:
       context: ../cluster
-      dockerfile: k-connect/Dockerfile
+      dockerfile: kerberos-connect/Dockerfile
       args:
         - CONNECT_BINARY_URL=${CONNECT_BINARY_URL}
         - CONNECT_VERSION=${CONNECT_VERSION}
