@@ -497,6 +497,20 @@ pg-up:
 pg-down: 
 	NETWORK=${NETWORK} \
 	docker-compose -f compose/pg.yml -f compose/make-network.yml down
+
+ldap-rsp-build:
+	NETWORK=${NETWORK} \
+	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
+	docker-compose -f compose/ldap-rsp.yml -f compose/make-network.yml build
+ldap-rsp-up:
+	NETWORK=${NETWORK} \
+	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
+	docker-compose -f compose/ldap-rsp.yml -f compose/make-network.yml up -d
+ldap-rsp-down:
+	NETWORK=${NETWORK} \
+	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
+	docker-compose -f compose/ldap-rsp.yml -f compose/make-network.yml
+
 #---------------------------------------------
 # Other 
 #---------------------------------------------
