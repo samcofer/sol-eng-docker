@@ -308,15 +308,15 @@ kerb-ssh-down:
 kerb-rsp-build:
 	NETWORK=${NETWORK} \
 	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
-        docker-compose -f compose/kerberos-base.yml -f compose/kerberos-rstudio.yml -f compose/make-network.yml build k-rstudio
+        docker-compose -f compose/kerberos-rstudio.yml -f compose/make-network.yml build
 kerb-rsp-up:
 	NETWORK=${NETWORK} \
 	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
-        docker-compose -f compose/kerberos-base.yml -f compose/kerberos-rstudio.yml -f compose/make-network.yml up -d
+        docker-compose -f compose/kerberos-rstudio.yml -f compose/make-network.yml up -d
 kerb-rsp-down:
 	NETWORK=${NETWORK} \
 	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
-        docker-compose -f compose/kerberos-base.yml -f compose/kerberos-rstudio.yml -f compose/make-network.yml stop k-rstudio
+        docker-compose -f compose/kerberos-rstudio.yml -f compose/make-network.yml down
 
 kerb-rsc-up: download-connect kerb-rsc-up-hide
 kerb-rsc-up-hide:
