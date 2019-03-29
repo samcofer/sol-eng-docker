@@ -285,9 +285,9 @@ float-down:
 #---------------------------------------------
 # Kerberos
 #---------------------------------------------
-kerb-up: network-up kerb-server-up kerb-ssh-up kerb-rsp-up kerb-rsc-up
+kerb-up: network-up kerb-server-up kerb-ssh-up kerb-rsp-up kerb-connect-up
 
-kerb-down: kerb-rsc-down kerb-rsp-down kerb-ssh-down kerb-server-down
+kerb-down: kerb-connect-down kerb-rsp-down kerb-ssh-down kerb-server-down
 
 kerb-server-up:
 	NETWORK=${NETWORK} \
@@ -316,16 +316,25 @@ kerb-rsp-down:
 	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
         docker-compose -f compose/kerberos-rstudio.yml -f compose/make-network.yml down
 
-kerb-rsc-up: download-connect kerb-rsc-up-hide
-kerb-rsc-up-hide:
+kerb-connect-build: download-connect kerb-connect-build-hide
+kerb-connect-build-hide:
 	NETWORK=${NETWORK} \
 	CONNECT_LICENSE=$(CONNECT_LICENSE) \ 
 	CONNECT_BINARY_URL=${CONNECT_BINARY_URL} \
-	docker-compose -f compose/kerberos-base.yml -f compose/kerberos-connect.yml -f compose/make-network.yml up -d
+	CONNECT_VERSION=$(CONNECT_VERSION) \
+	docker-compose -f compose/kerberos-connect.yml -f compose/make-network.yml build
 
-kerb-rsc-down:
+kerb-connect-up: download-connect kerb-connect-up-hide
+kerb-connect-up-hide:
 	NETWORK=${NETWORK} \
-	docker-compose -f compose/kerberos-base.yml -f compose/kerberos-connect.yml -f compose/make-network.yml stop k-connect
+	CONNECT_LICENSE=$(CONNECT_LICENSE) \ 
+	CONNECT_BINARY_URL=${CONNECT_BINARY_URL} \
+	CONNECT_VERSION=$(CONNECT_VERSION) \
+	docker-compose -f compose/kerberos-connect.yml -f compose/make-network.yml up -d
+
+kerb-connect-down:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/kerberos-connect.yml -f compose/make-network.yml stop k-connect
 #---------------------------------------------
 # Proxy 
 #---------------------------------------------
