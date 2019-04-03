@@ -16,3 +16,4 @@ password optional pam_permit.so
 auth       sufficient     pam_krb5.so debug
 account    required       pam_krb5.so debug
 session    requisite      pam_krb5.so debug
+
