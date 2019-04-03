@@ -119,6 +119,21 @@ connect-down:
 	NETWORK=${NETWORK} \
 	docker-compose -f compose/base-connect.yml -f compose/make-network.yml down
 
+ldap-kerb-rsp-build:
+	NETWORK=${NETWORK} \
+	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
+	docker-compose -f compose/ldap-kerberos-rsp.yml -f compose/make-network.yml build
+
+ldap-kerb-rsp-up:
+	NETWORK=${NETWORK} \
+	RSP_LICENSE=$(RSP_LICENSE) \
+	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
+	docker-compose -f compose/ldap-kerberos-rsp.yml -f compose/make-network.yml up -d
+ldap-kerb-rsp-down:
+	NETWORK=${NETWORK} \
+	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
+	docker-compose -f compose/ldap-kerberos-rsp.yml -f compose/make-network.yml down
+
 rsp-up:
 	NETWORK=${NETWORK} \
 	RSP_LICENSE=$(RSP_LICENSE) \
@@ -318,6 +333,8 @@ kerb-rsp-down:
 	NETWORK=${NETWORK} \
 	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
         docker-compose -f compose/kerberos-rstudio.yml -f compose/make-network.yml down
+
+
 
 kerb-connect-build: download-connect kerb-connect-build-hide
 kerb-connect-build-hide:
