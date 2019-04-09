@@ -7,6 +7,9 @@ Proxies can be TRICKY!! Here, we aggregate some interesting resources about prox
 - `tcpdump` is a super useful tool...
     - In a docker container, it may be necessary to `mv /usr/sbin/tcpdump /usr/bin/tcpdump` (if you get a `libcrypto` error)
     - Then something like `/usr/bin/tcpdump -i any -w outputfile -nn -s0 port 3939 or port 80` can be helpful
+    - [tcpdump examples](https://hackertarget.com/tcpdump-examples/)
+    - [monitor many ports](https://stackoverflow.com/questions/2187932/monitoring-multiple-ports-in-tcpdump)
+    - [capturing for wireshark](https://www.wireshark.org/docs/wsug_html_chunked/AppToolstcpdump.html)
 
 ## Nginx
 
