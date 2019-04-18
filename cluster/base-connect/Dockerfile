@@ -11,11 +11,13 @@ RUN apt-get update -y -qq && \
     git \
     g++ \
     libblas3 \
+    libcairo2-dev \
     libcurl4-openssl-dev \
     libedit2 \
     liblapack3 \
     libxml2-dev \
     libssl-dev \
+    libtiff5-dev \
     libxt6 \
     lsb-release \
     make \
