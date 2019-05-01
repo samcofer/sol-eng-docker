@@ -23,6 +23,9 @@ Enabled = true
 Executable = /usr/bin/python
 Executable = /usr/bin/python3
 
+[Packages]
+;HTTPProxy = http://proxy-mitm:8080/
+;HTTPSProxy = http://proxy-mitm:8080/
 	
 [Http]
 ; RStudio Connect will listen on this network address for HTTP connections.
