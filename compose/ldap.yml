@@ -43,3 +43,9 @@ services:
       - LDAP_PORT=389
       - LDAP_USER=cn=admin,dc=example,dc=org
       - LDAP_PASS=admin
+      - SMTP_HOST=
+      - SMTP_PORT=
+      - SMTP_USER=
+      - SMTP_PASS=
+      - SMTP_FROM=
+      - SMTP_TLS=off
