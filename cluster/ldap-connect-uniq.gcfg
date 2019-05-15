@@ -42,7 +42,7 @@ UserSearchBaseDN = dc=example,dc=org
 BindDN = cn=admin,dc=example,dc=org
 BindPassword = admin
 GroupObjectClass = posixGroup
-GroupSearchBaseDN = dc=group,dc=example,dc=org
+GroupSearchBaseDN = dc=example,dc=org
 GroupNameAttribute = cn
 GroupUniqueIdAttribute = entryUUID
 Logging = true
