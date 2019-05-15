@@ -24,3 +24,22 @@ services:
       - PHPLDAPADMIN_HTTPS=false
     links:
       - openldap
+
+  selfserve:
+    hostname: selfserve
+    image: dtwardow/ldap-self-service-password
+    ports:
+      - "80"
+    links:
+      - openldap
+    environment:
+      - SERVER_HOSTNAME=selfserve
+      - LSSP_ATTR_LOGIN=uid
+      - LSSP_ATTR_FN=cn
+      - LSSP_ATTR_MAIL=mail
+      - LSSP_DEFAULT_ACTION=change
+      - LDAP_BASE=dc=example,dc=org
+      - LDAP_HOST=openldap
+      - LDAP_PORT=389
+      - LDAP_USER=cn=admin,dc=example,dc=org
+      - LDAP_PASS=admin
