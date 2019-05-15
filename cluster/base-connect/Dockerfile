@@ -53,7 +53,7 @@ RUN wget -O /usr/local/bin/dumb-init https://github.com/Yelp/dumb-init/releases/
 	chmod +x /usr/local/bin/dumb-init
 
 # because licensing
-RUN apt-get -y install sudo
+RUN apt-get update -qq && apt-get -y install sudo
 RUN useradd -m docker && echo "docker:docker" | chpasswd && adduser docker sudo
 
 # create users
