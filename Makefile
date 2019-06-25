@@ -9,6 +9,7 @@ CONNECT_VERSION=1.7.4-4
 CONNECT_BINARY_URL=rstudio-connect_${CONNECT_VERSION}_amd64.deb
 
 RSTUDIO_VERSION=1.2.1186-1
+#1.3.11234
 
 test-env-up: network-up
 
