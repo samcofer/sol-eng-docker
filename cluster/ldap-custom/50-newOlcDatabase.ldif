@@ -1,0 +1,11 @@
+dn: olcDatabase={2}{{ LDAP_BACKEND }}
+objectClass: olcDatabaseConfig
+objectClass: olcHdbConfig
+olcDatabase: {2}{{ LDAP_BACKEND }}
+olcDbDirectory: /var/lib/ldap
+olcDbIndex: objectClass eq,pres
+olcDbIndex: ou,cn,mail,surname,givenname eq,pres,sub
+structuralObjectClass: olcHdbConfig
+creatorsName: cn=config
+olcSuffix: dc=rstudio,dc=com
+olcRootDN: cn=admin,dc=rstudio,dc=com

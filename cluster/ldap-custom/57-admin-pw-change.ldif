@@ -1,0 +1,5 @@
+# Admin schema password
+dn: cn=admin,dc=rstudio,dc=com
+changetype: modify
+replace: userPassword
+userPassword: {{ LDAP_ADMIN_PASSWORD_ENCRYPTED }}
