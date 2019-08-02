@@ -14,18 +14,19 @@ services:
     ports:
       - "8787"
       - "443"
+    restart: "always"
 
-  rsp-ldap:
-    hostname: rsp-ldap
-    build:
-      context: ../cluster
-      dockerfile: rsp-ldap/Dockerfile
-      args:
-        - RSTUDIO_VERSION=${RSTUDIO_VERSION}
-    image: rstudio/sol-eng-rstudio:ldap-${RSTUDIO_VERSION}
-    environment:
-      - RSP_LICENSE
-    ports:
-      - "8787"
-      - "443"
+#  rsp-ldap:
+#    hostname: rsp-ldap
+#    build:
+#      context: ../cluster
+#      dockerfile: rsp-ldap/Dockerfile
+#      args:
+#        - RSTUDIO_VERSION=${RSTUDIO_VERSION}
+#    image: rstudio/sol-eng-rstudio:ldap-${RSTUDIO_VERSION}
+#    environment:
+#      - RSP_LICENSE
+#    ports:
+#      - "8787"
+#      - "443"
  
