@@ -199,3 +199,18 @@ uid: test
 uidnumber: 1005
 userpassword: {MD5}CY9rzUYh03PK3k6DJie09g==
 
+# Entry 16: cn=bingo,dc=support,dc=example,dc=org
+dn: cn=bingo,dc=support,dc=example,dc=org
+cn: bingo
+gidnumber: 500
+givenname: Bingo
+homedirectory: /home/bingo
+loginshell: /bin/sh
+mail: bingo@example.org
+objectclass: inetOrgPerson
+objectclass: posixAccount
+objectclass: top
+sn: Nameo
+uid: bingo
+uidnumber: 1008
+userpassword: {MD5}CY9rzUYh03PK3k6DJie09g==
