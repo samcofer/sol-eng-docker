@@ -9,9 +9,11 @@ services:
        #- "636" # secure port - use if LDAP_TLS=true
     volumes:
       - ../cluster/users.ldif:/container/service/slapd/assets/config/bootstrap/ldif/50-bootstrap.ldif
+      - ../cluster/ldap-custom:/container/service/slapd/assets/config/bootstrap/ldif/custom
+      - ../cluster/mnt/ldap2:/var/lib/ldap2
     environment:
       - LDAP_TLS=false
-    command: ["--copy-service"]
+    command: ["--copy-service", "--loglevel", "debug"]
 
   ldapadmin:
     hostname: ldapadmin
