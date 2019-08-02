@@ -1,0 +1,23 @@
+# LDIF Export for dc=rstudio,dc=com
+# Server: openldap (openldap)
+# Search Scope: sub
+# Search Filter: (objectClass=*)
+
+version: 1
+
+# Entry 1: dc=rstudio,dc=com
+dn: dc=rstudio,dc=com
+dc: rstudio
+o: RStudio, Inc.
+objectclass: top
+objectclass: dcObject
+objectclass: organization
+
+# Entry 2: cn=admin,dc=rstudio,dc=com
+dn: cn=admin,dc=rstudio,dc=com
+cn: admin
+description: LDAP administrator
+objectclass: simpleSecurityObject
+objectclass: organizationalRole
+userpassword: {SSHA}+FquX8RcwTtBPo7mu2pgSvjaQYX9HpCL
+
