@@ -8,8 +8,8 @@ services:
       - 8443:8443
     environment:
       - SIMPLESAMLPHP_SP_ENTITY_ID=ssl-proxy-saml
-      - SIMPLESAMLPHP_SP_ASSERTION_CONSUMER_SERVICE=https://localhost/secret/postResponse
-      - SIMPLESAMLPHP_SP_SINGLE_LOGOUT_SERVICE=https://localhost/secret/logout
+      - SIMPLESAMLPHP_SP_ASSERTION_CONSUMER_SERVICE=https://ssl-proxy-saml/rstudio/secret/postResponse
+      - SIMPLESAMLPHP_SP_SINGLE_LOGOUT_SERVICE=https://ssl-proxy-saml/rstudio/secret/logout
     volumes:
       - ../cluster/users.php:/var/www/simplesamlphp/config/authsources.php
 
@@ -18,12 +18,13 @@ services:
     build:
       context: ../cluster
       dockerfile: apache-saml/Dockerfile
-    command: "sh -c '/usr/local/apache2/cert_get.sh /usr/local/apache2/cert_config.json ; httpd-foreground'"
+    command: "sh -c '/usr/local/apache2/cert_get.sh; httpd-foreground'"
     volumes:
-      - "../cluster/ssl-proxy-saml/httpd.conf:/usr/local/apache2/conf/httpd.conf"
+      - "../cluster/ssl-proxy-saml/httpd-all-alt.conf:/usr/local/apache2/conf/httpd.conf"
       - "../cluster/ssl-proxy-saml/apache_saml.xml:/usr/local/apache2/mellon/apache_saml.xml"
       - "../cluster/ssl/cert_get.sh:/usr/local/apache2/cert_get.sh"
       - "../cluster/ssl-proxy-saml/cert_config.json:/usr/local/apache2/cert_config.json"
+      - "../cluster/ssl-proxy-saml/mellon.conf:/usr/local/apache2/conf/mellon.conf"
     ports:
       - "80:80"
       - "443:443"
