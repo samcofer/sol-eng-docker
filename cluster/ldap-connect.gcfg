@@ -6,7 +6,7 @@
 ; setting is configured.
 ;	
 ; SenderEmail = account@company.com
-SenderEmail = 
+SenderEmail = test@test.com
 
 ; Address is a public URL for this RStudio Connect server. Must be configured
 ; to enable features like including links to your content in emails. If
@@ -14,7 +14,12 @@ SenderEmail =
 ; in terms of that proxy.
 ;	
 ; Address = https://rstudio-connect.company.com
-Address =
+Address = http://example.com
+EmailProvider = SMTP
+
+[SMTP]
+Host = localhost
+Port = 25
 	
 [Http]
 ; RStudio Connect will listen on this network address for HTTP connections.
@@ -44,4 +49,5 @@ GroupObjectClass = posixGroup
 GroupSearchBaseDN = dc=example,dc=org
 GroupNameAttribute = cn
 GroupUniqueIdAttribute = entryUUID
+PermittedLoginGroup = cn=finance_group,dc=example,dc=org
 Logging = true
