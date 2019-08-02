@@ -30,6 +30,11 @@ raw_json=`cat cert_config.json | jq --arg var "${hostname}" '.request.hosts[0] =
 echo "${raw_json}"
 curl -d "${raw_json}" ${URL}/api/v1/cfssl/newcert > new_cert.json
 
+echo "Writing ${filename}.crt into $(pwd)"
 cat new_cert.json | jq -r '.result.certificate' > ${filename}.crt
+
+echo "Writing ${filename}.csr into $(pwd)"
 cat new_cert.json | jq -r '.result.certificate_request' > ${filename}.csr
+
+echo "Writing ${filename}.key into $(pwd)"
 cat new_cert.json | jq -r '.result.private_key' > ${filename}.key
