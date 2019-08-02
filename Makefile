@@ -8,8 +8,11 @@ CONNECT_VERSION=1.7.6-6
 #1.7.0-11
 CONNECT_BINARY_URL=rstudio-connect_${CONNECT_VERSION}_amd64.deb
 
-RSTUDIO_VERSION=1.2.1186-1
+RSTUDIO_VERSION=1.2.1558-3
 #1.3.11234
+#RSTUDIO_VERSION=1.3.322-1
+
+SSP_VERSION=1.5.10.990
 
 test-env-up: network-up
 
@@ -83,6 +86,28 @@ ssl-proxy-connect-down:
 	NETWORK=${NETWORK} \
 	docker-compose -f compose/ssl-proxy-connect.yml down
 
+ssl-connect-up: download-connect ssl-connect-up-hide
+ssl-connect-up-hide:
+	NETWORK=${NETWORK} \
+	CONNECT_LICENSE=$(CONNECT_LICENSE) \
+	CONNECT_VERSION=$(CONNECT_VERSION) \
+	docker-compose -f compose/ssl-connect.yml -f compose/make-network.yml up -d
+
+ssl-connect-build: download-connect ssl-connect-build-hide
+ssl-connect-build-hide:
+	NETWORK=${NETWORK} \
+	CONNECT_BINARY_URL=${CONNECT_BINARY_URL} \
+	docker-compose -f compose/ssl-connect.yml -f compose/make-network.yml build
+
+ssl-connect-down:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/ssl-connect.yml down
+
+ssl-proxy-rsp-build:
+	NETWORK=${NETWORK} \
+	RSP_LICENSE=$(RSP_LICENSE) \
+	docker-compose -f compose/ssl-proxy-rsp.yml -f compose/make-network.yml build
+
 ssl-proxy-rsp-up:
 	NETWORK=${NETWORK} \
 	RSP_LICENSE=$(RSP_LICENSE) \
@@ -153,12 +178,15 @@ rsp-down:
 ssp-up:
 	NETWORK=${NETWORK} \
 	SSP_LICENSE=$(SSP_LICENSE) \
+	SSP_VERSION=${SSP_VERSION} \
 	docker-compose -f compose/base-ssp.yml -f compose/make-network.yml up -d
 ssp-build:
 	NETWORK=${NETWORK} \
+        SSP_VERSION=${SSP_VERSION} \
 	docker-compose -f compose/base-ssp.yml -f compose/make-network.yml build
 ssp-down:
 	NETWORK=${NETWORK} \
+        SSP_VERSION=${SSP_VERSION} \
 	docker-compose -f compose/base-ssp.yml -f compose/make-network.yml down
 
 #---------------------------------------------
