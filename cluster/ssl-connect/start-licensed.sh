@@ -28,7 +28,7 @@ trap deactivate EXIT
 
 echo 'Executing SSL script'
 # set up SSL
-/cert_get.sh /cert_config.json
+/cert_get.sh
 
 echo "Starting connect ..."
 "$@"
