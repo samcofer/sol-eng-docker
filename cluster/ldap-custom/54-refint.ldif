@@ -1,9 +1,3 @@
-# Load refint module
-dn: cn=module{0},cn=config
-changetype: modify
-add: olcModuleLoad
-olcModuleLoad: refint
-
 # Backend refint overlay
 dn: olcOverlay={1}refint,olcDatabase={2}{{ LDAP_BACKEND }},cn=config
 changetype: add
