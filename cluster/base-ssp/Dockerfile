@@ -1,7 +1,8 @@
-FROM rocker/shiny
+FROM rstudio/r-base:bionic
 
+ARG SSP_VERSION=$SSP_VERSION
 RUN apt-get update && apt-get install -y gdebi-core && \
-	wget https://s3.amazonaws.com/rstudio-shiny-server-pro-build/ubuntu-14.04/x86_64/shiny-server-commercial-1.5.10.990-amd64.deb \
+	wget https://s3.amazonaws.com/rstudio-shiny-server-pro-build/ubuntu-14.04/x86_64/shiny-server-commercial-${SSP_VERSION}-amd64.deb \
 	-O shiny-server.deb && \
 	gdebi -n shiny-server.deb
 
