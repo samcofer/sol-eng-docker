@@ -7,9 +7,12 @@ services:
       - 8080:8080
       - 8443:8443
     environment:
-      - SIMPLESAMLPHP_SP_ENTITY_ID=ssl-proxy-saml
-      - SIMPLESAMLPHP_SP_ASSERTION_CONSUMER_SERVICE=https://ssl-proxy-saml/rstudio/secret/postResponse
-      - SIMPLESAMLPHP_SP_SINGLE_LOGOUT_SERVICE=https://ssl-proxy-saml/rstudio/secret/logout
+      #- SIMPLESAMLPHP_SP_ENTITY_ID=ssl-proxy-saml
+      #- SIMPLESAMLPHP_SP_ASSERTION_CONSUMER_SERVICE=https://ssl-proxy-saml/rstudio/secret/postResponse
+      #- SIMPLESAMLPHP_SP_SINGLE_LOGOUT_SERVICE=https://ssl-proxy-saml/rstudio/secret/logout
+      - SIMPLESAMLPHP_SP_ENTITY_ID=https://ssl-proxy-saml/rsconnect/__login__/saml
+      - SIMPLESAMLPHP_SP_ASSERTION_CONSUMER_SERVICE=https://ssl-proxy-saml/rsconnect/__login__/saml/acs
+      - SIMPLESAMLPHP_SP_SINGLE_LOGOUT_SERVICE=https://ssl-proxy-saml/rsconnect/__logout__
     volumes:
       - ../cluster/users.php:/var/www/simplesamlphp/config/authsources.php
 
