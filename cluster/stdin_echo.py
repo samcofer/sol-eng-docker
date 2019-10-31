@@ -81,6 +81,19 @@ async def run_new(cmd):
         read_stdout(proc.stdout),
         write_stdin(proc.stdin))
 
+# THANK YOU https://stackoverflow.com/questions/55590343/asyncio-run-or-run-until-complete
+def arun(aw):
+    if sys.version_info >= (3, 7):
+        return asyncio.run(aw)
+
+    # Emulate asyncio.run() on older versions
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+    try:
+        return loop.run_until_complete(aw)
+    finally:
+        loop.close()
+        asyncio.set_event_loop(None)
 
 if __name__ == "__main__":
     args = sys.argv
@@ -91,4 +104,4 @@ if __name__ == "__main__":
     command_to_run = ' '.join(args)
     print(command_to_run)
 
-    asyncio.run(run_new(command_to_run))
+    arun(run_new(command_to_run))
