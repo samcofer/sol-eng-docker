@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 import asyncio
 import sys
+import argparse
 
 async def run(cmd):
     proc = await asyncio.create_subprocess_shell(
@@ -26,6 +27,7 @@ async def run(cmd):
             if stdout:
                 print(f'[stdout] {stdout.decode()}')
 
+
 async def read_stdout(stdout):
     print('read_stdout')
     while True:
@@ -46,27 +48,30 @@ async def read_stderr(stderr):
         print(f'stderr: { buf }')
 
 
-async def write_stdin(stdin):
+async def write_stdin_parent(stdin, what = sys.stdin):
+    try:
+        await asyncio.wait_for(write_stdin(stdin, what), 0.5)
+    except asyncio.TimeoutError:
+        print('Timeout!')
+
+async def write_stdin(stdin, what = sys.stdin):
     print('write_stdin')
-    for i in range(100):
-        buf = f'line: { i }\n'.encode()
+    print('waiting for input...')
+    for line in what:
+        buf = line.encode()
         print(f'stdin: { buf }')
 
         stdin.write(buf)
         await stdin.drain()
+        print('waiting for input...')
         #await asyncio.sleep(0.01)
-        await asyncio.sleep(0.5)
+        await asyncio.sleep(0.1)
+    print('done waiting...')
 
 
-async def run_new():
+async def run_new(cmd):
     proc = await asyncio.create_subprocess_shell(
-        #'/usr/bin/tee',
-        #'/Users/carendt/.pyenv/shims/python3',
-        #'/Users/carendt/rstudio/auth-docker/cluster/sha256_base64_stdin.py',
-        #'python3',
-        'python3 /Users/carendt/rstudio/auth-docker/cluster/sha256_base64_stdin.py',
-        #'bash /Users/carendt/rstudio/auth-docker/cluster/test.sh',
-        #'python3 cluster/test.py',
+        cmd,
         stdin=asyncio.subprocess.PIPE,
         stdout=asyncio.subprocess.PIPE,
         stderr=asyncio.subprocess.PIPE)
@@ -76,5 +81,14 @@ async def run_new():
         read_stdout(proc.stdout),
         write_stdin(proc.stdin))
 
+
 if __name__ == "__main__":
-    asyncio.run(run_new())
+    args = sys.argv
+    print(args)
+    print("Removing first argument")
+    del(args[0])
+
+    command_to_run = ' '.join(args)
+    print(command_to_run)
+
+    asyncio.run(run_new(command_to_run))
