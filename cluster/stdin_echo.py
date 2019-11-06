@@ -57,8 +57,12 @@ async def write_stdin_parent(stdin, what = sys.stdin):
 async def write_stdin(stdin, what = sys.stdin):
     print('write_stdin')
     print('waiting for input...')
-    for line in what:
+    while True:
+        print('reading!')
+        line = what.read(1)
+        print('got text')
         buf = line.encode()
+        #buf = line
         print(f'stdin: { buf }')
 
         stdin.write(buf)
@@ -79,7 +83,7 @@ async def run_new(cmd):
     await asyncio.gather(
         read_stderr(proc.stderr),
         read_stdout(proc.stdout),
-        write_stdin(proc.stdin))
+        write_stdin(proc.stdin, sys.stdin))
 
 # THANK YOU https://stackoverflow.com/questions/55590343/asyncio-run-or-run-until-complete
 def arun(aw):
