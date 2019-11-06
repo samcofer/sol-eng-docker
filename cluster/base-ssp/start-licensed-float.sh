@@ -13,7 +13,7 @@ fi
 
 activate() {
     echo "Activating license ..."
-    /opt/shiny-server/bin/license-manager activate $SSP_LICENSE # output is informative.
+    /opt/shiny-server/bin/license-manager license-server ${LICENSE_SERVER} # output is informative.
     if [ $? -ne 0 ]
     then
         echo >&2 'error: SSP_LICENSE could not be activated.'
