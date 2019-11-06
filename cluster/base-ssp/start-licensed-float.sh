@@ -4,8 +4,8 @@
 mkdir -p /var/log/shiny-server
 chown shiny:shiny /var/log/shiny-server
 
-if [ -z "$SSP_LICENSE" ]; then
-    echo >&2 'error: The SSP_LICENSE variable is not set.'
+if [ -z "$LICENSE_SERVER" ]; then
+    echo >&2 'error: The LICENSE_SERVER variable is not set.'
     "$@"
     exit 1
 fi
@@ -16,7 +16,7 @@ activate() {
     /opt/shiny-server/bin/license-manager license-server ${LICENSE_SERVER} # output is informative.
     if [ $? -ne 0 ]
     then
-        echo >&2 'error: SSP_LICENSE could not be activated.'
+        echo >&2 'error: LICENSE_SERVER could not be activated.'
         exit 1
     fi     
 }
