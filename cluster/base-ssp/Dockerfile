@@ -15,7 +15,8 @@ RUN wget -O /usr/local/bin/dumb-init https://github.com/Yelp/dumb-init/releases/
 
 # setup init
 COPY ./base-ssp/start-licensed.sh /start-licensed.sh
-RUN chmod +x /start-licensed.sh
+COPY ./base-ssp/start-licensed-float.sh /start-licensed-float.sh
+RUN chmod +x /start-licensed.sh && chmod +x /start-licensed-float.sh
 CMD dumb-init /start-licensed.sh shiny-server 2>&1
 
 ENV SSP_LICENSE=${SSP_LICENSE}
