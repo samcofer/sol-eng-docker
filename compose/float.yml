@@ -42,3 +42,17 @@ services:
     environment:
       - "LICENSE=$RSPM_FLOAT_LICENSE"
       - "PRODUCT=rspm"
+
+  float-ssp:
+    hostname: float-ssp
+    build:
+      context: ../cluster
+      dockerfile: ./float/Dockerfile
+      args:
+        - "PRODUCT=ssp"
+        - "PORT=8979"
+    ports:
+      - "8979:8979"
+    environment:
+      - "LICENSE=$SSP_FLOAT_LICENSE"
+      - "PRODUCT=ssp"
