@@ -4,11 +4,11 @@ PWD := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 PROJECT=auth-docker
 NETWORK=${PROJECT}_default
 SCALE=1
-CONNECT_VERSION=1.7.6-6
+CONNECT_VERSION=1.7.8-7
 #1.7.0-11
 CONNECT_BINARY_URL=rstudio-connect_${CONNECT_VERSION}_amd64.deb
 
-RSTUDIO_VERSION=1.2.1558-3
+RSTUDIO_VERSION=1.2.5001-3
 #1.3.11234
 #RSTUDIO_VERSION=1.3.322-1
 
@@ -130,6 +130,7 @@ connect-up-hide:
 	NETWORK=${NETWORK} \
 	CONNECT_LICENSE=$(CONNECT_LICENSE) \
 	CONNECT_VERSION=$(CONNECT_VERSION) \
+	CONNECT_BINARY_URL=${CONNECT_BINARY_URL} \
 	docker-compose -f compose/base-connect.yml -f compose/make-network.yml up -d
 
  #--scale connect=2
@@ -188,6 +189,18 @@ ssp-down:
 	NETWORK=${NETWORK} \
         SSP_VERSION=${SSP_VERSION} \
 	docker-compose -f compose/base-ssp.yml -f compose/make-network.yml down
+
+ssp-float-up:
+	NETWORK=${NETWORK} \
+	SSP_LICENSE=$(SSP_LICENSE) \
+	SSP_VERSION=${SSP_VERSION} \
+	LICENSE_SERVER=float-ssp:8979 \
+	docker-compose -f compose/ssp-float.yml -f compose/make-network.yml up -d
+
+ssp-float-down:
+	NETWORK=${NETWORK} \
+        SSP_VERSION=${SSP_VERSION} \
+	docker-compose -f compose/ssp-float.yml -f compose/make-network.yml down
 
 #---------------------------------------------
 # Kubernetes
@@ -405,11 +418,11 @@ apache-simple-down:
 
 proxy-basic-up:
 	NETWORK=${NETWORK} \
-        docker-compose -f compose/proxy-basic.yml -f compose/make-network.yml up -d nginx-support-ssp
+        docker-compose -f compose/proxy-basic.yml -f compose/make-network.yml up -d apache-support-rsp
 
 proxy-basic-down:
 	NETWORK=${NETWORK} \
-        docker-compose -f compose/proxy-basic.yml -f compose/make-network.yml stop nginx-support-ssp
+        docker-compose -f compose/proxy-basic.yml -f compose/make-network.yml stop apache-support-rsp
 
 #---------------------------------------------
 # Proxy Products
