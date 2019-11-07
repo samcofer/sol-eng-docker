@@ -17,6 +17,7 @@ Proxies can be TRICKY!! Here, we aggregate some interesting resources about prox
 - [the map module](http://nginx.org/en/docs/http/ngx_http_map_module.html)
 - [the proxy module](http://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_redirect)
 - [nginx request size limit](https://serverfault.com/questions/814767/413-request-entity-too-large-in-nginx-with-client-max-body-size-set)
+- [epic nginx customization through javascript (njs)](https://nginx.org/en/docs/njs/reference.html)
 
 ## Apache
 
@@ -34,3 +35,6 @@ Server Pro. In this case, you cannot start an R session.
 - Always make sure that the right modules are loaded!! Otherwise you get weird
   behavior, thinking you have capabilities you do not
 - [Logging in Apache](https://www.loggly.com/ultimate-guide/apache-logging-basics/)
+- [Advanced Apache customization through RewriteMap](https://stackoverflow.com/questions/21032461/how-to-base64-encode-apache-header)
+    - [RewriteMap docs](https://httpd.apache.org/docs/2.4/rewrite/rewritemap.html)
+- [Custom Expressions](https://httpd.apache.org/docs/trunk/expr.html)
