@@ -8,7 +8,7 @@ CONNECT_VERSION=1.7.8-7
 #1.7.0-11
 CONNECT_BINARY_URL=rstudio-connect_${CONNECT_VERSION}_amd64.deb
 
-RSTUDIO_VERSION=1.2.5001-3
+RSTUDIO_VERSION=1.2.5033-1
 #1.3.11234
 #RSTUDIO_VERSION=1.3.322-1
 
@@ -160,6 +160,16 @@ ldap-kerb-rsp-down:
 	NETWORK=${NETWORK} \
 	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
 	docker-compose -f compose/ldap-kerberos-rsp.yml -f compose/make-network.yml down
+
+rsp-ha-up:
+	NETWORK=${NETWORK} \
+	RSP_LICENSE=$(RSP_LICENSE) \
+	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
+	docker-compose -f compose/rsp-ha.yml -f compose/make-network.yml up -d
+
+rsp-ha-down:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/rsp-ha.yml -f compose/make-network.yml down
 
 rsp-up:
 	NETWORK=${NETWORK} \
@@ -329,6 +339,10 @@ launcher-session-build:
 	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
 	docker-compose -f compose/launcher-rsp.yml build launcher-session
 
+r-session-debug-build:
+	RSP_VERSION=$(RSTUDIO_VERSION) \
+	docker-compose -f compose/r-session-debug.yml build debug-session
+
 #---------------------------------------------
 # Floating License Servers
 #---------------------------------------------
@@ -418,12 +432,19 @@ apache-simple-down:
 
 proxy-basic-up:
 	NETWORK=${NETWORK} \
-        docker-compose -f compose/proxy-basic.yml -f compose/make-network.yml up -d apache-support-rsp
+        docker-compose -f compose/proxy-basic.yml -f compose/make-network.yml up -d apache-support-ssp
 
 proxy-basic-down:
 	NETWORK=${NETWORK} \
-        docker-compose -f compose/proxy-basic.yml -f compose/make-network.yml stop apache-support-rsp
+        docker-compose -f compose/proxy-basic.yml -f compose/make-network.yml stop apache-support-ssp
 
+proxy-basic-rsp-ha-up:
+	NETWORK=${NETWORK} \
+        docker-compose -f compose/proxy-basic.yml -f compose/make-network.yml up -d apache-support-rsp-ha
+
+proxy-basic-rsp-ha-down:
+	NETWORK=${NETWORK} \
+        docker-compose -f compose/proxy-basic.yml -f compose/make-network.yml stop apache-support-rsp-ha
 #---------------------------------------------
 # Proxy Products
 #---------------------------------------------
