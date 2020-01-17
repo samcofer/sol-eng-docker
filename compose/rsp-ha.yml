@@ -1,0 +1,15 @@
+version: '2.3'
+services:
+
+  rsp:
+    image: rstudio/rstudio-server-pro:1.2.5019-6
+    #privileged: true
+    environment:
+      RSP_LICENSE: ${RSP_LICENSE}
+    ports:
+      - "8787"
+    scale: 2
+    volumes:
+      - ../cluster/rsp-load-balancer:/etc/rstudio/load-balancer
+      - ../cluster/rsp-ha-rserver.conf:/etc/rstudio/rserver.conf
+      - ../cluster/secure-cookie-key:/etc/rstudio/secure-cookie-key
