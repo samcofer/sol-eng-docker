@@ -1,0 +1,8 @@
+[config]
+
+balancer = sessions
+
+[nodes]
+
+rstudio1
+rstudio2
