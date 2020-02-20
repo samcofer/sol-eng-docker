@@ -161,6 +161,15 @@ ldap-kerb-rsp-down:
 	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
 	docker-compose -f compose/ldap-kerberos-rsp.yml -f compose/make-network.yml down
 
+ssp-ha-up:
+	NETWORK=${NETWORK} \
+	SSP_LICENSE=$(SSP_LICENSE) \
+	SSP_VERSION=$(SSP_VERSION) \
+	docker-compose -f compose/ssp-ha.yml -f compose/make-network-3.7.yml up -d
+ssp-ha-down:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/ssp-ha.yml -f compose/make-network-3.7.yml down
+
 rsp-ha-up:
 	NETWORK=${NETWORK} \
 	RSP_LICENSE=$(RSP_LICENSE) \
@@ -445,6 +454,14 @@ proxy-basic-rsp-ha-up:
 proxy-basic-rsp-ha-down:
 	NETWORK=${NETWORK} \
         docker-compose -f compose/proxy-basic.yml -f compose/make-network.yml stop apache-support-rsp-ha
+
+proxy-basic-ssp-ha-up:
+	NETWORK=${NETWORK} \
+        docker-compose -f compose/proxy-basic.yml -f compose/make-network.yml up -d apache-support-ssp-ha
+
+proxy-basic-ssp-ha-down:
+	NETWORK=${NETWORK} \
+        docker-compose -f compose/proxy-basic.yml -f compose/make-network.yml stop apache-support-ssp-ha
 #---------------------------------------------
 # Proxy Products
 #---------------------------------------------
