@@ -1,15 +1,50 @@
-version: '2.3'
+version: '3.7'
 services:
 
-  rsp:
+  rsp1:
     image: rstudio/rstudio-server-pro:1.2.5019-6
     #privileged: true
     environment:
       RSP_LICENSE: ${RSP_LICENSE}
     ports:
       - "8787"
-    scale: 2
     volumes:
       - ../cluster/rsp-load-balancer:/etc/rstudio/load-balancer
       - ../cluster/rsp-ha-rserver.conf:/etc/rstudio/rserver.conf
       - ../cluster/secure-cookie-key:/etc/rstudio/secure-cookie-key
+      - type: volume
+        source: rsp-nfs-vol
+        target: /home
+        volume:
+          nocopy: true
+  rsp2:
+    image: rstudio/rstudio-server-pro:1.2.5019-6
+    #privileged: true
+    environment:
+      RSP_LICENSE: ${RSP_LICENSE}
+    ports:
+      - "8787"
+    volumes:
+      - ../cluster/rsp-load-balancer:/etc/rstudio/load-balancer
+      - ../cluster/rsp-ha-rserver.conf:/etc/rstudio/rserver.conf
+      - ../cluster/secure-cookie-key:/etc/rstudio/secure-cookie-key
+      - type: volume
+        source: rsp-nfs-vol
+        target: /home
+        volume:
+          nocopy: true
+  rsp-nfs:
+    image: colearendt/nfs-server-alpine
+    command: ["/mnt/home"] 
+    environment:
+      NFS_OPTS: rw,async,fsid=0,no_subtree_check,no_auth_nlm,insecure
+    ports:
+      - "2049:2049"
+      - "111:111"
+
+volumes:
+  rsp-nfs-vol:
+    driver_opts:
+      type: "nfs"
+      o: "addr=host.docker.internal,nolock,soft,rw"
+      device: ":/mnt/home"
