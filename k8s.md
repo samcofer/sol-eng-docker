@@ -307,6 +307,7 @@ Wins:
 - **----->>>** [Read about the problem of resolving service names. This is
   promising for the future!
 ](https://github.com/kubernetes/kubernetes/issues/44528)
+- [Related service publishing issue to the host](https://github.com/docker/for-mac/issues/2445) [another](https://github.com/docker/for-mac/issues/171)
 
 - [Persistent Volumes on K8s](https://medium.com/platformer-blog/nfs-persistent-volumes-with-kubernetes-a-case-study-ce1ed6e2c266)
 - [Another nfs k8s issue](https://github.com/kubernetes/kubernetes/issues/44377)
