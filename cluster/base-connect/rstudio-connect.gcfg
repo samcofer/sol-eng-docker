@@ -17,6 +17,7 @@ DefaultContentListView = "expanded"
 ;	
 ; Address = https://rstudio-connect.company.com
 Address = http://localhost:3939
+ViewerKiosk = true
 
 [Python]
 Enabled = true
