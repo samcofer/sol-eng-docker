@@ -7,5 +7,7 @@ services:
     privileged: true
     volumes:
       - ../cluster/proxy-connect.gcfg:/etc/rstudio-connect/rstudio-connect.gcfg
+    ports:
+      - 3939
     environment:
       - CONNECT_LICENSE
