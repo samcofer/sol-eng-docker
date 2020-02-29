@@ -1,0 +1,12 @@
+version: '3.3'
+services:
+
+  debug-session:
+    hostname: debug-session
+    image: colearendt/r-session-debug:${RSP_VERSION}
+    build:
+      context: ../cluster
+      dockerfile: r-session-debug/Dockerfile
+      args:
+        R_VERSION: "3.5.1"
+        RSP_VERSION: ${RSP_VERSION}
