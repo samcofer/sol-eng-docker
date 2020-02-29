@@ -15,7 +15,7 @@ SenderEmail = test@test.com
 ;	
 ; Address = https://rstudio-connect.company.com
 Address = http://example.com
-EmailProvider = SMTP
+EmailProvider = None
 
 [SMTP]
 Host = localhost
