@@ -3,7 +3,7 @@ services:
 
   ldap-connect:
     hostname: ldap-connect
-    image: rstudio/sol-eng-connect:${CONNECT_VERSION}
+    image: rstudio/rstudio-connect:${CONNECT_VERSION}
     ports:
       - "3939"
     privileged: true
