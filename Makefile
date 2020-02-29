@@ -180,6 +180,13 @@ rsp-ha-down:
 	NETWORK=${NETWORK} \
 	docker-compose -f compose/rsp-ha.yml -f compose/make-network-3.7.yml down
 
+nfs-up:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/nfs.yml -f compose/make-network.yml up -d
+nfs-down:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/nfs.yml -f compose/make-network.yml down
+ 
 rsp-up:
 	NETWORK=${NETWORK} \
 	RSP_LICENSE=$(RSP_LICENSE) \
