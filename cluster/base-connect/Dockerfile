@@ -45,7 +45,7 @@ RUN mkdir -p /opt/R && \
 # Install Connect
 ARG CONNECT_BINARY_URL
 COPY $CONNECT_BINARY_URL /rstudio-connect.deb
-RUN gdebi -n rstudio-connect.deb && \
+RUN gdebi -n /rstudio-connect.deb && \
     rm /rstudio-connect.deb
 
 # install dumb-init
