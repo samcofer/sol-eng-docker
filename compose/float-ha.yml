@@ -1,0 +1,30 @@
+version: '2.3'
+services:
+
+  float-connect-1:
+    hostname: float-connect-1
+    build:
+      context: ../cluster
+      dockerfile: ./float/Dockerfile
+      args:
+        - "PRODUCT=connect"
+        - "PORT=8999"
+    ports:
+      - "8999"
+    environment:
+      - "LICENSE=$CONNECT_FLOAT_LICENSE"
+      - "PRODUCT=connect"
+
+  float-connect-2:
+    hostname: float-connect-2
+    build:
+      context: ../cluster
+      dockerfile: ./float/Dockerfile
+      args:
+        - "PRODUCT=connect"
+        - "PORT=8999"
+    ports:
+      - "8999"
+    environment:
+      - "LICENSE=$CONNECT_FLOAT_LICENSE_ALT"
+      - "PRODUCT=connect"
