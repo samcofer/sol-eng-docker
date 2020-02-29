@@ -1,7 +1,7 @@
 ARG RSTUDIO_VERSION
-FROM rstudio/sol-eng-rstudio:${RSTUDIO_VERSION}
+FROM rstudio/rstudio-server-pro:${RSTUDIO_VERSION}
 
-RUN apt-get install -y \
+RUN apt-get update && apt-get install -y \
     nfs-common \
     sssd \
     sssd-ldap
