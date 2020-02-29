@@ -14,5 +14,8 @@ services:
     ports:
       - 3838:3838
     volumes:
-      - "../cluster/ssp-ldap.conf:/etc/shiny-server/shiny-server.conf"
+      - "../cluster/ssp-basic.conf:/etc/shiny-server/shiny-server.conf"
+    command:
+      - "shiny-server"
+      - "/etc/shiny-server/shiny-server.conf"
 
