@@ -17,6 +17,7 @@ services:
 
   float-connect:
     hostname: float-connect
+    image: rstudio/float-connect:${VERSION}
     build:
       context: ../cluster
       dockerfile: ./float/Dockerfile
