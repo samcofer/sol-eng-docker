@@ -38,8 +38,8 @@ services:
     image: nginx
     volumes:
       - ../cluster/nginx-float-ha.conf:/etc/nginx/nginx.conf:ro
-      - ../cluster/ssl/connect.crt:/cert.crt
-      - ../cluster/ssl/connect.key:/cert.key
+      - ../cluster/ssl/nginx-float-ha.crt:/cert.crt
+      - ../cluster/ssl/nginx-float-ha.key:/cert.key
     ports:
       - "80"
       - "443:443"
