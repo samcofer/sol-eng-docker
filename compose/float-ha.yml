@@ -27,6 +27,8 @@ services:
       args:
         - "PRODUCT=connect"
         - "PORT=8999"
+    volumes:
+      - "../cluster/float/connect-license-server.conf:/etc/connect-license-server.conf"
     ports:
       - "8999"
     environment:
