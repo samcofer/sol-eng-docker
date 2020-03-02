@@ -42,3 +42,4 @@ services:
       - ../cluster/ssl/connect.key:/cert.key
     ports:
       - "80"
+      - "443:443"

@@ -362,12 +362,27 @@ r-session-debug-build:
 #---------------------------------------------
 # Floating License Servers
 #---------------------------------------------
+float-build:
+	NETWORK=${NETWORK} \
+	VERSION=1.1.1 \
+	docker-compose -f compose/float.yml -f compose/make-network.yml build
 float-up:
 	NETWORK=${NETWORK} \
+	VERSION=1.1.1 \
 	docker-compose -f compose/float.yml -f compose/make-network.yml up -d
 float-down:
 	NETWORK=${NETWORK} \
 	docker-compose -f compose/float.yml -f compose/make-network.yml down 
+
+float-ha-up:
+	NETWORK=${NETWORK} \
+	VERSION=1.1.1 \
+	RSC_FLOAT_LICENSE=$(RSC_FLOAT_LICENSE) \
+	RSC_FLOAT_LICENSE_ALT=$(RSC_FLOAT_LICENSE_ALT) \
+	docker-compose -f compose/float-ha.yml -f compose/make-network.yml up -d
+float-ha-down:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/float-ha.yml -f compose/make-network.yml down 
 
 #---------------------------------------------
 # Kerberos
