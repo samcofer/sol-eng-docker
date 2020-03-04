@@ -32,8 +32,6 @@
 ###   Allow from 208.113.183.103
 
 ### CONFIGURATION
-MY_ALLOWED_IP="208.113.183.103"
-MY_REDIRECT="www.askapache.com"
 
 # command line
 if [ -e $GATEWAY_INTERFACE ]; then
@@ -57,8 +55,6 @@ declare | sort;echo;echo
 
 else
 
-if [ "$REMOTE_ADDR" == "$MY_ALLOWED_IP" ]; then
-
 echo "Content-type: text/plain; charset=iso-8859-1";echo
 
 echo "+ ARGS: ${0}"
@@ -72,19 +68,6 @@ echo "+-----------------------------------------------------+"
 echo "| PERL PRINTENV                                       |";
 echo "+=====================================================+";
 perl -e'foreach $var (sort(keys(%ENV))) {$val = $ENV{$var};$val =~ s|n|\n|g;$val =~ s|"|\"|g;print "${var}="${val}"n"}';echo;echo
-
-#echo "+-----------------------------------------------------+"
-#echo "| declare                                             |";
-#echo "+=====================================================+";
-#declare | sort;echo;echo
-
-else
-
-echo "Content-type: text/html"
-echo "Location: http://${MY_REDIRECT}";
-echo "";
-
-fi
 
 fi
 
