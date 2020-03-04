@@ -44,4 +44,4 @@ services:
       - ../cluster/ssl/nginx-float-ha.key:/cert.key
     ports:
       - "80"
-      - "443:443"
+      - "443"
