@@ -1,0 +1,47 @@
+version: '2.3'
+services:
+
+  float-connect-1:
+    hostname: float-connect-1
+    image: rstudio/float-connect:${VERSION}
+    build:
+      context: ../cluster
+      dockerfile: ./float/Dockerfile
+      args:
+        - "PRODUCT=connect"
+        - "PORT=8999"
+    volumes:
+      - "../cluster/float/connect-license-server.conf:/etc/connect-license-server.conf"
+    ports:
+      - "8999"
+    environment:
+      - "LICENSE=$RSC_FLOAT_LICENSE"
+      - "PRODUCT=connect"
+
+  float-connect-2:
+    hostname: float-connect-2
+    image: rstudio/float-connect:${VERSION}
+    build:
+      context: ../cluster
+      dockerfile: ./float/Dockerfile
+      args:
+        - "PRODUCT=connect"
+        - "PORT=8999"
+    volumes:
+      - "../cluster/float/connect-license-server.conf:/etc/connect-license-server.conf"
+    ports:
+      - "8999"
+    environment:
+      - "LICENSE=$RSC_FLOAT_LICENSE_ALT"
+      - "PRODUCT=connect"
+
+  nginx-float-ha:
+    hostname: nginx-float-ha
+    image: nginx
+    volumes:
+      - ../cluster/nginx-float-ha.conf:/etc/nginx/nginx.conf:ro
+      - ../cluster/ssl/nginx-float-ha.crt:/cert.crt
+      - ../cluster/ssl/nginx-float-ha.key:/cert.key
+    ports:
+      - "80"
+      - "443"

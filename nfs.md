@@ -31,3 +31,4 @@ rpcdebug -m nfsd all
 
 - [Access denied](https://www.centos.org/forums/viewtopic.php?t=56673)
 - [Install on Ubuntu](https://help.ubuntu.com/lts/serverguide/network-file-system.html.en)
+- [Encrypting nfs...?](https://www.linuxjournal.com/content/encrypting-nfsv4-stunnel-tls)

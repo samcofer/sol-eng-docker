@@ -12,7 +12,7 @@ RUN wget -O /usr/local/bin/dumb-init https://github.com/Yelp/dumb-init/releases/
 
 # install license server binary
 ARG PRODUCT=rsp
-ARG VERSION=1.0.9
+ARG VERSION=1.1.1
 ARG PORT=8989
 RUN wget https://s3.amazonaws.com/rstudio-license-server/${PRODUCT}-license-server-${VERSION}-x86_64.deb \
 	-O ${PRODUCT}-license-server.deb && \

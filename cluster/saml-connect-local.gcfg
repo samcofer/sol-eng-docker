@@ -2,6 +2,7 @@
 
 [Server]
 SenderEmail = test@example.com
+#Address = https://ssl-proxy-saml/rsconnect/
 Address = http://localhost:3939/
 	
 [Http]

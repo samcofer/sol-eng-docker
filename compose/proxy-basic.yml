@@ -37,6 +37,22 @@ services:
     ports:
       - "80"
 
+  apache-support-rsp-ha:
+    hostname: apache-support-rsp-ha
+    image: httpd:2.4
+    volumes: 
+      - ../cluster/apache-support-rsp-ha.conf:/usr/local/apache2/conf/httpd.conf
+    ports:
+      - "80"
+
+  apache-support-ssp-ha:
+    hostname: apache-support-ssp-ha
+    image: httpd:2.4
+    volumes: 
+      - ../cluster/apache-support-ssp-ha.conf:/usr/local/apache2/conf/httpd.conf
+    ports:
+      - "80"
+
   nginx-support-rsp:
     hostname: nginx-support-rsp
     image: nginx

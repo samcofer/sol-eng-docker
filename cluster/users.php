@@ -30,22 +30,28 @@ $config = array(
             'email' => 'john@example.org',
         ),
         'ashley:ashley' => array(
-            'uid' => array('1003'),
+            'uid' => array('1004'),
             'eduPersonAffiliation' => array('finance'),
 	    'user' => 'ashley',
             'email' => 'ashley@example.org',
         ),
         'jen:jen' => array(
-            'uid' => array('1004'),
+            'uid' => array('1005'),
             'eduPersonAffiliation' => array('support'),
 	    'user' => 'jen',
             'email' => 'jen@example.org',
         ),
         'test:test' => array(
-            'uid' => array('1005'),
+            'uid' => array('1006'),
             'eduPersonAffiliation' => array('support'),
 	    'user' => 'test',
             'email' => 'test@example.org',
+        ),
+        'bingo:bingo' => array(
+            'uid' => array('1007'),
+            'eduPersonAffiliation' => array('support'),
+	    'user' => 'bingo',
+            'email' => 'bingo@example.org',
         ),
     ),
 );

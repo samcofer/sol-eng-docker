@@ -1,0 +1,24 @@
+version: '2.3'
+services:
+
+  ssp-float:
+    hostname: ssp-float
+    build:
+      args:
+       - SSP_VERSION
+      context: ../cluster
+      dockerfile: base-ssp/Dockerfile
+    image: rstudio/sol-eng-shiny-server:${SSP_VERSION}
+    environment:
+      - SSP_LICENSE
+      - LICENSE_SERVER
+    entrypoint:
+      - "dumb-init"
+      - "/start-licensed-float.sh"
+    command:
+      - "shiny-server"
+    ports:
+      - "3838"
+    scale: 20
+    volumes:
+      - "../cluster/ssp-float.conf:/etc/shiny-server/shiny-server.conf"

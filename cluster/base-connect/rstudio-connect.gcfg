@@ -17,12 +17,16 @@ DefaultContentListView = "expanded"
 ;	
 ; Address = https://rstudio-connect.company.com
 Address = http://localhost:3939
+ViewerKiosk = true
 
 [Python]
 Enabled = true
 Executable = /usr/bin/python
 Executable = /usr/bin/python3
 
+[Packages]
+;HTTPProxy = http://proxy-mitm:8080/
+;HTTPSProxy = http://proxy-mitm:8080/
 	
 [Http]
 ; RStudio Connect will listen on this network address for HTTP connections.

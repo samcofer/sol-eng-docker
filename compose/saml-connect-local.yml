@@ -1,8 +1,8 @@
 version: '2.3'
 services:
 
-  connect:
-    hostname: connect
+  saml-connect-local:
+    hostname: saml-connect-local
     image: rstudio/sol-eng-connect:${CONNECT_VERSION}
     ports:
       - "3939:3939"

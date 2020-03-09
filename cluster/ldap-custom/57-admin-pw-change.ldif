@@ -1,0 +1,19 @@
+# Admin schema password
+
+# Entry 1: dc=example,dc=org
+dn: dc=rstudio,dc=com
+changetype: add
+dc: rstudio
+o: RStudio, Inc.
+objectclass: top
+objectclass: dcObject
+objectclass: organization
+#
+#dn: cn=admin,dc=rstudio,dc=com
+#changetype: add
+#cn: admin
+#description: LDAP administrator
+#objectclass: simpleSecurityObject
+#objectclass: organizationalRole
+#userpassword: {SSHA}+FquX8RcwTtBPo7mu2pgSvjaQYX9HpCL
+#

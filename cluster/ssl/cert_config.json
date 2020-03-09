@@ -1,6 +1,6 @@
 {
 	"request": {
-		"hosts": ["my-hostname"],
+		"hosts": ["localhost","localhost"],
 		"names": [
 			{
 				"C": "US",
@@ -9,6 +9,6 @@
 				"O": "RSTUDIO-DOCKER.COM"
 			}
 		],
-		"CN": "my-hostname"
+		"CN": "localhost"
 	}
 }

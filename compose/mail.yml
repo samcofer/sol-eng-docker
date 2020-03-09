@@ -4,28 +4,28 @@ volumes:
   sqlite:
 
 services:
-  smtp-sink:
-    build: ../cluster/smtp-sink/
-    image: smtp-sink
+  mail-smtp:
+    build: ../cluster/mail-smtp/
+    image: colearendt/mail-smtp
     ports:
       - "25"
     volumes:
       - mailbox:/home/smtp/Maildir/
 
-  courier-imap:
-    build: ../cluster/courier-imap/
-    image: courier-imap
+  mail-courier:
+    build: ../cluster/mail-courier/
+    image: colearendt/mail-courier
     ports:
       - "143"
     volumes:
       - mailbox:/home/smtp/Maildir/
 
-  webmail:
-    build: ../cluster/webmail/
-    image: roundcube
+  mail-ui:
+    build: ../cluster/mail-ui/
+    image: colearendt/mail-ui
     environment:
-      - IMAP_HOSTNAME=courier-imap
-      - SMTP_HOSTNAME=smtp-sink
+      - IMAP_HOSTNAME=mail-courier
+      - SMTP_HOSTNAME=mail-smtp
     ports:
       - "80"
     volumes:
