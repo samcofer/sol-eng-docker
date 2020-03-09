@@ -38,3 +38,12 @@ Server Pro. In this case, you cannot start an R session.
 - [Advanced Apache customization through RewriteMap](https://stackoverflow.com/questions/21032461/how-to-base64-encode-apache-header)
     - [RewriteMap docs](https://httpd.apache.org/docs/2.4/rewrite/rewritemap.html)
 - [Custom Expressions](https://httpd.apache.org/docs/trunk/expr.html)
+
+### CGI
+
+- CGI scripts can be helpful for debugging
+- [Overview of different ways to enable](https://mediatemple.net/community/products/dv/204643090/running-scripts-outside-of-the-cgi-bin)
+- [How to load module](https://tecadmin.net/enable-or-disable-cgi-in-apache24/)
+- [More about how to enable](https://www.techrepublic.com/blog/diy-it-guy/diy-enable-cgi-on-your-apache-server/)
+- [Useful script example](https://www.askapache.com/shellscript/apache-printenv-improvement/)
+
