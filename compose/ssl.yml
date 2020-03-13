@@ -1,0 +1,12 @@
+version: '2.3'
+services:
+  cfssl:
+    hostname: cfssl
+    image: cfssl/cfssl
+    command: ["serve", "-ca", "/auth-docker.pem", "-ca-key", "/auth-docker.key.nopass", "-address", "cfssl"]
+    volumes: 
+      - ../cluster/ssl/auth-docker.key.nopass:/auth-docker.key.nopass
+      - ../cluster/ssl/auth-docker.pem:/auth-docker.pem
+    ports:
+      - "8888"
+

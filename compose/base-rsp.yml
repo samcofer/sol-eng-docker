@@ -1,0 +1,45 @@
+version: '2.3'
+services:
+  #base-rsp:
+  #  hostname: proxy-debug
+  #  image: brndnmtthws/nginx-echo-headers
+
+  base-rsp:
+    image: rstudio/rstudio-server-pro:1.2.5019-6
+    privileged: true
+    environment:
+      RSP_LICENSE: ${RSP_LICENSE}
+    ports:
+      - "8787"
+ 
+
+#  base-rsp:
+#    hostname: base-rsp
+#    build:
+#      context: ../cluster
+#      dockerfile: base-rsp/Dockerfile
+#      args:
+#        - RSTUDIO_VERSION=${RSTUDIO_VERSION}
+#    image: rstudio/sol-eng-rstudio:${RSTUDIO_VERSION}
+#    environment:
+#      - RSP_LICENSE
+#    command: "bash"
+#    ports:
+#      - "8787"
+#      - "443"
+#    restart: "always"
+#
+#  rsp-ldap:
+#    hostname: rsp-ldap
+#    build:
+#      context: ../cluster
+#      dockerfile: rsp-ldap/Dockerfile
+#      args:
+#        - RSTUDIO_VERSION=${RSTUDIO_VERSION}
+#    image: rstudio/sol-eng-rstudio:ldap-${RSTUDIO_VERSION}
+#    environment:
+#      - RSP_LICENSE
+#    ports:
+#      - "8787"
+#      - "443"
+ 

@@ -1,0 +1,65 @@
+version: '2.3' 
+services:
+
+  nfs01:
+    hostname: nfs01
+    image: colearendt/nfs-server-alpine:latest
+    command: ["/var/home"]
+    environment:
+      NFS_OPTS: rw,async,fsid=0,no_subtree_check,no_auth_nlm,insecure
+    volumes:
+      - "home-volume:/var/home"
+    privileged: true
+    ports:
+      - 2049
+  busybox:
+    hostname: busybox
+    image: ubuntu:bionic
+    command: ["sleep", "10000"]
+    privileged: true
+
+volumes:
+  home-volume:
+
+  # this one has an I/O error on file creation...
+#  nfs01:
+#    hostname: nfs01 
+#    image: nfs-server-alpine:latest
+#    volumes:
+#      - "./somedir:/var/home"
+#    environment: 
+#      - "SHARED_DIRECTORY=/var/home"
+#      #- "SYNC=true"
+#    #ports:
+#    #  - "2049:2049"
+#    privileged: true
+#  nfs02:
+#    hostname: nfs02
+#    image: cpuguy83/nfs-server
+#    privileged: true
+#    command: ["/path/to/share"]
+#    ports:
+#      - "2049:2049"
+#  client:
+#    hostname: client
+#    image: cpuguy83/nfs-client
+#    privileged: true
+#    environment:
+#      - "NFS_PORT_2049_TCP_ADDR=172.29.0.4"
+#    command: ["/path/to/share:/path/to/share"]
+#  test:
+#    hostname: test-nfs
+#    privileged: true
+#    image: ubuntu
+#    command: ["sleep","10000000"]
+#  test2:
+#    hostname: test2-nfs
+#    privileged: true
+#    image: outstand/nfs-client
+#    volumes:
+#      - "/mnt/nfsdir"
+#    environment:
+#      - "SERVER=nfs01"
+#      - "SHARE=/"
+#      - "MOUNTPOINT=/mnt/nfsdir"
+#

@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: launcher
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: launcher
+  template:
+    metadata:
+      labels:
+        app: launcher
+    spec:
+      serviceAccount: job-launcher
+      containers:
+      - name: launcher
+        image: rstudio/launcher-ldap:latest
+        #args: ["/usr/lib/rstudio-server/bin/rstudio-launcher"]
+        #command: ["sleep","10000"]
+        #imagePullPolicy: Never
+        ports:
+        - containerPort: 5559
+        volumeMounts:
+        - name: launcher-pub
+          mountPath: "/etc/rstudio/launcher.pub"
+          subPath: "launcher.pub"
+        - name: launcher-pem
+          mountPath: "/etc/rstudio/launcher.pem"
+          subPath: "launcher.pem"
+        - name: launcher-k8s-prof-conf
+          mountPath: "/etc/rstudio/launcher.kubernetes.profiles.conf"
+          subPath: "launcher.kubernetes.profiles.conf"
+        - name: launcher-conf
+          mountPath: "/etc/rstudio/launcher.conf"
+          subPath: "launcher.conf"
+      volumes:
+      - name: launcher-conf
+        configMap:
+          name: launcher-config
+          items:
+          - key: launcher.conf
+            path: "launcher.conf"
+      - name: launcher-k8s-prof-conf
+        configMap:
+          name: launcher-config
+          items:
+          - key: launcher.kubernetes.profiles.conf
+            path: "launcher.kubernetes.profiles.conf"
+      - name: launcher-pub
+        configMap:
+          name: launcher-config
+          items:
+          - key: launcher.pub
+            path: "launcher.pub"
+      - name: launcher-pem
+        configMap:
+          name: launcher-config
+          defaultMode: 384
+          items:
+          - key: launcher.pem
+            path: "launcher.pem"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: launcher
+spec:
+  type: NodePort
+  selector:
+    app: launcher
+  ports:
+  - port: 5559

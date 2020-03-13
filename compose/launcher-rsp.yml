@@ -1,0 +1,45 @@
+version: '3.3'
+services:
+
+  launcher-rsp:
+    hostname: launcher-rsp
+    image: rstudio/launcher-rsp
+    build:
+      context: ../cluster
+      dockerfile: launcher-rsp/Dockerfile
+    environment:
+      - RSP_LICENSE
+    ports:
+      - 8787:8787
+
+  launcher:
+    hostname: launcher
+    image: compose_launcher
+    build:
+      context: ../cluster
+      dockerfile: launcher/Dockerfile
+    environment:
+      - RSP_LICENSE
+    ports:
+      - 5559:5559
+
+  launcher-session:
+    hostname: launcher-session
+    image: rstudio/launcher-session:${RSTUDIO_VERSION}
+    build:
+      context: ../cluster
+      dockerfile: launcher-session/Dockerfile
+      args:
+        R_VERSION: "3.5.1"
+        RSTUDIO_VERSION: ${RSTUDIO_VERSION}
+
+  launcher-session-alt:
+    hostname: launcher-session-alt
+    image: rstudio/launcher-session:${RSTUDIO_VERSION}
+    build:
+      context: ../cluster
+      dockerfile: launcher-session-alt/Dockerfile
+      args:
+        R_VERSION: "3.5.1"
+        RSTUDIO_VERSION: ${RSTUDIO_VERSION}
+

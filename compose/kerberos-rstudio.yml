@@ -1,0 +1,15 @@
+version: '2.3'
+services:
+
+  kerberos-rstudio:
+    hostname: kerberos-rstudio
+    build:
+      context: ../cluster
+      dockerfile: kerberos-rstudio/Dockerfile
+      args:
+        - RSTUDIO_VERSION=${RSTUDIO_VERSION}
+    image: rstudio/sol-eng-rstudio:kerberos-${RSTUDIO_VERSION}
+    ports:
+      - "8787"
+    environment:
+      - RSP_LICENSE

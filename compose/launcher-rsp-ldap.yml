@@ -1,0 +1,36 @@
+version: '3.3'
+services:
+
+  launcher-rsp-ldap:
+    hostname: launcher-rsp-ldap
+    image: rstudio/launcher-rsp-ldap
+    build:
+      context: ../cluster
+      dockerfile: launcher-rsp-ldap/Dockerfile
+      args:
+        RSTUDIO_VERSION: ${RSTUDIO_VERSION}
+    environment:
+      - RSP_LICENSE
+    ports:
+      - 8787:8787
+
+  launcher-ldap:
+    hostname: launcher-ldap
+    image: rstudio/launcher-ldap
+    build:
+      context: ../cluster
+      dockerfile: launcher-ldap/Dockerfile
+    environment:
+      - RSP_LICENSE
+    ports:
+      - 5559:5559
+
+  launcher-session:
+    hostname: launcher-session
+    image: rstudio/launcher-session
+    build:
+      context: ../cluster
+      dockerfile: launcher-session/Dockerfile
+      args:
+        R_VERSION: "3.5.1"
+        RSTUDIO_VERSION: ${RSTUDIO_VERSION}

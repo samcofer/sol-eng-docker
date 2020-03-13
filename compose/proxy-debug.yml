@@ -1,0 +1,6 @@
+version: "2.3"
+services:
+  proxy-debug:
+    hostname: proxy-debug
+    image: brndnmtthws/nginx-echo-headers
+

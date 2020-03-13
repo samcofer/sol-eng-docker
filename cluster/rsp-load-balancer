@@ -1,0 +1,8 @@
+[config]
+
+balancer = sessions
+
+[nodes]
+
+rsp1
+rsp2

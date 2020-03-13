@@ -1,0 +1,53 @@
+version: '2.3'
+services:
+
+  openldap:
+    hostname: openldap
+    image: osixia/openldap
+    ports:
+       - "389" # insecure port - use if LDAP_TLS=false
+       #- "636" # secure port - use if LDAP_TLS=true
+    volumes:
+      - ../cluster/users.ldif:/container/service/slapd/assets/config/bootstrap/ldif/50-bootstrap.ldif
+#      - ../cluster/ldap-custom:/container/service/slapd/assets/config/bootstrap/ldif/custom
+#      - ../cluster/mnt/ldap2:/var/lib/ldap2
+    environment:
+      - LDAP_TLS=false
+    command: ["--copy-service", "--loglevel", "debug"]
+
+  ldapadmin:
+    hostname: ldapadmin
+    image: osixia/phpldapadmin
+    ports:
+      #- "443" # secure port - use for HTTPS
+      - "80" # insecure port - use for HTTP
+    environment:
+      - PHPLDAPADMIN_LDAP_HOSTS=openldap
+      - PHPLDAPADMIN_HTTPS=false
+    links:
+      - openldap
+
+  selfserve:
+    hostname: selfserve
+    image: dtwardow/ldap-self-service-password
+    ports:
+      - "80"
+    links:
+      - openldap
+    environment:
+      - SERVER_HOSTNAME=selfserve
+      - LSSP_ATTR_LOGIN=uid
+      - LSSP_ATTR_FN=cn
+      - LSSP_ATTR_MAIL=mail
+      - LSSP_DEFAULT_ACTION=change
+      - LDAP_BASE=dc=example,dc=org
+      - LDAP_HOST=openldap
+      - LDAP_PORT=389
+      - LDAP_USER=cn=admin,dc=example,dc=org
+      - LDAP_PASS=admin
+      - SMTP_HOST=
+      - SMTP_PORT=
+      - SMTP_USER=
+      - SMTP_PASS=
+      - SMTP_FROM=
+      - SMTP_TLS=off

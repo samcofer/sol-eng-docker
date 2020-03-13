@@ -1,0 +1,26 @@
+version: '2.3'
+services:
+
+  rstudio-proxy:
+    hostname: rstudio-proxy
+    build:
+      context: ../cluster
+      dockerfile: base-rsp/Dockerfile
+    environment:
+      - RSP_LICENSE
+    ports:
+      - 8788:8787
+    volumes:
+      - ../cluster/secure-proxy-user-header:/etc/rstudio/secure-proxy-user-header
+      - ../cluster/proxy-rserver.conf:/etc/rstudio/rserver.conf
+    links:
+      - apache-auth
+
+  apache-auth:
+    hostname: apache-auth
+    build:
+      context: ../cluster
+      dockerfile: apache-auth/Dockerfile
+    ports:
+      - "80"
+

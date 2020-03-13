@@ -1,0 +1,14 @@
+{
+	"request": {
+		"hosts": ["localhost","localhost"],
+		"names": [
+			{
+				"C": "US",
+				"ST": "North Carolina",
+				"L": "Raleigh",
+				"O": "RSTUDIO-DOCKER.COM"
+			}
+		],
+		"CN": "localhost"
+	}
+}

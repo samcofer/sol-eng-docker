@@ -3,37 +3,57 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update -y -qq && \
     apt-get install -y \
+    apt-transport-https \
     build-essential \
     curl \
+    gcc \
     gdebi-core \
-    libcurl4-gnutls-dev \
+    git \
+    g++ \
+    libblas3 \
+    libcairo2-dev \
+    libcurl4-openssl-dev \
+    libedit2 \
+    liblapack3 \
     libxml2-dev \
     libssl-dev \
+    libtiff5-dev \
+    libxt6 \
     lsb-release \
+    make \
     ntp \
+    psmisc \
     rrdtool \
     unixodbc-dev \
     vim \
+    wget \
+    python \ 
+    python-pip \ 
+    python-virtualenv \
+    python3 \ 
+    python3-pip \
+    python3-virtualenv \
     wget
+# gcc & g++ are only needed as build dependencies for packages
 
-# install R apt
-RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 0x517166190x51716619e084dab9
-RUN echo "deb https://cran.rstudio.com/~/ubuntu $(lsb_release -cs)/" >> /etc/apt/sources.list.d/cran-rstudio.list
-RUN apt-get install -y apt-transport-https \
-	r-base
+# install R
+ARG R_VERSION=3.5.1
+RUN mkdir -p /opt/R && \
+	curl https://cdn.rstudio.com/r/ubuntu-1604/R-${R_VERSION}-ubuntu-1604.tar.gz | \
+	tar xzvf - -C /opt/R/
 
 # Install Connect
 ARG CONNECT_BINARY_URL
 COPY $CONNECT_BINARY_URL /rstudio-connect.deb
-RUN gdebi -n rstudio-connect.deb && \
+RUN gdebi -n /rstudio-connect.deb && \
     rm /rstudio-connect.deb
 
-# install dumb-iinit
+# install dumb-init
 RUN wget -O /usr/local/bin/dumb-init https://github.com/Yelp/dumb-init/releases/download/v1.1.3/dumb-init_1.1.3_amd64 && \
 	chmod +x /usr/local/bin/dumb-init
 
 # because licensing
-RUN apt-get -y install sudo
+RUN apt-get update -qq && apt-get -y install sudo
 RUN useradd -m docker && echo "docker:docker" | chpasswd && adduser docker sudo
 
 # create users

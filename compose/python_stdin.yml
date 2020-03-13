@@ -1,0 +1,17 @@
+version: '2.3'
+services:
+
+  python_stdin:
+    hostname: python_stdin
+    image: python:buster
+    entrypoint: /usr/local/bin/python3 /stdin_echo.py
+    command: /usr/local/bin/python3 /sha256_base64_stdin.py
+    volumes:
+      - ../cluster/sha256_base64_stdin.py:/sha256_base64_stdin.py
+      - ../cluster/stdin_echo.py:/stdin_echo.py
+
+  launcher_stdin:
+    image: colearendt/r-session-debug:latest
+    build:
+      context: ../cluster
+      dockerfile: ./r-session-debug/Dockerfile

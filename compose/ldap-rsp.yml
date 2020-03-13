@@ -1,0 +1,18 @@
+version: '2.3'
+services:
+
+  ldap-rsp:
+    hostname: ldap-rsp
+    build:
+      context: ../cluster
+      dockerfile: ldap-rsp/Dockerfile
+      args:
+        - RSTUDIO_VERSION=${RSTUDIO_VERSION}
+    image: rstudio/sol-eng-rstudio:ldap-${RSTUDIO_VERSION}
+    volumes:
+      - ../cluster/ldap-rsp.conf:/etc/rstudio/rserver.conf
+    environment:
+      - RSP_LICENSE
+    ports:
+      - "8787"
+      - "443"

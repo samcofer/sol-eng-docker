@@ -1,0 +1,29 @@
+version: '2.3'
+services:
+
+  ldap-connect:
+    hostname: ldap-connect
+    image: rstudio/rstudio-connect:${CONNECT_VERSION}
+    ports:
+      - "3939"
+    privileged: true
+    environment:
+      - CONNECT_LICENSE
+    volumes:
+      - ../cluster/ldap-connect.gcfg:/etc/rstudio-connect/rstudio-connect.gcfg
+    depends_on:
+      pg-connect:
+        condition: service_healthy
+
+  pg-connect:
+    hostname: pg-connect
+    image: postgres:10
+    environment:
+      POSTGRES_PASSWORD: test
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+

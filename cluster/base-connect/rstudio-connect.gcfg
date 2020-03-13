@@ -6,7 +6,9 @@
 ; setting is configured.
 ;	
 ; SenderEmail = account@company.com
-SenderEmail = 
+SenderEmail = rsconnect@example.com
+ExpandedViewUI = true
+DefaultContentListView = "expanded"
 
 ; Address is a public URL for this RStudio Connect server. Must be configured
 ; to enable features like including links to your content in emails. If
@@ -14,7 +16,17 @@ SenderEmail =
 ; in terms of that proxy.
 ;	
 ; Address = https://rstudio-connect.company.com
-Address =
+Address = http://localhost:3939
+ViewerKiosk = true
+
+[Python]
+Enabled = true
+Executable = /usr/bin/python
+Executable = /usr/bin/python3
+
+[Packages]
+;HTTPProxy = http://proxy-mitm:8080/
+;HTTPSProxy = http://proxy-mitm:8080/
 	
 [Http]
 ; RStudio Connect will listen on this network address for HTTP connections.

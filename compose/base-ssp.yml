@@ -1,0 +1,21 @@
+version: '2.3'
+services:
+
+  base-ssp:
+    hostname: base-ssp 
+    build:
+      args:
+       - SSP_VERSION
+      context: ../cluster
+      dockerfile: base-ssp/Dockerfile
+    image: rstudio/sol-eng-shiny-server:${SSP_VERSION}
+    environment:
+      - SSP_LICENSE
+    ports:
+      - 3838:3838
+    volumes:
+      - "../cluster/ssp-basic.conf:/etc/shiny-server/shiny-server.conf"
+    command:
+      - "shiny-server"
+      - "/etc/shiny-server/shiny-server.conf"
+

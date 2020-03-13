@@ -1,0 +1,15 @@
+version: '2.3'
+services:
+
+  kerberos-ssh-client:
+    hostname: kerberos-ssh-client
+    build:
+      context: ../cluster
+      dockerfile: ssh-client/Dockerfile
+    links:
+      - kerberos-ssh-server
+  kerberos-ssh-server:
+    hostname: kerberos-ssh-server
+    build:
+      context: ../cluster
+      dockerfile: ssh-server/Dockerfile

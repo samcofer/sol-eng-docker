@@ -1,0 +1,39 @@
+version: '2.3'
+services:
+  oauth2-nginx:
+    hostname: oauth2-nginx
+    image: nginx
+    volumes:
+      - ../cluster/oauth2-nginx.conf:/etc/nginx/nginx.conf:ro
+    links: 
+      - oauth2-proxy
+    ports:
+      - "80:80"
+
+  oauth2-proxy:
+    #image: a5huynh/oauth2_proxy
+    hostname: oauth2-proxy
+    build:
+      context: ../cluster
+      dockerfile: oauth2-proxy/Dockerfile
+    environment:
+      # .env file with ENV_VAR_NAME=value, one per line.
+      - OAUTH2_PROXY_CLIENT_ID=${OAUTH2_PROXY_CLIENT_ID}
+      - OAUTH2_PROXY_CLIENT_SECRET=${OAUTH2_PROXY_CLIENT_SECRET}
+      - OAUTH2_PROXY_COOKIE_SECRET=${OAUTH2_PROXY_COOKIE_SECRET}
+      - OAUTH2_HOST=${OAUTH2_HOST}
+    #entrypoint: sh
+    command: 
+      - --provider=github
+      - --http-address=http://0.0.0.0:80
+      - --upstream=http://proxy-connect:3939/
+      - --redirect-url=http://${OAUTH2_HOST}/oauth2/callback
+      - --email-domain=*
+      - --cookie-secure=false
+      - --set-xauthrequest
+      - --scope=user:email
+
+  oauth2-debug:
+    hostname: oauth2-debug
+    image: brndnmtthws/nginx-echo-headers
+    

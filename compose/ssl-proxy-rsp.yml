@@ -1,0 +1,16 @@
+version: "2.3"
+services:
+
+  ssl-proxy-rsp:
+    hostname: ssl-proxy-rsp
+    image: rstudio/ssl-proxy-rsp
+    build:
+      context: ../cluster
+      dockerfile: ssl-proxy-rsp/Dockerfile
+    ports:
+     - "8787"
+    volumes:
+      - ../cluster/secure-proxy-user-header:/etc/rstudio/secure-proxy-user-header
+      - ../cluster/ssl-proxy-rsp/rserver.conf:/etc/rstudio/rserver.conf
+    environment:
+      - RSP_LICENSE

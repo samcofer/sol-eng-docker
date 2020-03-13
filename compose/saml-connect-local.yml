@@ -1,0 +1,13 @@
+version: '2.3'
+services:
+
+  saml-connect-local:
+    hostname: saml-connect-local
+    image: rstudio/sol-eng-connect:${CONNECT_VERSION}
+    ports:
+      - "3939:3939"
+    privileged: true
+    environment:
+      - CONNECT_LICENSE
+    volumes:
+      - ../cluster/saml-connect-local.gcfg:/etc/rstudio-connect/rstudio-connect.gcfg

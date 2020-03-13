@@ -1,0 +1,14 @@
+version: '2.3'
+services:
+
+  proxy-rsp:
+    hostname: proxy-rsp
+    image: rstudio/rstudio-server-pro:${RSTUDIO_VERSION}
+    #image: rstudio/sol-eng-rstudio:ldap-${RSTUDIO_VERSION}
+    environment:
+      - RSP_LICENSE
+    ports:
+      - "8787"
+    volumes:
+      - ../cluster/secure-proxy-user-header:/etc/rstudio/secure-proxy-user-header
+      - ../cluster/proxy-rsp.conf:/etc/rstudio/rserver.conf

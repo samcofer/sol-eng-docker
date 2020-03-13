@@ -1,0 +1,75 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rsp 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rsp
+  template:
+    metadata:
+      labels:
+        app: rsp
+    spec:
+      containers:
+      - name: rsp
+        image: rstudio/sol-eng-rstudio:ldap-1.2.1186-1
+        env:
+        - name: RSP_LICENSE
+          valueFrom:
+            secretKeyRef:
+              name: license
+              key: rsp
+        #command: ["sleep","10000"]
+        #imagePullPolicy: Never
+        ports:
+        - containerPort: 8787
+        securityContext:
+          privileged: true
+        volumeMounts:
+          - name: nfs
+            mountPath: "/home"
+          - name: launcher-mounts
+            mountPath: "/etc/rstudio/launcher-mounts"
+            subPath: "launcher-mounts"
+          - name: launcher-pem
+            mountPath: "/etc/rstudio/launcher.pem"
+            subPath: "launcher.pem"
+          - name: launcher-pub
+            mountPath: "/etc/rstudio/launcher.pub"
+            subPath: "launcher.pub"
+      volumes:
+      - name: nfs
+        persistentVolumeClaim:
+          claimName: nfs
+      - name: launcher-mounts
+        configMap:
+          name: launcher-config
+          items:
+          - key: launcher-mounts
+            path: "launcher-mounts"
+      - name: launcher-pem
+        configMap:
+          name: launcher-config
+          defaultMode: 384
+          items:
+          - key: launcher.pem
+            path: "launcher.pem"
+      - name: launcher-pub
+        configMap:
+          name: launcher-config
+          items:
+          - key: launcher.pub
+            path: "launcher.pub"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rsp
+spec:
+  type: NodePort
+  selector:
+    app: rsp
+  ports:
+  - port: 8787
