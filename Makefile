@@ -605,6 +605,18 @@ proxy-saml-down:
 	NETWORK=${NETWORK} \
 	docker-compose -f compose/apache-saml.yml -f compose/make-network.yml down
 
+proxy-kerb-up:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/apache-kerb.yml -f compose/make-network.yml up -d
+
+proxy-kerb-build:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/apache-kerb.yml -f compose/make-network.yml build
+
+proxy-kerb-down:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/apache-kerb.yml -f compose/make-network.yml down
+
 
 #---------------------------------------------
 # LDAP
