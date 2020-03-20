@@ -5,12 +5,14 @@ services:
   #  image: brndnmtthws/nginx-echo-headers
 
   base-rsp:
-    image: rstudio/rstudio-server-pro:1.2.5019-6
+    image: rstudio/rstudio-server-pro:${RSTUDIO_VERSION}
     privileged: true
     environment:
       RSP_LICENSE: ${RSP_LICENSE}
     ports:
       - "8787"
+    #volumes:
+    #  - ../cluster/base-rserver.conf:/etc/rstudio/rserver.conf
  
 
 #  base-rsp:
