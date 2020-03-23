@@ -12,6 +12,7 @@ services:
     privileged: true
     volumes:
       - ../cluster/ldap-rsp.conf:/etc/rstudio/rserver.conf
+      #- /path/to/my/license.lic:/etc/rstudio-server/license.lic
     environment:
       - RSP_LICENSE
     ports:
