@@ -12,9 +12,10 @@ services:
     privileged: true
     volumes:
       - ../cluster/ldap-rsp.conf:/etc/rstudio/rserver.conf
-      #- /path/to/my/license.lic:/etc/rstudio-server/license.lic
-    environment:
-      - RSP_LICENSE
+      - "~/Downloads/rsp-cole-license-2020-12-30.lic:/etc/rstudio/license.lic"
+      - "../cluster/rsp-startup.sh:/usr/local/bin/startup.sh"
+    #environment:
+    #  - RSP_LICENSE
     ports:
       - "8787"
       - "443"
