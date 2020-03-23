@@ -9,6 +9,7 @@ services:
       args:
         - RSTUDIO_VERSION=${RSTUDIO_VERSION}
     image: rstudio/sol-eng-rstudio:ldap-${RSTUDIO_VERSION}
+    privileged: true
     volumes:
       - ../cluster/ldap-rsp.conf:/etc/rstudio/rserver.conf
     environment:

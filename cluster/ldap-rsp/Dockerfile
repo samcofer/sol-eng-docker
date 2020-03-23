@@ -4,7 +4,8 @@ FROM rstudio/rstudio-server-pro:${RSTUDIO_VERSION}
 RUN apt-get update && apt-get install -y \
     nfs-common \
     sssd \
-    sssd-ldap
+    sssd-ldap \
+    oddjob-mkhomedir
 
 # configure ldap
 COPY ./sssd.conf /etc/sssd/sssd.conf
