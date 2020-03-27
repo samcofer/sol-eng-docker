@@ -14,3 +14,5 @@ services:
       - "8787"
     environment:
       - RSP_LICENSE
+      - RSP_TESTUSER=
+
