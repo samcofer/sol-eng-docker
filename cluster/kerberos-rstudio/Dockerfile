@@ -13,5 +13,10 @@ COPY kerberos-rstudio/rserver.conf /etc/rstudio/rserver.conf
 COPY pam /etc/pam.d/rstudio
 COPY pam-session /etc/pam.d/rstudio-session
 
+# create users
+COPY users /tmp/users
+RUN awk ' { pass=system("openssl passwd -1 "$2); system("useradd -m -p "pass" -s /bin/bash "$1) } ' /tmp/users && \
+        rm /tmp/users
+
 RUN chmod -R 644 /etc/krb* && \
 	mkdir -p /etc/krb5.conf.d
