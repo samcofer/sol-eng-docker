@@ -16,3 +16,14 @@ services:
       - RSP_LICENSE
       - RSP_TESTUSER=
 
+  sut:
+    image: rstudio/sol-eng-rstudio:kerberos-${RSTUDIO_VERSION}
+    privileged: true
+    environment:
+      - RSP_LICENSE
+      - RSP_TESTUSER=
+    command: /run_tests.sh
+    entrypoint: []
+    volumes:
+     - "../test/run_tests.sh:/run_tests.sh"
+     - "../test/kerb-rsp.yaml:/tmp/goss.yaml"
