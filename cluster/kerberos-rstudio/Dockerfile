@@ -1,12 +1,12 @@
 ARG RSTUDIO_VERSION
-FROM rstudio/sol-eng-rstudio:${RSTUDIO_VERSION}
+FROM rstudio/rstudio-server-pro:${RSTUDIO_VERSION}
 
 # kerberos server
-RUN apt-get update && apt-get install -y ntp krb5-user libpam-krb5 openssh-client
+RUN apt-get update && \
+  apt-get install -y sssd sssd-ldap ntp krb5-user libpam-krb5 openssh-client
 
 COPY krb5.conf /etc/krb5.conf
 
-COPY kerberos-rstudio/supervisord.conf /etc/supervisord.conf
 COPY ssh_config /etc/ssh/ssh_config
 
 COPY kerberos-rstudio/rserver.conf /etc/rstudio/rserver.conf
