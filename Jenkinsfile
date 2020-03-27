@@ -3,7 +3,7 @@ ansiColor('xterm') {
     node('docker') {
       checkout scm
       print "Building environment"
-      sh "make kerb-server-up kerb-rsp-build"
+      sh "make network-up kerb-server-up kerb-rsp-build"
       print "Running Kerberos RStudio tests"
       sh "make kerb-rsp-test"
       print "Cleanup environment"
