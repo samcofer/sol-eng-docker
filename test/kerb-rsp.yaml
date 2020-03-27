@@ -1,0 +1,25 @@
+package:
+  rstudio-server:
+    installed: true
+
+user:
+  bobo:
+    exists: true
+
+file:
+  /usr/lib/rstudio-server:
+    exists: true
+
+command:
+  "echo 'momo' | kinit bobo@DOCKER-RSTUDIO.COM && klist":
+    title: simple_kinit_works
+    stdout: [
+      "Default principal: bobo@DOCKER-RSTUDIO.COM"
+    ]
+    exit-status: 0
+  "su bobo -c 'echo success'":
+    title: su_bobo_works
+    stdout: [
+      "success"
+    ]
+    exit-status: 0
