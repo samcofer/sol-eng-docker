@@ -30,7 +30,7 @@ command:
     ]
     exit-status: 0
   "echo 'momo' | kinit bobo@DOCKER-RSTUDIO.COM && curl --delegation always -v -i -u : --negotiate http://apache-kerb:80/":
-    title: kerb_ssh_works
+    title: kerb_curl_works
     stdout: [
       "WWW-Authenticate: Negotiate",
       "HTTP/1.1 200 OK",
