@@ -7,7 +7,7 @@ ansiColor('xterm') {
       print "Running Kerberos RStudio tests"
       sh "make kerb-rsp-test"
       print "Cleanup environment"
-      sh "make kerb-server-down"
+      sh "make proxy-kerb-down kerb-ssh-down kerb-server-down test-env-down"
       print "Finished"
     }
   }
