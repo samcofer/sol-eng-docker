@@ -23,3 +23,9 @@ command:
       "success"
     ]
     exit-status: 0
+  "echo 'momo' | kinit bobo@DOCKER-RSTUDIO.COM && ssh -o StrictHostKeyChecking=no bobo@kerberos-ssh-server 'hostname'":
+    title: kerb_ssh_works
+    stdout: [
+      "ssh-server"
+    ]
+    exit-status: 0
