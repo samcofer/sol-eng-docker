@@ -8,7 +8,6 @@ services:
       context: ../cluster
       dockerfile: kerberos-connect/Dockerfile
       args:
-        - CONNECT_BINARY_URL=${CONNECT_BINARY_URL}
         - CONNECT_VERSION=${CONNECT_VERSION}
     ports:
       - "3939"
