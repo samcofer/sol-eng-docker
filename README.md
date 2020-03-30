@@ -4,15 +4,15 @@ This project houses docker infrastructure for quickly setting up, configuring, a
 
 ## Sub-Projects
 
-- [Kerberos](./kerberos.md)
-- [Oauth2 Proxy](./oauth2.md)
-- [General Proxy](./proxy.md)
-- [SAML](./saml.md)
-- [LDAP](./ldap.md)
-- [Kubernetes](./k8s.md)
-- [SSL/TLS/HTTPS](./ssl.md)
+- [Kerberos](./docs/kerberos.md)
+- [Oauth2 Proxy](./docs/oauth2.md)
+- [General Proxy](./docs/proxy.md)
+- [SAML](./docs/saml.md)
+- [LDAP](./docs/ldap.md)
+- [Kubernetes](./docs/k8s.md)
+- [SSL/TLS/HTTPS](./docs/ssl.md)
 - [Floating Licenses](./cluster/float/README.md)
-- [Metrics / Prometheus / Grafana](./metrics.md)
+- [Metrics / Prometheus / Grafana](./docs/metrics.md)
 
 # Getting Started
 
@@ -38,6 +38,11 @@ make proxy-connect-up proxy-saml-up
 ```
 
 # Organization
+
+## [Docs](./docs)
+
+The [`./docs](./docs) directory houses documentation around the various
+options, projects, and examples that exist in this repository.
 
 ## [Docker Compose](./compose)
 
@@ -82,8 +87,7 @@ rebuild it)
 ## Init Systems
 
 There are a slew of them... [S6](todo), [systemctl](todo), [runit](todo),
-systemd (avoid like the plague in Docker), and [dumb-init](todo), just to name
+systemd (avoid like the plague in Docker), [tini](todo) and [dumb-init](todo), just to name
 a few.
 
 Init systems are interesting in docker-land.  Lots more needs to be written about this.
-
