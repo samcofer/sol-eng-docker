@@ -432,25 +432,30 @@ kerb-rsp-down:
 
 
 
-kerb-connect-build: download-connect kerb-connect-build-hide
-kerb-connect-build-hide:
-	NETWORK=${NETWORK} \
-	CONNECT_LICENSE=$(CONNECT_LICENSE) \ 
-	CONNECT_BINARY_URL=${CONNECT_BINARY_URL} \
-	CONNECT_VERSION=$(CONNECT_VERSION) \
-	docker-compose -f compose/kerberos-connect.yml -f compose/make-network.yml build
-
-kerb-connect-up: download-connect kerb-connect-up-hide
-kerb-connect-up-hide:
+kerb-connect-build:
 	NETWORK=${NETWORK} \
 	CONNECT_LICENSE=$(CONNECT_LICENSE) \
-	CONNECT_BINARY_URL=$(CONNECT_BINARY_URL) \
 	CONNECT_VERSION=$(CONNECT_VERSION) \
-	docker-compose -f compose/kerberos-connect.yml -f compose/make-network.yml up -d
+	docker-compose -f compose/kerb-connect.yml -f compose/make-network.yml build
+
+kerb-connect-up:
+	NETWORK=${NETWORK} \
+	CONNECT_LICENSE=$(CONNECT_LICENSE) \
+	CONNECT_VERSION=$(CONNECT_VERSION) \
+	docker-compose -f compose/kerb-connect.yml -f compose/make-network.yml up -d
 
 kerb-connect-down:
 	NETWORK=${NETWORK} \
-	docker-compose -f compose/kerberos-connect.yml -f compose/make-network.yml down
+	docker-compose -f compose/kerb-connect.yml -f compose/make-network.yml down
+
+kerb-connect-test:
+	NETWORK=${NETWORK} \
+	CONNECT_VERSION=$(CONNECT_VERSION) \
+	docker-compose -f compose/kerb-connect.yml -f compose/make-network.yml run sut
+kerb-connect-test-i:
+	NETWORK=${NETWORK} \
+	CONNECT_VERSION=$(CONNECT_VERSION) \
+	docker-compose -f compose/kerb-connect.yml -f compose/make-network.yml run sut bash
 #---------------------------------------------
 # Proxy 
 #---------------------------------------------
