@@ -6,7 +6,11 @@ RUN apt-get update && \
 	apt-get dist-upgrade -y
 
 # kerberos server
-RUN apt-get install -y ntp krb5-user supervisor
+RUN apt-get install -y \
+	ntp \
+	krb5-user \
+	supervisor \
+	curl
 
 COPY krb5.conf /etc/krb5.conf
 

@@ -1,0 +1,12 @@
+version: "2.3"
+services:
+  apache-kerb:
+    hostname: apache-kerb
+    build:
+      context: ../cluster
+      dockerfile: apache-kerb/Dockerfile
+    volumes:
+      - ../cluster/apache-kerb.conf:/usr/local/apache2/conf/httpd.conf
+      #- ../cluster/cgi:/var/www/html/
+    ports:
+      - "80"
