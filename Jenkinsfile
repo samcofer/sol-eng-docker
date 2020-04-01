@@ -12,7 +12,9 @@ ansiColor('xterm') {
       sh "make kerb-rsp-test"
       print "====> Running Kerberos Connect tests"
       sh "make kerb-connect-test"
-      } finally() {
+      } catch(err) {
+        print "${err}"
+      } finally {
         print "====> Cleanup environment"
         sh "make proxy-kerb-down kerb-ssh-down kerb-server-down kerb-rsp-down kerb-connect-down test-env-down"
       }
