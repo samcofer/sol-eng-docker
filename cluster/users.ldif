@@ -81,7 +81,7 @@ objectclass: inetOrgPerson
 objectclass: posixAccount
 objectclass: top
 sn: Golly
-uid: joe
+uid: test\joe
 uidnumber: 1000
 userpassword: {MD5}j/MkifkvM0FmlL6P3C1MIg==
 
