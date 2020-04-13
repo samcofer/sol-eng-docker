@@ -32,15 +32,23 @@ else
     fi
 fi
 
+# Start sssd if it is configured
+if [ -f "/etc/sssd/sssd.conf" ]; then
+  # remove old PID file
+  echo 'Removing old pid file'
+  rm -rf /var/run/sssd.pid
+  echo 'Starting sssd'
+  sssd
+fi
 
-# Start Server Pro
-/usr/lib/rstudio-server/bin/rstudio-launcher > /var/log/rstudio-launcher.log 2>&1 &
-wait-for-it.sh localhost:5559 -t $LAUNCHER_TIMEOUT
+# Start Launcher
+if [ "$RSP_LAUNCHER" == "true" ]; then
+  /usr/lib/rstudio-server/bin/rstudio-launcher > /var/log/rstudio-launcher.log 2>&1 &
+  wait-for-it.sh localhost:5559 -t $RSP_LAUNCHER_TIMEOUT
+fi
 
 # touch log files to initialize them
-su rstudio-server -c 'mkdir -p /var/lib/rstudio-server/monitor/log/'
-touch /var/lib/rstudio-server/monitor/log/rstudio-server.log
-chown rstudio-server:rstudio-server /var/lib/rstudio-server/monitor/log/rstudio-server.log
+su rstudio-server -c 'touch /var/lib/rstudio-server/monitor/log/rstudio-server.log'
 touch /var/log/rstudio-server.log
 
 tail -n 100 -f /var/lib/rstudio-server/monitor/log/*.log /var/lib/rstudio-launcher/*.log /var/lib/rstudio-launcher/Local/*.log /var/log/rstudio-launcher.log /var/log/rstudio-server.log &
