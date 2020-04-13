@@ -82,6 +82,48 @@ Long term: I like the idea of a lighter-weight image, but Ubuntu suffices for no
 - It was important that the keytab was readable by the postgres service (dunce me did not make sure that was possible)
 - Then the big trick is making sure that DNS lookup is happening properly, as well as realm lookup, and the auth user is matching in the database
 
+## Single-Sign-On (SSO)
+
+- Need to set permissions on the service keytab to be readable... [random help](https://users.ece.cmu.edu/~allbery/lambdabot/logs/kerberos/2008-02-17.txt) 
+ > failed to verify krb5 credentials: Permission denied, yet the auth.log shows tickets were granted
+- Need to set default realm for services (i.e. `apache-kerb DOCKER-RSTUDIO.COM`) since we are not using FQDN
+- Need to understand keytabs a bit better...
+    - [generating a keytab](https://docs.tibco.com/pub/spotfire_server/7.6.1/doc/html/tsas_admin_help/GUID-27726F6E-569C-4704-8433-5CCC0232EC79.html)
+    - [helpful post on curl negotiate](https://stackoverflow.com/questions/38509837/when-using-negotiate-with-curl-is-a-keytab-file-required)
+    - [headless keytabs](https://community.hortonworks.com/questions/2435/why-is-kinit-with-a-headless-keytab-failing.html)
+- Your service name _matters a lot!!!_. `Wrong principal name` issues may be related to the service trying to guess what its own name is and that guess conflicting with the client... [Thank you, SO](https://stackoverflow.com/questions/14687245/apache-sends-wrong-server-principal-name-to-kerberos)
+- [Apache `mod_auth_kerb`](http://modauthkerb.sourceforge.net/configure.html) for the win
+- Maybe a way in [nginx](https://stackoverflow.com/questions/37795107/how-to-kerberos-authentication-with-nginx) as well?
+- Adding CGI scripts to apache is pretty cool
+    - Make sure the script itself is executable
+    - [Make sure `cgid_module` is enabled](http://httpd.apache.org/docs/current/howto/cgi.html)
+    - In Kerberos context, you have to be sure that authentication _is_ in fact required (otherwise no Kerberos magic can happen)
+    - [Some example bash scripts](http://www.yolinux.com/TUTORIALS/BashShellCgi.html)... [and a kerberos specific one](http://modauthkerb.sourceforge.net/credential-cache-example.script)
+    - [A general overview](https://www.techrepublic.com/blog/diy-it-guy/diy-enable-cgi-on-your-apache-server/)
+    - The weird thing here is that we either have to request the CGI script directly... or execute it every time..?
+        - Have to figure out how to take the temporary credential cache and get a new one!
+        - Maybe we can tell the browser to cache the request as long as the ticket is valid for? Or something?...
+        - We _do_ have a TGT, so that is good!
+        - [Some thoughts on this process](https://github.com/jcmturner/gokrb5/issues/7)
+        - Basically, this would be much more trivial if I was RStudio... it's hard b/c when the Apache process dies, the cache goes bye-bye
+        - Not to mention the fact that I am going to be on another host... so I may need to SSH onto the RStudio box and issue a ticket?
+        - Not to mention the fact that the ticket issued on RStudio will not be tied to any PAM session or anything, so it will just expire
+        - We are [getting to the heart](https://serverfault.com/questions/422778/how-to-automate-kinit-process-to-obtain-tgt-for-kerberos) of tickets, TGT, and keytabs here, people! 
+    - More on [constrained delegation](https://www.coresecurity.com/blog/kerberos-delegation-spns-and-more)
+
+### Useful `curl` commands
+
+```bash
+# simple kerberos authentication via the browser
+curl -v -i -u : --negotiate http://apache-kerb:80/ 
+
+# to allow delegation (kerberos usage on the server)
+curl --delegation always -v -i -u : --negotiate http://apache-kerb:80/cgi-bin/krb.sh
+```
+
+### TODO
+- TODO - a tinyproxy instance to make browsing easy without weird URL stuff...?
+- TODO - a way to enable `KRB5_TRACE` for apache child processess... need to set ENV vars for child processes
 
 # Research & Links
 

@@ -8,8 +8,8 @@ CONNECT_VERSION=1.7.8-7
 #1.7.0-11
 CONNECT_BINARY_URL=rstudio-connect_${CONNECT_VERSION}_amd64.deb
 
-RSTUDIO_VERSION=daily
-#RSTUDIO_VERSION=1.2.5033-1
+#RSTUDIO_VERSION=daily
+RSTUDIO_VERSION=1.2.5033-1
 #1.3.11234
 #RSTUDIO_VERSION=1.3.322-1
 
@@ -412,37 +412,50 @@ kerb-ssh-down:
 kerb-rsp-build:
 	NETWORK=${NETWORK} \
 	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
-        docker-compose -f compose/kerberos-rstudio.yml -f compose/make-network.yml build
+        docker-compose -f compose/kerb-rsp.yml -f compose/make-network.yml build
 kerb-rsp-up:
 	NETWORK=${NETWORK} \
 	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
-        docker-compose -f compose/kerberos-rstudio.yml -f compose/make-network.yml up -d
+        docker-compose -f compose/kerb-rsp.yml -f compose/make-network.yml up -d
+kerb-rsp-test:
+	NETWORK=${NETWORK} \
+	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
+        docker-compose -f compose/kerb-rsp.yml -f compose/make-network.yml run sut
+kerb-rsp-test-i:
+	NETWORK=${NETWORK} \
+	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
+        docker-compose -f compose/kerb-rsp.yml -f compose/make-network.yml run sut bash
 kerb-rsp-down:
 	NETWORK=${NETWORK} \
 	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
-        docker-compose -f compose/kerberos-rstudio.yml -f compose/make-network.yml down
+        docker-compose -f compose/kerb-rsp.yml -f compose/make-network.yml down
 
 
 
-kerb-connect-build: download-connect kerb-connect-build-hide
-kerb-connect-build-hide:
-	NETWORK=${NETWORK} \
-	CONNECT_LICENSE=$(CONNECT_LICENSE) \ 
-	CONNECT_BINARY_URL=${CONNECT_BINARY_URL} \
-	CONNECT_VERSION=$(CONNECT_VERSION) \
-	docker-compose -f compose/kerberos-connect.yml -f compose/make-network.yml build
-
-kerb-connect-up: download-connect kerb-connect-up-hide
-kerb-connect-up-hide:
+kerb-connect-build:
 	NETWORK=${NETWORK} \
 	CONNECT_LICENSE=$(CONNECT_LICENSE) \
-	CONNECT_BINARY_URL=$(CONNECT_BINARY_URL) \
 	CONNECT_VERSION=$(CONNECT_VERSION) \
-	docker-compose -f compose/kerberos-connect.yml -f compose/make-network.yml up -d
+	docker-compose -f compose/kerb-connect.yml -f compose/make-network.yml build
+
+kerb-connect-up:
+	NETWORK=${NETWORK} \
+	CONNECT_LICENSE=$(CONNECT_LICENSE) \
+	CONNECT_VERSION=$(CONNECT_VERSION) \
+	docker-compose -f compose/kerb-connect.yml -f compose/make-network.yml up -d
 
 kerb-connect-down:
 	NETWORK=${NETWORK} \
-	docker-compose -f compose/kerberos-connect.yml -f compose/make-network.yml down
+	docker-compose -f compose/kerb-connect.yml -f compose/make-network.yml down
+
+kerb-connect-test:
+	NETWORK=${NETWORK} \
+	CONNECT_VERSION=$(CONNECT_VERSION) \
+	docker-compose -f compose/kerb-connect.yml -f compose/make-network.yml run sut
+kerb-connect-test-i:
+	NETWORK=${NETWORK} \
+	CONNECT_VERSION=$(CONNECT_VERSION) \
+	docker-compose -f compose/kerb-connect.yml -f compose/make-network.yml run sut bash
 #---------------------------------------------
 # Proxy 
 #---------------------------------------------
@@ -604,6 +617,18 @@ proxy-saml-restart:
 proxy-saml-down:
 	NETWORK=${NETWORK} \
 	docker-compose -f compose/apache-saml.yml -f compose/make-network.yml down
+
+proxy-kerb-up:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/apache-kerb.yml -f compose/make-network.yml up -d
+
+proxy-kerb-build:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/apache-kerb.yml -f compose/make-network.yml build
+
+proxy-kerb-down:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/apache-kerb.yml -f compose/make-network.yml down
 
 
 #---------------------------------------------

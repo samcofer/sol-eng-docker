@@ -1,0 +1,25 @@
+version: '2.3'
+services:
+
+  kerb-connect:
+    hostname: kerb-connect
+    image: rstudio/sol-eng-connect:kerberos-${CONNECT_VERSION}
+    build:
+      context: ../cluster
+      dockerfile: kerberos-connect/Dockerfile
+      args:
+        - CONNECT_VERSION=${CONNECT_VERSION}
+    ports:
+      - "3939"
+    privileged: true
+    environment:
+      - CONNECT_LICENSE
+
+  sut:
+    image: rstudio/sol-eng-connect:kerberos-${CONNECT_VERSION}
+    privileged: true
+    command: /run_tests.sh
+    entrypoint: []
+    volumes:
+     - "../test/run_tests.sh:/run_tests.sh"
+     - "../test/kerb-connect.yaml:/tmp/goss.yaml"

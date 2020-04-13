@@ -1,0 +1,39 @@
+package:
+  rstudio-server:
+    installed: true
+
+user:
+  bobo:
+    exists: true
+
+file:
+  /usr/lib/rstudio-server:
+    exists: true
+
+command:
+  "echo 'momo' | kinit bobo@DOCKER-RSTUDIO.COM && klist":
+    title: simple_kinit_works
+    stdout: [
+      "Default principal: bobo@DOCKER-RSTUDIO.COM"
+    ]
+    exit-status: 0
+  "su bobo -c 'echo success'":
+    title: su_bobo_works
+    stdout: [
+      "success"
+    ]
+    exit-status: 0
+  "echo 'momo' | kinit bobo@DOCKER-RSTUDIO.COM && ssh -o StrictHostKeyChecking=no bobo@kerberos-ssh-server 'hostname'":
+    title: kerb_ssh_works
+    stdout: [
+      "ssh-server"
+    ]
+    exit-status: 0
+  "echo 'momo' | kinit bobo@DOCKER-RSTUDIO.COM && curl --delegation always -v -i -u : --negotiate http://apache-kerb:80/":
+    title: kerb_curl_works
+    stdout: [
+      "WWW-Authenticate: Negotiate",
+      "HTTP/1.1 200 OK",
+      "It works!"
+    ]
+    exit-status: 0

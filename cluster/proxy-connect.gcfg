@@ -27,3 +27,8 @@ Provider = proxy
 [ProxyAuth]
 UsernameHeader = X-Secret-User-Header
 Logging = true
+
+[RPackageRepository "CRAN"]
+URL = https://demo.rstudiopm.com/cran/__linux__/bionic/latest
+[RPackageRepository "RSPM"]
+URL = https://demo.rstudiopm.com/cran/__linux__/bionic/latest
