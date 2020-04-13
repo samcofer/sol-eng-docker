@@ -15,4 +15,6 @@ COPY ./rstudio-session-sssd /etc/pam.d/rstudio-session
 COPY ./ldap-rsp/docker-entrypoint.sh /docker-entrypoint.sh
 
 # adhoc fixes to make it work...
-RUN chmod 600 /etc/sssd/sssd.conf
+RUN chmod 600 /etc/sssd/sssd.conf && \
+  # so users can create their own home directories
+  chmod 777 /home
