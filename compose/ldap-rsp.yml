@@ -14,7 +14,8 @@ services:
       - "../cluster/ldap-rsp.conf:/etc/rstudio/rserver.conf"
       - "../cluster/rsp-startup.sh:/usr/local/bin/startup.sh"
     environment:
-      - RSP_LICENSE
+      - "RSP_LICENSE"
+      - "RSP_LAUNCHER=true"
     ports:
       - "8787"
       - "443"
