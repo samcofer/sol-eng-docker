@@ -3,9 +3,9 @@ services:
 
   proxy-connect:
     hostname: proxy-connect
-    image: rstudio/sol-eng-connect:${CONNECT_VERSION}
+    image: rstudio/rstudio-connect:${CONNECT_VERSION}
     privileged: true
     volumes:
       - ../cluster/proxy-connect.gcfg:/etc/rstudio-connect/rstudio-connect.gcfg
     environment:
-      - CONNECT_LICENSE
+      - RSC_LICENSE
