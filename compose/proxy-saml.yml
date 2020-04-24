@@ -13,13 +13,13 @@ services:
     volumes:
       - ../cluster/users.php:/var/www/simplesamlphp/config/authsources.php
 
-  apache-saml:
-    hostname: apache-saml
+  proxy-saml:
+    hostname: proxy-saml
     build:
       context: ../cluster
       dockerfile: apache-saml/Dockerfile
     volumes:
-      - ../cluster/apache-saml-rstudio.conf:/usr/local/apache2/conf/httpd.conf
+      - ../cluster/apache-saml-all.conf:/usr/local/apache2/conf/httpd.conf
       - ../cluster/cgi:/var/www/html/
     ports:
       - "80:80"
