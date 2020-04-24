@@ -21,8 +21,7 @@ ViewerKiosk = true
 
 [Python]
 Enabled = true
-Executable = /usr/bin/python
-Executable = /usr/bin/python3
+Executable = /opt/python/3.6.5/bin/python
 
 [Packages]
 ;HTTPProxy = http://proxy-mitm:8080/
@@ -35,3 +34,11 @@ Listen = :3939
 [Authentication]
 ; Specifies the type of user authentication.
 Provider = password
+
+[RPackageRepository "CRAN"]
+;URL = file:///tmp/test
+URL = "https://packagemanager.rstudio.com/cran/__linux__/bionic/latest"
+
+[RPackageRepository "RSPM"]
+;URL = file:///tmp/test
+URL = "https://packagemanager.rstudio.com/cran/__linux__/bionic/latest"
