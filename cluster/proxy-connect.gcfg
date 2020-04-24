@@ -26,6 +26,8 @@ Provider = proxy
 
 [ProxyAuth]
 UsernameHeader = X-Secret-User-Header
+GroupsHeader = X-Groups
+GroupsAutoProvision = true
 Logging = true
 
 [RPackageRepository "CRAN"]
