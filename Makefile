@@ -594,19 +594,19 @@ saml-connect-local-down:
 
 proxy-saml-up:
 	NETWORK=${NETWORK} \
-	docker-compose -f compose/apache-saml.yml -f compose/make-network.yml up -d
+	docker-compose -f compose/proxy-saml.yml -f compose/make-network.yml up -d
 
 proxy-saml-build:
 	NETWORK=${NETWORK} \
-	docker-compose -f compose/apache-saml.yml -f compose/make-network.yml build
+	docker-compose -f compose/proxy-saml.yml -f compose/make-network.yml build
 
 proxy-saml-restart:
 	NETWORK=${NETWORK} \
-	docker-compose -f compose/apache-saml.yml -f compose/make-network.yml restart
+	docker-compose -f compose/proxy-saml.yml -f compose/make-network.yml restart
 
 proxy-saml-down:
 	NETWORK=${NETWORK} \
-	docker-compose -f compose/apache-saml.yml -f compose/make-network.yml down
+	docker-compose -f compose/proxy-saml.yml -f compose/make-network.yml down
 
 proxy-kerb-up:
 	NETWORK=${NETWORK} \
