@@ -8,7 +8,7 @@ services:
       - "3939"
     privileged: true
     environment:
-      - CONNECT_LICENSE
+      - RSC_LICENSE
     volumes:
       - ../cluster/ldap-connect.gcfg:/etc/rstudio-connect/rstudio-connect.gcfg
     depends_on:
