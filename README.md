@@ -1,14 +1,20 @@
-# Auth Docker
+# Solutions Engineering Docker
 
-This project houses docker infrastructure for quickly setting up, configuring, and testing authentication with RStudio Professional Software.
+This project houses docker infrastructure for quickly setting up, configuring,
+and testing customer environments with RStudio Professional Software.
 
 ## Sub-Projects
 
+### Tested
+
 - [Kerberos](./docs/kerberos.md)
-- [Oauth2 Proxy](./docs/oauth2.md)
-- [General Proxy](./docs/proxy.md)
 - [SAML](./docs/saml.md)
 - [LDAP](./docs/ldap.md)
+
+### Untested
+
+- [General Proxy](./docs/proxy.md)
+- [Oauth2 Proxy](./docs/oauth2.md)
 - [Kubernetes](./docs/k8s.md)
 - [SSL/TLS/HTTPS](./docs/ssl.md)
 - [Floating Licenses](./cluster/float/README.md)
@@ -26,11 +32,17 @@ To get started, you will need to install:
 
 Then look to specific sub-project pages (above) for detailed make commands to get things built and started.
 
+Your first step will be:
+```
+make test-env-up
+```
+
 # Examples
 
 A handful of examples that might interest you
 ```
-make ldap-up
+make test-env-up
+make ldap-server-up
 make connect-up
 make rsp-up
 make kerb-up
@@ -65,11 +77,14 @@ build.
 The [`./k8s`](./k8s) directory is where individual kubernetes asset configuration files
 live. These will often build on or from [`./cluster`](./cluster) resources.
 
+**NOTE: These are not well maintained**
+
 # Common Problems
 
 - docker cache outdated: let's say it has been a while and your docker cache
-  needs `apt-get update` to be run in order to install things.  `docker-compose 
-  -f myfile.yml build --no-cache myservice` can get you unstuck! 
+  needs `apt-get update` to be run in order to install things.  `docker-compose
+-f myfile.yml build --no-cache myservice` can get you unstuck if you are
+building images!
 
 # Conventions
 
