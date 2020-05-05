@@ -4,12 +4,12 @@ PWD := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 PROJECT=auth-docker
 NETWORK=${PROJECT}_default
 SCALE=1
-CONNECT_VERSION=1.7.8-7
+CONNECT_VERSION=1.8.2-10
 #1.7.0-11
 CONNECT_BINARY_URL=rstudio-connect_${CONNECT_VERSION}_amd64.deb
 
-#RSTUDIO_VERSION=daily
-RSTUDIO_VERSION=1.2.5033-1
+RSTUDIO_VERSION=daily
+#RSTUDIO_VERSION=1.2.5033-1
 #1.3.11234
 #RSTUDIO_VERSION=1.3.322-1
 
@@ -126,12 +126,10 @@ ssl-proxy-rsp-down:
 #---------------------------------------------
 # Base Products
 #---------------------------------------------
-connect-up: download-connect connect-up-hide
-connect-up-hide:
+connect-up:
 	NETWORK=${NETWORK} \
-	CONNECT_LICENSE=$(CONNECT_LICENSE) \
+	RSC_LICENSE=$(RSC_LICENSE) \
 	CONNECT_VERSION=$(CONNECT_VERSION) \
-	CONNECT_BINARY_URL=${CONNECT_BINARY_URL} \
 	docker-compose -f compose/base-connect.yml -f compose/make-network.yml up -d
 
  #--scale connect=2
@@ -502,19 +500,11 @@ proxy-basic-ssp-ha-down:
 # Proxy Products
 #---------------------------------------------
 
-proxy-connect-up: download-connect proxy-connect-up-hide
-proxy-connect-up-hide:
+proxy-connect-up:
 	NETWORK=${NETWORK} \
-	CONNECT_LICENSE=$(CONNECT_LICENSE) \
+	RSC_LICENSE=$(RSC_LICENSE) \
 	CONNECT_VERSION=$(CONNECT_VERSION) \
-	CONNECT_BINARY_URL=${CONNECT_BINARY_URL} \
 	docker-compose -f compose/proxy-connect.yml -f compose/make-network.yml up -d
-
-proxy-connect-build: download-connect proxy-connect-build-hide
-proxy-connect-build-hide:
-	NETWORK=${NETWORK} \
-	CONNECT_BINARY_URL=${CONNECT_BINARY_URL} \
-	docker-compose -f compose/proxy-connect.yml -f compose/make-network.yml build
 
 proxy-connect-down:
 	NETWORK=${NETWORK} \
@@ -604,19 +594,19 @@ saml-connect-local-down:
 
 proxy-saml-up:
 	NETWORK=${NETWORK} \
-	docker-compose -f compose/apache-saml.yml -f compose/make-network.yml up -d
+	docker-compose -f compose/proxy-saml.yml -f compose/make-network.yml up -d
 
 proxy-saml-build:
 	NETWORK=${NETWORK} \
-	docker-compose -f compose/apache-saml.yml -f compose/make-network.yml build
+	docker-compose -f compose/proxy-saml.yml -f compose/make-network.yml build
 
 proxy-saml-restart:
 	NETWORK=${NETWORK} \
-	docker-compose -f compose/apache-saml.yml -f compose/make-network.yml restart
+	docker-compose -f compose/proxy-saml.yml -f compose/make-network.yml restart
 
 proxy-saml-down:
 	NETWORK=${NETWORK} \
-	docker-compose -f compose/apache-saml.yml -f compose/make-network.yml down
+	docker-compose -f compose/proxy-saml.yml -f compose/make-network.yml down
 
 proxy-kerb-up:
 	NETWORK=${NETWORK} \

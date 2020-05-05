@@ -214,3 +214,10 @@ sn: Nameo
 uid: bingo
 uidnumber: 1008
 userpassword: {MD5}CY9rzUYh03PK3k6DJie09g==
+
+# groupOfNames
+dn: cn=Example Group,dc=example,dc=org
+cn: Example Group
+member: cn=bingo,dc=support,dc=example,dc=org
+member: cn=test, dc=support,dc=example,dc=org
+objectClass: groupOfNames

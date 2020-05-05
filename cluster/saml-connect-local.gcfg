@@ -17,5 +17,13 @@ IdPMetaData = http://saml-idp:8080/simplesaml/saml2/idp/metadata.php
 UsernameAttribute = user
 EmailAttribute = email
 UniqueIdAttribute = uid
+GroupsAttribute = eduPersonAffiliation
 NameIdFormat = transient
 SSOInitiated = IdPAndSP
+GroupsAutoProvision = true
+
+[RPackageRepository "CRAN"]
+URL = "https://packagemanager.rstudio.com/cran/__linux__/bionic/latest"
+
+[RPackageRepository "RSPM"]
+URL = "https://packagemanager.rstudio.com/cran/__linux__/bionic/latest"

@@ -25,6 +25,24 @@ To do this, you need to trust the Certificate Authority! Do so by importing
 certificates, or by specifying it with something like `curl --cacert
 auth-docker.pem https://myservice`
 
+# Get Other Services / Containers to Trust the CA
+
+- In Ubuntu (Bionic):
+```
+# BE CAREFUL WHAT openssl YOU ARE USING
+which openssl
+echo $PATH
+
+# EDIT path if you are not using something like /usr/bin/openssl
+
+# after mounting the .pem into the container
+cp /ssl/auth-docker.pem /usr/local/share/ca-certificates/auth-docker.crt
+
+dpkg-reconfigure ca-certificates
+# or
+update-ca-certificates
+```
+
 ## Mac
 
 ### Chrome

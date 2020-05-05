@@ -14,3 +14,9 @@ services:
       - ../cluster/secure-proxy-user-header:/etc/rstudio/secure-proxy-user-header
       - ../cluster/proxy-rsp-launcher.conf:/etc/rstudio/rserver.conf
       - ../cluster/launcher.conf:/etc/rstudio/launcher.conf
+      - ../cluster/rstudio-session:/etc/pam.d/rstudio-session
+      - ../cluster/rstudio-session:/etc/pam.d/rstudio
+      - ../cluster/pam-test.sh:/etc/pam_scripts/test.sh
+      - ../cluster/ssl/cert_get.sh:/cert_get.sh
+      - ../cluster/ssl/cert_config.json:/cert_config.json
+      - ./testdata:/ssl/

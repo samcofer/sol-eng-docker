@@ -1,6 +1,6 @@
 {
 	"request": {
-		"hosts": ["localhost","localhost"],
+		"hosts": ["localhost","localhost","127.0.0.1"],
 		"names": [
 			{
 				"C": "US",
