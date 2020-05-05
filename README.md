@@ -99,6 +99,14 @@ rebuild it)
 - `make some-key-up` targets compose file `compose/some-key.yml` and executes `up -d`
 - `make some-key-down` targets compose file `compose/some-key.yml` and executes `down`
 
+# Testing
+
+There are several `make` targets that are tested in CI to prevent backwards
+incompatibilities. To see which of these are tested, you should have a look at
+the [`Jenkinsfile`](./Jenkinsfile).
+
+# Reference
+
 ## Init Systems
 
 There are a slew of them... [S6](todo), [systemctl](todo), [runit](todo),
