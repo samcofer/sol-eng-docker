@@ -1,0 +1,29 @@
+; RStudio Connect configuration file
+
+[Server]
+SenderEmail = test@example.com
+#Address = https://ssl-proxy-saml/rsconnect/
+Address = http://localhost:3939/
+	
+[Http]
+Listen = :3939
+
+[Authentication]
+Provider = saml
+
+[SAML]
+Logging = true
+IdPMetaDataPath = /etc/rstudio-connect/keycloak-metadata.xml
+UsernameAttribute = user
+EmailAttribute = email
+UniqueIdAttribute = uid
+GroupsAttribute = eduPersonAffiliation
+;NameIdFormat = transient
+SSOInitiated = IdPAndSP
+GroupsAutoProvision = true
+
+[RPackageRepository "CRAN"]
+URL = "https://packagemanager.rstudio.com/cran/__linux__/bionic/latest"
+
+[RPackageRepository "RSPM"]
+URL = "https://packagemanager.rstudio.com/cran/__linux__/bionic/latest"
