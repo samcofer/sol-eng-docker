@@ -14,13 +14,13 @@ Provider = saml
 [SAML]
 Logging = true
 IdPMetaDataPath = /etc/rstudio-connect/keycloak-metadata.xml
-UsernameAttribute = user
+UsernameAttribute = NameID
 EmailAttribute = email
-UniqueIdAttribute = uid
-GroupsAttribute = eduPersonAffiliation
+;UniqueIdAttribute = uid
+;GroupsAttribute = eduPersonAffiliation
 ;NameIdFormat = transient
 SSOInitiated = IdPAndSP
-GroupsAutoProvision = true
+;GroupsAutoProvision = true
 
 [RPackageRepository "CRAN"]
 URL = "https://packagemanager.rstudio.com/cran/__linux__/bionic/latest"
