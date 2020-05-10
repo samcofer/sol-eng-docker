@@ -574,6 +574,14 @@ ssl-proxy-saml-down:
 	NETWORK=${NETWORK} \
 	docker-compose -f compose/ssl-proxy-saml.yml -f compose/make-network.yml down
 
+keycloak-up:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/keycloak.yml -f compose/make-network.yml up -d
+
+keycloak-down:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/keycloak.yml -f compose/make-network.yml down
+
 saml-idp-up:
 	NETWORK=${NETWORK} \
 	docker-compose -f compose/saml-idp.yml -f compose/make-network.yml up -d
@@ -591,6 +599,16 @@ saml-connect-local-up:
 saml-connect-local-down:
 	NETWORK=${NETWORK} \
 	docker-compose -f compose/saml-connect-local.yml -f compose/make-network.yml down
+
+saml-connect-keycloak-up:
+	NETWORK=${NETWORK} \
+	RSC_LICENSE=$(RSC_LICENSE) \
+	CONNECT_VERSION=$(CONNECT_VERSION) \
+	docker-compose -f compose/saml-connect-keycloak.yml -f compose/make-network.yml up -d
+
+saml-connect-keycloak-down:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/saml-connect-keycloak.yml -f compose/make-network.yml down
 
 proxy-saml-up:
 	NETWORK=${NETWORK} \
