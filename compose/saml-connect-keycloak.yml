@@ -1,0 +1,14 @@
+version: '2.3'
+services:
+
+  saml-connect-keycloak:
+    hostname: saml-connect-keycloak
+    image: rstudio/rstudio-connect:${CONNECT_VERSION}
+    ports:
+      - "3939:3939"
+    privileged: true
+    environment:
+      - RSC_LICENSE
+    volumes:
+      - ../cluster/saml-connect-keycloak.gcfg:/etc/rstudio-connect/rstudio-connect.gcfg
+      - ../cluster/saml-connect-keycloak-metadata.xml:/etc/rstudio-connect/keycloak-metadata.xml
