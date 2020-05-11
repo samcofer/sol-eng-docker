@@ -26,25 +26,25 @@ ldap-all-down: launcher-ldap-down rsp-ldap-down \
 	nfs-down
 
 setup:
-	./k8s/setup.sh
+	./setup.sh
 
 #helpers:
-#	source ./k8s/helpers.sh
+#	source ./helpers.sh
 
 nfs-up:
-	kubectl --namespace=rstudio apply -f ./k8s/nfs.yml
+	kubectl --namespace=rstudio apply -f ./nfs.yml
 nfs-down:
-	kubectl --namespace=rstudio delete --ignore-not-found=true -f ./k8s/nfs.yml
+	kubectl --namespace=rstudio delete --ignore-not-found=true -f ./nfs.yml
 
 nfs-ip-fix:
-	./k8s/ip_hack.sh
+	./ip_hack.sh
 
 nfs-pv-up:
-	echo 'be sure the IP is set properly in ./k8s/pv.yml !!' && \
+	echo 'be sure the IP is set properly in ./pv.yml !!' && \
 	echo 'you can get it with `kubectl --namespace=rstudio describe service nfs01`' && \
-	kubectl --namespace=rstudio apply -f ./k8s/pv.yml
+	kubectl --namespace=rstudio apply -f ./pv.yml
 nfs-pv-down:
-	kubectl --namespace=rstudio delete --ignore-not-found=true -f ./k8s/pv.yml
+	kubectl --namespace=rstudio delete --ignore-not-found=true -f ./pv.yml
 
 
 nfs-launcher-mounts:
@@ -82,36 +82,36 @@ launcher-conf-down:
 	kubectl delete configmap --namespace=rstudio launcher-conf
 
 secret-rsp:
-	kubectl --namespace=rstudio create secret generic license --from-file=./k8s/rsp
+	kubectl --namespace=rstudio create secret generic license --from-file=./rsp
 
 secret-rsp-down:
 	kubectl --namespace=rstudio delete --ignore-not-found=true secret license
 
 ldap-up:
-	kubectl --namespace=rstudio apply -f ./k8s/ldap.yml
+	kubectl --namespace=rstudio apply -f ./ldap.yml
 ldap-down:
-	kubectl --namespace=rstudio delete --ignore-not-found=true -f ./k8s/ldap.yml
+	kubectl --namespace=rstudio delete --ignore-not-found=true -f ./ldap.yml
 
 launcher-up:
 	echo 'be sure the IP is set properly in ./cluster/launcher-rsp/launcher-mounts!!' && \
 	echo 'you can get it with `kubectl --namespace=rstudio describe service nfs01`' && \
-	kubectl --namespace=rstudio apply -f ./k8s/launcher.yml
+	kubectl --namespace=rstudio apply -f ./launcher.yml
 launcher-down:
-	kubectl --namespace=rstudio delete --ignore-not-found=true -f ./k8s/launcher.yml
+	kubectl --namespace=rstudio delete --ignore-not-found=true -f ./launcher.yml
 
 launcher-ldap-up:
 	echo 'be sure the IP is set properly in ./cluster/launcher-rsp/launcher-mounts!!' && \
 	echo 'you can get it with `kubectl --namespace=rstudio describe service nfs01`' && \
-	kubectl --namespace=rstudio apply -f ./k8s/launcher-ldap.yml
+	kubectl --namespace=rstudio apply -f ./launcher-ldap.yml
 launcher-ldap-down:
-	kubectl --namespace=rstudio delete --ignore-not-found=true -f ./k8s/launcher-ldap.yml
+	kubectl --namespace=rstudio delete --ignore-not-found=true -f ./launcher-ldap.yml
 
 rsp-up:
-	kubectl --namespace=rstudio apply -f ./k8s/rsp.yml
+	kubectl --namespace=rstudio apply -f ./rsp.yml
 rsp-down:
-	kubectl --namespace=rstudio delete --ignore-not-found=true -f ./k8s/rsp.yml
+	kubectl --namespace=rstudio delete --ignore-not-found=true -f ./rsp.yml
 
 rsp-ldap-up:
-	kubectl --namespace=rstudio apply -f ./k8s/rsp-ldap.yml
+	kubectl --namespace=rstudio apply -f ./rsp-ldap.yml
 rsp-ldap-down:
-	kubectl --namespace=rstudio delete --ignore-not-found=true -f ./k8s/rsp-ldap.yml
+	kubectl --namespace=rstudio delete --ignore-not-found=true -f ./rsp-ldap.yml
