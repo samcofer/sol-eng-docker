@@ -22,6 +22,13 @@ and testing customer environments with RStudio Professional Software.
 
 # Getting Started
 
+First you need a license! Mosey on over to `#support` and ask for a dev license
+key for the product you are interested in testing against.  You need to be sure
+that the license key will run in a hypervisor (i.e. Docker).
+
+Then export the variable as `RSC_LICENSE`, `RSP_LICENSE`, or `RSPM_LICENSE`, as
+the case may be.
+
 There are several users scripted into the systems at the outset.  These users
 are in the [users](./cluster/users) file. They are `user pass` combinations.
 
@@ -47,6 +54,7 @@ make connect-up
 make rsp-up
 make kerb-up
 make proxy-connect-up proxy-saml-up
+make ldap-connect-up
 ```
 
 # Organization
