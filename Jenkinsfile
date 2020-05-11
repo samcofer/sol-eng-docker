@@ -91,6 +91,28 @@ ansiColor('xterm') {
         //======================= END: Proxy tests ================================
         print "Finished"
       }
+    },
+    'alternatives': {
+      node('docker') {
+        checkout scm
+        //======================= BEGIN: Alternative tests ================================
+        print "==> BEGIN: Alternative tests"
+        try {
+        print "====> Building environment"
+        sh "make test-env-up"
+        sh "make ssl-up mail-up"
+        sh "sleep 10"
+        } catch(err) {
+          print "${err}"
+        } finally {
+          print "====> Cleanup environment"
+          sh "make mail-down ssl-down"
+          sh "make test-env-down"
+        }
+        print "==> END: Alternative tests"
+        //======================= END: Alternative tests ================================
+        print "Finished"
+      }
     }
   }
 }
