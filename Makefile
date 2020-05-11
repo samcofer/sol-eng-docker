@@ -1,7 +1,7 @@
 #!make
 PWD := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 
-PROJECT=auth-docker
+PROJECT=sol-eng-docker
 NETWORK=${PROJECT}_default
 SCALE=1
 CONNECT_VERSION=1.8.2-10
