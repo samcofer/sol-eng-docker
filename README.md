@@ -22,6 +22,13 @@ and testing customer environments with RStudio Professional Software.
 
 # Getting Started
 
+First you need a license! Mosey on over to `#support` and ask for a dev license
+key for the product you are interested in testing against.  You need to be sure
+that the license key will run in a hypervisor (i.e. Docker).
+
+Then export the variable as `RSC_LICENSE`, `RSP_LICENSE`, or `RSPM_LICENSE`, as
+the case may be.
+
 There are several users scripted into the systems at the outset.  These users
 are in the [users](./cluster/users) file. They are `user pass` combinations.
 
@@ -29,6 +36,7 @@ To get started, you will need to install:
  - `make`
  - `docker`
  - `docker-compose`
+ - `bash`
 
 Then look to specific sub-project pages (above) for detailed make commands to get things built and started.
 
@@ -36,6 +44,10 @@ Your first step will be:
 ```
 make test-env-up
 ```
+
+NOTE: If you are using Windows, we recommend starting a [git
+bash](https://gitforwindows.org/) terminal so you can use the numerous `bash`
+conventions that we employ
 
 # Examples
 
@@ -47,6 +59,7 @@ make connect-up
 make rsp-up
 make kerb-up
 make proxy-connect-up proxy-saml-up
+make ldap-connect-up
 ```
 
 # Organization
@@ -81,6 +94,11 @@ live. These will often build on or from [`./cluster`](./cluster) resources.
 
 # Common Problems
 
+- The `docker network` does not exist yet
+    - Run `make test-env-up` to resolve this issue
+```
+ERROR: Network sol-eng-docker_default declared as external, but could not be found. Please create the network manually using `docker network create sol-eng-docker_default` and try again.
+```
 - docker cache outdated: let's say it has been a while and your docker cache
   needs `apt-get update` to be run in order to install things.  `docker-compose
 -f myfile.yml build --no-cache myservice` can get you unstuck if you are
