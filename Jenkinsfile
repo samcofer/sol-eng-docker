@@ -78,13 +78,13 @@ ansiColor('xterm') {
         try {
         print "====> Building environment"
         sh "make test-env-up"
-        sh "make proxy-saml-up proxy-basic-up"
+        sh "make proxy-saml-up proxy-basic-up proxy-mitm-up"
         sh "sleep 10"
         } catch(err) {
           print "${err}"
         } finally {
           print "====> Cleanup environment"
-          sh "make proxy-basic-down proxy-saml-down"
+          sh "make proxy-mitm-down proxy-basic-down proxy-saml-down"
           sh "make test-env-down"
         }
         print "==> END: Proxy tests"
