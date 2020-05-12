@@ -36,6 +36,7 @@ To get started, you will need to install:
  - `make`
  - `docker`
  - `docker-compose`
+ - `bash`
 
 Then look to specific sub-project pages (above) for detailed make commands to get things built and started.
 
@@ -43,6 +44,10 @@ Your first step will be:
 ```
 make test-env-up
 ```
+
+NOTE: If you are using Windows, we recommend starting a [git
+bash](https://gitforwindows.org/) terminal so you can use the numerous `bash`
+conventions that we employ
 
 # Examples
 
@@ -89,6 +94,11 @@ live. These will often build on or from [`./cluster`](./cluster) resources.
 
 # Common Problems
 
+- The `docker network` does not exist yet
+    - Run `make test-env-up` to resolve this issue
+```
+ERROR: Network sol-eng-docker_default declared as external, but could not be found. Please create the network manually using `docker network create sol-eng-docker_default` and try again.
+```
 - docker cache outdated: let's say it has been a while and your docker cache
   needs `apt-get update` to be run in order to install things.  `docker-compose
 -f myfile.yml build --no-cache myservice` can get you unstuck if you are
