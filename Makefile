@@ -266,6 +266,15 @@ float-ha-down:
 	NETWORK=${NETWORK} \
 	docker-compose -f compose/float-ha.yml -f compose/make-network.yml down 
 
+float-connect-up:
+	NETWORK=${NETWORK} \
+	CONNECT_VERSION=$(CONNECT_VERSION) \
+	docker-compose -f compose/float-connect.yml -f compose/make-network.yml up -d
+
+float-connect-down:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/float-connect.yml -f compose/make-network.yml down
+
 #---------------------------------------------
 # Kerberos
 #---------------------------------------------
