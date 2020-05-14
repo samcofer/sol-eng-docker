@@ -1,3 +1,5 @@
+# NOTE: Must set license key secret below
+# OPTIONAL: persistent storage. uncomment sections below
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -9,6 +11,8 @@ data:
     [Server]
     ; must match persistent storage location
     DataDir = /var/lib/rstudio-connect
+
+    ; must be set to add users
     Address =
     
     [HTTP]
@@ -35,19 +39,19 @@ stringData:
   rstudio-connect: my-license-key
 ---
 # optional - for persistent storage if your cluster supports it
-kind: PersistentVolumeClaim
-apiVersion: v1
-metadata:
-  name: persistent-storage-connect
-  namespace: default
-spec:
-  accessModes:
-    - ReadWriteOnce
-  #volumeMode: Block
-  #storageClassName: gp2
-  resources:
-    requests:
-      storage: 5Gi
+# kind: PersistentVolumeClaim
+# apiVersion: v1
+# metadata:
+#   name: persistent-storage-connect
+#   namespace: default
+# spec:
+#   accessModes:
+#     - ReadWriteOnce
+#   #volumeMode: Block
+#   #storageClassName: gp2
+#   resources:
+#     requests:
+#       storage: 5Gi
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -84,8 +88,9 @@ spec:
           - name: connect-config
             mountPath: "/etc/rstudio-connect/rstudio-connect.gcfg"
             subPath: "rstudio-connect.gcfg"
-          - name: connect-data
-            mountPath: "/var/lib/rstudio-connect"
+          # optional - for persistent storage if your cluster supports it
+          # - name: connect-data
+          #   mountPath: "/var/lib/rstudio-connect"
       volumes:
       - name: connect-config
         configMap:
@@ -93,9 +98,10 @@ spec:
           items:
           - key: rstudio-connect.gcfg
             path: "rstudio-connect.gcfg"
-      - name: connect-data
-        persistentVolumeClaim:
-          claimName: persistent-storage-connect
+      # optional - for persistent storage if your cluster supports it
+      # - name: connect-data
+      #   persistentVolumeClaim:
+      #     claimName: persistent-storage-connect
 ---
 apiVersion: v1
 kind: Service
