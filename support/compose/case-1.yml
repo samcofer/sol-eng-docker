@@ -1,6 +1,6 @@
 version: '2.3'
 services:
-  base-rsp:
+  case-1-rsp:
     image: rstudio/rstudio-server-pro:${RSTUDIO_VERSION}
     privileged: true
     environment:
