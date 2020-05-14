@@ -8,5 +8,5 @@ services:
     ports:
       - "8787"
     volumes:
-      - ./rsp-startup.sh:/usr/local/bin/startup.sh
+      - ../config/case-1.sh:/usr/local/bin/startup.sh
  
