@@ -41,6 +41,12 @@ if [ -f "/etc/sssd/sssd.conf" ]; then
   sssd
 fi
 
+# Break all the things
+chown -R rstudio-server:rstudio-server /opt/R/3.6.3/lib/R/library
+chown -R rstudio-server:rstudio-server /opt/R/3.6.3/lib/R/etc
+chmod 770 /opt/R/3.6.3/lib/R/library
+chmod 770 /opt/R/3.6.3/lib/R/etc
+
 # Start Launcher
 if [ "$RSP_LAUNCHER" == "true" ]; then
   /usr/lib/rstudio-server/bin/rstudio-launcher > /var/log/rstudio-launcher.log 2>&1 &
