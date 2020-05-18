@@ -1,6 +1,8 @@
 # Kerberos on Docker
 
-For the purposes of internal testing, this repo houses Kerberos running in a docker network orchestrated by `docker-compose.yml`.  Some simple users/passwords are included out of the box:
+For the purposes of internal testing, this repo houses Kerberos running in a
+docker network orchestrated by `docker-compose.yml`.  Some simple
+users/passwords are included out of the box:
 
 On Kerberos (which runs on k-server)
 
@@ -9,12 +11,18 @@ On Kerberos (which runs on k-server)
 |n/a   |pass      |master|
 |ubuntu|ubuntu    |admin |
 |bobo  |momo      |user  |
+|test  |test      |user  |
+|julie |julie     |user  |
+|joe   |joe       |user  |
 
 On simple-client:
 
-|user | password  |
-|-----|-----------|
-|bobo |momo       |
+|user  | password  |
+|------|-----------|
+|bobo  |momo       |
+|test  |test       |
+|julie |julie      |
+|joe   |joe        |
 
 This user can be tested with:
 ```bash
@@ -23,31 +31,50 @@ kinit bobo
 klist
 ```
 
-**NOTE:** All users in [the users file](cluster/users) will be automatically created throughout the system (in Kerberos and locally on each individual container).  Thank you, `awk`!!
+**NOTE:** All users in [the users file](cluster/users) will be automatically
+created throughout the system (in Kerberos and locally on each individual
+container).  Thank you, `awk`!!
 
 # Get Started
 
 We have attempted to make this project somewhat modular.  To test Kerberos with SSH, you can execute something like:
 
 ```bash
-make network-up kerb-server-up kerb-ssh-up
+make kerb-server-up kerb-ssh-up
 ```
 
-Then connect to the running `k-ssh-server` and `k-ssh-client` containers with `docker exec -it <container name> bash`.  Consult the respective `README.md` files for more specific information.
+Then connect to the running `k-ssh-server` and `k-ssh-client` containers with
+`docker exec -it <container name> bash`.  Consult the respective `README.md`
+files for more specific information.
 
 On the other hand, if you want to test with RStudio:
 
 ```bash
-make network-up kerb-server-up kerb-ssh-up kerb-rsp-up
+make kerb-rsp-up
 ```
 
-The license for RStudio Server Pro should be in an environment variable `RSP_LICENSE`.  This will get read by the build process and passed along / activated by the container. Then get things operational per the respective `README.md` files, log into RStudio Server Pro, and ssh to `k-ssh-server`. Blam!  No authentication question. Yep. Thank you, Kerberos.
+The license for RStudio Server Pro should be in an environment variable
+`RSP_LICENSE`.  This will get read by the build process and passed along /
+activated by the container. Then get things operational per the respective
+`README.md` files, log into RStudio Server Pro, and ssh to `k-ssh-server`.
+Blam!  No authentication question. Yep. Thank you, Kerberos.
 
-There is even a kerberized Connect instance. To authenticate to the only available service (SSH), you will need a crafty Shiny app like [this one](todo) that gives you a shell. Again, only do-able thanks to Kerberos!
+There is even a kerberized Connect instance. To authenticate to the only
+available service (SSH), you will need a crafty Shiny app like [this
+one](https://github.com/colearendt/shiny-shell) that gives you a shell. Again,
+only do-able thanks to Kerberos!
 
 ```bash
-make network-up kerb-server-up kerb-ssh-up kerb-connect-up
+make kerb-connect-up
 ```
+
+An **advanced** setup using a Kerberos authentication proxy:
+
+```bash
+make proxy-connect-up proxy-kerb-up
+```
+
+Then try to publish using Kerberos authentication from RSP!
 
 # Development Process
 In short... we outline the painful development process that we went through below.
