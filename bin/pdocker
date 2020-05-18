@@ -3,6 +3,7 @@
 import subprocess
 import re
 import argparse
+import itertools
 
 
 def run_docker_command(args):
@@ -11,25 +12,30 @@ def run_docker_command(args):
 
 def parse_port(text, container):
   # naively grab first
-  docker_line = re.findall(r'^.*' + container + r'.*$', text, re.MULTILINE)
-  if len(docker_line) == 0:
+  docker_lines = re.findall(r'^.*' + container + r'.*$', text, re.MULTILINE)
+  if len(docker_lines) == 0:
     print('No such container found')
     return
 
-  container_name = re.findall(r'\s([\w\d\-\_]*)$', docker_line[0])[0]
-  port_info = re.findall(r'\s([\w\d\-\>\.\:]+/tcp)\s', docker_line[0])[0]
+  print()
+  for inst in docker_lines:
+    container_name = re.findall(r'\s([\w\d\-\_]*)$', inst)[0]
+    port_info = re.findall(r'\s([\w\d\-\>\.\:]+/tcp)[\s,]', inst)
 
-  # is there a port exposed?
-  port_map = re.findall(r'->', port_info)
+    # is there a port exposed?
+    port_maps = [ re.search(r'->', x) for x in port_info ]
 
-  if port_map:
-    # extract the exposed port
-    exposed_port = re.findall(r'^[\w\d\.]*\:*(\d+)->', port_info)[0]
+    if any(port_maps):
+      subset_ports = list(itertools.compress(port_info, port_maps))
 
-    # print the location
-    print()
-    print(container_name + ': \t\thttp://localhost:' + exposed_port)
-    print()
+      # extract the exposed port(s)
+      exposed_ports = [re.findall(r'^[\w\d\.]*\:*(\d+)->(\d+)', p)[0] for p in subset_ports] 
+
+      # print the location
+      for ep in exposed_ports:
+        print(container_name + ': \t' + ep[1] + '\t->\thttp://localhost:' + ep[0])
+
+  print()
 
 
 if __name__ == "__main__":
