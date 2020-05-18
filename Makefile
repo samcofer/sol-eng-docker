@@ -395,7 +395,8 @@ proxy-connect-up:
 	NETWORK=${NETWORK} \
 	RSC_LICENSE=$(RSC_LICENSE) \
 	CONNECT_VERSION=$(CONNECT_VERSION) \
-	docker-compose -f compose/proxy-connect.yml -f compose/make-network.yml up -d
+	docker-compose -f compose/proxy-connect.yml -f compose/make-network.yml up -d && \
+	./bin/pdocker ps proxy-connect
 
 proxy-connect-down:
 	NETWORK=${NETWORK} \
@@ -501,7 +502,8 @@ proxy-saml-down:
 
 proxy-kerb-up:
 	NETWORK=${NETWORK} \
-	docker-compose -f compose/proxy-kerb.yml -f compose/make-network.yml up -d
+	docker-compose -f compose/proxy-kerb.yml -f compose/make-network.yml up -d && \
+	./bin/pdocker ps proxy-kerb
 
 proxy-kerb-build:
 	NETWORK=${NETWORK} \
