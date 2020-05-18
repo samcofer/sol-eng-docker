@@ -18,4 +18,3 @@ services:
       - "RSP_LAUNCHER=true"
     ports:
       - "8787"
-      - "443"

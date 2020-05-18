@@ -1,8 +1,8 @@
 version: '2.3'
 services:
 
-  saml-connect-local:
-    hostname: saml-connect-local
+  saml-connect:
+    hostname: saml-connect
     image: rstudio/rstudio-connect:${CONNECT_VERSION}
     ports:
       - "3939:3939"
@@ -10,4 +10,4 @@ services:
     environment:
       - RSC_LICENSE
     volumes:
-      - ../cluster/saml-connect-local.gcfg:/etc/rstudio-connect/rstudio-connect.gcfg
+      - ../cluster/saml-connect.gcfg:/etc/rstudio-connect/rstudio-connect.gcfg

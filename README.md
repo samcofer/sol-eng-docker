@@ -37,6 +37,7 @@ To get started, you will need to install:
  - `docker`
  - `docker-compose`
  - `bash`
+ - `python3` (on your PATH)
 
 Then look to specific sub-project pages (above) for detailed make commands to get things built and started.
 
