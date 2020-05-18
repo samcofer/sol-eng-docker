@@ -319,7 +319,9 @@ kerb-rsp-down:
 	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
         docker-compose -f compose/kerb-rsp.yml -f compose/make-network.yml down
 
-
+kerb-proxy-up: proxy-kerb-up
+kerb-proxy-down: proxy-kerb-down
+kerb-proxy-build: proxy-kerb-build
 
 kerb-connect-build:
 	NETWORK=${NETWORK} \
