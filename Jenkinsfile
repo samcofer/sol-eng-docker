@@ -9,6 +9,7 @@ ansiColor('xterm') {
         print "====> Building environment"
         sh "make test-env-up"
         sh "make kerb-server-up kerb-ssh-up proxy-kerb-up kerb-rsp-build kerb-connect-build"
+        sh "make proxy-connect-up"
         sh "sleep 10"
         print "====> Running Kerberos RStudio tests"
         sh "make kerb-rsp-test"
@@ -18,6 +19,7 @@ ansiColor('xterm') {
           print "${err}"
         } finally {
           print "====> Cleanup environment"
+          sh "make proxy-connect-down"
           sh "make proxy-kerb-down kerb-ssh-down kerb-server-down kerb-rsp-down kerb-connect-down"
           sh "make test-env-down"
         }
@@ -35,11 +37,13 @@ ansiColor('xterm') {
         print "====> Building environment"
         sh "make test-env-up"
         sh "make ldap-server-up ldap-rsp-build"
+        sh "make ldap-connect-up ldap-rsp-up"
         sh "sleep 10"
         } catch(err) {
           print "${err}"
         } finally {
           print "====> Cleanup environment"
+          sh "make ldap-rsp-down ldap-connect-down"
           sh "make ldap-server-down ldap-rsp-down"
           sh "make test-env-down"
         }
@@ -57,11 +61,13 @@ ansiColor('xterm') {
         print "====> Building environment"
         sh "make test-env-up"
         sh "make saml-idp-up"
+        sh "make saml-connect-up"
         sh "sleep 10"
         } catch(err) {
           print "${err}"
         } finally {
           print "====> Cleanup environment"
+          sh "make saml-connect-down"
           sh "make saml-idp-down"
           sh "make test-env-down"
         }
@@ -79,11 +85,13 @@ ansiColor('xterm') {
         print "====> Building environment"
         sh "make test-env-up"
         sh "make proxy-saml-up proxy-basic-up proxy-mitm-up"
+        sh "make proxy-connect-up proxy-rsp-up"
         sh "sleep 10"
         } catch(err) {
           print "${err}"
         } finally {
           print "====> Cleanup environment"
+          sh "make proxy-rsp-down proxy-connect-down"
           sh "make proxy-mitm-down proxy-basic-down proxy-saml-down"
           sh "make test-env-down"
         }
