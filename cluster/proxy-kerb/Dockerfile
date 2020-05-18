@@ -18,6 +18,7 @@ COPY krb5.conf /etc/krb5.conf
 
 COPY ./proxy-kerb.conf /usr/local/apache2/conf/httpd.conf
 COPY ./proxy-kerb/cgi_krb.sh /usr/local/apache2/cgi-bin/krb.sh
+COPY ./proxy-kerb/index.html /usr/local/apache2/htdocs/index.html
 
 # make directories
 RUN chmod -R 644 /etc/krb* && \
