@@ -5,6 +5,8 @@ services:
     hostname: proxy-connect
     image: rstudio/rstudio-connect:${CONNECT_VERSION}
     privileged: true
+    ports:
+      - "3939"
     volumes:
       - ../cluster/proxy-connect.gcfg:/etc/rstudio-connect/rstudio-connect.gcfg
     environment:
