@@ -1,39 +1,7 @@
 # Kerberos on Docker
 
 For the purposes of internal testing, this repo houses Kerberos running in a
-docker network orchestrated by `docker-compose.yml`.  Some simple
-users/passwords are included out of the box:
-
-On Kerberos (which runs on k-server)
-
-| user | password | role |
-|------|----------|------|
-|n/a   |pass      |master|
-|ubuntu|ubuntu    |admin |
-|bobo  |momo      |user  |
-|test  |test      |user  |
-|julie |julie     |user  |
-|joe   |joe       |user  |
-
-On simple-client:
-
-|user  | password  |
-|------|-----------|
-|bobo  |momo       |
-|test  |test       |
-|julie |julie      |
-|joe   |joe        |
-
-This user can be tested with:
-```bash
-kinit bobo
-<enter password>
-klist
-```
-
-**NOTE:** All users in [the users file](cluster/users) will be automatically
-created throughout the system (in Kerberos and locally on each individual
-container).  Thank you, `awk`!!
+docker network orchestrated by `docker-compose.yml`.  
 
 # Get Started
 
@@ -75,6 +43,76 @@ make proxy-connect-up proxy-kerb-up
 ```
 
 Then try to publish using Kerberos authentication from RSP!
+
+
+## Credentials
+Some simple users/passwords are included out of the box:
+
+On Kerberos (which runs on k-server)
+
+| user | password | role |
+|------|----------|------|
+|n/a   |pass      |master|
+|ubuntu|ubuntu    |admin |
+|bobo  |momo      |user  |
+|test  |test      |user  |
+|julie |julie     |user  |
+|joe   |joe       |user  |
+
+On simple-client:
+
+|user  | password  |
+|------|-----------|
+|bobo  |momo       |
+|test  |test       |
+|julie |julie      |
+|joe   |joe        |
+
+**NOTE:** All users in [the users file](cluster/users) will be automatically
+created throughout the system (in Kerberos and locally on each individual
+container).  Thank you, `awk`!!
+
+## Kerberos Specific Examples
+
+### Simple `kinit`
+
+```bash
+kinit bobo
+<enter password>
+klist
+```
+
+### Useful `curl` commands
+
+```bash
+# simple kerberos authentication via the browser
+curl -v -i -u : --negotiate http://apache-kerb:80/ 
+
+# to allow delegation (kerberos usage on the server)
+curl --delegation always -v -i -u : --negotiate http://apache-kerb:80/cgi-bin/krb.sh
+```
+
+### Publishing from RStudio Server Pro using Kerberos
+
+Run this in your R session:
+```
+options("rsconnect.libcurl.options" = list(gssapi_delegation = curl::curl_symbols("CURLGSSAPI_DELEGATION_FLAG")$value,
+     httpauth = curl::curl_symbols("CURLAUTH_GSSAPI")$value,
+     userpwd = ":"
+   ))
+options(rsconnect.http.verbose = TRUE)
+options(rsconnect.http.trace.json = TRUE)
+```
+
+If you want to use the IDE, copy this to `~/.rsconnect_profile`
+```
+options("rsconnect.libcurl.options" = list(gssapi_delegation = curl::curl_symbols("CURLGSSAPI_DELEGATION_FLAG")$value,
+     httpauth = curl::curl_symbols("CURLAUTH_GSSAPI")$value,
+     userpwd = ":"
+   ))
+options(rsconnect.http.verbose = TRUE)
+options(rsconnect.http.trace.json = TRUE)
+```
 
 # Development Process
 In short... we outline the painful development process that we went through below.
@@ -137,16 +175,6 @@ Long term: I like the idea of a lighter-weight image, but Ubuntu suffices for no
         - Not to mention the fact that the ticket issued on RStudio will not be tied to any PAM session or anything, so it will just expire
         - We are [getting to the heart](https://serverfault.com/questions/422778/how-to-automate-kinit-process-to-obtain-tgt-for-kerberos) of tickets, TGT, and keytabs here, people! 
     - More on [constrained delegation](https://www.coresecurity.com/blog/kerberos-delegation-spns-and-more)
-
-### Useful `curl` commands
-
-```bash
-# simple kerberos authentication via the browser
-curl -v -i -u : --negotiate http://apache-kerb:80/ 
-
-# to allow delegation (kerberos usage on the server)
-curl --delegation always -v -i -u : --negotiate http://apache-kerb:80/cgi-bin/krb.sh
-```
 
 ### TODO
 - TODO - a tinyproxy instance to make browsing easy without weird URL stuff...?
