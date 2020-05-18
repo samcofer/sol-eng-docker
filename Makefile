@@ -518,33 +518,27 @@ proxy-kerb-down:
 #---------------------------------------------
 # LDAP
 #---------------------------------------------
-ldap-up: network-up ldap-server-up ldap-connect-up
-ldap-down: ldap-connect-down ldap-server-down
+#ldap-up: network-up ldap-server-up ldap-connect-up
+#ldap-down: ldap-connect-down ldap-server-down
 
 ldap-server-up:
 	NETWORK=${NETWORK} \
-	docker-compose -f compose/ldap.yml -f compose/make-network.yml up -d
+	docker-compose -f compose/ldap-server.yml -f compose/make-network.yml up -d && \
+	./bin/pdocker ps phpldapadmin
 ldap-server-down:
 	NETWORK=${NETWORK} \
-	docker-compose -f compose/ldap.yml -f compose/make-network.yml down
+	docker-compose -f compose/ldap-server.yml -f compose/make-network.yml down
 
-ldap-connect-up: download-connect ldap-connect-up-hide
-ldap-connect-up-hide:
+ldap-connect-up:
 	NETWORK=${NETWORK} \
 	CONNECT_LICENSE=$(CONNECT_LICENSE) \
 	CONNECT_VERSION=$(CONNECT_VERSION) \
-	docker-compose -f compose/ldap-connect.yml -f compose/make-network.yml up -d
-
-ldap-connect-build: download-connect ldap-connect-build-hide
-ldap-connect-build-hide:
-	NETWORK=${NETWORK} \
-	CONNECT_BINARY_URL=${CONNECT_BINARY_URL} \
-	docker-compose -f compose/ldap-connect.yml -f compose/make-network.yml build
+	docker-compose -f compose/ldap-connect.yml -f compose/make-network.yml up -d && \
+	./bin/pdocker ps ldap-connect
 
 ldap-connect-down:
 	NETWORK=${NETWORK} \
 	docker-compose -f compose/ldap-connect.yml -f compose/make-network.yml down
-
 
 pg-up: 
 	NETWORK=${NETWORK} \
