@@ -554,7 +554,8 @@ ldap-rsp-build:
 ldap-rsp-up:
 	NETWORK=${NETWORK} \
 	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
-	docker-compose -f compose/ldap-rsp.yml -f compose/make-network.yml up -d
+	docker-compose -f compose/ldap-rsp.yml -f compose/make-network.yml up -d && \
+	./bin/pdocker ps ldap-rsp
 ldap-rsp-down:
 	NETWORK=${NETWORK} \
 	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
