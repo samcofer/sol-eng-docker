@@ -474,15 +474,16 @@ saml-idp-down:
 	NETWORK=${NETWORK} \
 	docker-compose -f compose/saml-idp.yml -f compose/make-network.yml down
 
-saml-connect-local-up:
+saml-connect-up:
 	NETWORK=${NETWORK} \
 	CONNECT_LICENSE=$(CONNECT_LICENSE) \
 	CONNECT_VERSION=$(CONNECT_VERSION) \
-	docker-compose -f compose/saml-connect-local.yml -f compose/make-network.yml up -d
+	docker-compose -f compose/saml-connect.yml -f compose/make-network.yml up -d && \
+	./bin/pdocker ps saml-connect
 
-saml-connect-local-down:
+saml-connect-down:
 	NETWORK=${NETWORK} \
-	docker-compose -f compose/saml-connect-local.yml -f compose/make-network.yml down
+	docker-compose -f compose/saml-connect.yml -f compose/make-network.yml down
 
 proxy-saml-up:
 	NETWORK=${NETWORK} \
