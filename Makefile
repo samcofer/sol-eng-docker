@@ -8,9 +8,8 @@ CONNECT_VERSION=1.8.2-10
 #1.7.0-11
 CONNECT_BINARY_URL=rstudio-connect_${CONNECT_VERSION}_amd64.deb
 
-RSTUDIO_VERSION=daily
+RSTUDIO_VERSION=preview
 #RSTUDIO_VERSION=1.2.5033-1
-#1.3.11234
 #RSTUDIO_VERSION=1.3.322-1
 
 SSP_VERSION=1.5.10.990
@@ -367,11 +366,11 @@ apache-simple-down:
 
 proxy-basic-up:
 	NETWORK=${NETWORK} \
-        docker-compose -f compose/proxy-basic.yml -f compose/make-network.yml up -d apache-support-ssp
+        docker-compose -f compose/proxy-basic.yml -f compose/make-network.yml up -d nginx-support-rsp
 
 proxy-basic-down:
 	NETWORK=${NETWORK} \
-        docker-compose -f compose/proxy-basic.yml -f compose/make-network.yml stop apache-support-ssp
+        docker-compose -f compose/proxy-basic.yml -f compose/make-network.yml stop nginx-support-rsp
 
 proxy-basic-rsp-ha-up:
 	NETWORK=${NETWORK} \
@@ -502,15 +501,15 @@ proxy-saml-down:
 
 proxy-kerb-up:
 	NETWORK=${NETWORK} \
-	docker-compose -f compose/apache-kerb.yml -f compose/make-network.yml up -d
+	docker-compose -f compose/proxy-kerb.yml -f compose/make-network.yml up -d
 
 proxy-kerb-build:
 	NETWORK=${NETWORK} \
-	docker-compose -f compose/apache-kerb.yml -f compose/make-network.yml build
+	docker-compose -f compose/proxy-kerb.yml -f compose/make-network.yml build
 
 proxy-kerb-down:
 	NETWORK=${NETWORK} \
-	docker-compose -f compose/apache-kerb.yml -f compose/make-network.yml down
+	docker-compose -f compose/proxy-kerb.yml -f compose/make-network.yml down
 
 
 #---------------------------------------------
