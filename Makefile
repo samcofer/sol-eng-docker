@@ -131,17 +131,9 @@ connect-up:
 	CONNECT_VERSION=$(CONNECT_VERSION) \
 	docker-compose -f compose/base-connect.yml -f compose/make-network.yml up -d
 
- #--scale connect=2
-connect-build: download-connect connect-build-hide
-connect-build-hide:
-	NETWORK=${NETWORK} \
-	CONNECT_LICENSE=$(CONNECT_LICENSE) \
-	CONNECT_BINARY_URL=${CONNECT_BINARY_URL} \
-	CONNECT_VERSION=$(CONNECT_VERSION) \
-	docker-compose -f compose/base-connect.yml -f compose/make-network.yml build
-
 connect-down:
 	NETWORK=${NETWORK} \
+	CONNECT_VERSION=$(CONNECT_VERSION) \
 	docker-compose -f compose/base-connect.yml -f compose/make-network.yml down
 
 ldap-kerb-rsp-build:
@@ -191,13 +183,9 @@ rsp-up:
 	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
 	docker-compose -f compose/base-rsp.yml -f compose/make-network.yml up -d
 
-rsp-build:
-	NETWORK=${NETWORK} \
-	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
-	docker-compose -f compose/base-rsp.yml -f compose/make-network.yml build
-
 rsp-down:
 	NETWORK=${NETWORK} \
+	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
 	docker-compose -f compose/base-rsp.yml -f compose/make-network.yml down
 
 ssp-up:
