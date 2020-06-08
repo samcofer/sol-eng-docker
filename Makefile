@@ -63,7 +63,8 @@ mail-down:
 #---------------------------------------------
 ssl-up:
 	NETWORK=${NETWORK} \
-	docker-compose -f compose/ssl.yml -f compose/make-network.yml up -d
+	docker-compose -f compose/ssl.yml -f compose/make-network.yml up -d && \
+	./bin/pdocker ps cfssl
 
 ssl-down:
 	NETWORK=${NETWORK} \
@@ -86,15 +87,15 @@ ssl-proxy-connect-down:
 	NETWORK=${NETWORK} \
 	docker-compose -f compose/ssl-proxy-connect.yml down
 
-ssl-connect-up: download-connect ssl-connect-up-hide
-ssl-connect-up-hide:
+ssl-connect-up:
 	NETWORK=${NETWORK} \
 	CONNECT_LICENSE=$(CONNECT_LICENSE) \
 	CONNECT_VERSION=$(CONNECT_VERSION) \
-	docker-compose -f compose/ssl-connect.yml -f compose/make-network.yml up -d
+	docker-compose -f compose/ssl-connect.yml -f compose/make-network.yml up -d && \
+	./bin/pdocker ps ssl-connect
 
-ssl-connect-build: download-connect ssl-connect-build-hide
-ssl-connect-build-hide:
+
+ssl-connect-build:
 	NETWORK=${NETWORK} \
 	CONNECT_BINARY_URL=${CONNECT_BINARY_URL} \
 	docker-compose -f compose/ssl-connect.yml -f compose/make-network.yml build
@@ -181,7 +182,8 @@ rsp-up:
 	NETWORK=${NETWORK} \
 	RSP_LICENSE=$(RSP_LICENSE) \
 	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
-	docker-compose -f compose/base-rsp.yml -f compose/make-network.yml up -d
+	docker-compose -f compose/base-rsp.yml -f compose/make-network.yml up -d && \
+	./bin/pdocker ps base-rsp
 
 rsp-down:
 	NETWORK=${NETWORK} \
