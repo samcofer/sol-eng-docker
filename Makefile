@@ -295,7 +295,8 @@ kerb-rsp-build:
 kerb-rsp-up:
 	NETWORK=${NETWORK} \
 	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
-        docker-compose -f compose/kerb-rsp.yml -f compose/make-network.yml up -d
+        docker-compose -f compose/kerb-rsp.yml -f compose/make-network.yml up -d && \
+	./bin/pdocker ps kerb-rsp
 kerb-rsp-test:
 	NETWORK=${NETWORK} \
 	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
@@ -315,15 +316,16 @@ kerb-proxy-build: proxy-kerb-build
 
 kerb-connect-build:
 	NETWORK=${NETWORK} \
-	CONNECT_LICENSE=$(CONNECT_LICENSE) \
+	RSC_LICENSE=$(RSC_LICENSE) \
 	CONNECT_VERSION=$(CONNECT_VERSION) \
 	docker-compose -f compose/kerb-connect.yml -f compose/make-network.yml build
 
 kerb-connect-up:
 	NETWORK=${NETWORK} \
-	CONNECT_LICENSE=$(CONNECT_LICENSE) \
+	RSC_LICENSE=$(RSC_LICENSE) \
 	CONNECT_VERSION=$(CONNECT_VERSION) \
-	docker-compose -f compose/kerb-connect.yml -f compose/make-network.yml up -d
+	docker-compose -f compose/kerb-connect.yml -f compose/make-network.yml up -d && \
+	./bin/pdocker ps kerb-connect
 
 kerb-connect-down:
 	NETWORK=${NETWORK} \
