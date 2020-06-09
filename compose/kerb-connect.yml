@@ -13,7 +13,7 @@ services:
       - "3939"
     privileged: true
     environment:
-      - CONNECT_LICENSE
+      - RSC_LICENSE
 
   sut:
     image: rstudio/sol-eng-connect:kerberos-${CONNECT_VERSION}
