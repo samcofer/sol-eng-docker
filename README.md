@@ -39,7 +39,7 @@ To get started, you will need to install:
  - `bash`
  - `python3` (on your PATH)
 
-Once done, you can run the following to check your environment:
+Once done, you can run the following (from a bash shell) to check your environment:
 ```
 make check
 ```
