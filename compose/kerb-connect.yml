@@ -14,6 +14,8 @@ services:
     privileged: true
     environment:
       - RSC_LICENSE
+    volumes:
+      - "../cluster/kerberos-connect/rstudio-connect.gcfg:/etc/rstudio-connect/rstudio-connect.gcfg"
 
   sut:
     image: rstudio/sol-eng-connect:kerberos-${CONNECT_VERSION}
