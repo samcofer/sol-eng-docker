@@ -44,6 +44,11 @@ Once done, you can run the following (from a bash shell) to check your environme
 make check
 ```
 
+Then you can run this to pre-pull important images:
+```
+make pull
+```
+
 Your first step will be:
 ```
 make test-env-up

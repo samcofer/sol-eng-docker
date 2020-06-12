@@ -4,13 +4,14 @@ PWD := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 PROJECT=sol-eng-docker
 NETWORK=${PROJECT}_default
 SCALE=1
-CONNECT_VERSION=1.8.2-10
+CONNECT_VERSION=1.8.2.1-12
 #1.7.0-11
 CONNECT_BINARY_URL=rstudio-connect_${CONNECT_VERSION}_amd64.deb
 
-RSTUDIO_VERSION=preview
+#RSTUDIO_VERSION=preview
 #RSTUDIO_VERSION=1.2.5033-1
 #RSTUDIO_VERSION=1.3.322-1
+RSTUDIO_VERSION=1.3.959-1
 
 SSP_VERSION=1.5.10.990
 
@@ -20,6 +21,17 @@ test-env-down: network-down
 
 check:
 	./bin/check.sh
+
+pull:
+	docker pull rstudio/rstudio-server-pro:${RSTUDIO_VERSION} \
+	&& docker pull rstudio/rstudio-connect:${CONNECT_VERSION} \
+	&& docker pull ubuntu:16.04 \
+	&& docker pull kristophjunge/test-saml-idp \
+	&& docker pull osixia/openldap \
+	&& docker pull osixia/phpldapadmin \
+	&& docker pull dtwardow/ldap-self-service-password
+	  
+
 
 #---------------------------------------------
 # Network
