@@ -18,6 +18,8 @@ test-env-up: network-up
 
 test-env-down: network-down
 
+check:
+	./bin/check.sh
 
 #---------------------------------------------
 # Network
