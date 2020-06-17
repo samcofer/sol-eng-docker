@@ -31,6 +31,7 @@ pull:
 	&& docker pull osixia/phpldapadmin \
 	&& docker pull dtwardow/ldap-self-service-password
 	  
+build: kerb-server-build kerb-ssh-build kerb-rsp-build kerb-connect-build
 
 
 #---------------------------------------------
@@ -144,7 +145,11 @@ connect-up:
 	NETWORK=${NETWORK} \
 	RSC_LICENSE=$(RSC_LICENSE) \
 	CONNECT_VERSION=$(CONNECT_VERSION) \
-	docker-compose -f compose/base-connect.yml -f compose/make-network.yml up -d
+	docker-compose -f compose/base-connect.yml -f compose/make-network.yml up -d && \
+	./bin/pdocker ps compose_connect
+
+connect-restart:
+	./bin/pdocker restart compose_connect_1
 
 connect-down:
 	NETWORK=${NETWORK} \
@@ -288,6 +293,11 @@ kerb-down: kerb-connect-down kerb-rsp-down kerb-ssh-down kerb-server-down
 kerb-server-up:
 	NETWORK=${NETWORK} \
         docker-compose -f compose/kerberos-base.yml -f compose/make-network.yml up -d
+
+kerb-server-build:
+	NETWORK=${NETWORK} \
+        docker-compose -f compose/kerberos-base.yml -f compose/make-network.yml build
+
 kerb-server-down:
 	NETWORK=${NETWORK} \
         docker-compose -f compose/kerberos-base.yml -f compose/make-network.yml down
