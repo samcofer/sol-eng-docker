@@ -149,8 +149,7 @@ connect-up:
 	./bin/pdocker ps compose_connect
 
 connect-restart:
-	docker restart compose_connect_1 && \
-	./bin/pdocker ps compose_connect
+	./bin/pdocker restart compose_connect_1
 
 connect-down:
 	NETWORK=${NETWORK} \
