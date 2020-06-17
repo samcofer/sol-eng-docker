@@ -49,3 +49,7 @@ if __name__ == "__main__":
     if command_args[0] == 'ps':
       cmdout = run_docker_command(['ps'])
       parse_port(cmdout.stdout.decode('utf-8'), command_args[1])
+    elif command_args[0] == 'restart':
+      cmdout = run_docker_command(command_args)
+      psout = run_docker_command(['ps'])
+      parse_port(psout.stdout.decode('utf-8'), command_args[1])
