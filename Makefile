@@ -144,7 +144,12 @@ connect-up:
 	NETWORK=${NETWORK} \
 	RSC_LICENSE=$(RSC_LICENSE) \
 	CONNECT_VERSION=$(CONNECT_VERSION) \
-	docker-compose -f compose/base-connect.yml -f compose/make-network.yml up -d
+	docker-compose -f compose/base-connect.yml -f compose/make-network.yml up -d && \
+	./bin/pdocker ps compose_connect
+
+connect-restart:
+	docker restart compose_connect_1 && \
+	./bin/pdocker ps compose_connect
 
 connect-down:
 	NETWORK=${NETWORK} \
