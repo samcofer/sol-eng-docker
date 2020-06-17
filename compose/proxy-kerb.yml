@@ -1,0 +1,13 @@
+version: "2.3"
+services:
+  proxy-kerb:
+    hostname: proxy-kerb
+    build:
+      context: ../cluster
+      dockerfile: proxy-kerb/Dockerfile
+    volumes:
+      - ../cluster/proxy-kerb.conf:/usr/local/apache2/conf/httpd.conf
+      - ../cluster/proxy-kerb/index.html:/usr/local/apache2/htdocs/index.html
+      #- ../cluster/cgi:/var/www/html/
+    ports:
+      - "80"

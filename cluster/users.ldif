@@ -213,7 +213,7 @@ objectclass: top
 sn: Nameo
 uid: bingo
 uidnumber: 1008
-userpassword: {MD5}CY9rzUYh03PK3k6DJie09g==
+userpassword: {MD5}OjeVu2HVN3VFtPNF/yI+PQ==
 
 # groupOfNames
 dn: cn=Example Group,dc=example,dc=org

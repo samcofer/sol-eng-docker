@@ -3,26 +3,39 @@
 This project contains information for using LDAP (or Active Directory... but
 putting that in a docker container is hard).
 
-## Getting started
+# Getting started
 
-Get started by executing:
+Get started by ensuring `make test-env-up` has been executed, and then executing:
+
 ```
-make ldap-up
+make ldap-server-up
 ```
 
-This creates the necessary network (`make network-up`), the LDAP server (`make ldap-server-up`),
-and starts RStudio Connect as well (`make ldap-connect-up`). The users and passwords pre-provisioned
-are [listed here](./cluster/users).
+This creates a LDAP server with users pre-provisioned from
+[`../cluster/users.ldif`](../cluster/users.ldif).  However, there is an easier
+to read list of `user pass` combinations at
+[`../cluster/users`](../cluster/users).
 
-You must have the environment variable `CONNECT_LICENSE` set to a valid license
-value locally (in the environment where `make` is executed). Contact #support
-if you need or have questions about a license.
+## Other `make` targets
 
-### LDAP Configuration
+To actually use the server, you probably want to stand up one of the products with:
+
+```
+make ldap-connect-up
+```
+
+or
+
+```
+make ldap-rsp-up
+```
+
+## LDAP Configuration and Customization
 
 The `osixia/ldap` docker container comes provisioned with a domain of
-`dc=example,dc=org`. To log into the browser, connect to the [`ldapadmin`](./compose/ldap.yml)
-container (whose port 80 is mapped to some ephemeral port on your host by default)
+`dc=example,dc=org`. To log into the browser, connect to the
+[`ldapadmin`](./compose/ldap-server.yml) container (whose port 80 is mapped to
+some ephemeral port on your host by default)
 
 Then, login as:
 
@@ -32,20 +45,8 @@ pass: admin
 ```
 
 This will give you access to alter / update the LDAP configuration from your
-browser.  A handful of  users are provisioned in the system by default, and
-have users/passwords listed [here](./cluster/users). For example, `user/pass` pairs
-`bobo/momo`, `test/test` and `jen/jen`.
-
-### Useful `make` targets
-
-```
-make ldap-up
-make ldap-down
-make network-up ldap-server-up ldap-connect-up
-make ldap-connect-down ldap-server-down network-down
-
-make download-connect
-```
+browser.  A handful of  users are provisioned in the system by default using
+[`../cluster/users.ldif`](../cluster/users.ldif).
 
 ### Provision Users
 
@@ -85,6 +86,7 @@ compose file](./compose/ldap-connect.yml). `usermanager` should work. Just be
 judicious about the fact that interacting with Connect in the browser while
 using `usermanager` _could_ potentially cause some strange consequences.
 
+# Development Workflow
 
 ## Resources
 

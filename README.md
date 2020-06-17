@@ -37,13 +37,24 @@ To get started, you will need to install:
  - `docker`
  - `docker-compose`
  - `bash`
+ - `python3` (on your PATH)
 
-Then look to specific sub-project pages (above) for detailed make commands to get things built and started.
+Once done, you can run the following (from a bash shell) to check your environment:
+```
+make check
+```
+
+Then you can run this to pre-pull important images:
+```
+make pull
+```
 
 Your first step will be:
 ```
 make test-env-up
 ```
+
+Then look to specific sub-project pages (above) for detailed make commands to get things built and started.
 
 NOTE: If you are using Windows, we recommend starting a [git
 bash](https://gitforwindows.org/) terminal so you can use the numerous `bash`

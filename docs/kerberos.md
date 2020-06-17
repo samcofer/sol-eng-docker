@@ -1,6 +1,52 @@
 # Kerberos on Docker
 
-For the purposes of internal testing, this repo houses Kerberos running in a docker network orchestrated by `docker-compose.yml`.  Some simple users/passwords are included out of the box:
+For the purposes of internal testing, this repo houses Kerberos running in a
+docker network orchestrated by `docker-compose.yml`.  
+
+# Get Started
+
+We have attempted to make this project somewhat modular.  To test Kerberos with SSH, you can execute something like:
+
+```bash
+make kerb-server-up kerb-ssh-up
+```
+
+Then connect to the running `k-ssh-server` and `k-ssh-client` containers with
+`docker exec -it <container name> bash`.  Consult the respective `README.md`
+files for more specific information.
+
+On the other hand, if you want to test with RStudio:
+
+```bash
+make kerb-rsp-up
+```
+
+The license for RStudio Server Pro should be in an environment variable
+`RSP_LICENSE`.  This will get read by the build process and passed along /
+activated by the container. Then get things operational per the respective
+`README.md` files, log into RStudio Server Pro, and ssh to `k-ssh-server`.
+Blam!  No authentication question. Yep. Thank you, Kerberos.
+
+There is even a kerberized Connect instance. To authenticate to the only
+available service (SSH), you will need a crafty Shiny app like [this
+one](https://github.com/colearendt/shiny-shell) that gives you a shell. Again,
+only do-able thanks to Kerberos!
+
+```bash
+make kerb-connect-up
+```
+
+An **advanced** setup using a Kerberos authentication proxy:
+
+```bash
+make proxy-connect-up proxy-kerb-up
+```
+
+Then try to publish using Kerberos authentication from RSP!
+
+
+## Credentials
+Some simple users/passwords are included out of the box:
 
 On Kerberos (which runs on k-server)
 
@@ -9,44 +55,63 @@ On Kerberos (which runs on k-server)
 |n/a   |pass      |master|
 |ubuntu|ubuntu    |admin |
 |bobo  |momo      |user  |
+|test  |test      |user  |
+|julie |julie     |user  |
+|joe   |joe       |user  |
 
 On simple-client:
 
-|user | password  |
-|-----|-----------|
-|bobo |momo       |
+|user  | password  |
+|------|-----------|
+|bobo  |momo       |
+|test  |test       |
+|julie |julie      |
+|joe   |joe        |
 
-This user can be tested with:
+**NOTE:** All users in [the users file](cluster/users) will be automatically
+created throughout the system (in Kerberos and locally on each individual
+container).  Thank you, `awk`!!
+
+## Kerberos Specific Examples
+
+### Simple `kinit`
+
 ```bash
 kinit bobo
 <enter password>
 klist
 ```
 
-**NOTE:** All users in [the users file](cluster/users) will be automatically created throughout the system (in Kerberos and locally on each individual container).  Thank you, `awk`!!
-
-# Get Started
-
-We have attempted to make this project somewhat modular.  To test Kerberos with SSH, you can execute something like:
+### Useful `curl` commands
 
 ```bash
-make network-up kerb-server-up kerb-ssh-up
+# simple kerberos authentication via the browser
+curl -v -i -u : --negotiate http://apache-kerb:80/ 
+
+# to allow delegation (kerberos usage on the server)
+curl --delegation always -v -i -u : --negotiate http://apache-kerb:80/cgi-bin/krb.sh
 ```
 
-Then connect to the running `k-ssh-server` and `k-ssh-client` containers with `docker exec -it <container name> bash`.  Consult the respective `README.md` files for more specific information.
+### Publishing from RStudio Server Pro using Kerberos
 
-On the other hand, if you want to test with RStudio:
-
-```bash
-make network-up kerb-server-up kerb-ssh-up kerb-rsp-up
+Run this in your R session:
+```
+options("rsconnect.libcurl.options" = list(gssapi_delegation = curl::curl_symbols("CURLGSSAPI_DELEGATION_FLAG")$value,
+     httpauth = curl::curl_symbols("CURLAUTH_GSSAPI")$value,
+     userpwd = ":"
+   ))
+options(rsconnect.http.verbose = TRUE)
+options(rsconnect.http.trace.json = TRUE)
 ```
 
-The license for RStudio Server Pro should be in an environment variable `RSP_LICENSE`.  This will get read by the build process and passed along / activated by the container. Then get things operational per the respective `README.md` files, log into RStudio Server Pro, and ssh to `k-ssh-server`. Blam!  No authentication question. Yep. Thank you, Kerberos.
-
-There is even a kerberized Connect instance. To authenticate to the only available service (SSH), you will need a crafty Shiny app like [this one](todo) that gives you a shell. Again, only do-able thanks to Kerberos!
-
-```bash
-make network-up kerb-server-up kerb-ssh-up kerb-connect-up
+If you want to use the IDE, copy this to `~/.rsconnect_profile`
+```
+options("rsconnect.libcurl.options" = list(gssapi_delegation = curl::curl_symbols("CURLGSSAPI_DELEGATION_FLAG")$value,
+     httpauth = curl::curl_symbols("CURLAUTH_GSSAPI")$value,
+     userpwd = ":"
+   ))
+options(rsconnect.http.verbose = TRUE)
+options(rsconnect.http.trace.json = TRUE)
 ```
 
 # Development Process
@@ -110,16 +175,6 @@ Long term: I like the idea of a lighter-weight image, but Ubuntu suffices for no
         - Not to mention the fact that the ticket issued on RStudio will not be tied to any PAM session or anything, so it will just expire
         - We are [getting to the heart](https://serverfault.com/questions/422778/how-to-automate-kinit-process-to-obtain-tgt-for-kerberos) of tickets, TGT, and keytabs here, people! 
     - More on [constrained delegation](https://www.coresecurity.com/blog/kerberos-delegation-spns-and-more)
-
-### Useful `curl` commands
-
-```bash
-# simple kerberos authentication via the browser
-curl -v -i -u : --negotiate http://apache-kerb:80/ 
-
-# to allow delegation (kerberos usage on the server)
-curl --delegation always -v -i -u : --negotiate http://apache-kerb:80/cgi-bin/krb.sh
-```
 
 ### TODO
 - TODO - a tinyproxy instance to make browsing easy without weird URL stuff...?

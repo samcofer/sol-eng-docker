@@ -1,0 +1,119 @@
+# NOTE: Must set license key secret below
+# OPTIONAL: persistent storage. uncomment sections below
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: rstudio-connect-config
+  namespace: default
+data:
+  rstudio-connect.gcfg: |
+    [Server]
+    ; must match persistent storage location
+    DataDir = /var/lib/rstudio-connect
+
+    ; must be set to add users
+    Address =
+    
+    [HTTP]
+    Listen = :3939
+    
+    ; depends on image build
+    [Python]
+    Enabled = true
+    Executable = /opt/python/3.6.5/bin/python
+    
+    [RPackageRepository "CRAN"]
+    URL = https://packagemanager.rstudio.com/cran/__linux__/bionic/latest
+    
+    [RPackageRepository "RSPM"]
+    URL = https://packagemanager.rstudio.com/cran/__linux__/bionic/latest
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: rstudio-connect-license
+  namespace: default
+type: Opaque
+stringData:
+  rstudio-connect: my-license-key
+---
+# optional - for persistent storage if your cluster supports it
+# kind: PersistentVolumeClaim
+# apiVersion: v1
+# metadata:
+#   name: persistent-storage-connect
+#   namespace: default
+# spec:
+#   accessModes:
+#     - ReadWriteOnce
+#   #volumeMode: Block
+#   #storageClassName: gp2
+#   resources:
+#     requests:
+#       storage: 5Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rstudio-connect
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rstudio-connect
+  template:
+    metadata:
+      labels:
+        app: rstudio-connect
+    spec:
+      containers:
+      - name: connect
+        # should be a pinned version number
+        image: rstudio/rstudio-connect:latest
+        env:
+        - name: RSC_LICENSE
+          valueFrom:
+            secretKeyRef:
+              name: rstudio-connect-license
+              key: rstudio-connect
+        #command: ["sleep","10000"]
+        #imagePullPolicy: Never
+        ports:
+        - containerPort: 3939
+        securityContext:
+          privileged: true
+        volumeMounts:
+          - name: connect-config
+            mountPath: "/etc/rstudio-connect/rstudio-connect.gcfg"
+            subPath: "rstudio-connect.gcfg"
+          # optional - for persistent storage if your cluster supports it
+          # - name: connect-data
+          #   mountPath: "/var/lib/rstudio-connect"
+      volumes:
+      - name: connect-config
+        configMap:
+          name: rstudio-connect-config
+          items:
+          - key: rstudio-connect.gcfg
+            path: "rstudio-connect.gcfg"
+      # optional - for persistent storage if your cluster supports it
+      # - name: connect-data
+      #   persistentVolumeClaim:
+      #     claimName: persistent-storage-connect
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rstudio-connect
+  namespace: default
+spec:
+  type: ClusterIP
+  selector:
+    app: rstudio-connect
+  ports:
+  - port: 80
+    targetPort: 3939
+    protocol: TCP
+    name: rstudio-connect-ui

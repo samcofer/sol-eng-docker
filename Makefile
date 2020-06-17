@@ -4,20 +4,34 @@ PWD := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 PROJECT=sol-eng-docker
 NETWORK=${PROJECT}_default
 SCALE=1
-CONNECT_VERSION=1.8.2-10
+CONNECT_VERSION=1.8.2.1-12
 #1.7.0-11
 CONNECT_BINARY_URL=rstudio-connect_${CONNECT_VERSION}_amd64.deb
 
-RSTUDIO_VERSION=daily
+#RSTUDIO_VERSION=preview
 #RSTUDIO_VERSION=1.2.5033-1
-#1.3.11234
 #RSTUDIO_VERSION=1.3.322-1
+RSTUDIO_VERSION=1.3.959-1
 
 SSP_VERSION=1.5.10.990
 
 test-env-up: network-up
 
 test-env-down: network-down
+
+check:
+	./bin/check.sh
+
+pull:
+	docker pull rstudio/rstudio-server-pro:${RSTUDIO_VERSION} \
+	&& docker pull rstudio/rstudio-connect:${CONNECT_VERSION} \
+	&& docker pull ubuntu:16.04 \
+	&& docker pull kristophjunge/test-saml-idp \
+	&& docker pull osixia/openldap \
+	&& docker pull osixia/phpldapadmin \
+	&& docker pull dtwardow/ldap-self-service-password
+	  
+build: kerb-server-build kerb-ssh-build kerb-rsp-build kerb-connect-build
 
 
 #---------------------------------------------
@@ -64,7 +78,8 @@ mail-down:
 #---------------------------------------------
 ssl-up:
 	NETWORK=${NETWORK} \
-	docker-compose -f compose/ssl.yml -f compose/make-network.yml up -d
+	docker-compose -f compose/ssl.yml -f compose/make-network.yml up -d && \
+	./bin/pdocker ps cfssl
 
 ssl-down:
 	NETWORK=${NETWORK} \
@@ -87,15 +102,15 @@ ssl-proxy-connect-down:
 	NETWORK=${NETWORK} \
 	docker-compose -f compose/ssl-proxy-connect.yml down
 
-ssl-connect-up: download-connect ssl-connect-up-hide
-ssl-connect-up-hide:
+ssl-connect-up:
 	NETWORK=${NETWORK} \
 	CONNECT_LICENSE=$(CONNECT_LICENSE) \
 	CONNECT_VERSION=$(CONNECT_VERSION) \
-	docker-compose -f compose/ssl-connect.yml -f compose/make-network.yml up -d
+	docker-compose -f compose/ssl-connect.yml -f compose/make-network.yml up -d && \
+	./bin/pdocker ps ssl-connect
 
-ssl-connect-build: download-connect ssl-connect-build-hide
-ssl-connect-build-hide:
+
+ssl-connect-build:
 	NETWORK=${NETWORK} \
 	CONNECT_BINARY_URL=${CONNECT_BINARY_URL} \
 	docker-compose -f compose/ssl-connect.yml -f compose/make-network.yml build
@@ -130,19 +145,15 @@ connect-up:
 	NETWORK=${NETWORK} \
 	RSC_LICENSE=$(RSC_LICENSE) \
 	CONNECT_VERSION=$(CONNECT_VERSION) \
-	docker-compose -f compose/base-connect.yml -f compose/make-network.yml up -d
+	docker-compose -f compose/base-connect.yml -f compose/make-network.yml up -d && \
+	./bin/pdocker ps compose_connect
 
- #--scale connect=2
-connect-build: download-connect connect-build-hide
-connect-build-hide:
-	NETWORK=${NETWORK} \
-	CONNECT_LICENSE=$(CONNECT_LICENSE) \
-	CONNECT_BINARY_URL=${CONNECT_BINARY_URL} \
-	CONNECT_VERSION=$(CONNECT_VERSION) \
-	docker-compose -f compose/base-connect.yml -f compose/make-network.yml build
+connect-restart:
+	./bin/pdocker restart compose_connect_1
 
 connect-down:
 	NETWORK=${NETWORK} \
+	CONNECT_VERSION=$(CONNECT_VERSION) \
 	docker-compose -f compose/base-connect.yml -f compose/make-network.yml down
 
 ldap-kerb-rsp-build:
@@ -190,15 +201,12 @@ rsp-up:
 	NETWORK=${NETWORK} \
 	RSP_LICENSE=$(RSP_LICENSE) \
 	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
-	docker-compose -f compose/base-rsp.yml -f compose/make-network.yml up -d
-
-rsp-build:
-	NETWORK=${NETWORK} \
-	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
-	docker-compose -f compose/base-rsp.yml -f compose/make-network.yml build
+	docker-compose -f compose/base-rsp.yml -f compose/make-network.yml up -d && \
+	./bin/pdocker ps base-rsp
 
 rsp-down:
 	NETWORK=${NETWORK} \
+	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
 	docker-compose -f compose/base-rsp.yml -f compose/make-network.yml down
 
 ssp-up:
@@ -272,6 +280,15 @@ float-ha-down:
 	NETWORK=${NETWORK} \
 	docker-compose -f compose/float-ha.yml -f compose/make-network.yml down 
 
+float-connect-up:
+	NETWORK=${NETWORK} \
+	CONNECT_VERSION=$(CONNECT_VERSION) \
+	docker-compose -f compose/float-connect.yml -f compose/make-network.yml up -d
+
+float-connect-down:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/float-connect.yml -f compose/make-network.yml down
+
 #---------------------------------------------
 # Kerberos
 #---------------------------------------------
@@ -282,6 +299,11 @@ kerb-down: kerb-connect-down kerb-rsp-down kerb-ssh-down kerb-server-down
 kerb-server-up:
 	NETWORK=${NETWORK} \
         docker-compose -f compose/kerberos-base.yml -f compose/make-network.yml up -d
+
+kerb-server-build:
+	NETWORK=${NETWORK} \
+        docker-compose -f compose/kerberos-base.yml -f compose/make-network.yml build
+
 kerb-server-down:
 	NETWORK=${NETWORK} \
         docker-compose -f compose/kerberos-base.yml -f compose/make-network.yml down
@@ -303,7 +325,8 @@ kerb-rsp-build:
 kerb-rsp-up:
 	NETWORK=${NETWORK} \
 	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
-        docker-compose -f compose/kerb-rsp.yml -f compose/make-network.yml up -d
+        docker-compose -f compose/kerb-rsp.yml -f compose/make-network.yml up -d && \
+	./bin/pdocker ps kerb-rsp
 kerb-rsp-test:
 	NETWORK=${NETWORK} \
 	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
@@ -317,19 +340,22 @@ kerb-rsp-down:
 	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
         docker-compose -f compose/kerb-rsp.yml -f compose/make-network.yml down
 
-
+kerb-proxy-up: proxy-kerb-up
+kerb-proxy-down: proxy-kerb-down
+kerb-proxy-build: proxy-kerb-build
 
 kerb-connect-build:
 	NETWORK=${NETWORK} \
-	CONNECT_LICENSE=$(CONNECT_LICENSE) \
+	RSC_LICENSE=$(RSC_LICENSE) \
 	CONNECT_VERSION=$(CONNECT_VERSION) \
 	docker-compose -f compose/kerb-connect.yml -f compose/make-network.yml build
 
 kerb-connect-up:
 	NETWORK=${NETWORK} \
-	CONNECT_LICENSE=$(CONNECT_LICENSE) \
+	RSC_LICENSE=$(RSC_LICENSE) \
 	CONNECT_VERSION=$(CONNECT_VERSION) \
-	docker-compose -f compose/kerb-connect.yml -f compose/make-network.yml up -d
+	docker-compose -f compose/kerb-connect.yml -f compose/make-network.yml up -d && \
+	./bin/pdocker ps kerb-connect
 
 kerb-connect-down:
 	NETWORK=${NETWORK} \
@@ -364,11 +390,11 @@ apache-simple-down:
 
 proxy-basic-up:
 	NETWORK=${NETWORK} \
-        docker-compose -f compose/proxy-basic.yml -f compose/make-network.yml up -d apache-support-ssp
+        docker-compose -f compose/proxy-basic.yml -f compose/make-network.yml up -d nginx-support-rsp
 
 proxy-basic-down:
 	NETWORK=${NETWORK} \
-        docker-compose -f compose/proxy-basic.yml -f compose/make-network.yml stop apache-support-ssp
+        docker-compose -f compose/proxy-basic.yml -f compose/make-network.yml stop nginx-support-rsp
 
 proxy-basic-rsp-ha-up:
 	NETWORK=${NETWORK} \
@@ -393,7 +419,8 @@ proxy-connect-up:
 	NETWORK=${NETWORK} \
 	RSC_LICENSE=$(RSC_LICENSE) \
 	CONNECT_VERSION=$(CONNECT_VERSION) \
-	docker-compose -f compose/proxy-connect.yml -f compose/make-network.yml up -d
+	docker-compose -f compose/proxy-connect.yml -f compose/make-network.yml up -d && \
+	./bin/pdocker ps proxy-connect
 
 proxy-connect-down:
 	NETWORK=${NETWORK} \
@@ -471,15 +498,16 @@ saml-idp-down:
 	NETWORK=${NETWORK} \
 	docker-compose -f compose/saml-idp.yml -f compose/make-network.yml down
 
-saml-connect-local-up:
+saml-connect-up:
 	NETWORK=${NETWORK} \
 	CONNECT_LICENSE=$(CONNECT_LICENSE) \
 	CONNECT_VERSION=$(CONNECT_VERSION) \
-	docker-compose -f compose/saml-connect-local.yml -f compose/make-network.yml up -d
+	docker-compose -f compose/saml-connect.yml -f compose/make-network.yml up -d && \
+	./bin/pdocker ps saml-connect
 
-saml-connect-local-down:
+saml-connect-down:
 	NETWORK=${NETWORK} \
-	docker-compose -f compose/saml-connect-local.yml -f compose/make-network.yml down
+	docker-compose -f compose/saml-connect.yml -f compose/make-network.yml down
 
 proxy-saml-up:
 	NETWORK=${NETWORK} \
@@ -499,47 +527,42 @@ proxy-saml-down:
 
 proxy-kerb-up:
 	NETWORK=${NETWORK} \
-	docker-compose -f compose/apache-kerb.yml -f compose/make-network.yml up -d
+	docker-compose -f compose/proxy-kerb.yml -f compose/make-network.yml up -d && \
+	./bin/pdocker ps proxy-kerb
 
 proxy-kerb-build:
 	NETWORK=${NETWORK} \
-	docker-compose -f compose/apache-kerb.yml -f compose/make-network.yml build
+	docker-compose -f compose/proxy-kerb.yml -f compose/make-network.yml build
 
 proxy-kerb-down:
 	NETWORK=${NETWORK} \
-	docker-compose -f compose/apache-kerb.yml -f compose/make-network.yml down
+	docker-compose -f compose/proxy-kerb.yml -f compose/make-network.yml down
 
 
 #---------------------------------------------
 # LDAP
 #---------------------------------------------
-ldap-up: network-up ldap-server-up ldap-connect-up
-ldap-down: ldap-connect-down ldap-server-down
+#ldap-up: network-up ldap-server-up ldap-connect-up
+#ldap-down: ldap-connect-down ldap-server-down
 
 ldap-server-up:
 	NETWORK=${NETWORK} \
-	docker-compose -f compose/ldap.yml -f compose/make-network.yml up -d
+	docker-compose -f compose/ldap-server.yml -f compose/make-network.yml up -d && \
+	./bin/pdocker ps phpldapadmin
 ldap-server-down:
 	NETWORK=${NETWORK} \
-	docker-compose -f compose/ldap.yml -f compose/make-network.yml down
+	docker-compose -f compose/ldap-server.yml -f compose/make-network.yml down
 
-ldap-connect-up: download-connect ldap-connect-up-hide
-ldap-connect-up-hide:
+ldap-connect-up:
 	NETWORK=${NETWORK} \
 	CONNECT_LICENSE=$(CONNECT_LICENSE) \
 	CONNECT_VERSION=$(CONNECT_VERSION) \
-	docker-compose -f compose/ldap-connect.yml -f compose/make-network.yml up -d
-
-ldap-connect-build: download-connect ldap-connect-build-hide
-ldap-connect-build-hide:
-	NETWORK=${NETWORK} \
-	CONNECT_BINARY_URL=${CONNECT_BINARY_URL} \
-	docker-compose -f compose/ldap-connect.yml -f compose/make-network.yml build
+	docker-compose -f compose/ldap-connect.yml -f compose/make-network.yml up -d && \
+	./bin/pdocker ps ldap-connect
 
 ldap-connect-down:
 	NETWORK=${NETWORK} \
 	docker-compose -f compose/ldap-connect.yml -f compose/make-network.yml down
-
 
 pg-up: 
 	NETWORK=${NETWORK} \
@@ -555,7 +578,8 @@ ldap-rsp-build:
 ldap-rsp-up:
 	NETWORK=${NETWORK} \
 	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
-	docker-compose -f compose/ldap-rsp.yml -f compose/make-network.yml up -d
+	docker-compose -f compose/ldap-rsp.yml -f compose/make-network.yml up -d && \
+	./bin/pdocker ps ldap-rsp
 ldap-rsp-down:
 	NETWORK=${NETWORK} \
 	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \

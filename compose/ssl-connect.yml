@@ -3,7 +3,7 @@ services:
 
   ssl-connect:
     hostname: ssl-connect
-    image: rstudio/ssl-connect
+    image: rstudio/rstudio-connect:ssl
     build:
       context: ../cluster
       dockerfile: ssl-connect/Dockerfile
@@ -15,7 +15,7 @@ services:
      - "3939"
     volumes:
       - ../cluster/ssl-connect/rstudio-connect.gcfg:/etc/rstudio-connect/rstudio-connect.gcfg
+      - ../cluster/ssl-connect/start-licensed.sh:/usr/local/bin/startup.sh
     environment:
-      - CONNECT_LICENSE
+      - RSC_LICENSE
 
-    
