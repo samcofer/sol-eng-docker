@@ -5,18 +5,20 @@ metadata:
   name: nginx-config
 data:
   rspm.conf: |
+    resolver 10.96.0.10 valid=10s;
     server {
       listen 80;
       # this takes care of redirecting /packages to /packages/
       rewrite ^/packages$ $scheme://$http_host/packages/;
 
       # Proxy RStudio Package manager at /packages/
-    location /packages/ {
-        rewrite ^/packages/(.*)$ /$1 break;
-        proxy_set_header    X-RSPM-Request $scheme://$http_host$request_uri;
-        proxy_pass http://rstudio-pm.soleng.svc.cluster.local;
-        proxy_redirect / $scheme://$http_host/packages/;
-    }
+      location /packages/ {
+          set $backend_url http://rstudio-pm.soleng.svc.cluster.local;
+          rewrite ^/packages/(.*)$ /$1 break;
+          proxy_set_header    X-RSPM-Request $scheme://$http_host$request_uri;
+          proxy_pass $backend_url;
+          proxy_redirect / $scheme://$http_host/packages/;
+      }
     }
 ---
 apiVersion: apps/v1
