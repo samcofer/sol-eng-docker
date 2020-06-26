@@ -33,10 +33,12 @@ fi
 docker run --rm alpine:latest echo '    - running a `docker` example...'
 docker_exit=$?
 if [[ ! "$docker_exit" -eq 0 ]] ; then
-  echo 'ERROR: a simple docker test did not work. Please ensure that `docker` is running!';
+  echo 'ERROR: a simple docker test did not work. Please ensure that `docker` is running and you have access to use it!';
   exit 2;
 else
   echo '    - `docker` is functional!'
 fi
+
+# TODO: do a similar test but with compose! (`podman` on RHEL 8 causes trouble with `docker-compose`)
 
 echo "---> Environment check complete. Good to go!"
