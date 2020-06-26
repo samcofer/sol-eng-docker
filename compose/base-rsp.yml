@@ -5,6 +5,7 @@ services:
   #  image: brndnmtthws/nginx-echo-headers
 
   base-rsp:
+    hostname: base-rsp
     image: rstudio/rstudio-server-pro:${RSTUDIO_VERSION}
     privileged: true
     environment:
