@@ -3,7 +3,7 @@ services:
 
   load-test:
     hostname: load-test
-    image: colearendt/load-test
+    image: colearendt/load-test:0.5
     build:
       context: ../cluster
       dockerfile: load-test/Dockerfile
