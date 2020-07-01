@@ -145,6 +145,9 @@ live. These will often build on or from [`./cluster`](./cluster) resources.
 ```
 ERROR: Network sol-eng-docker_default declared as external, but could not be found. Please create the network manually using `docker network create sol-eng-docker_default` and try again.
 ```
+- Volume mounts are not working...?
+    - We recommend _NOT_ running docker / cloning this repo as `root`
+    - The reason for this is a bit tricky, but basically you need to set `privileged: true` on containers that use mounts or docker will not be able to read the files you are mounting into the container
 - docker cache outdated: let's say it has been a while and your docker cache
   needs `apt-get update` to be run in order to install things.  `docker-compose
 -f myfile.yml build --no-cache myservice` can get you unstuck if you are
