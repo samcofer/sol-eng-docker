@@ -29,18 +29,50 @@ that the license key will run in a hypervisor (i.e. Docker).
 Then export the variable as `RSC_LICENSE`, `RSP_LICENSE`, or `RSPM_LICENSE`, as
 the case may be.
 
+```
+export RSC_LICENSE=my-rsc-key
+export RSP_LICENSE=my-rsp-key
+export RSPM_LICENSE=my-rspm-key
+```
+
 There are several users scripted into the systems at the outset.  These users
 are in the [users](./cluster/users) file. They are `user pass` combinations.
 
 To get started, you will need to install:
+ - `git`
  - `make`
  - `docker`
  - `docker-compose`
  - `bash`
  - `python3` (on your PATH)
 
+First step is to clone the repository. I recommend doing this [over
+SSH](https://help.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh).
+You will need to:
+- provide GitHub with an SSH key. If you do not have one (check with `ls
+  ~/.ssh`), you can generate it with
+```
+ssh-keygen
+```
+- then upload `id_rsa.pub` (THE PUBLIC PART! Not the other one!) to GitHub under:
+    - Dropdown in top right corner
+    - "Settings"
+    - "SSH and GPG Keys"
+    - "New SSH Key"
+- then clone with (the URL will be different if you are using HTTPS):
+```
+git clone git@github.com:rstudio/sol-eng-docker.git
+```
+
+Move into the directory:
+```
+cd sol-eng-docker
+```
+
 Once done, you can run the following (from a bash shell) to check your environment:
 ```
+# ensure you are IN the repository!
+pwd
 make check
 ```
 
@@ -68,7 +100,7 @@ make test-env-up
 make ldap-server-up
 make connect-up
 make rsp-up
-make kerb-up
+make kerb-server-up
 make proxy-connect-up proxy-saml-up
 make ldap-connect-up
 ```
@@ -105,11 +137,17 @@ live. These will often build on or from [`./cluster`](./cluster) resources.
 
 # Common Problems
 
+- HELP, I am on Windows!!
+    - You do need a `bash` shell, so we recommend using `git bash` or Windows Sub-system Linux (WSL)
+    - Beware checking out windows-style line endings in `git`. This will break `bash` in a myriad of ways
 - The `docker network` does not exist yet
     - Run `make test-env-up` to resolve this issue
 ```
 ERROR: Network sol-eng-docker_default declared as external, but could not be found. Please create the network manually using `docker network create sol-eng-docker_default` and try again.
 ```
+- Volume mounts are not working...?
+    - We recommend _NOT_ running docker / cloning this repo as `root`
+    - The reason for this is a bit tricky, but basically you need to set `privileged: true` on containers that use mounts or docker will not be able to read the files you are mounting into the container
 - docker cache outdated: let's say it has been a while and your docker cache
   needs `apt-get update` to be run in order to install things.  `docker-compose
 -f myfile.yml build --no-cache myservice` can get you unstuck if you are

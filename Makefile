@@ -138,6 +138,8 @@ ssl-proxy-rsp-down:
 	NETWORK=${NETWORK} \
 	docker-compose -f compose/ssl-proxy-rsp.yml -f compose/make-network.yml down
 
+load-test-build:
+	docker-compose -f compose/load-test.yml build
 #---------------------------------------------
 # Base Products
 #---------------------------------------------
@@ -390,7 +392,8 @@ apache-simple-down:
 
 proxy-basic-up:
 	NETWORK=${NETWORK} \
-        docker-compose -f compose/proxy-basic.yml -f compose/make-network.yml up -d nginx-support-rsp
+        docker-compose -f compose/proxy-basic.yml -f compose/make-network.yml up -d nginx-support-rsp && \
+	./bin/pdocker ps nginx-support-rsp
 
 proxy-basic-down:
 	NETWORK=${NETWORK} \
