@@ -252,6 +252,12 @@ r-session-debug-build:
 	docker-compose -f compose/r-session-debug.yml build debug-session
 
 #---------------------------------------------
+# Support
+#---------------------------------------------
+s-%:
+	$(MAKE) -C support $*
+
+#---------------------------------------------
 # Floating License Servers
 #---------------------------------------------
 float-build:
