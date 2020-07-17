@@ -9,4 +9,5 @@ services:
       - "8787"
     volumes:
       - ../config/case-1.sh:/usr/local/bin/startup.sh
+      - ../config/logging-debug.conf:/etc/rstudio/logging.conf
  
