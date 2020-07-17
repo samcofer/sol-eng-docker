@@ -61,6 +61,15 @@ services:
     ports:
       - "80"
 
+  nginx-support-connect:
+    hostname: nginx-support-connect
+    image: nginx
+    volumes:
+      - ../cluster/nginx-connect.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - "80"
+      - "443"
+
   nginx-all:
     hostname: nginx-all
     image: nginx

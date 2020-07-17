@@ -399,6 +399,15 @@ proxy-basic-down:
 	NETWORK=${NETWORK} \
         docker-compose -f compose/proxy-basic.yml -f compose/make-network.yml stop nginx-support-rsp
 
+nginx-support-connect-up:
+	NETWORK=${NETWORK} \
+        docker-compose -f compose/proxy-basic.yml -f compose/make-network.yml up -d nginx-support-connect && \
+	./bin/pdocker ps nginx-support-connect
+
+nginx-support-connect-down:
+	NETWORK=${NETWORK} \
+        docker-compose -f compose/proxy-basic.yml -f compose/make-network.yml down
+
 proxy-basic-rsp-ha-up:
 	NETWORK=${NETWORK} \
         docker-compose -f compose/proxy-basic.yml -f compose/make-network.yml up -d apache-support-rsp-ha
