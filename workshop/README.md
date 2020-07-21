@@ -27,9 +27,9 @@ What it is:
 
 Let's get started!
 
-[//]: # toc
+<!--toc-->
 - [Get Started](./get_started.md)
-[//]: # end toc
+<!--end toc-->
 
 # What about past workshops?
 
