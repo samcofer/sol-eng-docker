@@ -25,7 +25,24 @@ What it is:
 
 # Sounds Fun! What's next!?
 
-Let's get started! We have not yet ported the workshop directions into this
-repository, so your next steps are in [this Google
-Doc](https://docs.google.com/document/d/1nWZ-yMc_Sp5VGcK_jpE8qxpYyELizZ2sFMcJLcsjUn8/edit?usp=sharing)
+Let's get started!
+
+<> toc
+- [Get Started](./get_started.md)
+<> end toc
+
+# What about past workshops?
+
+You can definitely follow the instructions above solo or buddied up with
+someone else. Please feel free to ask questions in `#auth-workshop`.
+
+If you want a "video walkthrough" along with some common problems / pain
+points, then you can have a look at our past recordings!
+
+## Recordings
+
+- [2020-06-17 - Getting
+  Started](https://drive.google.com/file/d/1yEFzh4A0sGa7j1Tpk-HuY3JFiaMP1wtZ/view?usp=sharing)
+- [2020-07-02 -
+  Kerberos](https://drive.google.com/file/d/1ogotNEVLQ-XrQtD__8vsYSHrfklbPjLx/view?usp=sharing)
 
