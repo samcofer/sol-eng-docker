@@ -102,7 +102,7 @@ should see Connect running!!
 - To prove this is a functional Connect server, let’s do a git-based deployment
   of the https://github.com/colearendt/shiny-shell app (master branch)
 
-<img src='img/1_git_deploy.png' />
+<img src='img/get_started_git_deploy.png' />
 
 - See! It's alive!! Well done!!
 
@@ -112,7 +112,7 @@ should see Connect running!!
 
 - We are going to remove this error message from our browser:
 
-<img src='img/1_http_warning.png' />
+<img src='img/get_started_http_warning.png' />
 
 - In your terminal (or your favorite file editor), open the file
   `./cluster/base-connect.gcfg`
