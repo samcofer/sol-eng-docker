@@ -106,7 +106,8 @@ This is a simple pattern of communication. "Give me the thing"
 
 ### 301 - Redirect
 
-I call this ["these are not the droids you are looking for"]().
+I call this ["these are not the droids you are looking
+for"](https://www.youtube.com/watch?v=532j-186xEQ&t=44s).
 
 Common status codes are 301 or 302, and the "Location" response header is very important.
 
