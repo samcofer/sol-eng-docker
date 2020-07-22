@@ -1,8 +1,8 @@
 version: '2.3'
 services:
 
-  nginx-connect:
-    hostname: nginx-connect
+  proxy-nginx-connect:
+    hostname: proxy-nginx-connect
     image: nginx
     volumes:
       - ../cluster/nginx-connect.conf:/etc/nginx/nginx.conf:ro
