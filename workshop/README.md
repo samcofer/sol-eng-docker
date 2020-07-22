@@ -29,10 +29,14 @@ What it is:
 Let's get started!
 
 <!--toc-->
-- [Get Started](./get_started.md)
-- [SAML](./saml.md)
-- [LDAP](./ldap.md)
-- [Kerberos](./kerberos.md)
+
+Rough ordering. The first two introduce most concepts.  Global tips throughout.
+
+1. [Get Started](./get_started.md)
+1. [SAML](./saml.md)
+1. [Kerberos](./kerberos.md)
+1. [Proxy](./proxy.md)
+1. [LDAP](./ldap.md)
 <!--end toc-->
 
 # What about past workshops?
