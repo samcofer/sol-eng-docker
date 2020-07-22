@@ -399,6 +399,41 @@ proxy-basic-down:
 	NETWORK=${NETWORK} \
         docker-compose -f compose/proxy-basic.yml -f compose/make-network.yml stop nginx-support-rsp
 
+proxy-nginx-all-up:
+	NETWORK=${NETWORK} \
+        docker-compose -f compose/proxy-nginx-all.yml -f compose/make-network.yml up -d && \
+	./bin/pdocker ps proxy-nginx-all
+
+proxy-nginx-all-down:
+	NETWORK=${NETWORK} \
+        docker-compose -f compose/proxy-nginx-all.yml -f compose/make-network.yml down
+
+proxy-nginx-all-restart:
+	NETWORK=${NETWORK} \
+        docker-compose -f compose/proxy-nginx-all.yml -f compose/make-network.yml restart
+
+proxy-nginx-connect-up:
+	NETWORK=${NETWORK} \
+        docker-compose -f compose/proxy-nginx-connect.yml -f compose/make-network.yml up -d && \
+	./bin/pdocker ps proxy-nginx-connect
+
+proxy-nginx-connect-down:
+	NETWORK=${NETWORK} \
+        docker-compose -f compose/proxy-nginx-connect.yml -f compose/make-network.yml down
+
+proxy-nginx-connect-restart:
+	NETWORK=${NETWORK} \
+        docker-compose -f compose/proxy-nginx-connect.yml -f compose/make-network.yml restart
+
+nginx-support-connect-up:
+	NETWORK=${NETWORK} \
+        docker-compose -f compose/proxy-basic.yml -f compose/make-network.yml up -d nginx-support-connect && \
+	./bin/pdocker ps nginx-support-connect
+
+nginx-support-connect-down:
+	NETWORK=${NETWORK} \
+        docker-compose -f compose/proxy-basic.yml -f compose/make-network.yml down
+
 proxy-basic-rsp-ha-up:
 	NETWORK=${NETWORK} \
         docker-compose -f compose/proxy-basic.yml -f compose/make-network.yml up -d apache-support-rsp-ha
