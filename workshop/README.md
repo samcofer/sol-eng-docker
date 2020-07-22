@@ -21,6 +21,7 @@ What it is:
 - Let me try this `ldapsearch` command to be sure it works the way I thought
 - I have some time. Let me try to configure RStudio Server Pro to use SAML for
   myself
+- What happens if I tweak this nginx configuration?
 - I either use `docker` or am interested in learning more about `docker`
 
 # Sounds Fun! What's next!?
@@ -29,6 +30,9 @@ Let's get started!
 
 <!--toc-->
 - [Get Started](./get_started.md)
+- [SAML](./saml.md)
+- [LDAP](./ldap.md)
+- [Kerberos](./kerberos.md)
 <!--end toc-->
 
 # What about past workshops?
@@ -37,7 +41,8 @@ You can definitely follow the instructions above solo or buddied up with
 someone else. Please feel free to ask questions in `#auth-workshop`.
 
 If you want a "video walkthrough" along with some common problems / pain
-points, then you can have a look at our past recordings!
+points, then you can have a look at our past recordings! We will also announce
+future meetings in `#auth-workshop`
 
 ## Recordings
 
