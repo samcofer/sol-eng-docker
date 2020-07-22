@@ -5,6 +5,13 @@ and testing customer environments with RStudio Professional Software.
 
 ## Sub-Projects
 
+### Auth Workshop
+
+There is an "Auth Workshop" with a more curated walkthrough of these resources.
+Visit `#auth-workshop` or checkout the docs!
+
+- [Auth Workshop](./workshop)
+
 ### Tested
 
 - [Kerberos](./docs/kerberos.md)
