@@ -15,6 +15,10 @@ services:
     environment:
       - RSP_LICENSE
       - RSP_TESTUSER=
+    volumes:
+     - "../cluster/kerberos-rstudio/rserver.conf:/etc/rstudio/rserver.conf"
+     - "../cluster/pam:/etc/pam.d/rstudio"
+     - "../cluster/pam-session:/etc/pam.d/rstudio-session"
 
   sut:
     image: rstudio/sol-eng-rstudio:kerberos-${RSTUDIO_VERSION}

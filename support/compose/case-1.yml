@@ -1,0 +1,13 @@
+version: '2.3'
+services:
+  case-1-rsp:
+    image: rstudio/rstudio-server-pro:${RSTUDIO_VERSION}
+    privileged: true
+    environment:
+      RSP_LICENSE: ${RSP_LICENSE}
+    ports:
+      - "8787"
+    volumes:
+      - ../config/case-1.sh:/usr/local/bin/startup.sh
+      - ../config/logging-debug.conf:/etc/rstudio/logging.conf
+ 

@@ -26,6 +26,7 @@ Provider = pam
 
 [Applications]
 RunAsCurrentUser = true
+
 [PAM]
 UseSession = true  ; Enable PAM sessions
 Service = rstudio-connect
@@ -33,3 +34,8 @@ ForwardPassword = true ; Forward the current user's password into the PAM sessio
 PasswordLifetime = 1h ; Cache passwords for 1 hour(s) after login
 AuthenticatedSessionService = rstudio-connect-session ; PAM service that accepts credentials
 
+[RPackageRepository "CRAN"]
+URL = "https://packagemanager.rstudio.com/cran/__linux__/bionic/latest"
+
+[RPackageRepository "RSPM"]
+URL = "https://packagemanager.rstudio.com/cran/__linux__/bionic/latest"

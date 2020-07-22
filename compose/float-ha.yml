@@ -3,7 +3,8 @@ services:
 
   float-connect-1:
     hostname: float-connect-1
-    image: rstudio/float-connect:${VERSION}
+    image: rstudio/rstudio-connect-float-lic:latest
+    #image: rstudio/float-connect:${VERSION}
     build:
       context: ../cluster
       dockerfile: ./float/Dockerfile
@@ -20,7 +21,8 @@ services:
 
   float-connect-2:
     hostname: float-connect-2
-    image: rstudio/float-connect:${VERSION}
+    image: rstudio/rstudio-connect-float-lic:latest
+    #image: rstudio/float-connect:${VERSION}
     build:
       context: ../cluster
       dockerfile: ./float/Dockerfile

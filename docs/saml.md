@@ -2,12 +2,43 @@
 
 The following outlines the implementation of SAML used in the auth-docker repo, as well as a handful of the pain points experienced.
 
-## Getting Started
+# Getting Started
+
+To get started, ensure you have run `make test-env-up`. Then run:
+
+```
+make saml-idp-up saml-connect-up
+```
+
+This will stand up RStudio Connect with SAML authentication.
+
+## Notes
+
+- Our current SAML IdP only supports a single "Service Provider" (SP) at a
+  time.  This means that if you want to use RSP, for instance, you will need to
+  modify this file and change the SP URL:
+  [../compose/saml-idp.yml](../compose/saml-idp.yml)
+- You need to add an entry in `/etc/hosts` to facilitate the IdP routing (it is
+  important that both the container and your host can route to `saml-idp` with
+  the same URL, which requires an entry in `/etc/hosts`)
+```
+127.0.0.1	saml-idp
+```
+
+## Credentials
+
+Users are provisioned via [`../cluster/users.php`](../cluster/users.php).
+However, for simple login, an easy reference of `user pass` combinations is
+available at [`../cluster/users`](../cluster/users)
+
+## Example workflow
 
 - Login: Go to http://localhost . This will prompt you for authentication before permitting you to access backend resources
 - Logout: Go to http://localhost/secret/logout?ReturnTo=http://localhost
 	- NOTE: this is currently broken... so you will get a `BadRequest` response... however, LogOut will be successful... so just go to http://localhost and you will be prompted for authentication
 - If you want to login to the SAML IdP, the `user:pass` is `admin:secret`
+
+# Development Background
 
 ## Tools Used
 

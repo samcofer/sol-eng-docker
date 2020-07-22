@@ -18,8 +18,7 @@ Address = http://localhost:3939
 
 [Python]
 Enabled = true
-Executable = /usr/bin/python
-Executable = /usr/bin/python3
+Executable = /opt/python/3.6.5/bin/python
 
 	
 [Https]
