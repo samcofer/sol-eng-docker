@@ -402,7 +402,7 @@ proxy-basic-down:
 proxy-nginx-all-up:
 	NETWORK=${NETWORK} \
         docker-compose -f compose/proxy-nginx-all.yml -f compose/make-network.yml up -d && \
-	./bin/pdocker ps nginx-all
+	./bin/pdocker ps proxy-nginx-all
 
 proxy-nginx-all-down:
 	NETWORK=${NETWORK} \
@@ -415,7 +415,7 @@ proxy-nginx-all-restart:
 proxy-nginx-connect-up:
 	NETWORK=${NETWORK} \
         docker-compose -f compose/proxy-nginx-connect.yml -f compose/make-network.yml up -d && \
-	./bin/pdocker ps nginx-connect
+	./bin/pdocker ps proxy-nginx-connect
 
 proxy-nginx-connect-down:
 	NETWORK=${NETWORK} \
