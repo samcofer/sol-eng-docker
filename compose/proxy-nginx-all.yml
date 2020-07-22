@@ -1,0 +1,10 @@
+version: '2.3'
+services:
+
+  nginx-all:
+    hostname: nginx-all
+    image: nginx
+    volumes:
+      - ../cluster/nginx-all.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - "80"
