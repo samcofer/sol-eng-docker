@@ -13,14 +13,18 @@ Provider = saml
 
 [SAML]
 Logging = true
-IdPMetaDataPath = /etc/rstudio-connect/keycloak-metadata.xml
+;IdPMetaDataPath = /etc/rstudio-connect/keycloak-metadata.xml
+NameIdFormat = unspecified
+IdPMetaDataUrl = http://keycloak:8080/auth/realms/master/protocol/saml/descriptor
 UsernameAttribute = NameID
-EmailAttribute = email
+EmailAttribute = "urn:oid:1.2.840.113549.1.9.1"
+FirstNameAttribute = "urn:oid:2.5.4.42"
+LastNameAttribute = "urn:oid:2.5.4.4"
 ;UniqueIdAttribute = uid
-;GroupsAttribute = eduPersonAffiliation
+GroupsAttribute = Role
 ;NameIdFormat = transient
 SSOInitiated = IdPAndSP
-;GroupsAutoProvision = true
+GroupsAutoProvision = true
 
 [RPackageRepository "CRAN"]
 URL = "https://packagemanager.rstudio.com/cran/__linux__/bionic/latest"
