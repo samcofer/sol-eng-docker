@@ -1,5 +1,28 @@
 ansiColor('xterm') {
   stage('test') {
+    parallel 'setup': {
+      node('docker') {
+        checkout scm
+        //======================= BEGIN: Setup tests ================================
+        print "==> BEGIN: Setup tests"
+        try {
+        print "====> Building environment"
+        sh "make check"
+        sh "make pull"
+        sh "make build"
+        sh "make test-env-up"
+        sh "sleep 10"
+        } catch(err) {
+          print "${err}"
+        } finally {
+          print "====> Cleanup environment"
+          sh "make test-env-down"
+        }
+        print "==> END: Setup tests"
+        //======================= END: Setup tests ================================
+        print "Finished"
+      }
+    },
     parallel 'kerberos': {
       node('docker') {
         checkout scm
@@ -86,11 +109,13 @@ ansiColor('xterm') {
         sh "make test-env-up"
         sh "make proxy-saml-up proxy-basic-up proxy-mitm-up"
         sh "make proxy-connect-up proxy-rsp-up"
+        sh "make proxy-nginx-connect-up"
         sh "sleep 10"
         } catch(err) {
           print "${err}"
         } finally {
           print "====> Cleanup environment"
+          sh "make proxy-nginx-connect-down"
           sh "make proxy-rsp-down proxy-connect-down"
           sh "make proxy-mitm-down proxy-basic-down proxy-saml-down"
           sh "make test-env-down"
