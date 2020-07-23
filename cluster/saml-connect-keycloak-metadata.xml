@@ -1,31 +1,50 @@
-<EntityDescriptor xmlns="urn:oasis:names:tc:SAML:2.0:metadata" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" Name="urn:keycloak" entityID="http://localhost:8080/auth/realms/master">
-<IDPSSODescriptor WantAuthnRequestsSigned="true" protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
-<KeyDescriptor use="signing">
-<dsig:KeyInfo>
-<dsig:KeyName>h3ISZM78Q1aOiV1c7ff9FnRhGk_aFPJ3YpokA7cfrXU</dsig:KeyName>
-<dsig:X509Data>
-<dsig:X509Certificate>
-MIICmzCCAYMCBgFx/CneCjANBgkqhkiG9w0BAQsFADARMQ8wDQYDVQQDDAZtYXN0ZXIwHhcNMjAwNTEwMDExNzE0WhcNMzAwNTEwMDExODU0WjARMQ8wDQYDVQQDDAZtYXN0ZXIwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCL2FAcnkbHssnYUagJmqmmiks7LLZpe/YXTWfwPTtYTEA8JucIduPwrQQMCmCzYR8YByIlpyGuYU8tYoM5dCDlXjCUH+s9zBxOYOTQn3PSKQnfqYI9/30lNmS5ZhOi7La9hl85X07SDS0QSCzbDmZlvUhLQ+EnjTV3uz2vr7M6vGicYJPnh0WXWsyVsUmTLd2bEn2eMHZ3n6Kdwj4dtlVV/InVSNkz//Y8nSogKZ76wRehq9+HUzzU1Y0JoFpSZLkHP2GDsyyIvP6HLbTyo9nAbQ5e490WxuwRwZ0jZtB90GcsAsYEzhUyj/LyEtC+7wvs1GilF5mqOIuzRS6e/mNXAgMBAAEwDQYJKoZIhvcNAQELBQADggEBAINPJm6d7B3LV2AXJQUXTgR4/bYqLq+vaMVMnt/QeUrFS4p/jPMTQ9Psc2L7ibpiO37ziWpgrIFlMSploOA35ztQ800SCYU5OZHSk+NZrZhpDxdI53mDGAyRz8Yj2ZnMtcKL3+Snaj0WT4OyC6cA+L2I8Or62dL39+vA/6eLxbFk98EEVPAT2rVsV3wDQpZ67fCJfrynMB/ggfX8x76cIsd0GXEGeK+03rPl3ldQcTmb/a4fd1CZF/4nMDM0DGKsrx758e9HWohqN809ZOgUfXHxBeuQvlk+gNuHcW41hXzghJdg8Pf2z5AbLamkkdexilf5Jy4lf4c02B71Pb/G0kE=
-</dsig:X509Certificate>
-</dsig:X509Data>
-</dsig:KeyInfo>
-</KeyDescriptor>
-<SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="http://localhost:8080/auth/realms/master/protocol/saml"/>
-<SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="http://localhost:8080/auth/realms/master/protocol/saml"/>
-<NameIDFormat>
-urn:oasis:names:tc:SAML:2.0:nameid-format:persistent
-</NameIDFormat>
-<NameIDFormat>
-urn:oasis:names:tc:SAML:2.0:nameid-format:transient
-</NameIDFormat>
-<NameIDFormat>
-urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified
-</NameIDFormat>
-<NameIDFormat>
-urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress
-</NameIDFormat>
-<SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="http://localhost:8080/auth/realms/master/protocol/saml"/>
-<SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="http://localhost:8080/auth/realms/master/protocol/saml"/>
-<SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP" Location="http://localhost:8080/auth/realms/master/protocol/saml"/>
-</IDPSSODescriptor>
-</EntityDescriptor>
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright 2016 Red Hat, Inc. and/or its affiliates
+  ~ and other contributors as indicated by the @author tags.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+	<EntityDescriptor entityID="http://localhost:8080/auth/realms/master" Name="urn:keycloak" xmlns="urn:oasis:names:tc:SAML:2.0:metadata" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+		<IDPSSODescriptor WantAuthnRequestsSigned="true"
+			protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
+                        <KeyDescriptor use="signing">
+                          <dsig:KeyInfo>
+                            <dsig:KeyName>ILcZwOKlYEcXlybi0TwG08QSC-7XHqxo5eLr4yXYvc4</dsig:KeyName>
+                            <dsig:X509Data>
+                              <dsig:X509Certificate>MIICmzCCAYMCBgFzd8D6ZDANBgkqhkiG9w0BAQsFADARMQ8wDQYDVQQDDAZtYXN0ZXIwHhcNMjAwNzIyMTgxODIyWhcNMzAwNzIyMTgyMDAyWjARMQ8wDQYDVQQDDAZtYXN0ZXIwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCkX28abCLCi2puMDya0RRQjDw2dNArtUgHinNw3E18o8qwQ7trHW5NAwo65RbLYNGX7ZdwO9l9NNsEwzii7hrtKfA2v7pR7OaiVCj275CzVUgiPgluia/Jg2CLTPXX8jA6vTbw8NDmh8j9Tn8wzjuNr0yMmE99+Ow6mDaTPUL22UfgS1737crDF7orR5HEzWycSm5A1eAsE/HjH492UIaJ4BrUiFnmWjAhMtr/RjarNigGchIUS07pk7JQc4FnFnErrBWCrKVFxrFixAz0zn3gYkbjgm0Co0zlrClYlBnyxRIdSwn2xvEjfrQd9avJGSLIu4eAH6Rbzv/EM54yJEaRAgMBAAEwDQYJKoZIhvcNAQELBQADggEBABU3LX747l/ijJQLevbyFbP3fDQtD53DEfz4m1OeMhZI9LiHqhuEI+jRBUwZSA7izNk67MTJtmg75T9OrVebuc2GPI3lMCImlcuumxs4YwDgC3uhcI92djAHtR6TnlDw4ehAi96ccCMPp0yv/M4uh/iF9T1zRbd5z6gmFk8JgVhI+mJrqiD/7o46Ny+8/A6r3/Oxrn3bYiBfT+fhwSUh1xGcTjI+axIRnBmw8Co2Icwk4SZE/+j3ppOefVfJ50gqtSgCSZ/myOCSAWuTJxIudqz47wmbQoafUF6gwGSD5ycN8oxnNoF72yNL1qeqhpHkcfI2yHNgdn7HlXDMNtCfi98=</dsig:X509Certificate>
+                            </dsig:X509Data>
+                          </dsig:KeyInfo>
+                        </KeyDescriptor>
+
+			<SingleLogoutService
+					Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"
+					Location="http://localhost:8080/auth/realms/master/protocol/saml" />
+			<SingleLogoutService
+					Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"
+					Location="http://localhost:8080/auth/realms/master/protocol/saml" />
+			<NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:persistent</NameIDFormat>
+			<NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:transient</NameIDFormat>
+			<NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified</NameIDFormat>
+			<NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress</NameIDFormat>
+			<SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"
+				Location="http://localhost:8080/auth/realms/master/protocol/saml" />
+			<SingleSignOnService
+				Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"
+				Location="http://localhost:8080/auth/realms/master/protocol/saml" />
+			<SingleSignOnService
+				Binding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP"
+				Location="http://localhost:8080/auth/realms/master/protocol/saml" />
+		</IDPSSODescriptor>
+	</EntityDescriptor>
