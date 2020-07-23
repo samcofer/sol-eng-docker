@@ -102,21 +102,21 @@ This is a simple pattern of communication. "Give me the thing"
 - Backend server gives the response
 - Reverse proxy tells the client the response
 
-<!--TODO: image-->
+<img src='img/proxy-200.png' />
 
 ### 301 - Redirect
 
 I call this ["these are not the droids you are looking
 for"](https://www.youtube.com/watch?v=532j-186xEQ&t=44s).
 
-Common status codes are 301 or 302, and the "Location" response header is very important.
+Common status codes are 301/302/307/30x/etc., and the "Location" response header is very important.
 
 - Client requests `/rspm/`
 - Reverse proxy forwards request for `/` to backend server
 - Backend server says "these are not the droids you are looking for." You should request `/client/`
 - Reverse proxy tells client to request `/rspm/client/` instead
 
-<!--TODO: image-->
+<img src='img/proxy-300.png' />
 
 ### 404 - Not Found
 
@@ -128,7 +128,7 @@ upstream server has no idea what you are requesting
 - Backend server says "I have no idea what you're talking about"
 - Reverse proxy forwards the response back to the client
 
-<!--TODO: image-->
+<img src='img/proxy-404.png' />
 
 ### 502 - Upstream not responding
 
@@ -141,7 +141,7 @@ and tell the client "I don't know what's wrong"
 - Backend server does not respond... proxy waits
 - After the timeout, proxy stops waiting and responds to the client
 
-<!--TODO: image-->
+<img src='img/proxy-502.png' />
 
 ### Caching
 
@@ -154,8 +154,10 @@ As they say, there are only 2 hard things in computer science. Naming, cache
 invalidation, and off-by-one errors. You will find both in this repository :wink:
 
 - Client requests `/rsc/`
-- Browser remembers that this path redirected to `/rsc/connect/` last time
+- Browser remembers that this path redirected to `/rsc/connect/` last time (with a "permanent redirect")
 - Browser requests `/rsc/connect/` instead
+
+<img src='img/proxy-cache.png' />
 
 ## Let's try it!
 
@@ -181,3 +183,7 @@ and many many ways to resolve. Welcome to proxy therapy, you are now the
 therapist.
 
 # Exercise 2 - Break it down!
+
+- Comment out `rewrite`
+- Comment out `proxy_redirect`
+- Stop Connect
