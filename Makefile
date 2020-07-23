@@ -29,7 +29,8 @@ pull:
 	&& docker pull kristophjunge/test-saml-idp \
 	&& docker pull osixia/openldap \
 	&& docker pull osixia/phpldapadmin \
-	&& docker pull dtwardow/ldap-self-service-password
+	&& docker pull dtwardow/ldap-self-service-password \
+	&& docker pull nginx
 	  
 build: kerb-server-build kerb-ssh-build kerb-rsp-build kerb-connect-build
 
@@ -410,7 +411,8 @@ proxy-nginx-all-down:
 
 proxy-nginx-all-restart:
 	NETWORK=${NETWORK} \
-        docker-compose -f compose/proxy-nginx-all.yml -f compose/make-network.yml restart
+        docker-compose -f compose/proxy-nginx-all.yml -f compose/make-network.yml restart && \
+	./bin/pdocker ps proxy-nginx-all
 
 proxy-nginx-connect-up:
 	NETWORK=${NETWORK} \
@@ -423,16 +425,8 @@ proxy-nginx-connect-down:
 
 proxy-nginx-connect-restart:
 	NETWORK=${NETWORK} \
-        docker-compose -f compose/proxy-nginx-connect.yml -f compose/make-network.yml restart
-
-nginx-support-connect-up:
-	NETWORK=${NETWORK} \
-        docker-compose -f compose/proxy-basic.yml -f compose/make-network.yml up -d nginx-support-connect && \
-	./bin/pdocker ps nginx-support-connect
-
-nginx-support-connect-down:
-	NETWORK=${NETWORK} \
-        docker-compose -f compose/proxy-basic.yml -f compose/make-network.yml down
+        docker-compose -f compose/proxy-nginx-connect.yml -f compose/make-network.yml restart && \
+	./bin/pdocker ps proxy-nginx-connect
 
 proxy-basic-rsp-ha-up:
 	NETWORK=${NETWORK} \
