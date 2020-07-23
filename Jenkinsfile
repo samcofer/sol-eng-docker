@@ -23,7 +23,7 @@ ansiColor('xterm') {
         print "Finished"
       }
     },
-    parallel 'kerberos': {
+    'kerberos': {
       node('docker') {
         checkout scm
         //======================= BEGIN: Kerberos tests ================================
