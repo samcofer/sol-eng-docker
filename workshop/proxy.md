@@ -183,3 +183,7 @@ and many many ways to resolve. Welcome to proxy therapy, you are now the
 therapist.
 
 # Exercise 2 - Break it down!
+
+- Comment out `rewrite`
+- Comment out `proxy_redirect`
+- Stop Connect
