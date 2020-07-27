@@ -1,0 +1,31 @@
+; RStudio Connect configuration file
+
+[Server]
+SenderEmail = rsconnect@example.com
+ExpandedViewUI = true
+DefaultContentListView = "expanded"
+
+Address = http://localhost:3939
+ViewerKiosk = true
+
+[Python]
+Enabled = true
+Executable = /opt/python/3.6.5/bin/python
+
+[Packages]
+;HTTPProxy = http://proxy-mitm:8080/
+;HTTPSProxy = http://proxy-mitm:8080/
+	
+[Http]
+Listen = :3939
+
+[Authentication]
+Provider = password
+
+[RPackageRepository "CRAN"]
+;URL = file:///tmp/test
+URL = "https://packagemanager.rstudio.com/cran/__linux__/bionic/latest"
+
+[RPackageRepository "RSPM"]
+;URL = file:///tmp/test
+URL = "https://packagemanager.rstudio.com/cran/__linux__/bionic/latest"
