@@ -5,7 +5,7 @@ COPY ./stdin_echo.py /stdin_echo.py
 
 RUN mv /usr/lib/rstudio-server/bin/rserver-launcher /usr/lib/rstudio-server/bin/rserver-launcher-orig && \
 	apt-get update && \
-	apt-get install -y vim cron nano
+	apt-get install -y vim cron nano tcpdump
   #pip install asyncio mitmproxy && \
   #yum update && yum install -y tcpdump
 
