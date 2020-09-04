@@ -3,7 +3,7 @@ services:
 
   rsp1:
     hostname: rsp1
-    image: rstudio/rstudio-server-pro:1.2.5033-1
+    image: rstudio/rstudio-server-pro:1.3.1056-1
     privileged: true
     environment:
       RSP_LICENSE: ${RSP_LICENSE}
@@ -16,7 +16,7 @@ services:
       - rsp-home-vol:/home
   rsp2:
     hostname: rsp2
-    image: rstudio/rstudio-server-pro:1.2.5033-1
+    image: rstudio/rstudio-server-pro:1.3.1056-1
     privileged: true
     environment:
       RSP_LICENSE: ${RSP_LICENSE}
@@ -27,21 +27,21 @@ services:
       - ../cluster/rsp-ha-rserver.conf:/etc/rstudio/rserver.conf
       - ../cluster/secure-cookie-key:/etc/rstudio/secure-cookie-key
       - rsp-home-vol:/home
-  rsp-nfs:
-    hostname: rsp-nfs
-    image: colearendt/nfs-server-alpine
-    privileged: true
-    command: ["/mnt/home"] 
-    environment:
-      NFS_OPTS: rw,async,fsid=0,no_subtree_check,no_auth_nlm,insecure
-    tmpfs: "/mnt/home"
-    ports:
-      - "2049:2049"
+  # rsp-nfs:
+  #   hostname: rsp-nfs
+  #   image: colearendt/nfs-server-alpine
+  #   privileged: true
+  #   command: ["/mnt/home"]
+  #   environment:
+  #     NFS_OPTS: rw,async,fsid=0,no_subtree_check,no_auth_nlm,insecure
+  #   tmpfs: "/mnt/home"
+  #   ports:
+  #     - "2049:2049"
 
 volumes:
   rsp-home-vol:
-  rsp-nfs-vol:
-    driver_opts:
-      type: "nfs"
-      o: "addr=host.docker.internal,nolock,soft,rw,proto=tcp"
-      device: ":/mnt/home"
+  # rsp-nfs-vol:
+  #   driver_opts:
+  #     type: "nfs"
+  #     o: "addr=host.docker.internal,nolock,soft,rw,proto=tcp"
+  #     device: ":/mnt/home"
