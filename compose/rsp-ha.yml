@@ -38,6 +38,14 @@ services:
   #   ports:
   #     - "2049:2049"
 
+  proxy:
+      image: nginx
+      ports:
+          - "80:80"
+      volumes:
+          - ../cluster/nginx-rsp-ha.conf:/etc/nginx/conf.d/default.conf
+
+
 volumes:
   rsp-home-vol:
   # rsp-nfs-vol:
