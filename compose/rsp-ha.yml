@@ -13,6 +13,9 @@ services:
       - ../cluster/rsp-load-balancer:/etc/rstudio/load-balancer
       - ../cluster/rsp-ha-rserver.conf:/etc/rstudio/rserver.conf
       - ../cluster/secure-cookie-key:/etc/rstudio/secure-cookie-key
+      - ../cluster/launcher.conf:/etc/rstudio/launcher.conf
+      - ../cluster/launcher.pem:/etc/rstudio/launcher.pem
+      - ../cluster/launcher.pub:/etc/rstudio/launcher.pub
       - rsp-home-vol:/home
   rsp2:
     hostname: rsp2
@@ -26,6 +29,9 @@ services:
       - ../cluster/rsp-load-balancer:/etc/rstudio/load-balancer
       - ../cluster/rsp-ha-rserver.conf:/etc/rstudio/rserver.conf
       - ../cluster/secure-cookie-key:/etc/rstudio/secure-cookie-key
+      - ../cluster/launcher.conf:/etc/rstudio/launcher.conf
+      - ../cluster/launcher.pem:/etc/rstudio/launcher.pem
+      - ../cluster/launcher.pub:/etc/rstudio/launcher.pub
       - rsp-home-vol:/home
   # rsp-nfs:
   #   hostname: rsp-nfs
