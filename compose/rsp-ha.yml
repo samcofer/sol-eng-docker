@@ -16,6 +16,7 @@ services:
       - ../cluster/launcher.pem:/etc/rstudio/launcher.pem
       - ../cluster/launcher.pub:/etc/rstudio/launcher.pub
       - rsp-home-vol:/home
+      - launcher-scratch:/var/lib/rstudio-launcher/Local
   rsp2:
     hostname: rsp2
     image: rstudio/rstudio-server-pro:1.3.1056-1
@@ -31,6 +32,7 @@ services:
       - ../cluster/launcher.pem:/etc/rstudio/launcher.pem
       - ../cluster/launcher.pub:/etc/rstudio/launcher.pub
       - rsp-home-vol:/home
+      - launcher-scratch:/var/lib/rstudio-launcher/Local
   # rsp-nfs:
   #   hostname: rsp-nfs
   #   image: colearendt/nfs-server-alpine
@@ -52,6 +54,7 @@ services:
 
 volumes:
   rsp-home-vol:
+  launcher-scratch:
   # rsp-nfs-vol:
   #   driver_opts:
   #     type: "nfs"
