@@ -27,6 +27,17 @@ Most interesting auth mechanism: SAML! (Then LDAP and Kerberos)
 
 Most intimidating auth mechanism: Kerberos (by a mile), then SAML and LDAP
 
+## Get Set Up!!
+
+If you have not used this repository before, there is some pre-work to
+ensure that your environment is set up properly and you are ready to go!
+
+This has the benefit of helping you have a quick/snappy experience running
+commands too!
+
+[Take a quick detour to our setup page, and then come back here to
+continue!](../../README#getting-started)
+
 # Exercise 0 - Let's Start Connect
 
 ## Getting Started

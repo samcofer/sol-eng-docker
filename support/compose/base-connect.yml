@@ -1,0 +1,17 @@
+version: '2.3'
+services:
+
+  connect:
+    hostname: connect
+    image: rstudio/rstudio-connect:${CONNECT_VERSION}
+    ports:
+      - 3939
+    privileged: true
+    environment:
+      - RSC_LICENSE
+      - TEE_LOG_FILE=/var/log/rstudio-connect.log
+    volumes:
+      - ../config/base-connect.gcfg:/etc/rstudio-connect/rstudio-connect.gcfg
+      - ../config/tee_connect_entrypoint.sh:/tee_connect_entrypoint.sh
+    command:
+      - "/tee_connect_entrypoint.sh"
