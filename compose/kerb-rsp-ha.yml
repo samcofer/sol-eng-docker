@@ -1,0 +1,75 @@
+version: '2.3'
+services:
+
+  kerb-rsp-ha-1:
+    hostname: kerb-rsp-ha-1
+    build:
+      context: ../cluster
+      dockerfile: kerberos-rstudio/Dockerfile
+      args:
+        - RSTUDIO_VERSION=${RSTUDIO_VERSION}
+    image: rstudio/sol-eng-rstudio:kerberos-${RSTUDIO_VERSION}
+    privileged: true
+    ports:
+      - "8787"
+    environment:
+      - RSP_LICENSE
+      - RSP_TESTUSER=
+    volumes:
+     - "../cluster/kerb-rsp-ha.conf:/etc/rstudio/rserver.conf"
+     - "../cluster/kerb-rsp-ha-load-balancer:/etc/rstudio/load-balancer"
+     - "../cluster/secure-cookie-key:/etc/rstudio/secure-cookie-key"
+     - "../cluster/pam:/etc/pam.d/rstudio"
+     - "../cluster/pam-session:/etc/pam.d/rstudio-session"
+     - "../cluster/kerb-rsp-ha-database.conf:/etc/rstudio/database.conf"
+     - "../shared/rsp-kerb-ha/shared:/var/lib/rstudio-server/shared-storage"
+     - "../shared/rsp-kerb-ha/home:/home"
+    depends_on:
+      pg-rsp:
+        condition: service_healthy
+
+  kerb-rsp-ha-2:
+    hostname: kerb-rsp-ha-2
+    build:
+      context: ../cluster
+      dockerfile: kerberos-rstudio/Dockerfile
+      args:
+        - RSTUDIO_VERSION=${RSTUDIO_VERSION}
+    image: rstudio/sol-eng-rstudio:kerberos-${RSTUDIO_VERSION}
+    privileged: true
+    ports:
+      - "8787"
+    environment:
+      - RSP_LICENSE
+      - RSP_TESTUSER=
+    volumes:
+     - "../cluster/kerb-rsp-ha.conf:/etc/rstudio/rserver.conf"
+     - "../cluster/kerb-rsp-ha-load-balancer:/etc/rstudio/load-balancer"
+     - "../cluster/secure-cookie-key:/etc/rstudio/secure-cookie-key"
+     - "../cluster/pam:/etc/pam.d/rstudio"
+     - "../cluster/pam-session:/etc/pam.d/rstudio-session"
+     - "../cluster/kerb-rsp-ha-database.conf:/etc/rstudio/database.conf"
+     - "../shared/rsp-kerb-ha/shared:/var/lib/rstudio-server/shared-storage"
+     - "../shared/rsp-kerb-ha/home:/home"
+    depends_on:
+      pg-rsp:
+        condition: service_healthy
+
+  pg-rsp:
+    hostname: pg-rsp
+    image: postgres:12
+    environment:
+      POSTGRES_PASSWORD: test
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  kerb-rsp-ha-nginx:
+    hostname: kerb-rsp-ha-nginx
+    image: nginx
+    volumes:
+      - ../cluster/kerb-rsp-ha-nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - "80:80"

@@ -4,7 +4,7 @@ PWD := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 PROJECT=sol-eng-docker
 NETWORK=${PROJECT}_default
 SCALE=1
-CONNECT_VERSION=1.8.4-11
+CONNECT_VERSION=1.8.4.2-2
 #1.7.0-11
 CONNECT_BINARY_URL=rstudio-connect_${CONNECT_VERSION}_amd64.deb
 
@@ -344,6 +344,17 @@ kerb-rsp-down:
 	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
         docker-compose -f compose/kerb-rsp.yml -f compose/make-network.yml down
 
+kerb-rsp-ha-up:
+	NETWORK=${NETWORK} \
+	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
+        docker-compose -f compose/kerb-rsp-ha.yml -f compose/make-network.yml up -d && \
+	./bin/pdocker ps kerb-rsp-ha
+
+kerb-rsp-ha-down:
+	NETWORK=${NETWORK} \
+	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
+        docker-compose -f compose/kerb-rsp-ha.yml -f compose/make-network.yml down
+
 kerb-proxy-up: proxy-kerb-up
 kerb-proxy-down: proxy-kerb-down
 kerb-proxy-build: proxy-kerb-build
@@ -525,7 +536,8 @@ ssl-proxy-saml-down:
 
 keycloak-up:
 	NETWORK=${NETWORK} \
-	docker-compose -f compose/keycloak.yml -f compose/make-network.yml up -d
+	docker-compose -f compose/keycloak.yml -f compose/make-network.yml up -d && \
+	./bin/pdocker ps keycloak
 
 keycloak-down:
 	NETWORK=${NETWORK} \

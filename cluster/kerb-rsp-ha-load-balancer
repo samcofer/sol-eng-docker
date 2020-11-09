@@ -1,0 +1,8 @@
+[config]
+
+balancer = sessions
+
+[nodes]
+
+kerb-rsp-ha-1
+kerb-rsp-ha-2
