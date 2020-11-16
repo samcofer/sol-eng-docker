@@ -15,15 +15,24 @@ services:
     environment:
       - RSP_LICENSE
       - RSP_TESTUSER=
+      - "XDG_CONFIG_DIRS=/etc/rstudio-alt:/etc/rstudio"
     volumes:
-     - "../cluster/kerb-rsp-ha.conf:/etc/rstudio/rserver.conf"
-     - "../cluster/kerb-rsp-ha-load-balancer:/etc/rstudio/load-balancer"
+     - "../cluster/kerb-rsp-ha:/etc/rstudio-alt"
      - "../cluster/secure-cookie-key:/etc/rstudio/secure-cookie-key"
      - "../cluster/pam:/etc/pam.d/rstudio"
      - "../cluster/pam-session:/etc/pam.d/rstudio-session"
      - "../cluster/kerb-rsp-ha-database.conf:/etc/rstudio/database.conf"
+     - "../cluster/launcher.pem:/etc/rstudio/launcher.pem"
+     - "../cluster/launcher.pub:/etc/rstudio/launcher.pub"
      - "../shared/rsp-kerb-ha/shared:/var/lib/rstudio-server/shared-storage"
      - "../shared/rsp-kerb-ha/home:/home"
+     - "../shared/rsp-kerb-ha/launcher:/var/lib/rstudio-launcher/Local"
+    #healthcheck:
+    #  test: ["CMD-SHELL", "curl http://localhost:8787/health-check"]
+    #  start_period: 30s
+    #  interval: 10s
+    #  timeout: 5s
+    #  retries: 5
     depends_on:
       pg-rsp:
         condition: service_healthy
@@ -44,13 +53,23 @@ services:
       - RSP_TESTUSER=
     volumes:
      - "../cluster/kerb-rsp-ha.conf:/etc/rstudio/rserver.conf"
+     - "../cluster/kerb-rsp-ha-launcher.conf:/etc/rstudio/launcher.conf"
      - "../cluster/kerb-rsp-ha-load-balancer:/etc/rstudio/load-balancer"
      - "../cluster/secure-cookie-key:/etc/rstudio/secure-cookie-key"
      - "../cluster/pam:/etc/pam.d/rstudio"
      - "../cluster/pam-session:/etc/pam.d/rstudio-session"
      - "../cluster/kerb-rsp-ha-database.conf:/etc/rstudio/database.conf"
+     - "../cluster/launcher.pem:/etc/rstudio/launcher.pem"
+     - "../cluster/launcher.pub:/etc/rstudio/launcher.pub"
      - "../shared/rsp-kerb-ha/shared:/var/lib/rstudio-server/shared-storage"
      - "../shared/rsp-kerb-ha/home:/home"
+     - "../shared/rsp-kerb-ha/launcher:/var/lib/rstudio-launcher/Local"
+    #healthcheck:
+    #  test: ["CMD-SHELL", "curl http://localhost:8787/health-check"]
+    #  start_period: 30s
+    #  interval: 10s
+    #  timeout: 5s
+    #  retries: 5
     depends_on:
       pg-rsp:
         condition: service_healthy
@@ -70,6 +89,7 @@ services:
     hostname: kerb-rsp-ha-nginx
     image: nginx
     volumes:
-      - ../cluster/kerb-rsp-ha-nginx.conf:/etc/nginx/nginx.conf:ro
+      - "../cluster/kerb-rsp-ha/kerb-rsp-ha-nginx.conf:/etc/nginx/nginx.conf:ro"
+      - "../cluster/kerb-rsp-ha/certs:/certs"
     ports:
       - "80:80"
