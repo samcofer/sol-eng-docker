@@ -1,6 +1,6 @@
-# Kerberos HA RSP
+# Kerberos RSP HA
 
-We have a Kerberos HA RSP setup that can be used pretty easily:
+We have a Kerberos RSP HA setup that can be used pretty easily:
 
 ```
 make kerb-rsp-build
