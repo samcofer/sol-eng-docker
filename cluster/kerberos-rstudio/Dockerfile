@@ -20,3 +20,9 @@ RUN awk ' { pass=system("openssl passwd -1 "$2); system("useradd -m -p "pass" -s
 
 RUN chmod -R 644 /etc/krb* && \
 	mkdir -p /etc/krb5.conf.d
+
+# trust the PEM key for dev work!!
+# TODO: make this a runtime thing
+COPY ssl/auth-docker.pem /auth-docker.pem
+RUN cp /auth-docker.pem /usr/local/share/ca-certificates/auth-docker.crt && \
+	update-ca-certificates
