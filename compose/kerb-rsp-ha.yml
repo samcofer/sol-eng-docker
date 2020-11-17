@@ -84,7 +84,8 @@ services:
     hostname: kerb-rsp-ha-nginx
     image: nginx
     volumes:
-      - "../cluster/kerb-rsp-ha/kerb-rsp-ha-nginx.conf:/etc/nginx/nginx.conf:ro"
+      - "../cluster/kerb-rsp-ha/kerb-rsp-ha-nginx.conf:/etc/nginx/nginx.conf:z"
       - "../cluster/kerb-rsp-ha/certs:/certs"
     ports:
       - "80:80"
+      - "443:443"
