@@ -3,16 +3,20 @@
 We have a Kerberos RSP HA setup that can be used pretty easily:
 
 ```
+make test-env-up
+make kerb-server-up
 make kerb-rsp-build
 make kerb-rsp-ha-up
 ```
 
 You may need to run `make kerb-rsp-ha-up` again so that the nginx proxy comes
-up. (There is a bit of a race condition here)
+up. (There is a bit of a race condition here. To be improved!)
 
 Then navigate to http://localhost:80/rstudio/ to log into the service using
 `user:pass` `test:test` (or one of the other combos in
 [`cluster/users`](../cluster/users)
+
+(You can also try `https://localhost/rstudio/`)
 
 ## What is it
 
@@ -29,6 +33,7 @@ Then navigate to http://localhost:80/rstudio/ to log into the service using
 - The certs in the `certs/` directory were created using
   [`cluster/ssl/cert_get.sh`](../cluster/ssl/cert_get.sh) and the `make ssl-up`
   service
+- Please read more about our SSL approach in [`docs/ssl`](./ssl.md)
 
 ## Common Modifications 
 
