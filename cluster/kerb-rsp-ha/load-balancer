@@ -1,6 +1,7 @@
 [config]
 
 balancer = sessions
+timeout = 10
 
 [nodes]
 
