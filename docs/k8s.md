@@ -8,13 +8,22 @@ You will need:
 - `curl`
 - `docker`
 - `make`.
+- `helm` (version 3+)
 
 The easiest way to do this on Mac is with the Kubernetes installation that is
 bundled with Docker (see more below).  Then do `brew install jq` too! It's a
 pretty awesome tool.
 
-You will also need a license (right now for RSP) that is used below. For more
+You will also need a license that is used below. For more
 tips on getting started, check out the section below on setup.
+
+```
+helm repo add soleng s3://sol-eng-helm-charts/
+make k8s-rsp-up
+make k8s-rsp-down
+```
+
+## Example Commands (OLD)
 
 ```
 # create rstudio namespace and LDAP seed users
@@ -50,16 +59,6 @@ make k8s-ldap-all-up
 ```
 
 ## More Setup
-
-### Helpers
-
-We have some helper aliases that you can use for convenience:
-```
-source k8s/helpers.sh
-
-# alias for `kubectl --namespace=rstudio`
-kr get pods
-```
 
 ### Docker Kubernetes for Mac
 
