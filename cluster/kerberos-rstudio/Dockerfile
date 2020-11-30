@@ -27,3 +27,6 @@ RUN chmod -R 644 /etc/krb* && \
 COPY ssl/auth-docker.pem /auth-docker.pem
 RUN cp /auth-docker.pem /usr/local/share/ca-certificates/auth-docker.crt && \
 	update-ca-certificates
+
+# put the certs into the instance in case we need them
+COPY kerb-rsp-ha/certs /certs
