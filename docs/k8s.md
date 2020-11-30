@@ -54,6 +54,34 @@ make k8s-kerb-rsp-up
 make k8s-kerb-rsp-down k8s-kerb-server-down
 ```
 
+## Helpful Kubernetes Tips
+
+To reload configuration in a pod:
+```
+kubectl delete pod <<pod name >>
+# example
+kubectl delete pod rsp-123-abc
+```
+
+To look at a service in your local browser
+```
+kubectl port-forward <<pod name>> <<local port>>:<<remote port>>
+# example (go to localhost:8888 in your browser)
+kubectl port-forward rsp-123-abc 8888:8787
+```
+
+To see pod details:
+```
+kubectl get pods
+kubectl get pod  <<pod name>> -o yaml
+kubectl describe pod <<pod name>>
+```
+
+To get pod logs:
+```
+kubectl logs <<pod name>>
+```
+
 ## Example Commands (OLD)
 
 ```
