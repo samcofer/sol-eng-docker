@@ -2,9 +2,18 @@
 # NEW
 # --------------------
 rsp-up:
-	helm upgrade --install rsp soleng/rstudio-server --set license=$(RSP_LICENSE) --set userCreate=true --set rbac.create=true --set homeStorage.create=true
+	helm upgrade --install rsp soleng/rstudio-server --set license=$(RSP_LICENSE) -f ./rsp-values.yaml 
 rsp-down:
 	helm delete rsp
+
+kerb-server-up:
+	kubectl apply -f ./kerberos.yaml
+
+kerb-server-down:
+	kubectl delete -f ./kerberos.yaml
+
+kerb-rsp-up:
+	helm upgrade --install kerb-rsp soleng/rstudio-server --set license=$(RSP_LICENSE) --set image.repository=rstudio/sol-eng-rstudio --set image.tag=kerberos-$(RSTUDIO_VERSION) -f ./kerb-rsp-values.yaml
 
 # --------------------
 # OLD

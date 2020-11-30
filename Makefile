@@ -243,7 +243,7 @@ ssp-float-down:
 # Kubernetes
 #---------------------------------------------
 k8s-%:
-	$(MAKE) -C k8s $*
+	RSTUDIO_VERSION=$(RSTUDIO_VERSION) $(MAKE) -C k8s $*
 
 launcher-session-build:
 	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \

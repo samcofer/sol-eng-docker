@@ -1,0 +1,7 @@
+license: real
+replicas: 1
+rbac:
+  create: true
+homeStorage:
+  create: true
+userCreate: false
