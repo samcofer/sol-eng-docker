@@ -3,7 +3,7 @@ FROM rstudio/rstudio-server-pro:${RSTUDIO_VERSION}
 
 # kerberos server
 RUN apt-get update && \
-  apt-get install -y sssd sssd-ldap ntp krb5-user libpam-krb5 openssh-client oddjob-mkhomedir
+  apt-get install -y sssd sssd-ldap ntp krb5-user libpam-krb5 openssh-client oddjob-mkhomedir rsyslog
 
 COPY krb5.conf /etc/krb5.conf
 
@@ -12,6 +12,7 @@ COPY ssh_config /etc/ssh/ssh_config
 COPY kerberos-rstudio/rserver.conf /etc/rstudio/rserver.conf
 COPY pam /etc/pam.d/rstudio
 COPY pam-session /etc/pam.d/rstudio-session
+COPY kerberos-rstudio/startup.sh /usr/local/bin/startup.sh
 
 # create users
 COPY users /tmp/users
