@@ -1,3 +1,14 @@
+# --------------------
+# NEW
+# --------------------
+rsp-up:
+	helm upgrade --install rsp soleng/rstudio-server --set license=$(RSP_LICENSE) --set userCreate=true --set rbac.create=true --set homeStorage.create=true
+rsp-down:
+	helm delete rsp
+
+# --------------------
+# OLD
+# --------------------
 down: launcher-ldap-down \
 	rsp-ldap-down \
 	ldap-down \
@@ -76,10 +87,10 @@ launcher-conf:
 launcher-conf-down:
 	kubectl delete configmap --namespace=rstudio launcher-conf
 
-launcher-conf:
-	kubectl create configmap --namespace=rstudio launcher-conf --from-file ./cluster/launcher-ldap/launcher.conf
-launcher-conf-down:
-	kubectl delete configmap --namespace=rstudio launcher-conf
+#launcher-conf:
+#	kubectl create configmap --namespace=rstudio launcher-conf --from-file ./cluster/launcher-ldap/launcher.conf
+#launcher-conf-down:
+#	kubectl delete configmap --namespace=rstudio launcher-conf
 
 secret-rsp:
 	kubectl --namespace=rstudio create secret generic license --from-file=./rsp
@@ -106,10 +117,6 @@ launcher-ldap-up:
 launcher-ldap-down:
 	kubectl --namespace=rstudio delete --ignore-not-found=true -f ./launcher-ldap.yml
 
-rsp-up:
-	kubectl --namespace=rstudio apply -f ./rsp.yml
-rsp-down:
-	kubectl --namespace=rstudio delete --ignore-not-found=true -f ./rsp.yml
 
 rsp-ldap-up:
 	kubectl --namespace=rstudio apply -f ./rsp-ldap.yml
