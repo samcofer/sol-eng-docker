@@ -13,3 +13,11 @@ config:
         memory-request-ratio: 0.1
         allow-unknown-images: 1
         container-images: rstudio/sol-eng-rstudio:kerberos-daily
+    rserver.conf:
+      auth-pam-sessions-enabled: 1
+      auth-pam-sessions-profile: rstudio-session
+      auth-pam-sessions-use-password: 1
+      launcher-sessions-callback-address: http://kerb-rsp/
+      launcher-use-ssl: 1
+    launcher.conf:
+      server:
