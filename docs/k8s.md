@@ -9,16 +9,31 @@ You will need:
 - `docker`
 - `make`.
 - `helm` (version 3+)
+    - `helm-s3` plugin (how to install below)
 
-The easiest way to do this on Mac is with the Kubernetes installation that is
-bundled with Docker (see more below).  Then do `brew install jq` too! It's a
-pretty awesome tool.
+You will also need AWS access to the `sol-eng-helm-charts` bucket. Be sure you
+have programmatic AWS access set up for your username, and then check access
+with
+
+```
+aws s3 ls s3://sol-eng-helm-charts
+```
+
+The easiest way to set up Kubernetes on Mac is with the Kubernetes installation
+that is bundled with Docker (see more below).  Then do `brew install jq` and
+`brew install helm` too!
 
 You will also need a license that is used below. For more
 tips on getting started, check out the section below on setup.
 
 ```
+# install the helm-s3 plugin
+helm plugin install https://github.com/hypnoglow/helm-s3.git
+
+# add the soleng repo
 helm repo add soleng s3://sol-eng-helm-charts/
+
+# create a bare-bones RSP instance with Kubernetes!
 make k8s-rsp-up
 make k8s-rsp-down
 ```
