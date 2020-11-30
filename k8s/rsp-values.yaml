@@ -5,3 +5,11 @@ rbac:
 homeStorage:
   create: true
 userCreate: true
+config:
+  server:
+    launcher.kubernetes.profiles.conf:
+      '*':
+        cpu-request-ratio: 0.1
+        memory-request-ratio: 0.1
+        allow-unknown-images: 1
+        container-images: colearendt/r-session:daily

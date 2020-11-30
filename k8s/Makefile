@@ -2,7 +2,7 @@
 # NEW
 # --------------------
 rsp-up:
-	helm upgrade --install rsp soleng/rstudio-server --set license=$(RSP_LICENSE) -f ./rsp-values.yaml 
+	helm upgrade --install rsp soleng/rstudio-server --set license=$(RSP_LICENSE) -f ./rsp-values.yaml  --set config.server."launcher\.kubernetes\.profiles\.conf"."\*".default-container-image=colearendt/r-session:daily
 rsp-down:
 	helm delete rsp
 
@@ -13,7 +13,9 @@ kerb-server-down:
 	kubectl delete -f ./kerberos.yaml
 
 kerb-rsp-up:
-	helm upgrade --install kerb-rsp soleng/rstudio-server --set license=$(RSP_LICENSE) --set image.repository=rstudio/sol-eng-rstudio --set image.tag=kerberos-$(RSTUDIO_VERSION) -f ./kerb-rsp-values.yaml
+	helm upgrade --install kerb-rsp soleng/rstudio-server --set license=$(RSP_LICENSE) --set image.repository=rstudio/sol-eng-rstudio --set image.tag=kerberos-$(RSTUDIO_VERSION) -f ./kerb-rsp-values.yaml --set config.server."launcher\.kubernetes\.profiles\.conf"."\*".default-container-image=rstudio/sol-eng-rstudio:kerberos-$(RSTUDIO_VERSION)
+kerb-rsp-down:
+	helm delete kerb-rsp
 
 # --------------------
 # OLD
