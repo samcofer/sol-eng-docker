@@ -38,6 +38,22 @@ make k8s-rsp-up
 make k8s-rsp-down
 ```
 
+## Kerberos
+
+Running Kerberos in a Kubernetes cluster takes a few more steps
+
+```
+# build requisite images
+make kerb-server-build
+make kerb-rsp-build
+
+make k8s-kerb-server-up
+make k8s-kerb-rsp-up
+
+# to delete
+make k8s-kerb-rsp-down k8s-kerb-server-down
+```
+
 ## Example Commands (OLD)
 
 ```
