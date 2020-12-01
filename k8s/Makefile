@@ -12,6 +12,12 @@ kerb-server-up:
 kerb-server-down:
 	kubectl delete -f ./kerberos.yaml
 
+kerb-ssh-up:
+	kubectl apply -f ./kerberos-ssh.yaml
+
+kerb-ssh-down:
+	kubectl apply -f ./kerberos-ssh.yaml
+
 kerb-rsp-up:
 	helm upgrade --install kerb-rsp soleng/rstudio-server --set license=$(RSP_LICENSE) --set image.repository=rstudio/sol-eng-rstudio --set image.tag=kerberos-$(RSTUDIO_VERSION) -f ./kerb-rsp-values.yaml --set config.server."launcher\.kubernetes\.profiles\.conf"."\*".default-container-image=rstudio/sol-eng-rstudio:kerberos-$(RSTUDIO_VERSION)
 kerb-rsp-down:

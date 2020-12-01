@@ -46,12 +46,14 @@ Running Kerberos in a Kubernetes cluster takes a few more steps
 # build requisite images
 make kerb-server-build
 make kerb-rsp-build
+make kerb-ssh-build
 
 make k8s-kerb-server-up
+make k8s-kerb-ssh-up
 make k8s-kerb-rsp-up
 
 # to delete
-make k8s-kerb-rsp-down k8s-kerb-server-down
+make k8s-kerb-rsp-down k8s-kerb-ssh-down k8s-kerb-server-down
 ```
 
 ## Helpful Kubernetes Tips
