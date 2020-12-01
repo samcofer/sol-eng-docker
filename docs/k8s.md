@@ -42,6 +42,13 @@ make k8s-rsp-down
 
 Running Kerberos in a Kubernetes cluster takes a few more steps
 
+!! IMPORTANT DISCLAIMER !!
+
+> Some of these images are built locally and not pushed to a repository.  As a
+> result, it is expected that you will build and use them _on the same node_.
+> I.e. Docker for Mac. Using these images will not work on an EKS cluster, for
+> instance.
+
 ```
 # build requisite images
 make kerb-server-build
