@@ -21,7 +21,7 @@ ServerKeyBits 1024
 
 # Logging
 SyslogFacility AUTH
-LogLevel INFO
+LogLevel DEBUG3
 
 # Authentication:
 LoginGraceTime 120

@@ -9,7 +9,7 @@ RUN apt-get update && \
 RUN apt-get install -y ntp krb5-user supervisor
 
 # ssh server
-RUN apt-get install -y openssh-server libpam-krb5
+RUN apt-get install -y openssh-server libpam-krb5 rsyslog
 
 COPY ssh-server/sshd_config /etc/ssh/sshd_config
 
