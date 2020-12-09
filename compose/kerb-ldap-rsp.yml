@@ -1,0 +1,21 @@
+version: '2.3'
+services:
+
+  kerb-ldap-rsp:
+    hostname: kerb-ldap-rsp
+    build:
+      context: ../cluster
+      dockerfile: kerb-ldap-rsp/Dockerfile
+      args:
+        - RSTUDIO_VERSION=${RSTUDIO_VERSION}
+    image: rstudio/sol-eng-rstudio:kerberos-ldap-${RSTUDIO_VERSION}
+    privileged: true
+    ports:
+      - "8787"
+    environment:
+      - RSP_LICENSE
+      - RSP_TESTUSER=
+    volumes:
+     - "../cluster/kerb-ldap-rsp/rserver.conf:/etc/rstudio/rserver.conf:z"
+     - "../cluster/rstudio-sssd:/etc/pam.d/rstudio"
+     - "../cluster/rstudio-session-sssd:/etc/pam.d/rstudio-session"
