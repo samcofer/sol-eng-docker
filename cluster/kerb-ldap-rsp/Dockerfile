@@ -8,6 +8,7 @@ RUN apt-get update && \
 COPY ssh_config /etc/ssh/ssh_config
 
 COPY kerb-ldap-rsp/rserver.conf /etc/rstudio/rserver.conf
+COPY kerb-ldap-rsp/launcher.conf /etc/rstudio/launcher.conf
 
 # configure ldap
 COPY ./sssd-kerb.conf /etc/sssd/sssd.conf
