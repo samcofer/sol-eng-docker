@@ -160,20 +160,24 @@ connect-down:
 	CONNECT_VERSION=$(CONNECT_VERSION) \
 	docker-compose -f compose/base-connect.yml -f compose/make-network.yml down
 
-ldap-kerb-rsp-build:
+kerb-ldap-rsp-build:
 	NETWORK=${NETWORK} \
 	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
-	docker-compose -f compose/ldap-kerberos-rsp.yml -f compose/make-network.yml build
+	docker-compose -f compose/kerb-ldap-rsp.yml -f compose/make-network.yml build
 
-ldap-kerb-rsp-up:
+kerb-ldap-rsp-up:
 	NETWORK=${NETWORK} \
 	RSP_LICENSE=$(RSP_LICENSE) \
 	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
-	docker-compose -f compose/ldap-kerberos-rsp.yml -f compose/make-network.yml up -d
-ldap-kerb-rsp-down:
+	docker-compose -f compose/kerb-ldap-rsp.yml -f compose/make-network.yml up -d && \
+	./bin/pdocker ps kerb-ldap-rsp
+	
+
+kerb-ldap-rsp-down:
 	NETWORK=${NETWORK} \
+	RSP_LICENSE=$(RSP_LICENSE) \
 	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
-	docker-compose -f compose/ldap-kerberos-rsp.yml -f compose/make-network.yml down
+	docker-compose -f compose/kerb-ldap-rsp.yml -f compose/make-network.yml down
 
 ssp-ha-up:
 	NETWORK=${NETWORK} \
