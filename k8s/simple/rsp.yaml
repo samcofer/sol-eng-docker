@@ -22,7 +22,7 @@ spec:
               name: license
               key: rsp
         #command: ["sleep","10000"]
-        imagePullPolicy: Never
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8787
         securityContext:
