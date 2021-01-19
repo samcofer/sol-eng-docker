@@ -190,5 +190,6 @@ Take a look at [rsp.yaml](../k8s/simple/rsp.yaml)
 
 - Notice how we mounted the secret into the container as an environment variable
 - RSP requires a "privileged" container (akin to root on the Kubernetes node). We did this with `securityContext`
-- Notice the commented out `command`. This can be a hacky but useful tool if our products are starting up weirdly (
-  common for RSP)
+- Notice the commented out `command`. This can be a hacky but useful tool if
+  our products are starting up weirdly ( common for RSP due to our complicated
+entrypoint script)
