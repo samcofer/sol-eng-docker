@@ -8,13 +8,90 @@ You will need:
 - `curl`
 - `docker`
 - `make`.
+- `helm` (version 3+)
+    - `helm-s3` plugin (how to install below)
 
-The easiest way to do this on Mac is with the Kubernetes installation that is
-bundled with Docker (see more below).  Then do `brew install jq` too! It's a
-pretty awesome tool.
+You will also need AWS access to the `sol-eng-helm-charts` bucket. Be sure you
+have programmatic AWS access set up for your username, and then check access
+with
 
-You will also need a license (right now for RSP) that is used below. For more
+```
+aws s3 ls s3://sol-eng-helm-charts
+```
+
+The easiest way to set up Kubernetes on Mac is with the Kubernetes installation
+that is bundled with Docker (see more below).  Then do `brew install jq` and
+`brew install helm` too!
+
+You will also need a license that is used below. For more
 tips on getting started, check out the section below on setup.
+
+```
+# install the helm-s3 plugin
+helm plugin install https://github.com/hypnoglow/helm-s3.git
+
+# add the soleng repo
+helm repo add soleng s3://sol-eng-helm-charts/
+
+# create a bare-bones RSP instance with Kubernetes!
+make k8s-rsp-up
+make k8s-rsp-down
+```
+
+## Kerberos
+
+Running Kerberos in a Kubernetes cluster takes a few more steps
+
+!! IMPORTANT DISCLAIMER !!
+
+> Some of these images are built locally and not pushed to a repository.  As a
+> result, it is expected that you will build and use them _on the same node_.
+> I.e. Docker for Mac. Using these images will not work on an EKS cluster, for
+> instance.
+
+```
+# build requisite images
+make kerb-server-build
+make kerb-rsp-build
+make kerb-ssh-build
+
+make k8s-kerb-server-up
+make k8s-kerb-ssh-up
+make k8s-kerb-rsp-up
+
+# to delete
+make k8s-kerb-rsp-down k8s-kerb-ssh-down k8s-kerb-server-down
+```
+
+## Helpful Kubernetes Tips
+
+To reload configuration in a pod:
+```
+kubectl delete pod <<pod name >>
+# example
+kubectl delete pod rsp-123-abc
+```
+
+To look at a service in your local browser
+```
+kubectl port-forward <<pod name>> <<local port>>:<<remote port>>
+# example (go to localhost:8888 in your browser)
+kubectl port-forward rsp-123-abc 8888:8787
+```
+
+To see pod details:
+```
+kubectl get pods
+kubectl get pod  <<pod name>> -o yaml
+kubectl describe pod <<pod name>>
+```
+
+To get pod logs:
+```
+kubectl logs <<pod name>>
+```
+
+## Example Commands (OLD)
 
 ```
 # create rstudio namespace and LDAP seed users
@@ -50,16 +127,6 @@ make k8s-ldap-all-up
 ```
 
 ## More Setup
-
-### Helpers
-
-We have some helper aliases that you can use for convenience:
-```
-source k8s/helpers.sh
-
-# alias for `kubectl --namespace=rstudio`
-kr get pods
-```
 
 ### Docker Kubernetes for Mac
 

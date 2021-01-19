@@ -1,0 +1,9 @@
+[config]
+
+balancer = sessions
+timeout = 10
+
+[nodes]
+
+kerb-rsp-ha-1:8787
+kerb-rsp-ha-2:8787

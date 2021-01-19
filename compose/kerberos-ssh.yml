@@ -3,13 +3,16 @@ services:
 
   kerberos-ssh-client:
     hostname: kerberos-ssh-client
+    image: rstudio/kerberos:ssh-client-1.0
     build:
       context: ../cluster
       dockerfile: ssh-client/Dockerfile
     links:
       - kerberos-ssh-server
+
   kerberos-ssh-server:
     hostname: kerberos-ssh-server
+    image: rstudio/kerberos:ssh-server-1.0
     build:
       context: ../cluster
       dockerfile: ssh-server/Dockerfile

@@ -26,6 +26,7 @@ Visit `#auth-workshop` or checkout the docs!
 - [SSL/TLS/HTTPS](./docs/ssl.md)
 - [Floating Licenses](./cluster/float/README.md)
 - [Metrics / Prometheus / Grafana](./docs/metrics.md)
+- [Kerberos RSP HA](./docs/kerberos-rsp-ha.md)
 
 # Getting Started
 

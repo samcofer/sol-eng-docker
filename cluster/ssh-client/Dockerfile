@@ -8,8 +8,6 @@ RUN apt-get update && \
 # kerberos server
 RUN apt-get install -y ntp krb5-user supervisor
 
-COPY krb5.conf /etc/krb5.conf
-
 # ssh client
 RUN apt-get install -y openssh-client libpam-krb5
 
@@ -20,7 +18,9 @@ RUN chmod -R 644 /etc/krb* && \
 	mkdir -p /etc/krb5.conf.d && \
 	mkdir -p /var/log/supervisord
 
-# create users
+# create users and configure
+COPY krb5.conf /etc/krb5.conf
+
 COPY users /tmp/users
 RUN awk ' { pass=system("openssl passwd -1 "$2); system("useradd -m -p "pass" -s /bin/bash "$1) } ' /tmp/users && \
         rm /tmp/users

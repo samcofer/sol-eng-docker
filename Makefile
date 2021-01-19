@@ -4,7 +4,7 @@ PWD := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 PROJECT=sol-eng-docker
 NETWORK=${PROJECT}_default
 SCALE=1
-CONNECT_VERSION=1.8.4-11
+CONNECT_VERSION=1.8.6.1
 #1.7.0-11
 CONNECT_BINARY_URL=rstudio-connect_${CONNECT_VERSION}_amd64.deb
 
@@ -12,6 +12,7 @@ CONNECT_BINARY_URL=rstudio-connect_${CONNECT_VERSION}_amd64.deb
 #RSTUDIO_VERSION=1.2.5033-1
 #RSTUDIO_VERSION=1.3.322-1
 RSTUDIO_VERSION=1.3.1056-1
+RSTUDIO_VERSION=daily
 
 SSP_VERSION=1.5.10.990
 
@@ -159,20 +160,24 @@ connect-down:
 	CONNECT_VERSION=$(CONNECT_VERSION) \
 	docker-compose -f compose/base-connect.yml -f compose/make-network.yml down
 
-ldap-kerb-rsp-build:
+kerb-ldap-rsp-build:
 	NETWORK=${NETWORK} \
 	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
-	docker-compose -f compose/ldap-kerberos-rsp.yml -f compose/make-network.yml build
+	docker-compose -f compose/kerb-ldap-rsp.yml -f compose/make-network.yml build
 
-ldap-kerb-rsp-up:
+kerb-ldap-rsp-up:
 	NETWORK=${NETWORK} \
 	RSP_LICENSE=$(RSP_LICENSE) \
 	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
-	docker-compose -f compose/ldap-kerberos-rsp.yml -f compose/make-network.yml up -d
-ldap-kerb-rsp-down:
+	docker-compose -f compose/kerb-ldap-rsp.yml -f compose/make-network.yml up -d && \
+	./bin/pdocker ps kerb-ldap-rsp
+	
+
+kerb-ldap-rsp-down:
 	NETWORK=${NETWORK} \
+	RSP_LICENSE=$(RSP_LICENSE) \
 	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
-	docker-compose -f compose/ldap-kerberos-rsp.yml -f compose/make-network.yml down
+	docker-compose -f compose/kerb-ldap-rsp.yml -f compose/make-network.yml down
 
 ssp-ha-up:
 	NETWORK=${NETWORK} \
@@ -242,7 +247,7 @@ ssp-float-down:
 # Kubernetes
 #---------------------------------------------
 k8s-%:
-	$(MAKE) -C k8s $*
+	RSTUDIO_VERSION=$(RSTUDIO_VERSION) $(MAKE) -C k8s $*
 
 launcher-session-build:
 	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
@@ -342,6 +347,17 @@ kerb-rsp-down:
 	NETWORK=${NETWORK} \
 	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
         docker-compose -f compose/kerb-rsp.yml -f compose/make-network.yml down
+
+kerb-rsp-ha-up:
+	NETWORK=${NETWORK} \
+	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
+        docker-compose -f compose/kerb-rsp-ha.yml -f compose/make-network.yml up -d && \
+	./bin/pdocker ps kerb-rsp-ha
+
+kerb-rsp-ha-down:
+	NETWORK=${NETWORK} \
+	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
+        docker-compose -f compose/kerb-rsp-ha.yml -f compose/make-network.yml down
 
 kerb-proxy-up: proxy-kerb-up
 kerb-proxy-down: proxy-kerb-down
@@ -488,7 +504,8 @@ proxy-debug-down:
 
 proxy-mitm-up:
 	NETWORK=${NETWORK} \
-	docker-compose -f compose/proxy-mitm.yml -f compose/make-network.yml up -d
+	docker-compose -f compose/proxy-mitm.yml -f compose/make-network.yml up -d && \
+	./bin/pdocker ps mitm
 proxy-mitm-down:
 	NETWORK=${NETWORK} \
 	docker-compose -f compose/proxy-mitm.yml -f compose/make-network.yml down
@@ -522,6 +539,15 @@ ssl-proxy-saml-down:
 	NETWORK=${NETWORK} \
 	docker-compose -f compose/ssl-proxy-saml.yml -f compose/make-network.yml down
 
+keycloak-up:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/keycloak.yml -f compose/make-network.yml up -d && \
+	./bin/pdocker ps keycloak
+
+keycloak-down:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/keycloak.yml -f compose/make-network.yml down
+
 saml-idp-up:
 	NETWORK=${NETWORK} \
 	docker-compose -f compose/saml-idp.yml -f compose/make-network.yml up -d
@@ -540,6 +566,17 @@ saml-connect-up:
 saml-connect-down:
 	NETWORK=${NETWORK} \
 	docker-compose -f compose/saml-connect.yml -f compose/make-network.yml down
+
+saml-connect-keycloak-up:
+	NETWORK=${NETWORK} \
+	RSC_LICENSE=$(RSC_LICENSE) \
+	CONNECT_VERSION=$(CONNECT_VERSION) \
+	docker-compose -f compose/saml-connect-keycloak.yml -f compose/make-network.yml up -d && \
+	./bin/pdocker ps saml-connect-keycloak
+
+saml-connect-keycloak-down:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/saml-connect-keycloak.yml -f compose/make-network.yml down
 
 proxy-saml-up:
 	NETWORK=${NETWORK} \

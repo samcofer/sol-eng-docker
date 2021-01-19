@@ -1,0 +1,91 @@
+version: '2.3'
+services:
+
+  kerb-rsp-ha-1:
+    hostname: kerb-rsp-ha-1
+    build:
+      context: ../cluster
+      dockerfile: kerberos-rstudio/Dockerfile
+      args:
+        - RSTUDIO_VERSION=${RSTUDIO_VERSION}
+    image: rstudio/sol-eng-rstudio:kerberos-${RSTUDIO_VERSION}
+    privileged: true
+    ports:
+      - "8787"
+    environment:
+      - RSP_LICENSE
+      - RSP_TESTUSER=
+      - "XDG_CONFIG_DIRS=/etc/rstudio-alt:/etc"
+    volumes:
+     - "../cluster/kerb-rsp-ha/:/etc/rstudio-alt/rstudio/"
+     - "../cluster/pam:/etc/pam.d/rstudio"
+     - "../cluster/pam-session:/etc/pam.d/rstudio-session"
+     - "../cluster/launcher.pem:/etc/rstudio/launcher.pem"
+     - "../cluster/launcher.pub:/etc/rstudio/launcher.pub"
+     - "../shared/rsp-kerb-ha/shared:/var/lib/rstudio-server/shared-storage"
+     - "../shared/rsp-kerb-ha/home:/home"
+     - "../shared/rsp-kerb-ha/launcher:/var/lib/rstudio-launcher/Local"
+    #healthcheck:
+    #  test: ["CMD-SHELL", "curl http://localhost:8787/health-check"]
+    #  start_period: 30s
+    #  interval: 10s
+    #  timeout: 5s
+    #  retries: 5
+    depends_on:
+      pg-rsp:
+        condition: service_healthy
+
+  kerb-rsp-ha-2:
+    hostname: kerb-rsp-ha-2
+    build:
+      context: ../cluster
+      dockerfile: kerberos-rstudio/Dockerfile
+      args:
+        - RSTUDIO_VERSION=${RSTUDIO_VERSION}
+    image: rstudio/sol-eng-rstudio:kerberos-${RSTUDIO_VERSION}
+    privileged: true
+    ports:
+      - "8787"
+    environment:
+      - RSP_LICENSE
+      - RSP_TESTUSER=
+      - "XDG_CONFIG_DIRS=/etc/rstudio-alt:/etc"
+    volumes:
+     - "../cluster/kerb-rsp-ha/:/etc/rstudio-alt/rstudio/"
+     - "../cluster/pam:/etc/pam.d/rstudio"
+     - "../cluster/pam-session:/etc/pam.d/rstudio-session"
+     - "../cluster/launcher.pem:/etc/rstudio/launcher.pem"
+     - "../cluster/launcher.pub:/etc/rstudio/launcher.pub"
+     - "../shared/rsp-kerb-ha/shared:/var/lib/rstudio-server/shared-storage"
+     - "../shared/rsp-kerb-ha/home:/home"
+     - "../shared/rsp-kerb-ha/launcher:/var/lib/rstudio-launcher/Local"
+    #healthcheck:
+    #  test: ["CMD-SHELL", "curl http://localhost:8787/health-check"]
+    #  start_period: 30s
+    #  interval: 10s
+    #  timeout: 5s
+    #  retries: 5
+    depends_on:
+      pg-rsp:
+        condition: service_healthy
+
+  pg-rsp:
+    hostname: pg-rsp
+    image: postgres:12
+    environment:
+      POSTGRES_PASSWORD: test
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  kerb-rsp-ha-nginx:
+    hostname: kerb-rsp-ha-nginx
+    image: nginx
+    volumes:
+      - "../cluster/kerb-rsp-ha/kerb-rsp-ha-nginx.conf:/etc/nginx/nginx.conf:z"
+      - "../cluster/kerb-rsp-ha/certs:/certs"
+    ports:
+      - "80:80"
+      - "443:443"
