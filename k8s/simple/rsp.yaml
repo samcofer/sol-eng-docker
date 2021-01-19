@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: rsp
-        image: rstudio/launcher-rsp
+        image: rstudio/rstudio-server-pro:daily
         env:
         - name: RSP_LICENSE
           valueFrom:
@@ -27,13 +27,6 @@ spec:
         - containerPort: 8787
         securityContext:
           privileged: true
-        volumeMounts:
-          - name: nfs
-            mountPath: "/home"
-      volumes:
-      - name: nfs
-        persistentVolumeClaim:
-          claimName: nfs
 ---
 apiVersion: v1
 kind: Service
@@ -44,4 +37,5 @@ spec:
   selector:
     app: rsp
   ports:
-  - port: 8787
+  - port: 80
+    targetPort: 8787
