@@ -2,7 +2,7 @@
 
 The following is a tutorial on getting started with k3s (in this case, on a public EC2 instance)
 
-### Step 1: Create ec2 instance with SSH access
+### Step 1: Create ec2 instance with SSH access (and other public ports)
 
 - ssh into the instance
 
