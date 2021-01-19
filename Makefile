@@ -4,7 +4,7 @@ PWD := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 PROJECT=sol-eng-docker
 NETWORK=${PROJECT}_default
 SCALE=1
-CONNECT_VERSION=1.8.4.2-2
+CONNECT_VERSION=1.8.6.1
 #1.7.0-11
 CONNECT_BINARY_URL=rstudio-connect_${CONNECT_VERSION}_amd64.deb
 
@@ -504,7 +504,8 @@ proxy-debug-down:
 
 proxy-mitm-up:
 	NETWORK=${NETWORK} \
-	docker-compose -f compose/proxy-mitm.yml -f compose/make-network.yml up -d
+	docker-compose -f compose/proxy-mitm.yml -f compose/make-network.yml up -d && \
+	./bin/pdocker ps mitm
 proxy-mitm-down:
 	NETWORK=${NETWORK} \
 	docker-compose -f compose/proxy-mitm.yml -f compose/make-network.yml down
