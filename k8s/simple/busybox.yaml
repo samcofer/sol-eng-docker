@@ -22,3 +22,4 @@ spec:
           - 'while true; do date > /tmp/index.html; hostname >> /tmp/index.html; sleep $(($RANDOM % 5 + 5)); done'
         imagePullPolicy: IfNotPresent
         name: busybox
+     
