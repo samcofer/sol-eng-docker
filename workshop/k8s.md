@@ -3,6 +3,13 @@
 This module will walk you through some basics for getting started with
 Kubernetes, so we can use it for further product exploration / playing.
 
+## Overview
+
+- [docker and containers](./get_started.md)
+- [Kubernetes and YAML](./k8s.md#what-is-kubernetes)
+- [Helm](./k8s/helm.md)
+- [Using Helmfile](./k8s/helmfile.md)
+
 ## What is Kubernetes?
 
 > One simple way of thinking about Kubernetes is YAML that defines deployments of docker (or other) containers
