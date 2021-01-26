@@ -3,6 +3,13 @@
 This module will walk you through some basics for getting started with
 Kubernetes, so we can use it for further product exploration / playing.
 
+## Overview
+
+- [docker and containers](./get_started.md)
+- [Kubernetes and YAML](./k8s.md#what-is-kubernetes)
+- [Helm](./k8s/helm.md)
+- [Using Helmfile](./k8s/helmfile.md)
+
 ## What is Kubernetes?
 
 > One simple way of thinking about Kubernetes is YAML that defines deployments of docker (or other) containers
@@ -190,5 +197,6 @@ Take a look at [rsp.yaml](../k8s/simple/rsp.yaml)
 
 - Notice how we mounted the secret into the container as an environment variable
 - RSP requires a "privileged" container (akin to root on the Kubernetes node). We did this with `securityContext`
-- Notice the commented out `command`. This can be a hacky but useful tool if our products are starting up weirdly (
-  common for RSP)
+- Notice the commented out `command`. This can be a hacky but useful tool if
+  our products are starting up weirdly ( common for RSP due to our complicated
+entrypoint script)
