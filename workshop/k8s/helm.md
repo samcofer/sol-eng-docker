@@ -123,6 +123,32 @@ Now navigate to http://localhost:8080 in your browser!
 
 Well done!! You have completed your first helm release / deployment!!
 
+### How did that work?
+
+Now take a look at the helm chart itself by navigating to [./k8s/charts/hello-world](../../k8s/charts/hello-world).
+
+You should see the following:
+
+- `Chart.yaml` - the metadata about the chart, its version, etc.
+- `values.yaml` - the default values for the chart
+- `.helmignore` - Helm needs an ignore-file too!
+- `templates` - This is the fun stuff. This is standard Kubernetes YAML (for the most part) _plus Go templating_
+    - You will see some conventions here if you poke around.
+    - `$.Release.Name` and `$.Release.Namespace` refer to what you think
+    - `.Values.something` refers to the values provided
+    - You can index deeper into values with `.Values.key.value`
+
+A few things left out of this simple example:
+
+- `charts` - That's right. Charts can depend on other charts. You can also specify dependencies and pin dependent
+  versions in `Chart.yaml`
+- `ci` - Convention is to use a `ci` folder for example `*-values.yaml` files that are used in testing, linting, and
+  CI (go figure)
+  
+If you can wrap your head around these conventions and get used to them, you will understand literally all helm charts!
+The only exception is that the layers of Go-templating get more and more confusing as the chart gets bigger / more complex.
+Ideally, the layers of Go-templating would be minimal... but sometimes, our hand is forced.
+
 ## Set a repository
 
 Now that you are "at the helm" of the `helm`-mobile (heh), let's use a real chart!
