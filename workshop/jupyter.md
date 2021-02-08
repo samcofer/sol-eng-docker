@@ -161,6 +161,52 @@ docker ps | grep base-rsp
 
 And `exit` to leave your experiment / deactivate the license
 
+To tear the container down:
+```bash
+make rsp-down
+```
+
+## Start jupyter outside of RSP
+
+What does it look like to start jupyter manually? To see whether the issue is in our environment or in RSP?
+
+First, you will need a port "exposed" on the docker container (so you can see it!). This works out well if we don't start RSP...
+
+So let's start RSP as we did before (leave the `command: ["sleep", "100000"]` line configured)
+
+```bash
+make rsp-up
+```
+
+Now shell into the container:
+```bash
+docker exec -it compose_base-rsp_1 bash
+
+# create our user again
+useradd -m -s /bin/bash -N -u $RSP_TESTUSER_UID $RSP_TESTUSER
+echo "$RSP_TESTUSER:$RSP_TESTUSER_PASSWD" | sudo chpasswd
+
+# now assume the user
+su rstudio
+
+# and run a notebook
+/opt/python/3.6.5/bin/jupyter notebook --port=8787 --ip=0.0.0.0
+```
+
+To use this URL, you will need to go to the URL shown (with token and such), but
+using `http://localhost:dockerport` like `http://localhost:55011`.
+
+To kill the notebook server, use `CTRL+C`.
+
+Then try with jupyterlab
+```bash
+/opt/python/3.6.5/bin/jupyter lab --port=8787 --ip=0.0.0.0
+```
+
+Again, to kill, use `CTRL+C`.
+
+This is how many open source users are familiar with executing Jupyter / JupyterLab locally! (Albeit not in docker)
+
 ## Separate RSP and Launcher
 
 This is not a common architecture, but it can give us a bit more understanding of how the different services work.
