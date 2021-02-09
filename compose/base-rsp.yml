@@ -1,9 +1,5 @@
 version: '2.3'
 services:
-  #base-rsp:
-  #  hostname: proxy-debug
-  #  image: brndnmtthws/nginx-echo-headers
-
   base-rsp:
     hostname: base-rsp
     image: rstudio/rstudio-server-pro:${RSTUDIO_VERSION}
@@ -12,37 +8,6 @@ services:
       RSP_LICENSE: ${RSP_LICENSE}
     ports:
       - "8787"
-    #volumes:
-    #  - ../cluster/base-rserver.conf:/etc/rstudio/rserver.conf
- 
-
-#  base-rsp:
-#    hostname: base-rsp
-#    build:
-#      context: ../cluster
-#      dockerfile: base-rsp/Dockerfile
-#      args:
-#        - RSTUDIO_VERSION=${RSTUDIO_VERSION}
-#    image: rstudio/sol-eng-rstudio:${RSTUDIO_VERSION}
-#    environment:
-#      - RSP_LICENSE
-#    command: "bash"
-#    ports:
-#      - "8787"
-#      - "443"
-#    restart: "always"
-#
-#  rsp-ldap:
-#    hostname: rsp-ldap
-#    build:
-#      context: ../cluster
-#      dockerfile: rsp-ldap/Dockerfile
-#      args:
-#        - RSTUDIO_VERSION=${RSTUDIO_VERSION}
-#    image: rstudio/sol-eng-rstudio:ldap-${RSTUDIO_VERSION}
-#    environment:
-#      - RSP_LICENSE
-#    ports:
-#      - "8787"
-#      - "443"
- 
+    volumes:
+      - ../cluster/base-rserver.conf:/etc/rstudio/rserver.conf
+      - ../cluster/jupyter.conf:/etc/rstudio/jupyter.conf

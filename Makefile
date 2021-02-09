@@ -205,11 +205,35 @@ nfs-down:
 	NETWORK=${NETWORK} \
 	docker-compose -f compose/nfs.yml -f compose/make-network.yml down
  
+launcher-up:
+	NETWORK=${NETWORK} \
+	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
+	docker-compose -f compose/launcher.yml -f compose/make-network.yml up -d && \
+	./bin/pdocker ps launcher
+
+launcher-restart:
+	NETWORK=${NETWORK} \
+	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
+	docker-compose -f compose/launcher.yml -f compose/make-network.yml restart && \
+	./bin/pdocker ps launcher
+
+launcher-down:
+	NETWORK=${NETWORK} \
+	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
+	docker-compose -f compose/launcher.yml -f compose/make-network.yml down
+
 rsp-up:
 	NETWORK=${NETWORK} \
 	RSP_LICENSE=$(RSP_LICENSE) \
 	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
 	docker-compose -f compose/base-rsp.yml -f compose/make-network.yml up -d && \
+	./bin/pdocker ps base-rsp
+
+rsp-restart:
+	NETWORK=${NETWORK} \
+	RSP_LICENSE=$(RSP_LICENSE) \
+	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
+	docker-compose -f compose/base-rsp.yml -f compose/make-network.yml restart && \
 	./bin/pdocker ps base-rsp
 
 rsp-down:
