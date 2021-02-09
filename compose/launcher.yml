@@ -1,0 +1,11 @@
+version: '2.3'
+services:
+  launcher:
+    hostname: launcher
+    image: rstudio/rstudio-server-pro:${RSTUDIO_VERSION}
+    privileged: true
+    ports:
+      - "5559"
+    command: ["/usr/lib/rstudio-server/bin/rstudio-launcher"]
+    volumes:
+      - ../cluster/local-launcher.conf:/etc/rstudio/launcher.conf
