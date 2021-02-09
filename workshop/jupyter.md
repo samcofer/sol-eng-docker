@@ -207,6 +207,60 @@ Again, to kill, use `CTRL+C`.
 
 This is how many open source users are familiar with executing Jupyter / JupyterLab locally! (Albeit not in docker)
 
+Now clean up:
+```bash
+exit
+make rsp-down
+```
+
 ## Separate RSP and Launcher
 
 This is not a common architecture, but it can give us a bit more understanding of how the different services work.
+
+Start the launcher independently of RSP:
+```bash
+make launcher-up
+```
+
+Shell into the launcher container and create your user:
+```bash
+docker exec -it compose_launcher_1 bash
+
+# create our user again
+useradd -m -s /bin/bash -N -u $RSP_TESTUSER_UID $RSP_TESTUSER
+echo "$RSP_TESTUSER:$RSP_TESTUSER_PASSWD" | sudo chpasswd
+
+exit
+```
+> NOTE that we are making sure the UID is the same...
+ 
+Configure RSP to use the launcher service by modifying `cluster/base-rserver.conf`:
+
+_cluster/base-rserver.conf_
+```ini
+launcher-address=launcher
+```
+
+Add this volume to `compose/base-rsp.yml`
+```yaml
+    # under volumes...
+    # volumes: 
+      - ../shared/local-launcher/home/:/home
+```
+
+And start a fresh RSP:
+```bash
+make rsp-down rsp-up
+```
+
+Now log into the browser and start a session!
+
+Execute this code to see where your session is running...
+```
+system("hostname")
+```
+
+## Final Note
+
+`launcher-sessions-callback-address` has been misconfigured the whole time... in order to properly configure it, we will
+need to make the port that RSP listens on consistent (rather than choosing a random / ephemeral port at runtime)
