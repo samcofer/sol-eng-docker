@@ -18,6 +18,10 @@ Visit `#auth-workshop` or checkout the docs!
 - [SAML](./docs/saml.md)
 - [LDAP](./docs/ldap.md)
 
+### Reference
+
+- [User Definition](./docs/users.md)
+
 ### Untested
 
 - [General Proxy](./docs/proxy.md)
