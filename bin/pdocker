@@ -8,53 +8,64 @@ import itertools
 
 
 def run_docker_command(args):
-  dproc = subprocess.run(['docker'] + args, capture_output=True)
-  return dproc
+    dproc = subprocess.run(['docker'] + args, capture_output=True)
+    return dproc
+
 
 def parse_port(text, container):
-  # naively grab first
-  docker_lines = re.findall(r'^.*' + container + r'.*$', text, re.MULTILINE)
-  if len(docker_lines) == 0:
-    print('No such container found')
-    return
+    # naively grab first
+    docker_lines = re.findall(r'^.*' + container + r'.*$', text, re.MULTILINE)
+    if len(docker_lines) == 0:
+        print('No such container found')
+        return
 
-  print()
-  for inst in docker_lines:
-    container_name = re.findall(r'\s([\w\d\-\_]*)$', inst)[0]
-    port_info = re.findall(r'\s([\w\d\-\>\.\:]+/tcp)[\s,]', inst)
+    print()
+    for inst in docker_lines:
+        if not inst or re.findall(r'^CONTAINER', inst):
+            continue
+        container_name = re.findall(r'\s([\w\d\-\_]*)$', inst)[0]
+        port_info = re.findall(r'\s([\w\d\-\>\.\:]+/tcp)[\s,]', inst)
 
-    # is there a port exposed?
-    port_maps = [ re.search(r'->', x) for x in port_info ]
+        # is there a port exposed?
+        port_maps = [ re.search(r'->', x) for x in port_info ]
 
-    if any(port_maps):
-      subset_ports = list(itertools.compress(port_info, port_maps))
+        if any(port_maps):
+            subset_ports = list(itertools.compress(port_info, port_maps))
 
-      # extract the exposed port(s)
-      exposed_ports = [re.findall(r'^[\w\d\.]*\:*(\d+)->(\d+)', p)[0] for p in subset_ports] 
+            # extract the exposed port(s)
+            exposed_ports = [re.findall(r'^[\w\d\.]*\:*(\d+)->(\d+)', p)[0] for p in subset_ports]
 
-      # print the location
-      for ep in exposed_ports:
-        print(container_name + ': \t' + ep[1] + '\t->\thttp://localhost:' + ep[0])
+            # print the location
+            for ep in exposed_ports:
+                print(container_name + ': \t' + ep[1] + '\t->\thttp://localhost:' + ep[0])
+        else:
+            print(container_name)
 
-  print()
+    print()
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Run a docker command with extra niceties')
     parser.add_argument('command', type=str, nargs='*', help='commands to execute')
-    #parser.add_argument('distribution', type=str, nargs=1, help='name of the distribution')
-    #parser.add_argument('release', type=str, nargs=1, help='name of the release')
 
     args = parser.parse_args()
     command_args = args.command
-    if command_args[0] == 'ps':
-      cmdout = run_docker_command(['ps'])
-      parse_port(cmdout.stdout.decode('utf-8'), command_args[1])
-    elif command_args[0] == 'restart':
-      cmdout = run_docker_command(command_args)
-      psout = run_docker_command(['ps'])
-      parse_port(psout.stdout.decode('utf-8'), command_args[1])
+    if len(command_args) > 0 and command_args[0] == 'ps':
+        cmdout = run_docker_command(['ps'])
+        if len(command_args) > 1:
+            cmdarg1 = command_args[1]
+        else:
+            cmdarg1 = ''
+        parse_port(cmdout.stdout.decode('utf-8'), cmdarg1)
+    elif len(command_args) > 0 and command_args[0] == 'restart':
+        cmdout = run_docker_command(command_args)
+        psout = run_docker_command(['ps'])
+        if len(command_args) > 1:
+            cmdarg1 = command_args[1]
+        else:
+            cmdarg1 = ''
+        parse_port(psout.stdout.decode('utf-8'), cmdarg1)
     else:
-      cmdout = run_docker_command(command_args)
-      print(cmdout.stdout.decode('utf-8'))
-      print(cmdout.stderr.decode('utf-8'), file=sys.stderr)
+        cmdout = run_docker_command(command_args)
+        print(cmdout.stdout.decode('utf-8'))
+        print(cmdout.stderr.decode('utf-8'), file=sys.stderr)
