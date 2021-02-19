@@ -69,7 +69,8 @@ download-connect:
 
 mail-up:
 	NETWORK=${NETWORK} \
-	docker-compose -f compose/mail.yml -f compose/make-network.yml up -d
+	docker-compose -f compose/mail.yml -f compose/make-network.yml up -d && \
+	./bin/pdocker ps mail-ui
 
 mail-down:
 	NETWORK=${NETWORK} \
