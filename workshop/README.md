@@ -56,4 +56,5 @@ future meetings in `#auth-workshop`
   Started](https://drive.google.com/file/d/1yEFzh4A0sGa7j1Tpk-HuY3JFiaMP1wtZ/view?usp=sharing)
 - [2020-07-02 -
   Kerberos](https://drive.google.com/file/d/1ogotNEVLQ-XrQtD__8vsYSHrfklbPjLx/view?usp=sharing)
-- [2020-07-23 - Proxy](https://drive.google.com/file/d/1kFxPdvfbSTuTvDnSybLqhO16UWpsn6PV/view?usp=sharing)
+- [2020-07-23 - Proxies](https://drive.google.com/file/d/1kFxPdvfbSTuTvDnSybLqhO16UWpsn6PV/view?usp=sharing)
+- [2021-02-09 - Jupyter](https://drive.google.com/file/d/1MjC3I0e67Kp4BZp4vZNWms0QZIndQNQo/view?usp=sharing)
