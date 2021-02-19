@@ -3,11 +3,15 @@ services:
   base-rsp:
     hostname: base-rsp
     image: rstudio/rstudio-server-pro:${RSTUDIO_VERSION}
-    privileged: true
     environment:
       RSP_LICENSE: ${RSP_LICENSE}
+    #command:
+    #  - "sleep"
+    #  - "100000"
     ports:
       - "8787"
     volumes:
       - ../cluster/base-rserver.conf:/etc/rstudio/rserver.conf
+      - ../cluster/local-launcher.conf:/etc/rstudio/launcher.conf
+      - ../cluster/launcher.local.conf:/etc/rstudio/launcher.local.conf
       - ../cluster/jupyter.conf:/etc/rstudio/jupyter.conf
