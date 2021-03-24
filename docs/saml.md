@@ -49,9 +49,12 @@ available at [`../cluster/users`](../cluster/users)
 
 - The XML MetaData is _extremely important_ to a SAML implementation. 
 - Many of the communication errors that happen are issues with the metadata definition
-- It can be helpful to install a SAML filter for devtools. I used [this one](todo)
-- If setting up `ProxyPass` to an endpoint (which should happen after authentication), you need to "bypass" the proxy for the `mod_auth_mellon` endpoint. This is done with `ProxyPass /secret/ !` (i.e. do not proxy `/secret/`).  
-- The `mod_auth_mellon` implementation is _very_ dependent on the URL/port you are addressing... this is painful in docker-land + EC2... at present, configuration uses `localhost`. TODO: make this easier to use
+- It can be helpful to install a SAML filter for devtools. I
+  used [this one](https://chrome.google.com/webstore/detail/saml-devtools-extension/jndllhgbinhiiddokbeoeepbppdnhhio)
+- If setting up `ProxyPass` to an endpoint (which should happen after authentication), you need to "bypass" the proxy
+  for the `mod_auth_mellon` endpoint. This is done with `ProxyPass /secret/ !` (i.e. do not proxy `/secret/`).
+- The `mod_auth_mellon` implementation is _very_ dependent on the URL/port you are addressing... this is painful in
+  docker-land + EC2... at present, configuration uses `localhost`. TODO: make this easier to use
 - The test IdP we are using needs to have the SP defined at startup (using environment variables)
 
 
@@ -68,4 +71,3 @@ available at [`../cluster/users`](../cluster/users)
 - [deep dive on SAML stuff](https://groups.google.com/forum/#!topic/simplesamlphp/LwiLTF9APx0)
 
 - [SAML and SSL](https://docs.oracle.com/cd/E19182-01/820-0595/ggswc/index.html)
-
