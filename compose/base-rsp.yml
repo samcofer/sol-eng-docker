@@ -12,6 +12,7 @@ services:
       - "8787"
     volumes:
       - ../cluster/base-rserver.conf:/etc/rstudio/rserver.conf
+      - ../cluster/database.conf:/etc/rstudio/database.conf
       - ../cluster/local-launcher.conf:/etc/rstudio/launcher.conf
       - ../cluster/launcher.local.conf:/etc/rstudio/launcher.local.conf
       - ../cluster/jupyter.conf:/etc/rstudio/jupyter.conf
