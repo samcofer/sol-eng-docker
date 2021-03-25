@@ -193,7 +193,8 @@ rsp-ha-up:
 	NETWORK=${NETWORK} \
 	RSP_LICENSE=$(RSP_LICENSE) \
 	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
-	docker-compose -f compose/rsp-ha.yml -f compose/make-network-3.7.yml up -d
+	docker-compose -f compose/rsp-ha.yml -f compose/make-network-3.7.yml up -d && \
+	./bin/pdocker ps rsp
 
 rsp-ha-down:
 	NETWORK=${NETWORK} \
