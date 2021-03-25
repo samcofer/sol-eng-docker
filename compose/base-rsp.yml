@@ -2,7 +2,8 @@ version: '2.3'
 services:
   base-rsp:
     hostname: base-rsp
-    image: rstudio/rstudio-server-pro:${RSTUDIO_VERSION}
+    #image: rstudio/rstudio-server-pro:${RSTUDIO_VERSION}
+    image: colearendt/rsp:${RSTUDIO_VERSION}
     environment:
       RSP_LICENSE: ${RSP_LICENSE}
     #command:
@@ -16,3 +17,4 @@ services:
       - ../cluster/local-launcher.conf:/etc/rstudio/launcher.conf
       - ../cluster/launcher.local.conf:/etc/rstudio/launcher.local.conf
       - ../cluster/jupyter.conf:/etc/rstudio/jupyter.conf
+      - ../cluster/vscode.conf:/etc/rstudio/vscode.conf
