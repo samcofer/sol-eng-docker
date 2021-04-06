@@ -59,6 +59,6 @@ k3d cluster delete tmp1
 - Deploy fun things!!
 ```bash
 helm repo add rstudio-beta https://cdn.rstudio.com/sol-eng/helm/
-helm install rsp rstudio-beta/rstudio-workbench --set license=$RSP_LICENSE --set userCreate=true
+helm upgrade --install rsp rstudio-beta/rstudio-workbench --set license=$RSP_LICENSE --set userCreate=true
 ```
 - More [here](../k8s.md) and [here](./helm.md)
