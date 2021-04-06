@@ -434,6 +434,15 @@ apache-simple-down:
 	NETWORK=${NETWORK} \
         docker-compose -f compose/proxy-basic.yml -f compose/make-network.yml stop apache-simple
 
+proxy-auth-up:
+	NETWORK=${NETWORK} \
+        docker-compose -f compose/proxy-auth.yml -f compose/make-network.yml up -d && \
+	./bin/pdocker ps proxy-auth
+
+proxy-auth-down:
+	NETWORK=${NETWORK} \
+        docker-compose -f compose/proxy-auth.yml -f compose/make-network.yml stop
+
 proxy-basic-up:
 	NETWORK=${NETWORK} \
         docker-compose -f compose/proxy-basic.yml -f compose/make-network.yml up -d nginx-support-rsp && \
