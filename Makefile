@@ -4,7 +4,7 @@ PWD := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 PROJECT=sol-eng-docker
 NETWORK=${PROJECT}_default
 SCALE=1
-CONNECT_VERSION=1.8.6.1
+CONNECT_VERSION=1.8.8
 #1.7.0-11
 CONNECT_BINARY_URL=rstudio-connect_${CONNECT_VERSION}_amd64.deb
 
@@ -591,6 +591,17 @@ saml-connect-up:
 saml-connect-down:
 	NETWORK=${NETWORK} \
 	docker-compose -f compose/saml-connect.yml -f compose/make-network.yml down
+
+oidc-connect-up:
+	NETWORK=${NETWORK} \
+	CONNECT_LICENSE=$(CONNECT_LICENSE) \
+	CONNECT_VERSION=$(CONNECT_VERSION) \
+	docker-compose -f compose/oidc-connect.yml -f compose/make-network.yml up -d && \
+	./bin/pdocker ps oidc-connect
+
+oidc-connect-down:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/oidc-connect.yml -f compose/make-network.yml down
 
 saml-connect-keycloak-up:
 	NETWORK=${NETWORK} \
