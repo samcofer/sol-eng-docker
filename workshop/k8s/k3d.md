@@ -56,9 +56,17 @@ k3d cluster delete tmp1
 
 ## Now what?
 
+- Deploy NFS
+```bash
+helm repo add kvaps https://kvaps.github.io/charts
+helm upgrade --install nfs kvaps/nfs-server-provisioner --version 1.3.0
+```
+
 - Deploy fun things!!
 ```bash
 helm repo add rstudio-beta https://cdn.rstudio.com/sol-eng/helm/
-helm upgrade --install rsp rstudio-beta/rstudio-workbench --set license=$RSP_LICENSE --set userCreate=true
+helm upgrade --install rsp rstudio-beta/rstudio-workbench \
+  --set license=$RSP_LICENSE --set userCreate=true \
+  --set homeStorage.create=true --set homeStorage.storageClassName=nfs --set homeStorage.requests.storage=500Mi
 ```
-- More [here](../k8s.md) and [here](./helm.md)
+There are more exercises to work through: [](../k8s.md) and [here](./helm.md)
