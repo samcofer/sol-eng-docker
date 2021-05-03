@@ -6,6 +6,7 @@ Kubernetes, so we can use it for further product exploration / playing.
 ## Overview
 
 - [docker and containers](./get_started.md)
+- [Set up a lightweight dev environment](./k8s/k3d.md)
 - [Kubernetes and YAML](./k8s.md#what-is-kubernetes)
 - [Helm](./k8s/helm.md)
 - [Using Helmfile](./k8s/helmfile.md)

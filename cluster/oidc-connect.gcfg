@@ -1,0 +1,26 @@
+; RStudio Connect configuration file
+
+[Server]
+SenderEmail = test@example.com
+#Address = https://ssl-proxy-saml/rsconnect/
+Address = http://localhost:3939/
+	
+[Http]
+Listen = :3939
+
+[Authentication]
+Provider = oauth2
+
+[OAuth2]
+Logging = true
+ClientId = connect
+ClientSecret = 5dff02f1-2e30-4d2d-8e48-9a641e00361d
+OpenIDConnectIssuer = http://keycloak:8080/auth/realms/master
+RequireUsernameClaim = true
+
+
+[RPackageRepository "CRAN"]
+URL = "https://packagemanager.rstudio.com/cran/__linux__/bionic/latest"
+
+[RPackageRepository "RSPM"]
+URL = "https://packagemanager.rstudio.com/cran/__linux__/bionic/latest"
