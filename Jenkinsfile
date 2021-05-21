@@ -14,6 +14,7 @@ ansiColor('xterm') {
         sh "sleep 10"
         } catch(err) {
           print "${err}"
+          currentBuild.result = "FAILURE"
         } finally {
           print "====> Cleanup environment"
           sh "make test-env-down"
@@ -40,6 +41,7 @@ ansiColor('xterm') {
         sh "make kerb-connect-test"
         } catch(err) {
           print "${err}"
+          currentBuild.result = "FAILURE"
         } finally {
           print "====> Cleanup environment"
           sh "make proxy-connect-down"
@@ -64,6 +66,7 @@ ansiColor('xterm') {
         sh "sleep 10"
         } catch(err) {
           print "${err}"
+          currentBuild.result = "FAILURE"
         } finally {
           print "====> Cleanup environment"
           sh "make ldap-rsp-down ldap-connect-down"
@@ -88,6 +91,7 @@ ansiColor('xterm') {
         sh "sleep 10"
         } catch(err) {
           print "${err}"
+          currentBuild.result = "FAILURE"
         } finally {
           print "====> Cleanup environment"
           sh "make saml-connect-down"
@@ -113,6 +117,7 @@ ansiColor('xterm') {
         sh "sleep 10"
         } catch(err) {
           print "${err}"
+          currentBuild.result = "FAILURE"
         } finally {
           print "====> Cleanup environment"
           sh "make proxy-nginx-connect-down"
@@ -137,6 +142,7 @@ ansiColor('xterm') {
         sh "sleep 10"
         } catch(err) {
           print "${err}"
+          currentBuild.result = "FAILURE"
         } finally {
           print "====> Cleanup environment"
           sh "make mail-down ssl-down"
