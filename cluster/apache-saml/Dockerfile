@@ -1,4 +1,4 @@
-FROM httpd:2.4
+FROM httpd:2.4.41
 
 # install system deps
 	#pkg-config \
