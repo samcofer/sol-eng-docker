@@ -616,7 +616,8 @@ saml-connect-keycloak-down:
 
 proxy-saml-up:
 	NETWORK=${NETWORK} \
-	docker-compose -f compose/proxy-saml.yml -f compose/make-network.yml up -d
+	docker-compose -f compose/proxy-saml.yml -f compose/make-network.yml up -d && \
+	./bin/pdocker ps proxy-saml
 
 proxy-saml-build:
 	NETWORK=${NETWORK} \

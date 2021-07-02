@@ -99,7 +99,7 @@ ansiColor('xterm') {
         try {
         print "====> Building environment"
         sh "make test-env-up"
-        sh "make proxy-saml-up proxy-basic-up proxy-mitm-up"
+        sh "make proxy-saml-build proxy-saml-up proxy-basic-up proxy-mitm-up"
         sh "make proxy-connect-up proxy-rsp-up"
         sh "make proxy-nginx-connect-up"
         sh "sleep 10"

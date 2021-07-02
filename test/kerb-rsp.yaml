@@ -29,7 +29,7 @@ command:
       "ssh-server"
     ]
     exit-status: 0
-  "echo 'momo' | kinit bobo@DOCKER-RSTUDIO.COM && curl --delegation always -v -i -u : --negotiate http://apache-kerb:80/":
+  "echo 'momo' | kinit bobo@DOCKER-RSTUDIO.COM && curl --delegation always -v -i -u : --negotiate http://proxy-kerb:80/":
     title: kerb_curl_works
     stdout: [
       "WWW-Authenticate: Negotiate",
