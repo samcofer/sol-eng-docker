@@ -13,6 +13,7 @@ CONNECT_BINARY_URL=rstudio-connect_${CONNECT_VERSION}_amd64.deb
 #RSTUDIO_VERSION=1.3.322-1
 RSTUDIO_VERSION=1.3.1056-1
 RSTUDIO_VERSION=daily
+RSTUDIO_VERSION=1.4.1106-5
 
 SSP_VERSION=1.5.10.990
 
@@ -193,7 +194,8 @@ rsp-ha-up:
 	NETWORK=${NETWORK} \
 	RSP_LICENSE=$(RSP_LICENSE) \
 	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
-	docker-compose -f compose/rsp-ha.yml -f compose/make-network-3.7.yml up -d
+	docker-compose -f compose/rsp-ha.yml -f compose/make-network-3.7.yml up -d && \
+	./bin/pdocker ps rsp
 
 rsp-ha-down:
 	NETWORK=${NETWORK} \
@@ -431,6 +433,15 @@ apache-simple-up:
 apache-simple-down:
 	NETWORK=${NETWORK} \
         docker-compose -f compose/proxy-basic.yml -f compose/make-network.yml stop apache-simple
+
+proxy-auth-up:
+	NETWORK=${NETWORK} \
+        docker-compose -f compose/proxy-auth.yml -f compose/make-network.yml up -d && \
+	./bin/pdocker ps proxy-auth
+
+proxy-auth-down:
+	NETWORK=${NETWORK} \
+        docker-compose -f compose/proxy-auth.yml -f compose/make-network.yml stop
 
 proxy-basic-up:
 	NETWORK=${NETWORK} \

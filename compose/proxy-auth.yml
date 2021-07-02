@@ -1,0 +1,10 @@
+version: '2.3'
+services:
+
+  proxy-auth:
+    hostname: proxy-auth
+    image: httpd:2.4
+    volumes:
+      - ../cluster/apache-auth.conf:/usr/local/apache2/conf/httpd.conf
+    ports:
+      - "80"
