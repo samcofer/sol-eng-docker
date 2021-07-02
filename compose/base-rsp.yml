@@ -2,8 +2,7 @@ version: '2.3'
 services:
   base-rsp:
     hostname: base-rsp
-    #image: rstudio/rstudio-server-pro:${RSTUDIO_VERSION}
-    image: colearendt/rsp:${RSTUDIO_VERSION}
+    image: rstudio/rstudio-workbench:${RSTUDIO_VERSION}
     environment:
       RSP_LICENSE: ${RSP_LICENSE}
     #command:
