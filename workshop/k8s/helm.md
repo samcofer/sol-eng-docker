@@ -149,6 +149,68 @@ If you can wrap your head around these conventions and get used to them, you wil
 The only exception is that the layers of Go-templating get more and more confusing as the chart gets bigger / more complex.
 Ideally, the layers of Go-templating would be minimal... but sometimes, our hand is forced.
 
+## Create an ingress
+
+Now how do we get access without port-forwarding!? This introduces the concept of "ingress"
+
+This presumes that you have an "Ingress Controller" (i.e. a service that handles ingress definitions),
+which you have automatically if you followed the [k3d directions](./k3d.md). For k3d users, you can
+find your ingress controller by looking at the `kube-system` namespace (other clusters will vary).
+
+```bash
+kubectl -n kube-system get svc
+kubectl -n kube-system get pods
+```
+
+`traefik` is our default ingress controller on `k3d`. So `traefik` is ready to _handle_ ingress, but
+there is no ingress defined!
+
+### Prepare the DNS name
+
+Our DNS name is going to be `hello.localhost`. So we need to route that to our cluster. Create a record in `/etc/hosts`
+that looks like the following (this will vary if you are using not-k3d, not locally, etc. You want the IP of your
+ingress controller):
+
+```
+127.0.0.1       hello.localhost
+```
+
+Now if you visit that URL, you should get a very bland "404 page not found" error. This is a classic `traefik` response
+when it has no idea what you are talking about. Let's teach it!
+
+### Create the ingress
+
+It just so happens that our helm chart is
+ready [to create an ingress controller for us](../../k8s/charts/hello-world/templates/ingress.yaml), we just
+have to give it the appropriate values.
+
+So let's edit your `example.yaml` file:
+
+_example.yaml_
+```yaml
+replicas: 4
+service:
+  port: 80
+
+ingress:
+  enabled: true
+  hosts:
+    - host: hello.localhost
+      paths:
+        - "/"
+```
+
+Then we can apply your update:
+
+```bash
+helm upgrade --install myrelease ./k8s/charts/hello-world -f example.yaml
+```
+
+Now visit http://hello.localhost in your browser. Success!! You have written your first ingress!
+
+Different domains / paths can take you to different services! You are well on your way to taking
+the Kubernetes world by storm!! 🎉
+
 ## Set a repository
 
 Now that you are "at the helm" of the `helm`-mobile (heh), let's use a real chart!
@@ -170,13 +232,9 @@ Now what charts are here...?
 ```bash
 helm search repo rstudio-beta
 # NAME                            CHART VERSION   APP VERSION     DESCRIPTION                                      
-# rstudio-beta-s3/rstudio-connect 0.0.11                          Kubernetes deployment for RStudio Connect        
-# rstudio-beta-s3/rstudio-pm      0.0.18                          Kubernetes deployment for RStudio Package Manager
-# rstudio-beta-s3/rstudio-server  0.1.3                           Kubernetes deployment for RStudio Server Pro     
-# rstudio-beta/rstudio-server     0.1.0                           Kubernetes deployment for RStudio Server Pro     
-# rstudio-beta1/rstudio-connect   0.0.10                          Kubernetes deployment for RStudio Connect        
-# rstudio-beta1/rstudio-pm        0.0.17                          Kubernetes deployment for RStudio Package Manager
-# rstudio-beta1/rstudio-server    0.1.2                           Kubernetes deployment for RStudio Server Pro   
+# rstudio-beta/rstudio-connect   0.0.10                          Kubernetes deployment for RStudio Connect        
+# rstudio-beta/rstudio-pm        0.0.17                          Kubernetes deployment for RStudio Package Manager
+# rstudio-beta/rstudio-server    0.1.2                           Kubernetes deployment for RStudio Server Pro   
 ```
 
 I mean, what did you expect? :) 
