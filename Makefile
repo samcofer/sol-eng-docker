@@ -27,7 +27,7 @@ check:
 	./bin/check.sh
 
 pull:
-	docker pull rstudio/rstudio-server-pro:${RSTUDIO_VERSION} \
+	docker pull rstudio/rstudio-workbench:${RSTUDIO_VERSION} \
 	&& docker pull rstudio/rstudio-connect:${CONNECT_VERSION} \
 	&& docker pull ubuntu:16.04 \
 	&& docker pull kristophjunge/test-saml-idp \
