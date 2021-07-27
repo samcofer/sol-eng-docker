@@ -4,6 +4,8 @@ PWD := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 PROJECT=sol-eng-docker
 NETWORK=${PROJECT}_default
 SCALE=1
+CONNECT_VERSION=1.8.4.2-2
+CONNECT_VERSION=1.8.6
 CONNECT_VERSION=1.8.8
 #1.7.0-11
 CONNECT_BINARY_URL=rstudio-connect_${CONNECT_VERSION}_amd64.deb
@@ -13,7 +15,7 @@ CONNECT_BINARY_URL=rstudio-connect_${CONNECT_VERSION}_amd64.deb
 #RSTUDIO_VERSION=1.3.322-1
 RSTUDIO_VERSION=1.3.1056-1
 RSTUDIO_VERSION=daily
-RSTUDIO_VERSION=1.4.1106-5
+RSTUDIO_VERSION=1.4.1717-3
 
 SSP_VERSION=1.5.10.990
 
@@ -33,7 +35,7 @@ pull:
 	&& docker pull osixia/phpldapadmin \
 	&& docker pull dtwardow/ldap-self-service-password \
 	&& docker pull nginx
-	  
+
 build: kerb-server-build kerb-ssh-build kerb-rsp-build kerb-connect-build
 
 
@@ -173,7 +175,7 @@ kerb-ldap-rsp-up:
 	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
 	docker-compose -f compose/kerb-ldap-rsp.yml -f compose/make-network.yml up -d && \
 	./bin/pdocker ps kerb-ldap-rsp
-	
+
 
 kerb-ldap-rsp-down:
 	NETWORK=${NETWORK} \
@@ -207,7 +209,7 @@ nfs-up:
 nfs-down:
 	NETWORK=${NETWORK} \
 	docker-compose -f compose/nfs.yml -f compose/make-network.yml down
- 
+
 launcher-up:
 	NETWORK=${NETWORK} \
 	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
@@ -303,7 +305,7 @@ float-up:
 	docker-compose -f compose/float.yml -f compose/make-network.yml up -d
 float-down:
 	NETWORK=${NETWORK} \
-	docker-compose -f compose/float.yml -f compose/make-network.yml down 
+	docker-compose -f compose/float.yml -f compose/make-network.yml down
 
 float-ha-up:
 	NETWORK=${NETWORK} \
@@ -313,7 +315,7 @@ float-ha-up:
 	docker-compose -f compose/float-ha.yml -f compose/make-network.yml up -d
 float-ha-down:
 	NETWORK=${NETWORK} \
-	docker-compose -f compose/float-ha.yml -f compose/make-network.yml down 
+	docker-compose -f compose/float-ha.yml -f compose/make-network.yml down
 
 float-connect-up:
 	NETWORK=${NETWORK} \
@@ -416,7 +418,7 @@ kerb-connect-test-i:
 	CONNECT_VERSION=$(CONNECT_VERSION) \
 	docker-compose -f compose/kerb-connect.yml -f compose/make-network.yml run sut bash
 #---------------------------------------------
-# Proxy 
+# Proxy
 #---------------------------------------------
 apache-auth-up:
 	NETWORK=${NETWORK} \
@@ -681,10 +683,15 @@ ldap-connect-down:
 	NETWORK=${NETWORK} \
 	docker-compose -f compose/ldap-connect.yml -f compose/make-network.yml down
 
-pg-up: 
+ldap-connect-restart:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/ldap-connect.yml -f compose/make-network.yml restart ldap-connect && \
+	./bin/pdocker ps ldap-connect
+
+pg-up:
 	NETWORK=${NETWORK} \
 	docker-compose -f compose/pg.yml -f compose/make-network.yml up -d
-pg-down: 
+pg-down:
 	NETWORK=${NETWORK} \
 	docker-compose -f compose/pg.yml -f compose/make-network.yml down
 
@@ -703,11 +710,11 @@ ldap-rsp-down:
 	docker-compose -f compose/ldap-rsp.yml -f compose/make-network.yml down
 
 #---------------------------------------------
-# Other 
+# Other
 #---------------------------------------------
 
 #
-#test-build: 
+#test-build:
 #	if [ ! -e "${DB2_TARGZ}" ]; then \
 #		aws s3 cp s3://${S3_BUCKET}/${DB2_TARGZ} ./${DB2_TARGZ}; \
 #	else \
@@ -722,7 +729,7 @@ ldap-rsp-down:
 #	ORACLE_RPM=${ORACLE_RPM} \
 #	docker-compose -f test-container.yml -p ${PROJECT} build
 #
-#test-up: 
+#test-up:
 #	NETWORK=${NETWORK} \
 #	docker-compose -f test-container.yml -p ${PROJECT} up -d
 #
