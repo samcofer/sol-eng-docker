@@ -1,5 +1,5 @@
 ARG RSTUDIO_VERSION
-FROM rstudio/rstudio-server-pro:${RSTUDIO_VERSION}
+FROM rstudio/rstudio-workbench:${RSTUDIO_VERSION}
 
 # kerberos server
 RUN apt-get update && \
