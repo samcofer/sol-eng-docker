@@ -1,6 +1,6 @@
 {
 	"request": {
-		"hosts": ["localhost","localhost","127.0.0.1"],
+		"hosts": ["localhost","localhost","127.0.0.1","kerb-rsp-ha-1","kerb-rsp-ha-2","kerb-rsp-ha-nginx"],
 		"names": [
 			{
 				"C": "US",

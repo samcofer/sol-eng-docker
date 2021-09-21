@@ -1,3 +1,31 @@
+# --------------------
+# NEW
+# --------------------
+rsp-up:
+	helm upgrade --install rsp soleng/rstudio-server --set license=$(RSP_LICENSE) -f ./rsp-values.yaml  --set config.server."launcher\.kubernetes\.profiles\.conf"."\*".default-container-image=colearendt/r-session:daily
+rsp-down:
+	helm delete rsp
+
+kerb-server-up:
+	kubectl apply -f ./kerberos.yaml
+
+kerb-server-down:
+	kubectl delete -f ./kerberos.yaml
+
+kerb-ssh-up:
+	kubectl apply -f ./kerberos-ssh.yaml
+
+kerb-ssh-down:
+	kubectl delete -f ./kerberos-ssh.yaml
+
+kerb-rsp-up:
+	helm upgrade --install kerb-rsp soleng/rstudio-server --set license=$(RSP_LICENSE) --set image.repository=rstudio/sol-eng-rstudio --set image.tag=kerberos-$(RSTUDIO_VERSION) -f ./kerb-rsp-values.yaml --set config.server."launcher\.kubernetes\.profiles\.conf"."\*".default-container-image=rstudio/sol-eng-rstudio:kerberos-$(RSTUDIO_VERSION)
+kerb-rsp-down:
+	helm delete kerb-rsp
+
+# --------------------
+# OLD
+# --------------------
 down: launcher-ldap-down \
 	rsp-ldap-down \
 	ldap-down \
@@ -76,10 +104,10 @@ launcher-conf:
 launcher-conf-down:
 	kubectl delete configmap --namespace=rstudio launcher-conf
 
-launcher-conf:
-	kubectl create configmap --namespace=rstudio launcher-conf --from-file ./cluster/launcher-ldap/launcher.conf
-launcher-conf-down:
-	kubectl delete configmap --namespace=rstudio launcher-conf
+#launcher-conf:
+#	kubectl create configmap --namespace=rstudio launcher-conf --from-file ./cluster/launcher-ldap/launcher.conf
+#launcher-conf-down:
+#	kubectl delete configmap --namespace=rstudio launcher-conf
 
 secret-rsp:
 	kubectl --namespace=rstudio create secret generic license --from-file=./rsp
@@ -106,10 +134,6 @@ launcher-ldap-up:
 launcher-ldap-down:
 	kubectl --namespace=rstudio delete --ignore-not-found=true -f ./launcher-ldap.yml
 
-rsp-up:
-	kubectl --namespace=rstudio apply -f ./rsp.yml
-rsp-down:
-	kubectl --namespace=rstudio delete --ignore-not-found=true -f ./rsp.yml
 
 rsp-ldap-up:
 	kubectl --namespace=rstudio apply -f ./rsp-ldap.yml

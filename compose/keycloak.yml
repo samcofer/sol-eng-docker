@@ -1,0 +1,12 @@
+version: "2.3"
+services:
+  keycloak:
+    hostname: keycloak
+    image: quay.io/keycloak/keycloak
+    ports:
+      - 8080:8080
+      - 8443:8443
+    environment:
+      - KEYCLOAK_USER=admin
+      - KEYCLOAK_PASSWORD=admin
+      - PROXY_ADDRESS_FORWARDING=true

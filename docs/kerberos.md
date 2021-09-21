@@ -1,7 +1,7 @@
 # Kerberos on Docker
 
 For the purposes of internal testing, this repo houses Kerberos running in a
-docker network orchestrated by `docker-compose.yml`.  
+docker network orchestrated by `docker-compose.yml`.
 
 # Get Started
 
@@ -86,7 +86,7 @@ klist
 
 ```bash
 # simple kerberos authentication via the browser
-curl -v -i -u : --negotiate http://apache-kerb:80/ 
+curl -v -i -u : --negotiate http://apache-kerb:80/
 
 # to allow delegation (kerberos usage on the server)
 curl --delegation always -v -i -u : --negotiate http://apache-kerb:80/cgi-bin/krb.sh
@@ -113,6 +113,49 @@ options("rsconnect.libcurl.options" = list(gssapi_delegation = curl::curl_symbol
 options(rsconnect.http.verbose = TRUE)
 options(rsconnect.http.trace.json = TRUE)
 ```
+
+### Create a keytab file
+
+Create and inspect a kerberos ticket using the user's password:
+
+```
+root@k-simple-client:/# kinit -c temp_ticket_cache bobo
+Password for bobo@DOCKER-RSTUDIO.COM:
+root@k-simple-client:/# klist -c temp_ticket_cache
+Ticket cache: FILE:temp_ticket_cache
+Default principal: bobo@DOCKER-RSTUDIO.COM
+Valid starting     Expires            Service principal
+02/02/21 13:44:32  02/03/21 13:44:28  krbtgt/DOCKER-RSTUDIO.COM@DOCKER-RSTUDIO.COM
+```
+
+Get the "key version number" from the ticket:
+
+```
+root@k-simple-client:/# kvno -c temp_ticket_cache krbtgt/DOCKER-RSTUDIO.COM@DOCKER-RSTUDIO.COM
+krbtgt/DOCKER-RSTUDIO.COM@DOCKER-RSTUDIO.COM: kvno = 1
+```
+
+Create the actual keytab file using the "key version number" and the password:
+
+```
+root@k-simple-client:/# ktutil
+ktutil:  add_entry -password -p bobo@DOCKER-RSTUDIO.COM -e aes256-cts-hmac-sha1-96 -k 1
+Password for bobo@DOCKER-RSTUDIO.COM:
+ktutil:  write_kt ./mykey
+ktutil:  quit
+```
+
+Create and inspect a kerberos ticket using the new keytab file:
+
+```
+root@k-simple-client:/# kinit -c other_ticket_cache -k -t mykey bobo
+root@k-simple-client:/# klist -c other_ticket_cache
+Ticket cache: FILE:other_ticket_cache
+Default principal: bobo@DOCKER-RSTUDIO.COM
+Valid starting     Expires            Service principal
+02/02/21 13:48:26  02/03/21 13:48:26  krbtgt/DOCKER-RSTUDIO.COM@DOCKER-RSTUDIO.COM
+```
+
 
 # Development Process
 In short... we outline the painful development process that we went through below.
@@ -149,7 +192,7 @@ Long term: I like the idea of a lighter-weight image, but Ubuntu suffices for no
 
 ## Single-Sign-On (SSO)
 
-- Need to set permissions on the service keytab to be readable... [random help](https://users.ece.cmu.edu/~allbery/lambdabot/logs/kerberos/2008-02-17.txt) 
+- Need to set permissions on the service keytab to be readable... [random help](https://users.ece.cmu.edu/~allbery/lambdabot/logs/kerberos/2008-02-17.txt)
  > failed to verify krb5 credentials: Permission denied, yet the auth.log shows tickets were granted
 - Need to set default realm for services (i.e. `apache-kerb DOCKER-RSTUDIO.COM`) since we are not using FQDN
 - Need to understand keytabs a bit better...
@@ -173,7 +216,7 @@ Long term: I like the idea of a lighter-weight image, but Ubuntu suffices for no
         - Basically, this would be much more trivial if I was RStudio... it's hard b/c when the Apache process dies, the cache goes bye-bye
         - Not to mention the fact that I am going to be on another host... so I may need to SSH onto the RStudio box and issue a ticket?
         - Not to mention the fact that the ticket issued on RStudio will not be tied to any PAM session or anything, so it will just expire
-        - We are [getting to the heart](https://serverfault.com/questions/422778/how-to-automate-kinit-process-to-obtain-tgt-for-kerberos) of tickets, TGT, and keytabs here, people! 
+        - We are [getting to the heart](https://serverfault.com/questions/422778/how-to-automate-kinit-process-to-obtain-tgt-for-kerberos) of tickets, TGT, and keytabs here, people!
     - More on [constrained delegation](https://www.coresecurity.com/blog/kerberos-delegation-spns-and-more)
 
 ### TODO
@@ -205,7 +248,7 @@ Long term: I like the idea of a lighter-weight image, but Ubuntu suffices for no
  - [kdc install](https://web.mit.edu/kerberos/krb5-devel/doc/admin/install_kdc.html)
  - [Install overview](https://www.centos.org/docs/5/html/5.1/Deployment_Guide/s1-kerberos-server.html)
  - [Realms and Principals](http://publib.boulder.ibm.com/tividd/td/framework/GC32-0803-00/en_US/HTML/plan20.htm)
- - [Creating keytab](https://kb.iu.edu/d/aumh)
+ - [Creating keytab](https://kb.iu.edu/d/aumh) ([alternative](https://services.dartmouth.edu/TDClient/1806/Portal/KB/ArticleDet?ID=81309))
  - [kadmind](https://web.mit.edu/kerberos/krb5-1.13/doc/admin/admin_commands/kadmind.html)
  - [Admin guide](https://web.mit.edu/kerberos/krb5-1.4/krb5-1.4/doc/krb5-admin.html)
  - [Admin local](https://web.mit.edu/kerberos/krb5-1.12/doc/admin/admin_commands/kadmin_local.html)
@@ -243,4 +286,3 @@ A lot of times, this requires you to bind mount `/sys/fs/cgroup` into the contai
  - [New init process](http://smarden.org/runit/replaceinit.html)
  - [More docs](http://phusion.github.io/baseimage-docker/#solution)
  - [Tags on DockerHub](https://hub.docker.com/r/phusion/baseimage/tags/)
-

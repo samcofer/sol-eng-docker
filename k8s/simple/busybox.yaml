@@ -1,0 +1,25 @@
+# This continually overwrites /tmp/index.html with the time and hostname of the pod.
+
+# beware... these sleep intervals can be horrible to tearing down the pods
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: busybox
+spec:
+  replicas: 1
+  selector:
+    name: busybox
+  template:
+    metadata:
+      labels:
+        name: busybox
+    spec:
+      containers:
+      - image: busybox
+        command:
+          - sh
+          - -c
+          - 'while true; do date > /tmp/index.html; hostname >> /tmp/index.html; sleep $(($RANDOM % 5 + 5)); done'
+        imagePullPolicy: IfNotPresent
+        name: busybox
+     

@@ -3,7 +3,7 @@ services:
 
   debug-session:
     hostname: debug-session
-    image: colearendt/r-session-debug:${RSP_VERSION}
+    image: colearendt/r-session-debug:${RSP_VERSION}-tcpdump
     build:
       context: ../cluster
       dockerfile: r-session-debug/Dockerfile

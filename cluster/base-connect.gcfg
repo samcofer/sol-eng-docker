@@ -2,11 +2,18 @@
 
 [Server]
 SenderEmail = rsconnect@example.com
+EmailTo = "no-reply@example.com"
 ExpandedViewUI = true
 DefaultContentListView = "expanded"
 
 Address = http://localhost:3939
 ViewerKiosk = true
+
+EmailProvider=none
+
+[SMTP]
+Host = mail-smtp
+Port = 25
 
 [Python]
 Enabled = true
@@ -15,7 +22,7 @@ Executable = /opt/python/3.6.5/bin/python
 [Packages]
 ;HTTPProxy = http://proxy-mitm:8080/
 ;HTTPSProxy = http://proxy-mitm:8080/
-	
+
 [Http]
 Listen = :3939
 

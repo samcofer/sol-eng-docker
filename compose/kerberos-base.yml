@@ -3,11 +3,14 @@ services:
 
   k-server:
     hostname: k-server
+    image: rstudio/kerberos:server-1.0
     build:
       context: ../cluster
       dockerfile: server/Dockerfile
+
   k-simple-client:
     hostname: k-simple-client
+    image: rstudio/kerberos:client-1.0
     build:
       context: ../cluster
       dockerfile: simple-client/Dockerfile

@@ -2,3 +2,8 @@
 *.deb
 *.log
 cluster/data
+shared/*
+ubuntu@*
+captures/
+tmp/
+compose/testdata

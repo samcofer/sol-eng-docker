@@ -18,6 +18,10 @@ Visit `#auth-workshop` or checkout the docs!
 - [SAML](./docs/saml.md)
 - [LDAP](./docs/ldap.md)
 
+### Reference
+
+- [User Definition](./docs/users.md)
+
 ### Untested
 
 - [General Proxy](./docs/proxy.md)
@@ -26,6 +30,7 @@ Visit `#auth-workshop` or checkout the docs!
 - [SSL/TLS/HTTPS](./docs/ssl.md)
 - [Floating Licenses](./cluster/float/README.md)
 - [Metrics / Prometheus / Grafana](./docs/metrics.md)
+- [Kerberos RSP HA](./docs/kerberos-rsp-ha.md)
 
 # Getting Started
 

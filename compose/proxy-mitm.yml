@@ -6,4 +6,4 @@ services:
     ports:
       - "8090:8080"
       - "8091:8081"
-    command: [ "mitmweb", "--web-iface", "0.0.0.0" ]
+    command: [ "mitmweb", "--web-host", "0.0.0.0", "-k" ]

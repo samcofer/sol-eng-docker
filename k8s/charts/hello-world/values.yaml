@@ -1,0 +1,15 @@
+replicas: 1
+
+image:
+  repository: "paulbouwer/hello-kubernetes"
+  pullPolicy: IfNotPresent
+  tag: "1.8"
+
+service:
+  type: NodePort
+  port: 8080
+  targetPort: 8080
+
+ingress:
+  enabled: false
+  hosts: []
