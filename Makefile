@@ -164,6 +164,21 @@ connect-down:
 	CONNECT_VERSION=$(CONNECT_VERSION) \
 	docker-compose -f compose/base-connect.yml -f compose/make-network.yml down
 
+pam-connect-up:
+	NETWORK=${NETWORK} \
+	RSC_LICENSE=$(RSC_LICENSE) \
+	CONNECT_VERSION=$(CONNECT_VERSION) \
+	docker-compose -f compose/pam-connect.yml -f compose/make-network.yml up -d && \
+	./bin/pdocker ps compose_pam-connect
+
+pam-connect-restart:
+	./bin/pdocker restart compose_pam-connect_1
+
+pam-connect-down:
+	NETWORK=${NETWORK} \
+	CONNECT_VERSION=$(CONNECT_VERSION) \
+	docker-compose -f compose/pam-connect.yml -f compose/make-network.yml down
+
 kerb-ldap-rsp-build:
 	NETWORK=${NETWORK} \
 	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
