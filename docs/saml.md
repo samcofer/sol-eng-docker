@@ -18,7 +18,8 @@ This will stand up RStudio Connect with SAML authentication.
   time.  This means that if you want to use RSP, for instance, you will need to
   modify this file and change the SP URL:
   [../compose/saml-idp.yml](../compose/saml-idp.yml)
-- You need to add an entry in `/etc/hosts` to facilitate the IdP routing (it is
+- You need to add an entry in `/etc/hosts` on the laptop/server where you're running the containers
+  to facilitate the IdP routing (it is
   important that both the container and your host can route to `saml-idp` with
   the same URL, which requires an entry in `/etc/hosts`)
 ```
@@ -36,7 +37,7 @@ available at [`../cluster/users`](../cluster/users)
 - Login: Go to http://localhost . This will prompt you for authentication before permitting you to access backend resources
 - Logout: Go to http://localhost/secret/logout?ReturnTo=http://localhost
 	- NOTE: this is currently broken... so you will get a `BadRequest` response... however, LogOut will be successful... so just go to http://localhost and you will be prompted for authentication
-- If you want to login to the SAML IdP, the `user:pass` is `admin:secret`
+- If you want to login to the SAML IdP, it's at http://saml-idp:8080/simplesaml the `user:pass` is `admin:secret`
 
 # Development Background
 
