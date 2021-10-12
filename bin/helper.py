@@ -3,8 +3,10 @@
 import sys
 import argparse
 
+
 def run_ssl(args):
     return
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Helper for sol-eng-docker')
