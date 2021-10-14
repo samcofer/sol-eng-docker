@@ -1,0 +1,10 @@
+version: '2.3'
+services:
+
+  proxy-nginx-rstudio:
+    hostname: proxy-nginx-rstudio
+    image: nginx
+    volumes:
+      - ../cluster/nginx-rstudio.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - "80"

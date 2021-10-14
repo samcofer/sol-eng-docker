@@ -13,7 +13,7 @@ CONNECT_BINARY_URL=rstudio-connect_${CONNECT_VERSION}_amd64.deb
 #RSTUDIO_VERSION=preview
 #RSTUDIO_VERSION=1.2.5033-1
 #RSTUDIO_VERSION=1.3.322-1
-RSTUDIO_VERSION=1.3.1056-1
+RSTUDIO_VERSION=1.3.1093-1
 RSTUDIO_VERSION=daily
 RSTUDIO_VERSION=1.4.1717-3
 
@@ -163,6 +163,21 @@ connect-down:
 	NETWORK=${NETWORK} \
 	CONNECT_VERSION=$(CONNECT_VERSION) \
 	docker-compose -f compose/base-connect.yml -f compose/make-network.yml down
+
+pam-connect-up:
+	NETWORK=${NETWORK} \
+	RSC_LICENSE=$(RSC_LICENSE) \
+	CONNECT_VERSION=$(CONNECT_VERSION) \
+	docker-compose -f compose/pam-connect.yml -f compose/make-network.yml up -d && \
+	./bin/pdocker ps compose_pam-connect
+
+pam-connect-restart:
+	./bin/pdocker restart compose_pam-connect_1
+
+pam-connect-down:
+	NETWORK=${NETWORK} \
+	CONNECT_VERSION=$(CONNECT_VERSION) \
+	docker-compose -f compose/pam-connect.yml -f compose/make-network.yml down
 
 kerb-ldap-rsp-build:
 	NETWORK=${NETWORK} \
@@ -481,6 +496,20 @@ proxy-nginx-connect-restart:
 	NETWORK=${NETWORK} \
         docker-compose -f compose/proxy-nginx-connect.yml -f compose/make-network.yml restart && \
 	./bin/pdocker ps proxy-nginx-connect
+
+proxy-nginx-rstudio-up:
+	NETWORK=${NETWORK} \
+        docker-compose -f compose/proxy-nginx-rstudio.yml -f compose/make-network.yml up -d && \
+	./bin/pdocker ps proxy-nginx-rstudio
+
+proxy-nginx-rstudio-down:
+	NETWORK=${NETWORK} \
+        docker-compose -f compose/proxy-nginx-rstudio.yml -f compose/make-network.yml down
+
+proxy-nginx-rstudio-restart:
+	NETWORK=${NETWORK} \
+        docker-compose -f compose/proxy-nginx-rstudio.yml -f compose/make-network.yml restart && \
+	./bin/pdocker ps proxy-nginx-rstudio
 
 proxy-basic-rsp-ha-up:
 	NETWORK=${NETWORK} \
