@@ -209,14 +209,25 @@ ssp-ha-down:
 
 rsp-ha-up:
 	NETWORK=${NETWORK} \
-	RSP_LICENSE=$(RSP_LICENSE) \
-	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
-	docker-compose -f compose/rsp-ha.yml -f compose/make-network-3.7.yml up -d && \
-	./bin/pdocker ps rsp
+	RSW_LICENSE=$(RSW_LICENSE) \
+	RSTUDIO_VERSION=2021.09.0-351.pro6 \
+	docker-compose -f compose/rsp-ha.yml -f compose/make-network.yml up -d && \
+	./bin/pdocker ps proxy
+
+rsp-ha-scale-up:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/rsp-ha.yml -f compose/make-network.yml up -d --scale rsp=2 && \
+	./bin/pdocker ps proxy
+
+rsp-ha-scale-down:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/rsp-ha.yml -f compose/make-network.yml up -d --scale rsp=1 && \
+	./bin/pdocker ps proxy
 
 rsp-ha-down:
 	NETWORK=${NETWORK} \
-	docker-compose -f compose/rsp-ha.yml -f compose/make-network-3.7.yml down
+	docker-compose -f compose/rsp-ha.yml -f compose/make-network.yml down
+	docker volume rm compose_launcher-scratch
 
 nfs-up:
 	NETWORK=${NETWORK} \
