@@ -1,0 +1,27 @@
+version: '2.3'
+services:
+
+  id:
+    hostname: id
+    image: ghcr.io/colearendt/get-id:014891d188dbc17126f218cb1a4dc13d1de61d9e
+    environment:
+      DATABASE_URL: postgres://postgres:test@pg-id:5432/postgres
+    ports:
+       - "9000"
+    depends_on:
+      pg-id:
+        condition: service_healthy
+
+  pg-id:
+    hostname: pg-id
+    image: postgres:12
+    environment:
+      POSTGRES_PASSWORD: test
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - ../cluster/pg-init-id.sh:/docker-entrypoint-initdb.d/init-db.sh
+      - ../cluster/pg-init-id.sql:/docker-entrypoint-initdb.d/id.sql

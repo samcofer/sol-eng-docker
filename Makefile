@@ -457,10 +457,27 @@ apache-auth-down:
 
 apache-simple-up:
 	NETWORK=${NETWORK} \
-        docker-compose -f compose/proxy-basic.yml -f compose/make-network.yml up -d apache-simple
+        docker-compose -f compose/proxy-basic.yml -f compose/make-network.yml up -d apache-simple && \
+	./bin/pdocker ps apache-simple
+apache-simple-restart:
+	NETWORK=${NETWORK} \
+        docker-compose -f compose/proxy-basic.yml -f compose/make-network.yml restart apache-simple && \
+	./bin/pdocker ps apache-simple
 apache-simple-down:
 	NETWORK=${NETWORK} \
         docker-compose -f compose/proxy-basic.yml -f compose/make-network.yml stop apache-simple
+
+apache-support-connect-up:
+	NETWORK=${NETWORK} \
+        docker-compose -f compose/apache-support-connect.yml -f compose/make-network.yml up -d apache-support-connect && \
+	./bin/pdocker ps apache-support-connect
+apache-support-connect-restart:
+	NETWORK=${NETWORK} \
+        docker-compose -f compose/apache-support-connect.yml -f compose/make-network.yml restart apache-support-connect && \
+	./bin/pdocker ps apache-support-connect
+apache-support-connect-down:
+	NETWORK=${NETWORK} \
+        docker-compose -f compose/apache-support-connect.yml -f compose/make-network.yml stop apache-support-connect
 
 proxy-auth-up:
 	NETWORK=${NETWORK} \
@@ -537,6 +554,7 @@ proxy-basic-ssp-ha-up:
 proxy-basic-ssp-ha-down:
 	NETWORK=${NETWORK} \
         docker-compose -f compose/proxy-basic.yml -f compose/make-network.yml stop apache-support-ssp-ha
+
 #---------------------------------------------
 # Proxy Products
 #---------------------------------------------
@@ -625,6 +643,15 @@ keycloak-up:
 keycloak-down:
 	NETWORK=${NETWORK} \
 	docker-compose -f compose/keycloak.yml -f compose/make-network.yml down
+
+id-up:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/id.yml -f compose/make-network.yml up -d && \
+	./bin/pdocker ps id 
+
+id-down:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/id.yml -f compose/make-network.yml down
 
 saml-idp-up:
 	NETWORK=${NETWORK} \
