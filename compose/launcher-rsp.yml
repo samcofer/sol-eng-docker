@@ -10,7 +10,7 @@ services:
     environment:
       - RSP_LICENSE
     ports:
-      - 8787:8787
+      - "8787:8787"
 
   launcher:
     hostname: launcher
@@ -21,7 +21,7 @@ services:
     environment:
       - RSP_LICENSE
     ports:
-      - 5559:5559
+      - "5559:5559"
 
   launcher-session:
     hostname: launcher-session
