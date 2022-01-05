@@ -68,7 +68,7 @@ On simple-client:
 |julie |julie      |
 |joe   |joe        |
 
-**NOTE:** All users in [the users file](cluster/users) will be automatically
+**NOTE:** All users in [the users file](../cluster/users) will be automatically
 created throughout the system (in Kerberos and locally on each individual
 container).  Thank you, `awk`!!
 
