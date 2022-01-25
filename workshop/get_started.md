@@ -36,7 +36,7 @@ This has the benefit of helping you have a quick/snappy experience running
 commands too!
 
 [Take a quick detour to our setup page, and then come back here to
-continue!](../../README#getting-started)
+continue!](../README.md#getting-started)
 
 # Exercise 0 - Let's Start Connect
 
