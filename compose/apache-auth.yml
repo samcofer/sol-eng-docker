@@ -9,7 +9,7 @@ services:
     environment:
       - RSP_LICENSE
     ports:
-      - 8788:8787
+      - "8788:8787"
     volumes:
       - ../cluster/secure-proxy-user-header:/etc/rstudio/secure-proxy-user-header
       - ../cluster/proxy-rserver.conf:/etc/rstudio/rserver.conf

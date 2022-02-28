@@ -11,7 +11,7 @@ services:
       - "home-volume:/var/home"
     privileged: true
     ports:
-      - 2049
+      - "2049"
   busybox:
     hostname: busybox
     image: ubuntu:bionic

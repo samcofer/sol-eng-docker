@@ -12,7 +12,7 @@ services:
     environment:
       - SSP_LICENSE
     ports:
-      - 3838:3838
+      - "3838:3838"
     volumes:
       - "../cluster/ssp-basic.conf:/etc/shiny-server/shiny-server.conf"
     command:
