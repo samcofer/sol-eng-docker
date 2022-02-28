@@ -3,7 +3,7 @@ services:
 
   proxy-rsp:
     hostname: proxy-rsp
-    image: rstudio/rstudio-server-pro:${RSTUDIO_VERSION}
+    image: rstudio/rstudio-workbench:${RSTUDIO_VERSION}
     #image: rstudio/sol-eng-rstudio:ldap-${RSTUDIO_VERSION}
     environment:
       - RSP_LICENSE

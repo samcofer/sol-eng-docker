@@ -15,7 +15,7 @@ CONNECT_BINARY_URL=rstudio-connect_${CONNECT_VERSION}_amd64.deb
 #RSTUDIO_VERSION=1.3.322-1
 RSTUDIO_VERSION=1.3.1093-1
 RSTUDIO_VERSION=daily
-RSTUDIO_VERSION=1.4.1717-3
+RSTUDIO_VERSION=2021.09.0-351.pro6
 
 SSP_VERSION=1.5.10.990
 
@@ -585,6 +585,12 @@ proxy-rsp-launcher-up:
 	RSP_LICENSE=$(RSP_LICENSE) \
 	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
 	docker-compose -f compose/proxy-rsp-launcher.yml -f compose/make-network.yml up -d
+
+proxy-rsp-launcher-restart:
+	NETWORK=${NETWORK} \
+	RSP_LICENSE=$(RSP_LICENSE) \
+	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
+	docker-compose -f compose/proxy-rsp-launcher.yml -f compose/make-network.yml restart
 
 proxy-rsp-launcher-down:
 	NETWORK=${NETWORK} \
