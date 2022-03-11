@@ -17,7 +17,8 @@ else
 fi
 
 chk_vers=`python3 -c 'import sys; print((3,7) <= (sys.version_info.major, sys.version_info.minor))'`
-if [[ "chk_vers" != "True" ]]; then
+echo "check version:"
+if [[ "$chk_vers" != "True" ]]; then
   echo "ERROR: Need python version 3.7 or greater. Please update python"
   echo "    if you need to use an older version, you can disable the ./bin/pdocker script by deleting its contents"
   echo "    for instance:"
