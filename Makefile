@@ -16,6 +16,8 @@ CONNECT_BINARY_URL=rstudio-connect_${CONNECT_VERSION}_amd64.deb
 RSTUDIO_VERSION=1.3.1093-1
 RSTUDIO_VERSION=daily
 RSTUDIO_VERSION=2021.09.0-351.pro6
+RSTUDIO_VERSION=1.4.1717-3
+RSTUDIO_VERSION=2022.02.0-443.pro2
 
 SSP_VERSION=1.5.10.990
 
@@ -653,7 +655,7 @@ keycloak-down:
 id-up:
 	NETWORK=${NETWORK} \
 	docker-compose -f compose/id.yml -f compose/make-network.yml up -d && \
-	./bin/pdocker ps id 
+	./bin/pdocker ps id
 
 id-down:
 	NETWORK=${NETWORK} \
