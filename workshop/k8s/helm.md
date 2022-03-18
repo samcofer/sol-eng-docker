@@ -81,7 +81,7 @@ This shows the different values that are available, along with their defaults.
 ### Now install it!
 
 To install a helm chart, we have to give the "release" a name. In our case, it will be
-`myhello`
+`myrelease`
 
 ```bash
 helm install myrelease ./k8s/charts/hello-world -f example.yaml
@@ -94,7 +94,7 @@ so you need to _upgrade_ it.
 helm upgrade myrelease ./k8s/charts/hello-world -f example.yaml
 ```
 
-As a little tip, `helm upgrade --install` will allow you to create _and_ upgrade charts, regardless of state.
+> **TIP:** `helm upgrade --install` will allow you to create _and_ upgrade charts, regardless of state. Idempotency 🎉
 
 ### Is it alive?
 
@@ -184,7 +184,8 @@ It just so happens that our helm chart is
 ready [to create an ingress controller for us](../../k8s/charts/hello-world/templates/ingress.yaml), we just
 have to give it the appropriate values.
 
-So let's edit your `example.yaml` file:
+So let's edit your `example.yaml` file (make sure to use YOUR name!). You also may need to change your domain, depending
+on what domains your Kubernetes cluster has access to:
 
 _example.yaml_
 ```yaml
@@ -195,7 +196,7 @@ service:
 ingress:
   enabled: true
   hosts:
-    - host: hello.localhost
+    - host: my-name.training.soleng.rstudioservices.com
       paths:
         - "/"
 ```
@@ -206,94 +207,16 @@ Then we can apply your update:
 helm upgrade --install myrelease ./k8s/charts/hello-world -f example.yaml
 ```
 
-Now visit http://hello.localhost in your browser. Success!! You have written your first ingress!
+Now visit https://the-url in your browser. Success!! You have written your first ingress!
+
+Alternatively, you may need to wait a little while for DNS to provision... 😅
+
+Try this to be sure that Kubernetes knows what you want:
+```bash
+kubectl get ingress
+```
+
+Once the DNS resolves properly, 
 
 Different domains / paths can take you to different services! You are well on your way to taking
 the Kubernetes world by storm!! 🎉
-
-## Set a repository
-
-Now that you are "at the helm" of the `helm`-mobile (heh), let's use a real chart!
-
-One of the great values of `helm` is that it makes it much easier to "pick and choose"
-what apps you would like to deploy to your Kubernetes cluster. To do so, you need a 
-helm _repository_ (basically a web server hosting some charts) and the name of the 
-chart that you want to install.
-
-Since this is RStudio, and we have some products that are fun to deploy on Kubernetes,
-let's use one of our repositories!
-
-```bash
-helm repo add rstudio-beta https://cdn.rstudio.com/sol-eng/helm
-```
-
-Now what charts are here...?
-
-```bash
-helm search repo rstudio-beta
-# NAME                            CHART VERSION   APP VERSION     DESCRIPTION                                      
-# rstudio-beta/rstudio-connect   0.0.10                          Kubernetes deployment for RStudio Connect        
-# rstudio-beta/rstudio-pm        0.0.17                          Kubernetes deployment for RStudio Package Manager
-# rstudio-beta/rstudio-server    0.1.2                           Kubernetes deployment for RStudio Server Pro   
-```
-
-I mean, what did you expect? :) 
-
-Alright! Let's install RStudio Server!
-
-First, we will create a simple values file to make our life easier:
-
-```yaml
-replicas: 1
-rbac:
-  create: true
-homeStorage:
-  create: true
-userCreate: true
-```
-
-Then ensure you have a valid RStudio license exported as the `RSP_LICENSE` environment variable.
-
-Now, you can install RSP!
-
-```bash
-helm install myrsp rstudio-beta/rstudio-server --set license=$RSP_LICENSE
-```
-
-Notice that we reference the repository (rather than a directory structure).
-
-### Is it alive?
-
-Take a look at your kubernetes environment. Is RSP alive?
-
-```bash
-helm list
-
-kubectl get pods
-
-# please tell me you have installed the autocompletion for kubectl by now!
-kubectl logs myrsp-<tab>
-```
-
-And let's use the service
-
-```bash
-kubectl port-forward svc/myrsp 8787:80
-```
-
-And login to your browser at http://localhost:8787 with user/password `rstudio/rstudio`.
-
-You should be able to launch a session and have it _automatically_ use your Kubernetes cluster.
-How cool is that!?
-
-### A _bit_ more complex
-
-Ok, so this chart has a _lot_ more options, and is _way_ more complex. There are
-tons of nuances to dig into with `helm`. Suffice it to say that you do not need
-to understand _exactly_ how a chart works if you can tweak the values to do what you want.
-
-```bash
-helm show values rstudio-beta/rstudio-server
-```
-
-We will dig into some more options in our next lesson! Have fun!
