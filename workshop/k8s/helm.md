@@ -190,13 +190,12 @@ on what domains your Kubernetes cluster has access to:
 _example.yaml_
 ```yaml
 replicas: 4
-service:
-  port: 80
 
 ingress:
   enabled: true
+  ingressClassName: traefik
   hosts:
-    - host: my-name.training.soleng.rstudioservices.com
+    - host: my-name.training.soleng.rstudioservices.com  # CHANGE ME!
       paths:
         - "/"
 ```
@@ -214,6 +213,8 @@ Alternatively, you may need to wait a little while for DNS to provision... 😅
 Try this to be sure that Kubernetes knows what you want:
 ```bash
 kubectl get ingress
+# NAME                      CLASS     HOSTS                                          ADDRESS   PORTS   AGE
+# myrelease                 traefik   cole.training.soleng.rstudioservices.com                 80      4s
 ```
 
 Once the DNS resolves properly, 
