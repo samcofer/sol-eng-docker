@@ -38,6 +38,11 @@ Let's create a simple deployment. This is an
 adapted [hello-world example](https://github.com/paulbouwer/hello-kubernetes)
 
 ```bash
+# clone the repository
+# git clone https://github.com/rstudio/sol-eng-docker.git
+# or (using ssh)
+# git clone git@github.com:rstudio/sol-eng-docker.git
+
 # go to the simple kubernetes resource folder
 cd k8s/simple
 kubectl apply -f hello-world.yaml
@@ -134,5 +139,5 @@ Take a look [busybox.yaml](../k8s/simple/busybox.yaml)
   - `COMMAND`/`CMD`: The "arguments" passed to the entrypoint executable / script
   
 - In Kubernetes, this paradigm changes to a better-named convention:
-  - `command`: Analogous to `ENTRYPOINT`. The "command" always executed by the contanier
+  - `command`: Analogous to `ENTRYPOINT`. The "command" always executed by the container
   - `args`: Analogous to `COMMAND`. The "args" passed to the "command"
