@@ -38,6 +38,11 @@ Let's create a simple deployment. This is an
 adapted [hello-world example](https://github.com/paulbouwer/hello-kubernetes)
 
 ```bash
+# clone the repository
+# git clone https://github.com/rstudio/sol-eng-docker.git
+# or (using ssh)
+# git clone git@github.com:rstudio/sol-eng-docker.git
+
 # go to the simple kubernetes resource folder
 cd k8s/simple
 kubectl apply -f hello-world.yaml
@@ -134,62 +139,5 @@ Take a look [busybox.yaml](../k8s/simple/busybox.yaml)
   - `COMMAND`/`CMD`: The "arguments" passed to the entrypoint executable / script
   
 - In Kubernetes, this paradigm changes to a better-named convention:
-  - `command`: Analogous to `ENTRYPOINT`. The "command" always executed by the contanier
+  - `command`: Analogous to `ENTRYPOINT`. The "command" always executed by the container
   - `args`: Analogous to `COMMAND`. The "args" passed to the "command"
-
-## Get Started with RStudio!!
-
-Ok, now we need to deploy a pro product! Let's start with the IDE!
-
-First, we need a license! Ensure you have the environment variable `RSP_LICENSE`
-exported with a real RStudio license
-
-```bash
-export RSP_LICENSE=xxxx
-```
-
-Now we will store this license on the Kubernetes cluster, where it will be accessible
-to the RSP service that we deploy. Kubernetes stores such things as **secrets**
-
-```bash
-kubectl create secret generic license --from-literal="rsp=$RSP_LICENSE"
-```
-
-From the same `k8s/simple` directory, execute the following:
-```bash
-kubectl apply -f rsp.yaml
-```
-
-Now we will make sure all is well with the world
-```bash
-kubectl get pods
-kubectl logs rsp-<name of pod>
-```
-
-And port-forward the service:
-```bash
-kubectl port-forward svc/rsp 8787:80
-```
-
-Then log in with user:password `rstudio:rstudio` and look at the output of `system('hostname')`.
-That's the name of your pod!! Well done!
-
-```r
-system("hostname")
-# rsp-78f9f9b56d-pqsvm
-```
-
-Again, to remove:
-```bash
-kubectl delete -f rsp.yaml
-```
-
-### New Concepts
-
-Take a look at [rsp.yaml](../k8s/simple/rsp.yaml)
-
-- Notice how we mounted the secret into the container as an environment variable
-- RSP requires a "privileged" container (akin to root on the Kubernetes node). We did this with `securityContext`
-- Notice the commented out `command`. This can be a hacky but useful tool if
-  our products are starting up weirdly ( common for RSP due to our complicated
-entrypoint script)
