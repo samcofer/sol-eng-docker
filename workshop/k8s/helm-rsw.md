@@ -113,7 +113,8 @@ _rsw.yaml_
 
 ingress:
   enabled: true
-  ingressClassName: "traefik"
+  annotations:
+    kubernetes.io/ingress.class: traefik
   hosts:
     - host: my-name-rsw.training.soleng.rstudioservices.com # CHANGE ME!
       paths:
