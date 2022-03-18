@@ -1,26 +1,26 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: rsp
+  name: rsw
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: rsp
+      app: rsw
   template:
     metadata:
       labels:
-        app: rsp
+        app: rsw
     spec:
       containers:
-      - name: rsp
-        image: rstudio/rstudio-server-pro:daily
+      - name: rsw
+        image: rstudio/rstudio-workbench:latest
         env:
-        - name: RSP_LICENSE
+        - name: RSW_LICENSE
           valueFrom:
             secretKeyRef:
               name: license
-              key: rsp
+              key: rsw
         #command: ["sleep","10000"]
         imagePullPolicy: IfNotPresent
         ports:
@@ -31,11 +31,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: rsp
+  name: rsw
 spec:
   type: NodePort
   selector:
-    app: rsp
+    app: rsw
   ports:
   - port: 80
     targetPort: 8787
