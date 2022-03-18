@@ -60,8 +60,6 @@ Setting values on the command line can be tedious. So create a YAML file like so
 _example.yaml_
 ```yaml
 replicas: 4
-service:
-  port: 80
 ```
 
 Now template the chart:
@@ -193,7 +191,8 @@ replicas: 4
 
 ingress:
   enabled: true
-  ingressClassName: traefik
+  annotations:
+    kubernetes.io/ingress.class: traefik
   hosts:
     - host: my-name.training.soleng.rstudioservices.com  # CHANGE ME!
       paths:

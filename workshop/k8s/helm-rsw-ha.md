@@ -59,7 +59,8 @@ service:
     
 ingress:
   enabled: true
-  ingressClassName: traefik
+  annotations:
+    kubernetes.io/ingress.class: traefik
   hosts:
     - host: my-name-ha-rsw.training.soleng.rstudioservices.com # CHANGE ME!
       paths:
@@ -71,11 +72,11 @@ And deploy! (remember, this time we need a license _and_ a database password)
 ```bash
 helm upgrade --install ha-ville rstudio/rstudio-workbench \
   --set license.key="${RSW_LICENSE}" \
-  --set config.secret.database\.conf.password="${RSW_POSTGRES_PASS}" \
+  --set "config.secret.database\.conf.password"="${RSW_POSTGRES_PASS}" \
   -f ha-ville.yaml
 ```
 
-Is it alive! Probe your environment to see if it's working!
+Is it alive!? Probe your environment to see if it's working!
 
 ## What next?
 
