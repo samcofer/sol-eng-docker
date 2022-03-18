@@ -37,14 +37,27 @@ Alright! Let's install RStudio Workbench!
 
 ## Install RStudio Workbench
 
-First, we will create a simple values file to make our life
+First, we will create a simple values file called `rsw.yaml` to make our life
 easier. [There are some other examples here](https://github.com/rstudio/helm/tree/main/examples/workbench):
 
+_rsw.yaml_
 ```yaml
 replicas: 1
-rbac:
-  create: true
+
 userCreate: true
+userName: rstudio
+userPassword: rstudio # CHANGE ME
+
+config:
+  server:
+    jupyter.conf:
+      jupyter-exe: /opt/python/jupyter/bin/jupyter
+    launcher.local.conf:
+      unprivileged: 1
+    launcher.conf:
+      cluster:
+        name: Local
+        type: Local
 ```
 
 Then ensure you have a valid RStudio license exported as the `RSW_LICENSE` environment variable.
@@ -52,7 +65,7 @@ Then ensure you have a valid RStudio license exported as the `RSW_LICENSE` envir
 Now, you can install RSW!
 
 ```bash
-helm upgrade --install myrsw rstudio/rstudio-workbench --set license.key=$RSW_LICENSE
+helm upgrade --install myrsw rstudio/rstudio-workbench -f rsw.yaml --set license.key=$RSW_LICENSE
 ```
 
 Notice that we reference the repository (rather than a directory structure). It is also possible to pin a version (
@@ -68,15 +81,18 @@ helm list
 
 kubectl get pods
 
+kubectl describe pod myrsw-<tab> rstudio
+kubectl get pod myrsw-<tab> -o yaml
+
 # please tell me you have installed the autocompletion for kubectl by now!
-kubectl logs myrsw-<tab>
+kubectl logs myrsw-<tab> rstudio -f
 ```
 
 And let's use the service
 
 ```bash
 # if you need to get the service name: kubectl get svc
-kubectl port-forward svc/myrsw 8787:80
+kubectl port-forward svc/myrsw-rstudio-workbench 8787:80
 ```
 
 And login to your browser at http://localhost:8787 with user/password `rstudio/rstudio`.
@@ -88,6 +104,35 @@ your server... we can do better than that.
 
 Let's tackle the first step of this - expose our app to the world.
 
+What we need to define here is called an "Ingress". Open up the `rsw.yaml` file that you started, and add this section
+to the bottom:
+
+_rsw.yaml_
+```yaml
+# ...
+
+ingress:
+  enabled: true
+  ingressClassName: "traefik"
+  hosts:
+    - host: my-name-rsw.training.soleng.rstudioservices.com # CHANGE ME!
+      paths:
+        - /
+```
+
+Now deploy again with the same command:
+```bash
+helm upgrade --install myrsw rstudio/rstudio-workbench -f rsw.yaml --set license.key=$RSW_LICENSE
+```
+
+And you should see another ingress now!
+
+```bash
+kubectl get ingress
+# NAME                      CLASS     HOSTS                                          ADDRESS   PORTS   AGE
+# myrelease                 traefik   cole.training.soleng.rstudioservices.com                 80      4s
+# myrsw-rstudio-workbench   traefik   cole-rsw.training.soleng.rstudioservices.com             80      4m27s
+```
 
 There is still much to be done! Nothing is persistent (yet), and we want to use the Kubernetes Launcher!
 
@@ -102,3 +147,12 @@ helm show values rstudio/rstudio-workbench
 ```
 
 We will dig into some more options in our next lesson! Have fun!
+
+### Cleanup
+
+If you are done and want to clean up (so you can play nicely with the cluster):
+
+```bash
+helm list
+helm delete myrsw
+```

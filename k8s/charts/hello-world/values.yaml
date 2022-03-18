@@ -12,4 +12,6 @@ service:
 
 ingress:
   enabled: false
+  annotations: {}
+  ingressClassName: ""
   hosts: []
