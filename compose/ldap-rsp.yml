@@ -3,18 +3,13 @@ services:
 
   ldap-rsp:
     hostname: ldap-rsp
-    build:
-      context: ../cluster
-      dockerfile: ldap-rsp/Dockerfile
-      args:
-        - RSTUDIO_VERSION=${RSTUDIO_VERSION}
-    image: rstudio/sol-eng-rstudio:ldap-${RSTUDIO_VERSION}
+    image: ghcr.io/rstudio/rstudio-workbench:${RSTUDIO_VERSION}
     privileged: true
     volumes:
       - "../cluster/ldap-rsp.conf:/etc/rstudio/rserver.conf"
-      - "../cluster/rsp-startup.sh:/usr/local/bin/startup.sh"
+      - "../cluster/sssd.conf:/etc/sssd/sssd.conf"
+      # - "../cluster/rsp-startup.sh:/usr/local/bin/startup.sh"
     environment:
-      - "RSP_LICENSE"
-      - "RSP_LAUNCHER=true"
+      - "RSW_LICENSE"
     ports:
       - "8787"
