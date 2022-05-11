@@ -1,0 +1,12 @@
+version: "2.3"
+services:
+  samba:
+    hostname: samba
+    image: dperson/samba
+    ports:
+      - "139:139"
+      - "445:445"
+    command: >-
+      -p
+      -u "rstudio;rstudio"
+      -s "rstudio;/rstudio;no;no;no;rstudio"

@@ -1,0 +1,20 @@
+version: '2.3'
+services:
+
+  smb-mount-rsw:
+    hostname: smb-mount-rsw
+    build:
+      context: ../cluster
+      dockerfile: smb-mount-rsw/Dockerfile
+      args:
+        - RSTUDIO_VERSION=${RSTUDIO_VERSION}
+    image: rstudio/sol-eng-rstudio:smb-mount-${RSTUDIO_VERSION}
+    privileged: true
+    ports:
+      - "8787"
+    environment:
+      - RSW_LICENSE
+    volumes:
+     - "../cluster/smb-mount-rsw/rserver.conf:/etc/rstudio/rserver.conf"
+     - "../cluster/smb-mount-rsw/launcher.conf:/etc/rstudio/launcher.conf"
+     - "../cluster/smb-mount-rsw/pam_mount.conf.xml:/etc/security/pam_mount.conf.xml"

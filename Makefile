@@ -653,7 +653,7 @@ keycloak-down:
 id-up:
 	NETWORK=${NETWORK} \
 	docker-compose -f compose/id.yml -f compose/make-network.yml up -d && \
-	./bin/pdocker ps id 
+	./bin/pdocker ps id
 
 id-down:
 	NETWORK=${NETWORK} \
@@ -811,3 +811,29 @@ ldap-rsp-down:
 #	docker-compose -f test-container.yml -p ${PROJECT} stop test-process
 #
 #.PHONY: db-up-redshift db-down-redshift db-up-db2 db-down-db2
+
+samba-up:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/samba.yml -f compose/make-network.yml up -d
+samba-down:
+	NETWORK=${NETWORK} \
+	docker-compose -f compose/samba.yml -f compose/make-network.yml down
+
+smb-mount-rsw-build:
+	NETWORK=${NETWORK} \
+	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
+	docker-compose -f compose/smb-mount-rsw.yml -f compose/make-network.yml build
+
+smb-mount-rsw-up:
+	NETWORK=${NETWORK} \
+	RSW_LICENSE=$(RSW_LICENSE) \
+	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
+	docker-compose -f compose/smb-mount-rsw.yml -f compose/make-network.yml up -d && \
+	./bin/pdocker ps smb-mount-rsw
+
+
+smb-mount-rsw-down:
+	NETWORK=${NETWORK} \
+	RSW_LICENSE=$(RSW_LICENSE) \
+	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
+	docker-compose -f compose/smb-mount-rsw.yml -f compose/make-network.yml down
