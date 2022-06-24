@@ -13,9 +13,8 @@ services:
     ports:
       - "8787"
     environment:
-      - RSP_LICENSE
-      - RSP_TESTUSER=
+      - RSW_LICENSE
+      - RSW_TESTUSER=
     volumes:
-     - "../cluster/kerb-ldap-rsp/rserver.conf:/etc/rstudio/rserver.conf:z"
-     - "../cluster/rstudio-sssd:/etc/pam.d/rstudio"
-     - "../cluster/rstudio-session-sssd:/etc/pam.d/rstudio-session"
+     - "../cluster/krb5.conf:/etc/krb5.conf"
+     - "../cluster/kerb-postgres-odbc.ini:/etc/odbc.ini"

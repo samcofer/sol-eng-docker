@@ -1,31 +1,29 @@
 ARG RSTUDIO_VERSION
-FROM rstudio/rstudio-server-pro:${RSTUDIO_VERSION}
+FROM rstudio/rstudio-workbench:${RSTUDIO_VERSION}
 
-# kerberos server
+# kerberos client
 RUN apt-get update && \
-  apt-get install -y sssd sssd-ldap sssd-krb5 ntp krb5-user openssh-client oddjob-mkhomedir rsyslog
+  apt-get install --yes --no-install-recommends \
+          ntp \
+          krb5-user \
+          rsyslog \
+ && apt-get clean \
+ && rm -rf /var/lib/apt/lists/*
 
 COPY ssh_config /etc/ssh/ssh_config
 
-COPY kerb-ldap-rsp/rserver.conf /etc/rstudio/rserver.conf
-COPY kerb-ldap-rsp/launcher.conf /etc/rstudio/launcher.conf
-
 # configure ldap
-COPY ./sssd-kerb.conf /etc/sssd/sssd.conf
-COPY rstudio-sssd /etc/pam.d/rstudio
-COPY rstudio-session-sssd /etc/pam.d/rstudio-session
-COPY kerb-ldap-rsp/startup.sh /usr/local/bin/startup.sh
+COPY ./sssd-kerb.conf /etc/sssd/conf.d/
+RUN chmod 600 /etc/sssd/conf.d/sssd-kerb.conf \
+ && mkdir -p /etc/krb5.conf.d \
+ && echo "[libdefaults]\n default_ccache_name = KEYRING:persistent:%{uid}" > /etc/krb5.conf.d/ccache-name.conf
 
-# trust the PEM key for dev work!!
-# TODO: make this a runtime thing
-COPY ssl/auth-docker.pem /auth-docker.pem
-RUN cp /auth-docker.pem /usr/local/share/ca-certificates/auth-docker.crt && \
-	update-ca-certificates
-
-# put the certs into the instance in case we need them
-COPY kerb-rsp-ha/certs /certs
-
-# adhoc fixes to make it work...
-RUN chmod 600 /etc/sssd/sssd.conf && \
-  # so users can create their own home directories
-  chmod 777 /home
+ENV DRIVERS_VERSION=2021.10.0
+# ODBC and drivers
+RUN curl -O https://cdn.rstudio.com/drivers/7C152C12/installer/rstudio-drivers_${DRIVERS_VERSION}_amd64.deb && \
+    apt-get update && \
+    apt-get install --yes --no-install-recommends unixodbc unixodbc-dev && \
+    apt-get install --yes --no-install-recommends ./rstudio-drivers_${DRIVERS_VERSION}_amd64.deb && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* ./rstudio-drivers_${DRIVERS_VERSION}_amd64.deb && \
+    cp /opt/rstudio-drivers/odbcinst.ini.sample /etc/odbcinst.ini

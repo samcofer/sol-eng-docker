@@ -443,6 +443,19 @@ kerb-connect-test-i:
 	NETWORK=${NETWORK} \
 	CONNECT_VERSION=$(CONNECT_VERSION) \
 	docker-compose -f compose/kerb-connect.yml -f compose/make-network.yml run sut bash
+
+kerb-postgres-up:
+	NETWORK=${NETWORK} \
+        docker-compose -f compose/kerberos-base.yml -f compose/postgres.yml -f compose/make-network.yml up -d
+
+kerb-postgres-build:
+	NETWORK=${NETWORK} \
+        docker-compose -f compose/kerberos-base.yml -f compose/postgres.yml -f compose/make-network.yml build
+
+kerb-postgres-down:
+	NETWORK=${NETWORK} \
+        docker-compose -f compose/kerberos-base.yml -f compose/postgres.yml -f compose/make-network.yml down
+
 #---------------------------------------------
 # Proxy
 #---------------------------------------------

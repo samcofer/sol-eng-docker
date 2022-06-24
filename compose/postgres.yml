@@ -2,11 +2,20 @@ version: '2.3'
 services:
 
   k-postgres:
-    container_name: k-postgres
     hostname: k-postgres
     build:
       context: ../cluster
       dockerfile: postgres/Dockerfile
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: "gss include_realm=1 krb_realm=DOCKER-RSTUDIO.COM map=krb_domain"
+      POSTGRES_PASSWORD: test
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - ../cluster/krb5.conf:/etc/krb5.conf
+      - ../cluster/postgres/config_postgres_krb5.sh:/docker-entrypoint-initdb.d/init-db.sh
     links:
       - k-server
-
