@@ -86,7 +86,7 @@ compose file](./compose/ldap-connect.yml). `usermanager` should work. Just be
 judicious about the fact that interacting with Connect in the browser while
 using `usermanager` _could_ potentially cause some strange consequences.
 
-By default this ldap Connect server instance is set to refer to the finance group for allowing login with the configurable setting `PermittedLoginGroup = cn=finance_group,dc=example,dc=org` in the config. By default the members in the finance group are: bobo, john, ashley. Changing this can be done by editing the  [`.gcfg` config file](./cluster/ldap-connnect.gcfg) and modifying user permissions above. 
+By default this ldap Connect server instance is set to refer to the finance group for allowing login with the configurable setting `PermittedLoginGroup = cn=finance_group,dc=example,dc=org` in the config. By default the members in the finance group are: bobo, john, ashley. Changing this can be done by editing the  [`.gcfg` config file](../cluster/ldap-connnect.gcfg) and modifying user permissions above. 
 
 # Development Workflow
 
