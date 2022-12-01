@@ -1,0 +1,30 @@
+version: '2.3'
+volumes:
+  sssd:
+  dummy:
+services:
+  sssd-sidecar:
+    hostname: sssd-sidecar
+    image: ghcr.io/colearendt/sssd:2022-12-01
+    command:
+      - /usr/sbin/sssd 
+      - -i 
+      - -c
+      - /etc/sssd/sssd.conf
+      - --logger=stderr
+    privileged: true
+    volumes: 
+      - "sssd:/var/lib/sss"
+      - "../cluster/sssd.conf:/etc/sssd/sssd.conf"
+  ldap-rsp-sidecar:
+    hostname: ldap-rsp-sidecar
+    image: ghcr.io/rstudio/rstudio-workbench:${RSTUDIO_VERSION}
+    privileged: true
+    volumes:
+      - "../cluster/ldap-rsp.conf:/etc/rstudio/rserver.conf"
+      - "sssd:/var/lib/sss"
+      - "dummy:/startup/user-provisioning"
+    environment:
+      - "RSW_LICENSE"
+    ports:
+      - "8787"
