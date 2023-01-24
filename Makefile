@@ -797,6 +797,16 @@ ldap-rsp-down:
 	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
 	docker-compose -f compose/ldap-rsp.yml -f compose/make-network.yml down
 
+ldap-rsp-sidecar-up:
+	NETWORK=${NETWORK} \
+	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
+	docker-compose -f compose/ldap-rsp-sidecar.yml -f compose/make-network.yml up -d && \
+	./bin/pdocker ps ldap-rsp
+ldap-rsp-sidecar-down:
+	NETWORK=${NETWORK} \
+	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
+	docker-compose -f compose/ldap-rsp-sidecar.yml -f compose/make-network.yml down
+
 #---------------------------------------------
 # Other
 #---------------------------------------------
