@@ -4,10 +4,7 @@
 SenderEmail = rsconnect@example.com
 EmailTo = "no-reply@example.com"
 DefaultContentListView = "expanded"
-
 Address = http://localhost:3939
-ViewerKiosk = true
-
 EmailProvider=none
 
 [SMTP]
@@ -25,9 +22,6 @@ Executable = /opt/python/3.9.5/bin/python
 [Http]
 Listen = :3939
 
-[Authentication]
-Provider = password
-
 [RPackageRepository "CRAN"]
 ;URL = file:///tmp/test
 URL = "https://packagemanager.rstudio.com/cran/__linux__/bionic/latest"
@@ -35,3 +29,12 @@ URL = "https://packagemanager.rstudio.com/cran/__linux__/bionic/latest"
 [RPackageRepository "RSPM"]
 ;URL = file:///tmp/test
 URL = "https://packagemanager.rstudio.com/cran/__linux__/bionic/latest"
+
+;[Authorization]
+; This setting prevents users from seeing other Connect users
+;
+; https://docs.posit.co/connect/admin/appendix/branding/#viewer-authorization-restrictions
+;ViewersCanOnlySeeThemselves = true
+
+[Authentication]
+Provider = password

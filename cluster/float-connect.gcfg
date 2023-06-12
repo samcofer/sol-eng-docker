@@ -5,7 +5,7 @@ SenderEmail = rsconnect@example.com
 ExpandedViewUI = true
 DefaultContentListView = "expanded"
 Address = http://localhost:3939
-ViewerKiosk = true
+;ViewerKiosk = true
 
 [Python]
 Enabled = true

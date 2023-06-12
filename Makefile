@@ -4,22 +4,31 @@ PWD := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 PROJECT=sol-eng-docker
 NETWORK=${PROJECT}_default
 SCALE=1
-CONNECT_VERSION=1.8.4.2-2
-CONNECT_VERSION=1.8.6
-CONNECT_VERSION=2021.09.0
-#1.7.0-11
+
+# Get the latest versions from: https://www.rstudio.com/wp-content/downloads.json
+
+# Dockerhub Connect repo: https://hub.docker.com/r/rstudio/rstudio-connect 
+#CONNECT_VERSION=1.7.0-11
+#CONNECT_VERSION=1.8.4.2-2
+#CONNECT_VERSION=1.8.6
+#CONNECT_VERSION=2021.09.0
+CONNECT_VERSION=ubuntu1804
 CONNECT_BINARY_URL=rstudio-connect_${CONNECT_VERSION}_amd64.deb
 
+# Dockerhub Workbench repo: https://hub.docker.com/r/rstudio/rstudio-workbench
 #RSTUDIO_VERSION=preview
 #RSTUDIO_VERSION=1.2.5033-1
 #RSTUDIO_VERSION=1.3.322-1
-RSTUDIO_VERSION=1.3.1093-1
-RSTUDIO_VERSION=daily
-RSTUDIO_VERSION=2021.09.0-351.pro6
-RSTUDIO_VERSION=1.4.1717-3
-RSTUDIO_VERSION=2022.02.0-443.pro2
+#RSTUDIO_VERSION=1.3.1093-1
+#RSTUDIO_VERSION=daily
+#RSTUDIO_VERSION=2021.09.0-351.pro6
+#RSTUDIO_VERSION=1.4.1717-3
+#RSTUDIO_VERSION=2022.02.0-443.pro2
+#RSTUDIO_VERSION=2023.03.2
+RSTUDIO_VERSION=ubuntu1804
 
 SSP_VERSION=1.5.10.990
+#SSP_VERSION=1.5.20.1002
 
 test-env-up: network-up
 
@@ -39,7 +48,6 @@ pull:
 	&& docker pull nginx
 
 build: kerb-server-build kerb-ssh-build kerb-rsp-build kerb-connect-build
-
 
 #---------------------------------------------
 # Network

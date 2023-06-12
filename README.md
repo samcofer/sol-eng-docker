@@ -100,6 +100,8 @@ make test-env-up
 
 Then look to specific sub-project pages (above) for detailed make commands to get things built and started.
 
+Don't forget to save your keys as environment variables before running the examples below!
+
 NOTE: If you are using Windows, we recommend starting a [git
 bash](https://gitforwindows.org/) terminal so you can use the numerous `bash`
 conventions that we employ
@@ -116,6 +118,38 @@ make kerb-server-up
 make proxy-connect-up proxy-saml-up
 make ldap-connect-up
 ```
+
+Logging in: 
+
+- For Connect the first user to create an account will be assigned as an administrator 
+- For other products users are provisioned, refer to [Users readme](docs/users.md)
+- To view user / password combinations, visit the [users](../cluster/users) file
+
+# Some useful commands 
+
+Get access to container and run commands: 
+```
+sudo docker exec –it container_name /bin/bash
+```
+
+Check logs: 
+```
+docker logs container_name
+```
+
+If you end up wanting to investigate networking, wireshark is a recommended packet sniffer. You can get the IP address of your docker container with: 
+
+```
+sudo docker inspect -f "{{ .NetworkSettings.IPAddress }}" container_name
+```
+
+# Clean-up when you are done 
+
+Use the relevant `down` command, for example `make connect-down` after running `make connect-up`. 
+
+Alternatively, you can close a specific container with the `rm` command: `docker rm container_id`
+
+Verify that all instances have been closed that should be closed with: `docker ps -a` or `docker container ls -a` 
 
 # Organization
 

@@ -16,7 +16,7 @@ DefaultContentListView = "expanded"
 ;	
 ; Address = https://rstudio-connect.company.com
 Address = http://localhost:3939
-ViewerKiosk = true
+;ViewerKiosk = true
 
 [Packages]
 ;HTTPProxy = http://proxy-mitm:8080/
