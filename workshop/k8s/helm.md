@@ -102,7 +102,7 @@ Check that the helm release exists:
 helm list
 ```
 
-Take a look at `kubectl get pods` and `kubectl get svcs`. The pods and service were named after our release!
+Take a look at `kubectl get pods` and `kubectl get svc`. The pods and service were named after our release!
 This is something helm charts will often do so that you can use a chart multiple times on the same cluster.
 
 You can also specify a namespace with `-n` (as you might expect)
