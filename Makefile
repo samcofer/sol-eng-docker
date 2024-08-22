@@ -12,7 +12,7 @@ SCALE=1
 #CONNECT_VERSION=1.8.4.2-2
 #CONNECT_VERSION=1.8.6
 #CONNECT_VERSION=2021.09.0
-CONNECT_VERSION=ubuntu1804
+CONNECT_VERSION=ubuntu2204
 CONNECT_BINARY_URL=rstudio-connect_${CONNECT_VERSION}_amd64.deb
 
 # Dockerhub Workbench repo: https://hub.docker.com/r/rstudio/rstudio-workbench
@@ -25,7 +25,7 @@ CONNECT_BINARY_URL=rstudio-connect_${CONNECT_VERSION}_amd64.deb
 #RSTUDIO_VERSION=1.4.1717-3
 #RSTUDIO_VERSION=2022.02.0-443.pro2
 #RSTUDIO_VERSION=2023.03.2
-RSTUDIO_VERSION=ubuntu1804
+RSTUDIO_VERSION=ubuntu2204
 
 SSP_VERSION=1.5.10.990
 #SSP_VERSION=1.5.20.1002
@@ -220,7 +220,7 @@ ssp-ha-down:
 rsp-ha-up:
 	NETWORK=${NETWORK} \
 	RSW_LICENSE=$(RSW_LICENSE) \
-	RSTUDIO_VERSION=2021.09.0-351.pro6 \
+	RSTUDIO_VERSION=$(RSTUDIO_VERSION) \
 	docker-compose -f compose/rsp-ha.yml -f compose/make-network.yml up -d && \
 	./bin/pdocker ps proxy
 

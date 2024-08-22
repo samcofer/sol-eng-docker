@@ -16,7 +16,10 @@ services:
       - ../cluster/launcher-ha.conf:/etc/rstudio/launcher.conf
       - ../cluster/launcher.pem:/etc/rstudio/launcher.pem
       - ../cluster/launcher.pub:/etc/rstudio/launcher.pub
-      - rsp-home-vol:/home
+      - ../cluster/startup-launcher.sh:/usr/local/bin/startup-launcher.sh
+      - ../cluster/startup.sh:/usr/local/bin/startup.sh
+      - ../cluster/rstudio-launcher.conf:/startup/launcher/rstudio-launcher.conf
+      - /efs/home:/home
       - launcher-scratch:/var/lib/rstudio-launcher/Local
     depends_on:
       pg-rsp:
